@@ -1,0 +1,13 @@
+New log file opened at Sun Jun 21 13:19:19 ICT 2015 by 6988@HERFAN-PC
+Taking next connection to: 63106
+New client attempting to connect on port: 63107-63106
+  Address = /192.168.1.120:63106
+This client on port 63107 has uuid fc31a7b8-4164-4d28-837e-5781346cf607 configName activator humanReadableName Activator protocolVersion 3 featureTags Vector()
+Connected Clients: activator-fc31a7b8-4164-4d28-837e-5781346cf607
+Taking next connection to: 63106
+Checking to see if clients are empty...
+No non-daemon clients connected after 3 min. Shutting down.
+Server socket thread exiting.
+0 clients open, will close them...
+All client sockets have been closed.
+Closing the 6988@HERFAN-PC logs at Sun Jun 21 13:23:00 ICT 2015, goodbye.
