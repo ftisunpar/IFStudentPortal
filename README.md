@@ -1,5 +1,5 @@
-Template Project Skripsi
-========================
+IT Student Portal
+=================
 
 Silahkan menggunakan (fork) template skripsi ini sebagai dasar dari skripsi
 Anda. Semua dokumen disimpan dalam direktori `doc/`. Jangan lupa mengubah
