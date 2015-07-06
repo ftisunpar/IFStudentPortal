@@ -1,13 +1,7 @@
-New log file opened at Mon Jun 29 04:45:25 ICT 2015 by 7592@HERFAN-PC
-Taking next connection to: 53463
-New client attempting to connect on port: 53464-53463
-  Address = /192.168.1.120:53463
-This client on port 53464 has uuid 51be7e90-302a-4130-94ef-d3b131a64c24 configName activator humanReadableName Activator protocolVersion 3 featureTags Vector()
-Connected Clients: activator-51be7e90-302a-4130-94ef-d3b131a64c24
-Taking next connection to: 53463
-Checking to see if clients are empty...
-No non-daemon clients connected after 3 min. Shutting down.
-Server socket thread exiting.
-0 clients open, will close them...
-All client sockets have been closed.
-Closing the 7592@HERFAN-PC logs at Mon Jun 29 04:48:25 ICT 2015, goodbye.
+New log file opened at Mon Jun 29 06:24:00 ICT 2015 by 7976@HERFAN-PC
+Taking next connection to: 54944
+New client attempting to connect on port: 54945-54944
+  Address = /192.168.1.120:54944
+This client on port 54945 has uuid 066b21c0-5f1f-4374-9575-5b0df247e6c4 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-066b21c0-5f1f-4374-9575-5b0df247e6c4
+Taking next connection to: 54944
