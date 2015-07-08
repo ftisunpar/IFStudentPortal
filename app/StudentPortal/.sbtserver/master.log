@@ -1,5 +1,5 @@
-New log file opened at Wed Jul 08 05:46:39 ICT 2015 by 6980@HERFAN-PC
-jvm 6980@HERFAN-PC
+New log file opened at Thu Jul 09 04:52:30 ICT 2015 by 5856@HERFAN-PC
+jvm 5856@HERFAN-PC
 jvm vmName=Java HotSpot(TM) 64-Bit Server VM vmVendor=Oracle Corporation vmVersion=25.40-b25
 jvm specName=Java Virtual Machine Specification specVendor=Oracle Corporation specVersion=1.8
 jvm arguments: [-Xms256m, -Xmx1024m, -XX:MetaspaceSize=64m, -XX:MaxMetaspaceSize=256m]
@@ -27,7 +27,7 @@ sorting: ns: List(sbt.plugins.CorePlugin, sbt.plugins.IvyPlugin, sbt.plugins.Jvm
   :: sorted deduced result: List(sbt.plugins.CorePlugin, sbt.plugins.IvyPlugin, sbt.plugins.JvmPlugin, sbt.plugins.JUnitXmlReportPlugin)
 [Loading] Done in H:\Kuliah\Skripsi\github\Skripsi\app\StudentPortal\project, returning: (studentportal-build)
 Loading project definition from H:\Kuliah\Skripsi\github\Skripsi\app\StudentPortal\project
-Running task... Cancel: sbt.TaskCancellationStrategy$Null$@666dd9f9, check cycles: false
+Running task... Cancel: sbt.TaskCancellationStrategy$Null$@72b93ea0, check cycles: false
 
 Initial source changes: 
 	removed:Set()

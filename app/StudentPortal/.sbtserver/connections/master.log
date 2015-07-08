@@ -1,49 +1,22 @@
-New log file opened at Wed Jul 08 05:46:39 ICT 2015 by 6980@HERFAN-PC
-Taking next connection to: 53090
-New client attempting to connect on port: 53091-53090
-  Address = /192.168.1.120:53090
-This client on port 53091 has uuid 2592362f-50e1-4af0-a011-c7b6e44e01f0 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-2592362f-50e1-4af0-a011-c7b6e44e01f0
-Taking next connection to: 53090
+New log file opened at Thu Jul 09 04:52:30 ICT 2015 by 5856@HERFAN-PC
+Taking next connection to: 58867
+New client attempting to connect on port: 58868-58867
+  Address = /192.168.1.120:58867
+This client on port 58868 has uuid 4dd077e5-0b07-4068-ad56-0b84732919f2 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-4dd077e5-0b07-4068-ad56-0b84732919f2
+Taking next connection to: 58867
 Checking to see if clients are empty...
 We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
+Taking next connection to: 58867
 Checking to see if clients are empty...
 We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
+Taking next connection to: 58867
 Checking to see if clients are empty...
 We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
+Taking next connection to: 58867
 Checking to see if clients are empty...
 We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
+Taking next connection to: 58867
 Checking to see if clients are empty...
 We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 53090
+Taking next connection to: 58867

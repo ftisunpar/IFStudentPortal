@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-
-<html lang="en">
-    <head>
-        <title>@main</title>    
-    </head>
-    <body>
-        <form action="@routes.Application.login()" method="POST" name ="form1">
-	        Nama<input type="text" name = "nama"/>
-	        NPM<input type="text" name= "npm"/>
-	       <input type="submit" name= "submit"/>
-        </form>
-        
-    </body>
+@(name:String)
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hello</title>
+</head>
+<body>
+<h1>Hello <em>@name</em></h1>
+</body>
 </html>
