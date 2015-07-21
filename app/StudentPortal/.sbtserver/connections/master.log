@@ -1,22 +1,13 @@
-New log file opened at Thu Jul 09 04:52:30 ICT 2015 by 5856@HERFAN-PC
-Taking next connection to: 58867
-New client attempting to connect on port: 58868-58867
-  Address = /192.168.1.120:58867
-This client on port 58868 has uuid 4dd077e5-0b07-4068-ad56-0b84732919f2 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-4dd077e5-0b07-4068-ad56-0b84732919f2
-Taking next connection to: 58867
+New log file opened at Thu Jul 09 09:39:58 ICT 2015 by 3692@HERFAN-PC
+Taking next connection to: 60533
+New client attempting to connect on port: 60534-60533
+  Address = /192.168.1.120:60533
+This client on port 60534 has uuid 28b8cb3a-e2a2-4093-98a6-0f1f699e9984 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-28b8cb3a-e2a2-4093-98a6-0f1f699e9984
+Taking next connection to: 60533
 Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 58867
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 58867
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 58867
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 58867
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 58867
+No non-daemon clients connected after 3 min. Shutting down.
+Server socket thread exiting.
+0 clients open, will close them...
+All client sockets have been closed.
+Closing the 3692@HERFAN-PC logs at Thu Jul 09 09:42:59 ICT 2015, goodbye.

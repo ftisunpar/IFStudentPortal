@@ -1,0 +1,21 @@
+@(mkList: List[MataKuliah])
+
+@main("IT Student Portal") {
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>@main</title>    
+    </head>
+    <body>
+        KULIAH<br>
+        <ul>
+        @for(mk <- mkList) {
+        	<li>@mk.nama</li>
+        }
+        </ul>
+    </body>
+</html>
+
+}

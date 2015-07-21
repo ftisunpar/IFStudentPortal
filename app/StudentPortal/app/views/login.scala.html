@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>IT Student Portal</title>
+	</head>
+	<body>
+		<h3>Login</h3>
+		<form action="@routes.Application.submitLogin()" method="POST" name ="loginForm">
+			<input name="npm" type="text" placeholder="username"/>
+			<input name="pass" type="password" placeholder="password"/>
+			<input name="submit" type="submit" value="login"/>
+		</form>
+	</body>
+</html>

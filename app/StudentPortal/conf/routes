@@ -5,7 +5,11 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET 	/hello						controllers.Application.hello(name:String)
+GET 	/login						controllers.Application.login()
+POST 	/login						controllers.Application.submitLogin()
+GET     /home                     	controllers.Application.home(nama: String)
+POST    /kuliah                     controllers.Application.submitKuliah()
+GET     /kuliah                     controllers.Application.kuliah(mkList: List[models.id.ac.unpar.siamodels.MataKuliah])
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
