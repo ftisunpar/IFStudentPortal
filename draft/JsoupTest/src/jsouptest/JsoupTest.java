@@ -33,7 +33,7 @@ public class JsoupTest {
         
         Mahasiswa herfan = new Mahasiswa("2012730012");
         String user = herfan.getEmailAddress();
-        String pass = "Ttdjq6Be";
+        String pass = "";
         
         Connection login_conn = scrap.login(user,pass);        
         Document login_doc =  login_conn.post();
