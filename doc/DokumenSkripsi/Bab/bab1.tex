@@ -4,11 +4,27 @@
 \section{Latar Belakang}
 \label{sec:latar_belakang}
 
-Student Portal UNPAR[] merupakan sistem informasi berbasis \textit{web} yang digunakan oleh mahasiswa Universitas Katolik Parahyangan. Fitur-fitur yang dimiliki Student Portal UNPAR yaitu rencana studi, jadwal, nilai dan indeks prestasi, dan pembayaran uang kuliah. Namun, fitur-fitur tersebut masih belum cukup untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika. 
+Student Portal UNPAR\cite{studentportalunpar} \footnote{https://studentportal.unpar.ac.id} merupakan sistem informasi berbasis \textit{web} yang digunakan oleh mahasiswa Universitas Katolik Parahyangan. Fitur-fitur yang dimiliki Student Portal UNPAR yaitu rencana studi, jadwal, nilai dan indeks prestasi, dan pembayaran uang kuliah. Namun, fitur-fitur tersebut masih belum cukup untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika. 
 
-Salah satu fitur yang diperlukan oleh mahasiswa Teknik Informatika UNPAR adalah prasyarat mata kuliah. Dalam Teknik Informatika UNPAR, terdapat beberapa mata kuliah yang membutuhkan prasyarat baik prasyarat tempuh maupun prasyarat lulus. Misalkan dalam pengambilan mata kuliah AIF401 Skripsi 1 membutuhkan prasyarat lulus 108 sks dan lulus mata kuliah Penulisan Ilmiah. 
+Salah satu fitur yang diperlukan oleh mahasiswa Teknik Informatika UNPAR adalah prasyarat mata kuliah. Dalam Teknik Informatika UNPAR, terdapat beberapa mata kuliah yang membutuhkan prasyarat baik prasyarat tempuh maupun prasyarat lulus. Student Portal UNPAR sudah menyediakan fitur prasyarat mata kuliah namun kurang mendukung karena data yang ditampilkan kurang akurat. Misalkan dalam pengambilan mata kuliah AIF469 Layanan Berbasis Web membutuhkan prasyarat lulus mata kuliah AIF305 Jaringan Komputer dan AIF315 Pemrograman Berbasis Web. Namun dalam Student Portal UNPAR, prasyarat yang dicantumkan hanya lulus mata kuliah AIF315 Pemrograman Berbasis Web. Selain itu, pemeriksaan prasyarat mata kuliah tidak dilakukan secara otomatis sehingga setiap pengambilan mata kuliah tetap dianggap valid meskipun belum memenuhi prasyarat.
 
-Untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika, fitur-fitur yang diperlukan akan dianalisa kemudian diimplementasikan ke dalam program IT Student Portal. Program yang akan dibuat merupakan program berbasis web menggunakan Play Framework. Selain itu, data-data yang akan ditampilkan diambil langsung dari Student Portal UNPAR dengan \textit{Web Scraping} menggunakan \textit{library} jsoup.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{Gambar/contoh-portal}
+	\caption{Prasyarat Mata Kuliah Student Portal UNPAR} 
+	\label{fig:prasyarat_student_portal}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{Gambar/contoh-tinyurl}
+	\caption{Prasyarat Mata Kuliah} 
+	\label{fig:prasyarat_tinyurl}
+\end{figure}
+
+jsoup merupakan library Java yang digunakan untuk menelusuri suatu website untuk mendapatkan suatu informasi. Informasi yang didapat berupa HTML yang kemudian diekstrak dan disajikan dalam bentuk \textit{Document Object Model}. Play Framework merupakan sebuah \textit{web framework} berbasis Java dan Scala. Play juga menggunakan \textit{design pattern} \textit{Model-View-Controller} (MVC) di mana \textit{model} dan \textit{controller} menggunakan Java sedangkan \textit{view} menggunakan Scala dan HTML.  
+
+Untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika, fitur-fitur yang diperlukan akan dianalisa kemudian diimplementasikan ke dalam program IT Student Portal. Program yang akan dibuat merupakan program berbasis \textit{web} menggunakan \textit{Play Framework}. Selain itu, data-data yang akan ditampilkan diambil langsung dari Student Portal UNPAR dengan \textit{Web Scraping} menggunakan \textit{library} jsoup. Untuk melakukan pengambilan data, jsoup harus mengetahui cara kerja dari Student Portal UNPAR. Analisis cara kerja Student Portal UNPAR akan dilakukan dengan menggunakan Chrome DevTools. 
 
 \section{Rumusan Masalah}
 \label{sec:rumusan_masalah}
@@ -34,6 +50,8 @@ Tujuan-tujuan yang hendak dicapai melalui penulisan skripsi ini sebagai berikut:
 
 Beberapa batasan yang dibuat terkait dengan pengerjaan skripsi ini sebagai berikut.
 \begin{itemize}
+	\item Data yang akan diolah diambil dari Student Portal UNPAR.
+	\item Prasyarat mata kuliah yang tersedia hanya mata kuliah Program Studi Teknik Informatika.
 	\item Aplikasi akan diuji pada server FTIS sehingga tidak bisa diakses dari luar.
 \end{itemize}
 
@@ -43,10 +61,9 @@ Beberapa batasan yang dibuat terkait dengan pengerjaan skripsi ini sebagai berik
 Berikut ini adalah metode-metode yang dilakukan pada penelitian ini:
 
 \begin{enumerate}
-	\item Melakukan studi mengenai cara kerja Chrome DevTools.
-  \item Melakukan studi mengenai \textit{library} jsoup.
-	\item Menganalisa cara kerja Student Portal UNPAR.
-	\item Mengimplementasikan \textit{library} jsoup
+	\item Melakukan studi mengenai \textit{library} jsoup, Chrome DevTools, dan Play Framework.
+	\item Menganalisis cara kerja Student Portal UNPAR.
+	\item Mengimplementasikan IT Student Portal dengan \textit{library} jsoup.
 	\item Melakukan eksperimen dan pengujian.
 \end{enumerate}
 
@@ -61,8 +78,7 @@ Sistematika penulisan setiap bab pada penelitian ini sebagai berikut:
   dan sistematika penulisan dari penelitian yang dilakukan.
   \item Bab Dasar Teori \\
   Bab 2 berisikan teori-teori yang menunjang penelitian yang dilakukan. Teori
-  yang digunakan dalam penilitian ini, antara lain \textit{Web Scraping}, CSS \textit{Selector},
-	\textit{Document Object Model}, Chrome DevTools, jsoup.
+  yang digunakan dalam penilitian ini, antara lain \textit{Library} jsoup, Chrome DevTools, dan \textit{Play Framework}.
   \item Bab Analisis \\
   Bab 3 berisikan analisis yang dilakukan pada penelitian ini. Analisis yang
   dilakukan meliputi: Analisis Fitur-fitur FTIS Student Portal, Analisis \textit{Web Scraping}, 
