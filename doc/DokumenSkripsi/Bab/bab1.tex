@@ -4,25 +4,25 @@
 \section{Latar Belakang}
 \label{sec:latar_belakang}
 
-Student Portal UNPAR\cite{studentportalunpar} \footnote{https://studentportal.unpar.ac.id} merupakan sistem informasi berbasis \textit{web} yang digunakan oleh mahasiswa Universitas Katolik Parahyangan. Fitur-fitur yang dimiliki Student Portal UNPAR yaitu rencana studi, jadwal, nilai dan indeks prestasi, dan pembayaran uang kuliah. Namun, fitur-fitur tersebut masih belum cukup untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika. 
+Student Portal UNPAR\cite{studentportalunpar} merupakan sistem informasi berbasis \textit{web} yang digunakan oleh mahasiswa Universitas Katolik Parahyangan. Fitur-fitur yang dimiliki Student Portal UNPAR yaitu rencana studi, jadwal, nilai dan indeks prestasi, dan pembayaran uang kuliah. Namun, fitur-fitur tersebut masih belum cukup untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika. 
 
-Salah satu fitur yang diperlukan oleh mahasiswa Teknik Informatika UNPAR adalah prasyarat mata kuliah. Dalam Teknik Informatika UNPAR, terdapat beberapa mata kuliah yang membutuhkan prasyarat baik prasyarat tempuh maupun prasyarat lulus. Student Portal UNPAR sudah menyediakan fitur prasyarat mata kuliah namun kurang mendukung karena data yang ditampilkan kurang akurat. Misalkan dalam pengambilan mata kuliah AIF469 Layanan Berbasis Web membutuhkan prasyarat lulus mata kuliah AIF305 Jaringan Komputer dan AIF315 Pemrograman Berbasis Web. Namun dalam Student Portal UNPAR, prasyarat yang dicantumkan hanya lulus mata kuliah AIF315 Pemrograman Berbasis Web. Selain itu, pemeriksaan prasyarat mata kuliah tidak dilakukan secara otomatis sehingga setiap pengambilan mata kuliah tetap dianggap valid meskipun belum memenuhi prasyarat.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.5]{Gambar/contoh-portal}
-	\caption{Prasyarat Mata Kuliah Student Portal UNPAR} 
-	\label{fig:prasyarat_student_portal}
-\end{figure}
+Salah satu fitur yang diperlukan oleh mahasiswa Teknik Informatika UNPAR adalah prasyarat mata kuliah. Dalam Teknik Informatika UNPAR, terdapat beberapa mata kuliah yang membutuhkan prasyarat baik prasyarat tempuh maupun prasyarat lulus. Student Portal UNPAR sudah menyediakan fitur prasyarat mata kuliah namun kurang mendukung karena data yang ditampilkan kurang akurat. Misalnya dalam pengambilan mata kuliah AIF453 Kecerdasan Bisnis membutuhkan prasyarat lulus mata kuliah AIF204 Manajemen Informasi dan Basis Data atau AIF102 Algoritma dan Struktur Data dengan IPK di atas 2.75 yang dapat dilihat pada gambar \ref{fig:1_prasyarat_tinyurl}. Namun dalam Student Portal UNPAR, prasyarat yang dicantumkan hanya lulus mata kuliah AIF204 Manajemen Informasi dan Basis Data seperti pada gambar \ref{fig:1_prasyarat_student_portal}. Selain itu, pemeriksaan prasyarat mata kuliah tidak dilakukan secara otomatis sehingga setiap pengambilan mata kuliah tetap dianggap valid meskipun belum memenuhi prasyarat.
 
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.5]{Gambar/contoh-tinyurl}
 	\caption{Prasyarat Mata Kuliah} 
-	\label{fig:prasyarat_tinyurl}
+	\label{fig:1_prasyarat_tinyurl}
 \end{figure}
 
-jsoup merupakan library Java yang digunakan untuk menelusuri suatu website untuk mendapatkan suatu informasi. Informasi yang didapat berupa HTML yang kemudian diekstrak dan disajikan dalam bentuk \textit{Document Object Model}. Play Framework merupakan sebuah \textit{web framework} berbasis Java dan Scala. Play juga menggunakan \textit{design pattern} \textit{Model-View-Controller} (MVC) di mana \textit{model} dan \textit{controller} menggunakan Java sedangkan \textit{view} menggunakan Scala dan HTML.  
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{Gambar/contoh-portal}
+	\caption{Prasyarat Mata Kuliah Student Portal UNPAR} 
+	\label{fig:1_prasyarat_student_portal}
+\end{figure}
+
+jsoup\cite{jsoup} merupakan \textit{library} Java yang digunakan untuk menelusuri suatu \textit{website} untuk mendapatkan suatu informasi. Informasi yang didapat berupa HTML yang kemudian diekstrak dan disajikan dalam bentuk \textit{Document Object Model}. Play Framework\cite{Leroux:2014} merupakan sebuah \textit{web framework} berbasis Java dan Scala. Play juga menggunakan \textit{design pattern} \textit{Model-View-Controller} (MVC) di mana \textit{model} dan \textit{controller} menggunakan Java sedangkan \textit{view} menggunakan Scala dan HTML. SIA Models\cite{siamodels} merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem Informasi Akademik UNPAR. Aplikasi akan dibuat dengan menggunakan Play Framework dan jsoup karena aplikasi didukung oleh SIA models yang tersedia dalam bahasa Java. 
 
 Untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika, fitur-fitur yang diperlukan akan dianalisa kemudian diimplementasikan ke dalam program IT Student Portal. Program yang akan dibuat merupakan program berbasis \textit{web} menggunakan \textit{Play Framework}. Selain itu, data-data yang akan ditampilkan diambil langsung dari Student Portal UNPAR dengan \textit{Web Scraping} menggunakan \textit{library} jsoup. Untuk melakukan pengambilan data, jsoup harus mengetahui cara kerja dari Student Portal UNPAR. Analisis cara kerja Student Portal UNPAR akan dilakukan dengan menggunakan Chrome DevTools. 
 
@@ -48,9 +48,9 @@ Tujuan-tujuan yang hendak dicapai melalui penulisan skripsi ini sebagai berikut:
 \section{Batasan Masalah}
 \label{sec:batasan_masalah}
 
-Beberapa batasan yang dibuat terkait dengan pengerjaan skripsi ini sebagai berikut.
+Beberapa batasan yang dibuat terkait dengan pengerjaan skripsi ini sebagai berikut:
 \begin{itemize}
-	\item Prasyarat mata kuliah yang tersedia hanya mata kuliah Program Studi Teknik Informatika.
+	\item Prasyarat mata kuliah yang tersedia hanya mata kuliah yang didukung SIA \textit{models}.
 	\item Aplikasi akan diuji pada server FTIS sehingga tidak bisa diakses dari luar.
 \end{itemize}
 
