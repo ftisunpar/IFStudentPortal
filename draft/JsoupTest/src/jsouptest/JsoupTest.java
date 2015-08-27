@@ -7,6 +7,7 @@
 package jsouptest;
 
 import id.ac.unpar.siamodels.Mahasiswa;
+import id.ac.unpar.siamodels.Mahasiswa.Nilai;
 import id.ac.unpar.siamodels.MataKuliah;
 import id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
 import java.io.File;
@@ -34,12 +35,17 @@ public class JsoupTest {
     
     public static void main(String[] args) throws IOException {
         Scraper scrap = new Scraper();
-        String pass = "";
+        String pass = "Ttdjq6Be";
         scrap.init();
         scrap.login("2012730012",pass);  
         ArrayList<String> mkl = scrap.requestKuliah();
         scrap.setNilai();
-        List<Object> mkKnown = new ArrayList<Object>(); 
+        Mahasiswa mhs = scrap.getLoggedMahasiswa();
+        for(Nilai n: mhs.getRiwayatNilai()){
+            System.out.println(n.toString());
+        }
+        
+        /*List<Object> mkKnown = new ArrayList<Object>(); 
         List<String> mkUnknown = new ArrayList<String>();
         for(String kodeMK : mkl){
             try {
@@ -78,7 +84,7 @@ public class JsoupTest {
                         }
                     }
             }
-        }
+        }*/
         
         scrap.logout();
 

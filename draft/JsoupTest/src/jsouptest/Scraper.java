@@ -5,7 +5,6 @@
  */
 package jsouptest;
 
-import java.awt.List;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -135,7 +134,8 @@ public class Scraper {
         Elements mk = doc.select("table");
 
         for(Element tb:mk){
-        String curr_sem = tb.select(".table_color3 th").text();
+            //String curr_sem = tb.select(".table_color3 th").text();
+            //System.out.println(curr_sem);
             Elements tr = tb.select("tr");
             String[] sem_set = this.parseSemester(tr.get(0).text());
             String thn = sem_set[0];
