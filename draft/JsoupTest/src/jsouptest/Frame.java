@@ -6,6 +6,7 @@
 
 package jsouptest;
 
+import id.ac.unpar.siamodels.Mahasiswa;
 import id.ac.unpar.siamodels.MataKuliah;
 import id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
 import java.io.IOException;
@@ -140,7 +141,7 @@ public class Frame extends javax.swing.JFrame {
                     }
                     else{
                         if(scrap.getLoggedMahasiswa().hasLulusKuliah(mk.getClass().getSimpleName())){
-                            //System.out.println(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()) + " sudah lulus");
+                            System.out.println(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()) + " sudah lulus");
                         }
                         else{
                             System.out.println(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()) + " memenuhi syarat");
@@ -148,7 +149,13 @@ public class Frame extends javax.swing.JFrame {
                     }
             }
         }
-        
+        Mahasiswa mhs = scrap.getLoggedMahasiswa();
+        for(Mahasiswa.Nilai n: mhs.getRiwayatNilai()){
+            System.out.println(n.toString());
+        }
+        System.out.println(mhs.calculateIPKLulus());
+        System.out.println(mhs.calculateSKSLulus());
+        System.out.println(mhs.calculateIPS());
         scrap.logout();
     }
     /**

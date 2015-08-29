@@ -38,6 +38,10 @@ public class Application extends Controller {
     	return ok(views.html.home.render(nama));
     }
     
+    public Result prasyarat() throws IOException{
+    	
+    	return ok(views.html.prasyarat.render());
+    }
     
 }
 

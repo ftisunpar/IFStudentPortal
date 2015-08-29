@@ -8,6 +8,7 @@ GET     /                           controllers.Application.index()
 GET 	/login						controllers.Application.login()
 POST 	/login						controllers.Application.submitLogin()
 GET     /home                     	controllers.Application.home()
+GET     /prasyarat                  controllers.Application.prasyarat()
 
 
 # Map static resources from the /public folder to the /assets URL path
