@@ -1,3 +1,5 @@
+@(list: List[models.display.PrasyaratTable], sz: Integer)
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -6,5 +8,13 @@
     </head>
     <body>
      	<h1>Prasyarat</h1> 
+     	<ul>
+     	@for(ls<-list){
+     		<li>@ls.mk.getNama()</li> 
+     		@ls.status
+     		<br>
+     	}
+     	</ul>
+     	@sz
     </body>
 </html>
