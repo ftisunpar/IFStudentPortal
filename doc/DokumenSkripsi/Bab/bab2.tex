@@ -4,8 +4,21 @@
 \section{jsoup}
 \label{sec:jsoup}
 
-\textit{Web Scraping} adalah teknik yang digunakan untuk mendapatkan informasi dari sebuah \textit{website}
-secara otomatis. Dalam Java, \textit{web scraping} dapat diimplementasikan menggunakan \textit{library} jsoup \cite{jsoup}. API yang disediakan oleh jsoup dapat digunakan untuk menyeleksi dan memanipulasi data. Elemen HTML akan di-\textit{parse} ke dalam bentuk \textit{Document Object Model} (DOM) yang direpresentasikan dalam kelas Document. Dalam menyeleksi data, jsoup memanfaatkan CSS \textit{Selector} untuk mendapatkan elemen HTML yang diinginkan dari objek Document hasil \textit{parsing} HTML. Hasil proses seleksi akan ditampung ke dalam objek bertipe Element yang merepresentasikan elemen pada HTML. Kemudian elemen yang diperoleh dapat dimanipulasi sesuai kebutuhan.
+\textit{Web scraping} adalah teknik mendapatkan informasi dari sebuah \textit{website} secara otomatis. Dalam Java, \textit{web scraping} dapat diimplementasikan menggunakan \textit{library} jsoup \cite{jsoup}. API yang disediakan oleh jsoup dapat digunakan untuk mengekstrak dan memanipulasi data seperti HTML. 
+
+Untuk mendapatkan data dari suatu \textit{website}, jsoup harus membuat koneksi terlebih dahulu dengan \textit{website} tersebut. Koneksi pada jsoup direpresentasikan oleh kelas Connection. \textit{Method} "`connect(String url)"' dapat dipanggil untuk membuat objek Connection baru dengan melempar IOException. Koneksi akan dibuat dengan mengirimkan HTTP \textit{request}. \textit{Method} "`connect(String url)"' merupakan \textit{static method} yang dimiliki oleh kelas Jsoup. Setelah membuat koneksi baru, objek Connection perlu memperhatikan pemanggilan \textit{method-method} berikut:
+\begin{enumerate}
+	\item \textbf{cookies()}, digunakan untuk menambahkan \textit{cookie} yang dikirim ke dalam \textit{request}.
+	\item \textbf{data()}, digunakan untuk menambahkan parameter data ke dalam \textbf{request}.
+	\item \textbf{timeout()}, digunakan untuk mengatur \textit{timeout request}.
+	\item \textbf{validateTLSCertificates()}, digunakan untuk mengatur pemeriksaan sertifikat TLS untuk HTTPS \textit{request}. 
+	\item \textbf{method()}, digunakan untuk mengatur metode pengiriman \textit{request}. 
+	\item \textbf{execute()}, digunakan untuk mengirim \textit{request}. 
+\end{enumerate}
+
+Dengan pemanggilan \textit{method} execute(), jsoup akan mengirim \textit{request} ke website yang dituju. Kemudian jsoup akan menerima \textit{response} dari website tersebut. Dalam jsoup, HTTP \textit{response} direpresentasikan dalam kelas Response, maka HTTP \textit{response} yang diterima akan disimpan ke dalam objek Response yang kemudian akan dikembalikan oleh \textit{method} execute().
+
+Response yang diperoleh akan di-\textit{parse} ke dalam bentuk \textit{Document Object Model} (DOM) yang direpresentasikan dalam kelas Document. Dalam menyeleksi data, jsoup memanfaatkan CSS \textit{Selector} untuk mendapatkan elemen HTML yang diinginkan dari objek Document hasil \textit{parsing} HTML. Hasil proses seleksi akan ditampung ke dalam objek bertipe Element yang merepresentasikan elemen pada HTML. Kemudian elemen yang diperoleh dapat dimanipulasi sesuai kebutuhan.
 
 \section{Chrome DevTools}
 \label{sec:devtools}

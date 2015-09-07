@@ -123,14 +123,15 @@ public class Scraper {
     }
     
     public void setNilai() throws IOException{  
-        Connection nilai = Jsoup.
-                connect(NILAI_URL).
-                cookies(this.login_cookies);
-        nilai.data("npm",this.logged_mhs.getNpm(),"thn_akd","ALL");
-        nilai.timeout(0).validateTLSCertificates(false); 
-        nilai.method(Connection.Method.POST);
-        
-        Document doc = nilai.execute().parse();
+        Connection nilaiConn = Jsoup.connect(NILAI_URL);
+        nilaiConn.cookies(this.login_cookies);
+        nilaiConn.data("npm",this.logged_mhs.getNpm());
+        nilaiConn.data("thn_akd","ALL");
+        nilaiConn.timeout(0);
+        nilaiConn.validateTLSCertificates(false); 
+        nilaiConn.method(Connection.Method.POST);
+        Response resp = nilaiConn.execute();
+        Document doc = resp.parse();
         Elements mk = doc.select("table");
 
         for(Element tb:mk){
