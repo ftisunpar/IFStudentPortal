@@ -18,13 +18,12 @@ Untuk mendapatkan data dari suatu \textit{website}, jsoup harus membuat koneksi 
 
 Dengan pemanggilan \textit{method} execute(), jsoup akan mengirim \textit{request} ke website yang dituju. Kemudian jsoup akan menerima \textit{response} dari website tersebut. Dalam jsoup, HTTP \textit{response} direpresentasikan dalam kelas Response, maka HTTP \textit{response} yang diterima akan disimpan ke dalam objek Response yang kemudian akan dikembalikan oleh \textit{method} execute().
 
-Response yang diperoleh akan di-\textit{parse} ke dalam bentuk \textit{Document Object Model} (DOM) yang direpresentasikan dalam kelas Document. Dalam menyeleksi data, jsoup memanfaatkan CSS \textit{Selector} untuk mendapatkan elemen HTML yang diinginkan dari objek Document hasil \textit{parsing} HTML. Hasil proses seleksi akan ditampung ke dalam objek bertipe Element yang merepresentasikan elemen pada HTML. Kemudian elemen yang diperoleh dapat dimanipulasi sesuai kebutuhan.
+Response yang diperoleh akan di-\textit{parse} ke dalam bentuk \textit{Document Object Model} (DOM) yang direpresentasikan dalam kelas Document. Proses parsing dapat dilakukan dengan pemanggilan method parse() oleh objek Response. Document yang telah diperoleh dari hasil parsing dapat diseleksi untuk mendapatkan data yang diinginkan. Dalam menyeleksi Document, jsoup memanfaatkan CSS \textit{Selector} untuk mendapatkan elemen HTML yang dipanggil oleh objek Document dengan method select(). Hasil proses seleksi akan ditampung ke dalam objek bertipe Elements yang merepresentasikan elemen-elemen pada HTML. 
 
 \section{Chrome DevTools}
 \label{sec:devtools}
 
 Chrome Developer Tools (DevTools) \cite{devtools} adalah perangkat \textit{debugging} yang dimiliki Google Chrome. Saat menunjungi suatu website, pengguna DevTools dapat melakukan debugging pada website tersebut. DevTools dapat diakses dengan menekan "`Ctrl+Shift+I"' saat sedang membuka suatu website.  
-
 
 Fitur-fitur yang dimiliki DevTools antara lain:
 \begin{enumerate}
@@ -44,6 +43,8 @@ Fitur-fitur yang dimiliki DevTools antara lain:
 	\caption{Chrome DevTools} 
 	\label{fig:chrome_devtools}
 \end{figure}
+
+
 
 \section{Play Framework}
 \label{sec:play}
