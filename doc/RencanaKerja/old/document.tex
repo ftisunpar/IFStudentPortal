@@ -1,0 +1,125 @@
+\documentclass[a4paper,twoside]{article}
+\usepackage[T1]{fontenc}
+\usepackage[bahasa]{babel}
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage{float}
+\usepackage[cm]{fullpage}
+\pagestyle{myheadings}
+\usepackage{etoolbox}
+\usepackage{setspace} 
+\usepackage{lipsum} 
+\setlength{\headsep}{30pt}
+\usepackage[inner=2cm,outer=2.5cm,top=2.5cm,bottom=2cm]{geometry} %margin
+% \pagestyle{empty}
+
+\makeatletter
+\renewcommand{\@maketitle} {\begin{center} {\LARGE \textbf{ \textsc{\@title}} \par} \bigskip {\large \textbf{\textsc{\@author}} }\end{center} }
+\renewcommand{\thispagestyle}[1]{}
+\markright{\textbf{\textsc{AIF401 \textemdash Rencana Kerja Skripsi \textemdash Sem. Ganjil 2015/2016}}}
+
+\onehalfspacing
+ 
+\begin{document}
+
+\title{\@judultopik}
+\author{\nama \textendash \@npm} 
+
+%tulis nama dan NPM anda di sini:
+\newcommand{\nama}{Herfan Heryandi}
+\newcommand{\@npm}{2012730012}
+\newcommand{\@judultopik}{IT Student Portal: Pemanfaatan \textit{Web Scraping} untuk Kustomisasi Student Portal UNPAR} % Judul/topik anda
+\newcommand{\jumpemb}{1} % Jumlah pembimbing, 1 atau 2
+\newcommand{\tanggal}{26/08/2015}
+\maketitle
+
+\pagenumbering{arabic}
+
+\section{Deskripsi}
+Student Portal UNPAR merupakan sistem informasi berbasis \textit{web} yang digunakan oleh mahasiswa Universitas Katolik Parahyangan. Fitur-fitur yang dimiliki Student Portal UNPAR yaitu rencana studi, jadwal, nilai dan indeks prestasi, dan pembayaran uang kuliah. Namun, fitur-fitur tersebut masih belum cukup untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika. Maka, skripsi ini dibuat untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika dengan menggunakan Play Framework dan \textit{library} jsoup untuk mengimplementasikan \textit{Web Scraping}.
+
+\section{Rumusan Masalah}
+Rumusan dari masalah yang akan dibahas pada skripsi ini sebagai
+berikut:
+\begin{itemize}
+	\item Fitur-fitur apa saja yang akan dibuat untuk IT Student Portal?
+	\item Bagaimana mengimplementasikan \textit{Web Scraping} dengan \textit{library} jsoup?
+	\item Bagaimana membangun aplikasi IT Student Portal?
+\end{itemize}
+
+\section{Tujuan}
+Tujuan-tujuan yang hendak dicapai melalui penulisan skripsi ini sebagai berikut:
+\begin{itemize}
+	\item	Mengetahui fitur-fitur yang akan dibuat dalam IT Student Portal.
+	\item	Mengimplementasikan \textit{Web Scraping} menggunakan \textit{library} jsoup.
+	\item Membangun aplikasi IT Student Portal.
+\end{itemize}
+
+\section{Deskripsi Perangkat Lunak}
+Perangkat lunak akhir yang akan dibuat memiliki fitur minimal sebagai berikut:
+\begin{itemize}
+	\item Perangkat lunak dapat menampilkan daftar mata kuliah yang dibuka.
+	\item Pengguna dapat memeriksa prasyarat mata kuliah yang dibuka.
+\end{itemize}
+Fitur-fitur lainnya akan ditambahkan setelah melakukan wawancara.
+
+\section{Rencana Kerja}
+Rencana kerja untuk menyelesaikan skripsi ini:
+\begin{itemize}
+	\item Pada saat mengambil kuliah AIF401 Skripsi 1
+	\begin{enumerate}
+		\item Mempelajari \textit{library} jsoup, Play Framework, dan Chrome DevTools.
+		\item Menganalisis cara kerja Student Portal UNPAR.
+		\item Menganalisis fitur-fitur yang akan ditambahkan dalam IT Student Portal.
+	\end{enumerate}
+	\item Pada saat mengambil kuliah AIF402 Skripsi 2
+	\begin{enumerate}
+		\item Merancang dan mengimplementasikan fitur-fitur IT Student Portal. 
+		\item Melakukan pengujian dan eksperimen.
+		\item Membuat dokumentasi skripsi.
+	\end{enumerate}
+\end{itemize}
+
+\section{Isi {\it Progress Report} Skripsi 1}
+Isi dari {\it Progress Report} Skripsi 1 yang akan diselesaikan dan dilaporkan ke pembimbing paling lambat 2 minggu sebelum tenggat waktu yang ditetapkan koordinator adalah :
+\begin{enumerate}
+	\item Status pemahaman dasar teori yang mendukung aplikasi.
+	\item Status dari hasil analisis pembangunan aplikasi.
+\end{enumerate}
+Estimasi persentase penyelesaian skripsi sampai dengan {\it Progress Report} Skripsi 1 adalah : 45\%
+
+\section{Pernyataan Khusus}
+Berlatar belakang perihal kejujuran serta keterbasan jumlah dosen, saya menyatakan akan mematuhi aturan-aturan khusus berikut:
+\begin{enumerate}
+	\item Skripsi adalah hasil karya saya sendiri. Peran teman / orang lain adalah untuk membantu pemahaman, tetapi tidak dalam konten Skripsi.
+	\item Saya menetapkan batasan yang jelas antara konten saya, dengan buatan orang lain (termasuk kode yang diambil dari {\it open source project})
+	\item Pengambilan kedua hanya akan dilakukan hanya jika sudah memenuhi minimal 90\% dari target.
+\end{enumerate}
+Saya bersedia mematuhi peraturan di atas, dan bersedia menerima sanksi pembatalan pengambilan Skripsi dengan dosen pembimbing terkait jika terbukti melanggar. Peraturan ini berlaku pada Skripsi 1 dan 2.
+
+\vspace{1.5cm}
+
+\centering Bandung, \tanggal\\
+\vspace{2cm} \nama \\ 
+\vspace{1cm}
+
+Menyetujui, \\
+\ifdefstring{\jumpemb}{2}{
+\vspace{1.5cm}
+\begin{centering} Menyetujui,\\ \end{centering} \vspace{0.75cm}
+\begin{minipage}[b]{0.45\linewidth}
+% \centering Bandung, \makebox[0.5cm]{\hrulefill}/\makebox[0.5cm]{\hrulefill}/2013 \\
+\vspace{2cm} Nama: \makebox[3cm]{\hrulefill}\\ Pembimbing Utama
+\end{minipage} \hspace{0.5cm}
+\begin{minipage}[b]{0.45\linewidth}
+% \centering Bandung, \makebox[0.5cm]{\hrulefill}/\makebox[0.5cm]{\hrulefill}/2013\\
+\vspace{2cm} Nama: \makebox[3cm]{\hrulefill}\\ Pembimbing Pendamping
+\end{minipage}
+\vspace{0.5cm}
+}{
+% \centering Bandung, \makebox[0.5cm]{\hrulefill}/\makebox[0.5cm]{\hrulefill}/2013\\
+\vspace{2cm} Nama: \makebox[3cm]{\hrulefill}\\ Pembimbing Tunggal
+}
+
+\end{document}
+
