@@ -34,7 +34,7 @@ public class Scraper {
     private final String ALLJADWAL_URL = BASE_URL + "includes/jadwal.all.php";
     private final String NILAI_URL = BASE_URL + "includes/nilai.sem.php";
     private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
-    private final int KODE_FAK = 7;
+    private final String KODE_FAK_FTIS = "7";
     private String thn_akd, sem_akd;
     private Mahasiswa logged_mhs; 
 
@@ -93,7 +93,7 @@ public class Scraper {
     public ArrayList<String> requestKuliah() throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
         kuliahConn.cookies(this.login_cookies);
-        kuliahConn.data("kode_fak",KODE_FAK+"");
+        kuliahConn.data("kode_fak",KODE_FAK_FTIS);
         kuliahConn.data("thn_akd",this.thn_akd);
         kuliahConn.data("sem_akd",Semester.fromString(this.sem_akd)+"");
         kuliahConn.timeout(0);
