@@ -6,7 +6,7 @@
 
 \textit{Web scraping}\cite{Vargiu:2013} adalah teknik mendapatkan informasi dari sebuah situs \textit{web} secara otomatis. Dalam Java, \textit{web scraping} dapat diimplementasikan menggunakan \textit{library} jsoup\cite{jsoup}. API yang disediakan oleh jsoup dapat digunakan untuk mengekstrak dan memanipulasi data HTML. 
 
-Subbab-subbab berikut menjelaskan kelas-kelas dari jsoup yang terkait dengan penelitian ini.
+Subbab-subbab berikut menjelaskan kelas-kelas dari jsoup yang terkait dengan pengerjaan skripsi ini.
 
 \subsection{Jsoup}
 
@@ -69,7 +69,6 @@ Kelas ini merupakan interface yang menyediakan pengambilan data dari situs \text
 		
 		\item \textbf{Connection.Response execute()} \\
 		Berfungsi untuk mengirim \textit{request}.\\
-		\textbf{Parameter:} tidak ada
 		\textbf{Kembalian:} objek Response.	
 \end{itemize}
 
@@ -79,17 +78,77 @@ Kelas ini merepresentasikan HTTP \textit{response}. Response merupakan turunan d
 \begin{itemize}
 	\item \textbf{Map<String,String> cookies()} \\
 		\textit{Method} ini diturunkan dari kelas Base, berfungsi untuk mendapatkan seluruh \textit{cookies}. \\
-		\textbf{Parameter:} tidak ada.
-		\textbf{Kembalian:} seluruh \textit{cookies}.
+		\textbf{Kembalian:} seluruh \textit{cookies}.	
 		
 		\item \textbf{Document parse()} \\
 		Berfungsi untuk \textit{parsing} \textit{response body} menjadi dokumen. \\
-		\textbf{Parameter:} tidak ada.
 		\textbf{Kembalian:} koneksi dengan situs \textit{web}.
+		
+		\item \textbf{String body()} \\
+		Berfungsi untuk mendapatkan \textit{response body} berupa \textit{string}. \\
+		\textbf{Kembalian:} \textit{response body} dalam bentuk \textit{string}.
+\end{itemize}
+
+\subsection{Document}
+
+Kelas ini merepresentasikan dokumen HTML. Salah satu \textit{method} yang dimiliki kelas ini adalah sebagai berikut:
+\begin{itemize}
+	\item \textbf{public Elements select(String cssQuery)} \\
+		\textit{Method} ini diturunkan dari kelas Element, berfungsi untuk menemukan elemen HTML yang sesuai dengan kueri CSS. \\
+		\textbf{Parameter:} 
+		\begin{itemize}
+			\item \textbf{cssQuery} kueri CSS.
+		\end{itemize}
+		\textbf{Kembalian:} elemen-elemen HTML yang sesuai dengan kueri CSS.	
+\end{itemize}
+
+\subsection{Elements}
+
+Kelas ini merepresentasikan kumpulan elemen HTML. Beberapa \textit{method} yang dimiliki kelas ini adalah sebagai berikut:
+\begin{itemize}
+	\item \textbf{public Elements select(String query)} \\
+		\textit{Method} Berfungsi untuk menemukan elemen-elemen yang sesuai dalam \textit{list} elemen. \\
+		\textbf{Parameter:} 
+		\begin{itemize}
+			\item \textbf{query} kueri \textit{Selector}.
+		\end{itemize}
+		\textbf{Kembalian:} elemen-elemen yang sudah diseleksi sesuai kueri.	
+		
+		\item \textbf{public String val()} \\
+		\textit{Method} Berfungsi untuk mendapatkan nilai dari elemen pertama. \\
+		\textbf{Kembalian:} nilai elemen.	
+		
+		\item \textbf{public String text()} \\
+		\textit{Method} Berfungsi untuk mendapatkan kombinasi teks dari seluruh elemen yang sesuai. \\
+		\textbf{Kembalian:} seluruh teks dalam \textit{string}.	
+\end{itemize}
+
+\subsection{Element}
+
+Kelas ini merepresentasikan sebuah elemen HTML yang berisikan \textit{tag}, atribut, dan \textit{child}. Beberapa \textit{method} yang dimiliki kelas ini adalah sebagai berikut:
+\begin{itemize}
+	\item \textbf{public Element child(int index)} \\
+		\textit{Method} Berfungsi untuk mendapatkan \textit{child element} berdasarkan nomor indeks. \\
+		\textbf{Parameter:} 
+		\begin{itemize}
+			\item \textbf{index} nomor index.
+		\end{itemize}
+		\textbf{Kembalian:} \textit{child element}.	
+		
+		\item \textbf{public Element child()} \\
+		\textit{Method} Berfungsi untuk mendapatkan seluruh \textit{child element}. \\
+		\textbf{Kembalian:} seluruh \textit{child element}.	
+		
+		\item \textbf{public String className()} \\
+		\textit{Method} Berfungsi untuk mendapatkan nama kelas elemen. \\
+		\textbf{Kembalian:} nama kelas elemen.	
+		
+		\item \textbf{public String text()} \\
+		\textit{Method} Berfungsi untuk mendapatkan teks dari elemen. \\
+		\textbf{Kembalian:} teks dalam \textit{string}.	
 \end{itemize}
 
 
-Response yang diperoleh akan di-\textit{parse} ke dalam bentuk \textit{Document Object Model} (DOM) yang direpresentasikan dalam kelas Document. Proses parsing dapat dilakukan dengan pemanggilan method parse() oleh objek Response. Document yang telah diperoleh dari hasil parsing dapat diseleksi untuk mendapatkan data yang diinginkan. Dalam menyeleksi Document, jsoup memanfaatkan CSS \textit{Selector} untuk mendapatkan elemen HTML yang dipanggil oleh objek Document dengan method select(). Hasil proses seleksi akan ditampung ke dalam objek bertipe Elements yang merepresentasikan elemen-elemen pada HTML. 
 
 \section{Chrome DevTools}
 \label{sec:devtools}
@@ -98,14 +157,14 @@ Chrome Developer Tools (DevTools) \cite{devtools} adalah perangkat \textit{debug
 
 Fitur-fitur yang dimiliki DevTools antara lain:
 \begin{enumerate}
-	\item \textit{Elements}, memeriksa dan mengubah elemen HTML dan \textit{style} dari suatu \textit{website}.
-	\item \textit{Console}, mendapatkan informasi pengembangan dan berinteraksi dengan dokumen.
-	\item \textit{Sources}, melakukan \textit{debugging} pada JavaScript dengan menentukan \textit{breakpoint}.
-	\item \textit{Network}, memantau kinerja jaringan pada \textit{website} secara \textit{real-time}.
-	\item \textit{Audits}, menganalisa halaman yang dimuat.
-	\item \textit{Timeline}, menampilkan alur waktu saat memuat halaman.
-	\item \textit{Profiles}, menggambarkan waktu eksekusi dan penggunaan memori saat memuat halaman.
-	\item \textit{Resources}, memeriksa sumber daya halaman yang dapat berupa basis data, \textit{cookies}, dan \textit{cache}.
+	\item \textbf{Elements}, memeriksa dan mengubah elemen HTML dan \textit{style} dari suatu \textit{website}.
+	\item \textbf{Console}, mendapatkan informasi pengembangan dan berinteraksi dengan dokumen.
+	\item \textbf{Sources}, melakukan \textit{debugging} pada JavaScript dengan menentukan \textit{breakpoint}.
+	\item \textbf{Network}, memantau kinerja jaringan pada \textit{website} secara \textit{real-time}.
+	\item \textbf{Audits}, menganalisa halaman yang dimuat.
+	\item \textbf{Timeline}, menampilkan alur waktu saat memuat halaman.
+	\item \textbf{Profiles}, menggambarkan waktu eksekusi dan penggunaan memori saat memuat halaman.
+	\item \textbf{Resources}, memeriksa sumber daya halaman yang dapat berupa basis data, \textit{cookies}, dan \textit{cache}.
 \end{enumerate}
 
 \begin{figure}[H]
@@ -115,7 +174,9 @@ Fitur-fitur yang dimiliki DevTools antara lain:
 	\label{fig:chrome_devtools}
 \end{figure}
 
-
+Pada subbab-subbab berikut akan dijelaskan mengenai dua panel dari DevTools.
+\subsection{Elements}
+\subsection{Network}
 
 \section{Play Framework}
 \label{sec:play}
