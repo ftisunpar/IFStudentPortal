@@ -4,7 +4,7 @@
 \section{jsoup}
 \label{sec:jsoup}
 
-\textit{Web scraping}\cite{Vargiu:2013} adalah teknik mendapatkan informasi dari sebuah situs \textit{web} secara otomatis. Dalam Java, \textit{web scraping} dapat diimplementasikan menggunakan \textit{library} jsoup\cite{jsoup}. API yang disediakan oleh jsoup dapat digunakan untuk mengekstrak dan memanipulasi data HTML. 
+\textit{Web scraping}\cite{Vargiu:2013} adalah teknik mendapatkan informasi dari sebuah situs web secara otomatis. Dalam Java, \textit{web scraping} dapat diimplementasikan menggunakan \textit{library} jsoup\cite{jsoup}. API yang disediakan oleh jsoup dapat digunakan untuk mengekstrak dan memanipulasi data HTML. 
 
 Subbab-subbab berikut menjelaskan kelas-kelas dari jsoup yang terkait dengan pengerjaan skripsi ini.
 
@@ -13,17 +13,17 @@ Subbab-subbab berikut menjelaskan kelas-kelas dari jsoup yang terkait dengan pen
 Kelas ini merupakan inti untuk mengakses fungsi jsoup. Salah satu \textit{method} yang dimiliki kelas ini adalah sebagai berikut:
 \begin{itemize}
 	\item \textbf{public static Connection connect(String url)} \\
-		Berfungsi untuk membuat koneksi baru dengan suatu situs \textit{web}. \\
+		Berfungsi untuk membuat koneksi baru dengan suatu situs web. \\
 		\textbf{Parameter:}
 		\begin{itemize}
-			\item \textbf{url} URL situs \textit{web} dengan protokol HTTP atau HTTPS.
+			\item \textbf{url} URL situs web dengan protokol HTTP atau HTTPS.
 		\end{itemize}
-		\textbf{Kembalian:} koneksi dengan situs \textit{web}.
+		\textbf{Kembalian:} koneksi dengan situs web.
 \end{itemize}
 
 \subsection{Connection}
 
-Kelas ini merupakan interface yang menyediakan pengambilan data dari situs \textit{web}. Beberapa \textit{method} yang dimiliki kelas ini adalah sebagai berikut:
+Kelas ini merupakan interface yang menyediakan pengambilan data dari situs web. Beberapa \textit{method} yang dimiliki kelas ini adalah sebagai berikut:
 
 \begin{itemize}
 	\item \textbf{Connection cookies(Map<String,String> cookies)} \\
@@ -32,7 +32,7 @@ Kelas ini merupakan interface yang menyediakan pengambilan data dari situs \text
 		\begin{itemize}
 			\item \textbf{cookies} \textit{map} dari \textit{cookie}.
 		\end{itemize}
-		\textbf{Kembalian:} koneksi dengan situs \textit{web}.
+		\textbf{Kembalian:} koneksi dengan situs web.
 		
 		\item \textbf{Connection data(String key, String value)} \\
 		Berfungsi untuk menambahkan parameter data. \\
@@ -41,7 +41,7 @@ Kelas ini merupakan interface yang menyediakan pengambilan data dari situs \text
 			\item \textbf{key} kunci data.
 			\item \textbf{value} nilai data.
 		\end{itemize}
-		\textbf{Kembalian:} koneksi dengan situs \textit{web}.
+		\textbf{Kembalian:} koneksi dengan situs web.
 		
 		\item \textbf{Connection method(Connection.Method method)} \\
 		Berfungsi untuk mengatur metode pengiriman. \\
@@ -49,7 +49,7 @@ Kelas ini merupakan interface yang menyediakan pengambilan data dari situs \text
 		\begin{itemize}
 			\item \textbf{method} metode pengiriman HTTP \textit{request}.
 		\end{itemize}
-		\textbf{Kembalian:} koneksi dengan situs \textit{web}.
+		\textbf{Kembalian:} koneksi dengan situs web.
 		
 		\item \textbf{Connection timeout(int millis)} \\
 		Berfungsi untuk mengatur batas waktu \textit{request}. Batas waktu nol akan dianggap sebagai batas waktu yang tak terhingga. \\
@@ -57,7 +57,7 @@ Kelas ini merupakan interface yang menyediakan pengambilan data dari situs \text
 		\begin{itemize}
 			\item \textbf{millis} banyaknya milisekon sebelum batas waktu.
 		\end{itemize}
-		\textbf{Kembalian:} koneksi dengan situs \textit{web}.
+		\textbf{Kembalian:} koneksi dengan situs web.
 		
 		\item \textbf{Connection validateTLSCertificates(boolean value)} \\
 		Berfungsi untuk mengatur pemeriksaan sertifikat TLS untuk HTTPS \textit{request}. Nilai "`true"' untuk memeriksa dan nilai "`false"' untuk tidak memeriksa.\\
@@ -65,7 +65,7 @@ Kelas ini merupakan interface yang menyediakan pengambilan data dari situs \text
 		\begin{itemize}
 			\item \textbf{value} status pemeriksaan sertifikat TLS.
 		\end{itemize}
-		\textbf{Kembalian:} koneksi dengan situs \textit{web}.
+		\textbf{Kembalian:} koneksi dengan situs web.
 		
 		\item \textbf{Connection.Response execute()} \\
 		Berfungsi untuk mengirim \textit{request}.\\
@@ -82,7 +82,7 @@ Kelas ini merepresentasikan HTTP \textit{response}. Response merupakan turunan d
 		
 		\item \textbf{Document parse()} \\
 		Berfungsi untuk \textit{parsing} \textit{response body} menjadi dokumen. \\
-		\textbf{Kembalian:} koneksi dengan situs \textit{web}.
+		\textbf{Kembalian:} koneksi dengan situs web.
 		
 		\item \textbf{String body()} \\
 		Berfungsi untuk mendapatkan \textit{response body} berupa \textit{string}. \\
@@ -153,11 +153,11 @@ Kelas ini merepresentasikan sebuah elemen HTML yang berisikan \textit{tag}, atri
 \section{Chrome DevTools}
 \label{sec:devtools}
 
-Chrome Developer Tools (DevTools) \cite{devtools} adalah perangkat \textit{debugging} yang dimiliki Google Chrome. Saat menunjungi suatu halaman web, pengguna DevTools dapat melakukan \textit{debugging} pada halaman tersebut. DevTools dapat diakses dengan menekan "`Ctrl+Shift+I"' saat sedang membuka suatu halaman web.  
+Chrome Developer Tools (DevTools)\cite{devtools} adalah perangkat \textit{debugging} yang dimiliki Google Chrome. Saat menunjungi suatu halaman web, pengguna DevTools dapat melakukan \textit{debugging} pada halaman tersebut. DevTools dapat diakses dengan menekan "`Ctrl+Shift+I"' saat sedang membuka suatu halaman web.  
 
-Fitur-fitur yang dimiliki DevTools antara lain:
+Panel-panel yang dimiliki DevTools (Gambar \ref{fig:2_chrome_devtools}) antara lain:
 \begin{enumerate}
-	\item \textbf{Elements}, memeriksa dan mengubah elemen HTML dan \textit{style} dari suatu \textit{website}.
+	\item \textbf{Elements}, memeriksa dan mengubah elemen HTML dan \textit{style} dari suatu situs web.
 	\item \textbf{Console}, mendapatkan informasi pengembangan dan berinteraksi dengan dokumen.
 	\item \textbf{Sources}, melakukan \textit{debugging} pada JavaScript dengan menentukan \textit{breakpoint}.
 	\item \textbf{Network}, memantau kinerja jaringan pada \textit{website} secara \textit{real-time}.
@@ -171,14 +171,41 @@ Fitur-fitur yang dimiliki DevTools antara lain:
 	\centering
 	\includegraphics[scale=0.5]{Gambar/chrome-devtools}
 	\caption{Chrome DevTools} 
-	\label{fig:chrome_devtools}
+	\label{fig:2_chrome_devtools}
 \end{figure}
 
 Pada subbab-subbab berikut akan dijelaskan mengenai dua panel dari DevTools.
+
 \subsection{Elements}
-Panel Elements memungkinkan untuk memperlihatkan informasi yang terstruktur tentang halaman yang sedang dibuka. HTML akan ditampilkan dalam bentuk pohon \textit{Document Object Model} (DOM). Tampilan pohon DOM memperlihatkan struktur DOM dari halaman yang sedang dibuka. Pohon DOM adalah pohon dari node-node yang mewakili setiap elemen HTML seperti \texttt{<body>} dan \texttt{<p>}. Tampilan struktur pohon DOM menampilkan tag elemen HTML bukan jenis node DOM: misalnya, \texttt{<p>} bukan \texttt{HTMLParagraphElement}.
+Panel Elements memungkinkan untuk memperlihatkan informasi yang terstruktur tentang halaman yang sedang dibuka. HTML akan ditampilkan dalam bentuk pohon \textit{Document Object Model} (DOM). Tampilan pohon DOM memperlihatkan struktur DOM dari halaman yang sedang dibuka. Pohon DOM adalah pohon dari node-node yang mewakili setiap elemen HTML seperti \texttt{<body>} dan \texttt{<p>}. Tampilan struktur pohon DOM menampilkan tag elemen HTML bukan jenis node DOM. Misalnya, \texttt{<p>} bukan \texttt{HTMLParagraphElement}. 
+
+Pemeriksaan elemen akan memperlihatkan node DOM dan CSS dari elemen yang dipilih pada \textit{browser}. Pemeriksaan elemen dapat dilakukan dengan cara klik kanan pada elemen yang ingin diperiksa kemudian pilih "`Inspect element"'. Dengan melakukan pemeriksaan elemen, jendela panel Elements akan muncul (Gambar \ref{fig:2_elements_panel}). 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Gambar/elements-panel}
+	\caption{Panel Elements} 
+	\label{fig:2_elements_panel}
+\end{figure}
 
 \subsection{Network}
+Panel Network secara otomatis mencatat semua aktivitas jaringan saat DevTools terbuka. Pertama kali dibuka, panel Network masih kosong. Halaman web harus dimuat ulang untuk mulai mencatat aktivitas jaringan atau menunggu adanya aktivitas jaringan pada halaman web. Setiap \textit{resource} yang dicatat akan ditambahkan ke dalam sebuah baris dalam tabel Network. Sedangkan kolom dari tabel Network berisi:
+\begin{itemize}
+	\item \textbf{Name dan Path}, nama dan URL dari \textit{resource}.
+	\item \textbf{Method}, HTTP \textit{request method}.
+	\item \textbf{Status dan Text}, kode status HTTP dan pesan.
+	\item \textbf{Domain}, domain dari \textit{resource}.
+\end{itemize}
+
+%skip%
+
+Ketika nama \textit{resource} dalam tabel Network diklik, maka akan muncul tab baru. Beberapa detail dari tab baru tersebut adalah sebagai berikut:
+\begin{itemize}
+	\item \textbf{Header}\\
+	\item \textbf{Preview}\\
+	\item \textbf{Response}\\
+	\item \textbf{Cookies}\\
+\end{itemize}
 
 \section{Play Framework}
 \label{sec:play}
