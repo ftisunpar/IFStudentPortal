@@ -51,7 +51,8 @@ public class Scraper {
     }
     
     public boolean login(String npm, String pass) throws IOException{
-        this.logged_mhs = new Mahasiswa(npm);
+        init();
+    	this.logged_mhs = new Mahasiswa(npm);
         String user = this.logged_mhs.getEmailAddress();
         Connection conn = Jsoup.connect(LOGIN_URL);
         conn.data("Submit", "Login");

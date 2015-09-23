@@ -73,11 +73,14 @@ pilihan "`Seluruh Tahun Akademik"' untuk melihat seluruh nilai berdasarkan semes
 \section{Analisis Kebutuhan IT Student Portal}
 Setelah melakukan wawancara dengan beberapa mahasiswa Program Studi Teknik Informatika UNPAR, diperoleh fitur-fitur sebagai berikut:
 \begin{enumerate}
-	\item Pemeriksaan prasyarat mata kuliah
-	\item Pemeriksaan sisa sks
-	\item DPS dapat berubah sesuai
+	\item Prasyarat mata kuliah
+	\item Status perkuliahan
+	\item DPS dapat berubah sesuai riwayat nilai
+	\item Susunan jadwal terurut
 	\item Detail Kuliah
-	\item dll
+	\item Tampilan \textit{desktop} pada sistem operasi selain Windows 
+	\item Daftar email dosen
+	\item Upload CV
 \end{enumerate}
 Fitur-fitur yang akan dipilih harus memenuhi kriteria:
 \begin{itemize}
@@ -87,7 +90,12 @@ Fitur-fitur yang akan dipilih harus memenuhi kriteria:
 Berdasarkan kriteria di atas dan batas waktu pembangunan aplikasi, maka akan dipilih fitur-fitur sebagai berikut:
 \begin{enumerate}
 	\item Prasyarat mata kuliah
+	\item Susunan jadwal yang terurut 
+	\item Tampilan \textit{desktop} pada sistem operasi selain Windows
 \end{enumerate}
 
-\section{Analisis Komunikasi Student Portal untuk Fitur IT Student Portal}
+%yang mengirim request
+%HTTP, halaman, browser atau ???
 
+\section{Analisis Komunikasi Student Portal untuk Fitur IT Student Portal}
+Student Portal UNPAR diakses dengan melakukan request pada URL \url{https://studentportal.unpar.ac.id/}. Saat mengklik tombol \textit{login}, halaman akan melakukan \textit{request} ke URL \url{https://studentportal.unpar.ac.id/home/index.login.submit.php} dengan mengirim Form Data \texttt{Submit=Login}. Halaman yang diperoleh dari pengiriman tersebut adalah halaman CAS UNPAR. Di halaman CAS UNPAR, \textit{login} akan dilakukan dengan mengirimkan data \texttt{username} yang berisi email \textit{student} UNPAR, \texttt{password} berisi kata sandi dari email \textit{student} UNPAR, \texttt{lt} diperoleh dari nilai elemen \texttt{input} dengan nama "`lt"', execution diperoleh dari nilai elemen \texttt{input} dengan nama "`execution"', dan \texttt{\_eventId} berisi "`submit"'. Setelah data tersebut dikirim ke URL \url{https://cas.unpar.ac.id/login}, akan diperoleh respon halaman depan Student Portal UNPAR dan \textit{cookies}.

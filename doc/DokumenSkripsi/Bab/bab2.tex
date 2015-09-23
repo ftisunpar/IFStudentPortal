@@ -23,7 +23,7 @@ Kelas ini merupakan inti untuk mengakses fungsi jsoup. Salah satu \textit{method
 
 \subsection{Connection}
 
-Kelas ini merupakan interface yang menyediakan pengambilan data dari situs web. Beberapa \textit{method} yang dimiliki kelas ini adalah sebagai berikut:
+Kelas ini merupakan \textit{interface} yang menyediakan pengambilan data dari situs web. Beberapa \textit{method} yang dimiliki kelas ini adalah sebagai berikut:
 
 \begin{itemize}
 	\item \textbf{Connection cookies(Map<String,String> cookies)} \\
@@ -189,17 +189,24 @@ Pemeriksaan elemen akan memperlihatkan node DOM dan CSS dari elemen yang dipilih
 \end{figure}
 
 \subsection{Network}
-Panel Network secara otomatis mencatat semua aktivitas jaringan saat DevTools terbuka. Pertama kali dibuka, panel Network masih kosong. Halaman web harus dimuat ulang untuk mulai mencatat aktivitas jaringan atau menunggu adanya aktivitas jaringan pada halaman web. Setiap \textit{resource} yang dicatat akan ditambahkan ke dalam sebuah baris dalam tabel Network. Sedangkan kolom dari tabel Network berisi:
+Panel Network secara otomatis mencatat semua aktivitas jaringan saat DevTools terbuka. Pertama kali dibuka, panel Network masih kosong. Halaman web harus dimuat ulang untuk mulai mencatat aktivitas jaringan atau menunggu adanya aktivitas jaringan pada halaman web. Setiap \textit{resource} yang dicatat akan ditambahkan ke dalam sebuah baris dalam tabel Network (Gambar \ref{fig:2_network_panel}). Sedangkan kolom dari tabel Network berisi:
 \begin{itemize}
 	\item \textbf{Name dan Path}, nama dan URL dari \textit{resource}.
 	\item \textbf{Method}, HTTP \textit{request method}.
 	\item \textbf{Status dan Text}, kode status HTTP dan pesan.
 	\item \textbf{Domain}, domain dari \textit{resource}.
 \end{itemize}
-
 %skip%
 
-Ketika nama \textit{resource} dalam tabel Network diklik, maka akan muncul tab baru. Beberapa detail dari tab baru tersebut adalah sebagai berikut:
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Gambar/network-panel}
+	\caption{Panel Network} 
+	\label{fig:2_network_panel}
+\end{figure}
+
+
+Ketika nama \textit{resource} dalam tabel Network diklik, maka akan muncul tab baru (Gambar \ref{fig:2_network_detail}). Beberapa detail dari tab baru tersebut adalah sebagai berikut:
 \begin{itemize}
 	\item \textbf{Header}\\
 	Tab Header menampilkan \textit{request} URL, \textit{request method}, \textit{status code}, HTTP \textit{response} dan \textit{request header} beserta nilainya, dan \textit{query string parameter}. HTTP header dapat ditampilkan secara terformat atau dalam bentuk sumber dengan mengklik \textit{toggle button} "`view parsed"'/"`view source"'. Nilai-nilai parameter dapat ditampilkan dalam bentuk yang sudah didekodekan atau dalam bentuk URL yang dienkode dengan mengklik \textit{toggle button} "`view decoded"'/"`view URL encoded"' .
@@ -208,10 +215,37 @@ Ketika nama \textit{resource} dalam tabel Network diklik, maka akan muncul tab b
 	\item \textbf{Response}\\
 	Tab Response berisi konten resource yang tidak terformat.
 	\item \textbf{Cookies}\\
-	Tab Cookies menampilkan sebuah tabel yang terdiri dari seluruh cookie yang ditransmisikan dalam HTTP request dan response header
+	Tab Cookies menampilkan sebuah tabel yang terdiri dari seluruh \textit{cookie} yang dikirim dalam HTTP \textit{request} dan \textit{response} \textit{header}.
 \end{itemize}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{Gambar/network-name}
+	\caption{Detail \textit{Resource}} 
+	\label{fig:2_network_detail}
+\end{figure}
 
 \section{Play Framework}
 \label{sec:play}
 
-Play Framework \cite{Leroux:2014} merupakan sebuah web framework berbasis Java dan Scala. Play juga menggunakan \textit{design pattern} Model-View-Controller (MVC) di mana \textit{model} dan \textit{controller} menggunakan Java sedangkan \textit{view} menggunakan Scala dan HTML. 
+Play Framework\cite{Leroux:2014} merupakan sebuah web framework berbasis bahasa Java dan Scala. Play Framework juga menggunakan \textit{design pattern} Model-View-Controller (MVC) di mana \textit{model} dan \textit{controller} menggunakan bahasa Java sedangkan \textit{view} menggunakan bahasa Scala dan HTML. Struktur aplikasi Play Framework dapat dilihat pada gambar \ref{fig:2_play_dir}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Gambar/play-dir}
+	\caption{Struktur Aplikasi Play Framework} 
+	\label{fig:2_play_dir}
+\end{figure}
+
+Dalam \textit{directory} \texttt{conf}, terdapat file \texttt{routes}. Melalui \texttt{routes}, Rute aplikasi dapat ditentukan dengan memetakan URL ke kode aplikasi. Setiap \texttt{route} memiliki tiga bagian yaitu HTTP \textit{method}, URL \textit{path}, dan \textit{action method} (Gambar \ref{fig:2_routes_example}). HTTP \textit{method} merupakan metode pengiriman HTTP. URL \textit{path} merupakan URL untuk mengakses halaman. \textit{Action method} merupakan \textit{method} pada \textit{package} \texttt{controller}, kelas \texttt{Application} yang menangani \textit{request}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Gambar/contoh-routes}
+	\caption{Routes} 
+	\label{fig:2_routes_example}
+\end{figure}
+
+\textit{Directory} \texttt{public} berisi \textit{resource} yang dapat diakses secara langsung sebagai \textit{public asset}. Biasanya \textit{public asset} mendukung file selain aplikasi yang dibuat seperti gambar, \textit{stylesheet}, Javascript dan halaman HTML statis. \textit{Public asset} tidak dihasilkan oleh aplikasi melainkan diatur secara langsung oleh pembuat program.
+
+\textit{Directory} aplikasi berisi kode
+% 2.6
