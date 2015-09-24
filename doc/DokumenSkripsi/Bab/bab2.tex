@@ -4,9 +4,9 @@
 \section{jsoup}
 \label{sec:jsoup}
 
-\textit{Web scraping}\cite{Vargiu:2013} adalah teknik mendapatkan informasi dari sebuah situs web secara otomatis. Dalam Java, \textit{web scraping} dapat diimplementasikan menggunakan \textit{library} jsoup\cite{jsoup}. API yang disediakan oleh jsoup dapat digunakan untuk mengekstrak dan memanipulasi data HTML. 
+\textit{Web scraping} adalah teknik mendapatkan informasi dari sebuah situs web secara otomatis \cite{Vargiu:2013}. Dalam bahasa Java, \textit{web scraping} dapat diimplementasikan menggunakan \textit{library} jsoup \cite{jsoup}. API yang disediakan oleh jsoup dapat digunakan untuk mengekstrak dan memanipulasi data HTML. 
 
-Subbab-subbab berikut menjelaskan kelas-kelas dari jsoup yang terkait dengan pengerjaan skripsi ini.
+Subbab-subbab berikut menjelaskan beberapa kelas dari jsoup.
 
 \subsection{Jsoup}
 
@@ -23,16 +23,16 @@ Kelas ini merupakan inti untuk mengakses fungsi jsoup. Salah satu \textit{method
 
 \subsection{Connection}
 
-Kelas ini merupakan \textit{interface} yang menyediakan pengambilan data dari situs web. Beberapa \textit{method} yang dimiliki kelas ini adalah sebagai berikut:
+Kelas ini merupakan \texttt{interface} yang menyediakan pengambilan data dari situs web. Beberapa \textit{method} yang dimiliki kelas ini adalah sebagai berikut:
 
 \begin{itemize}
 	\item \textbf{Connection cookies(Map<String,String> cookies)} \\
 		Berfungsi untuk menambahkan \textit{cookie}. \\
 		\textbf{Parameter:}
 		\begin{itemize}
-			\item \textbf{cookies} \textit{map} dari \textit{cookie}.
+			\item \textbf{cookies} \texttt{Map} dari \textit{cookie}.
 		\end{itemize}
-		\textbf{Kembalian:} koneksi dengan situs web.
+		\textbf{Kembalian:} koneksi dengan situs web yang sudah diubah.
 		
 		\item \textbf{Connection data(String key, String value)} \\
 		Berfungsi untuk menambahkan parameter data. \\
@@ -107,15 +107,15 @@ Kelas ini merepresentasikan dokumen HTML. Salah satu \textit{method} yang dimili
 Kelas ini merepresentasikan kumpulan elemen HTML. Beberapa \textit{method} yang dimiliki kelas ini adalah sebagai berikut:
 \begin{itemize}
 	\item \textbf{public Elements select(String query)} \\
-		\textit{Method} Berfungsi untuk menemukan elemen-elemen yang sesuai dalam \textit{list} elemen. \\
+		Berfungsi untuk menemukan elemen-elemen yang sesuai dalam \textit{list} elemen. \\
 		\textbf{Parameter:} 
 		\begin{itemize}
-			\item \textbf{query} kueri \textit{Selector}.
+			\item \textbf{query} kueri CSS.
 		\end{itemize}
 		\textbf{Kembalian:} elemen-elemen yang sudah diseleksi sesuai kueri.	
 		
 		\item \textbf{public String val()} \\
-		\textit{Method} Berfungsi untuk mendapatkan nilai dari elemen pertama. \\
+		Berfungsi untuk mendapatkan nilai dari elemen pertama. \\
 		\textbf{Kembalian:} nilai elemen.	
 		
 		\item \textbf{public String text()} \\
@@ -128,7 +128,7 @@ Kelas ini merepresentasikan kumpulan elemen HTML. Beberapa \textit{method} yang 
 Kelas ini merepresentasikan sebuah elemen HTML yang berisikan \textit{tag}, atribut, dan \textit{child}. Beberapa \textit{method} yang dimiliki kelas ini adalah sebagai berikut:
 \begin{itemize}
 	\item \textbf{public Element child(int index)} \\
-		\textit{Method} Berfungsi untuk mendapatkan \textit{child element} berdasarkan nomor indeks. \\
+		Berfungsi untuk mendapatkan \textit{child element} berdasarkan nomor indeks. \\
 		\textbf{Parameter:} 
 		\begin{itemize}
 			\item \textbf{index} nomor index.
@@ -136,15 +136,15 @@ Kelas ini merepresentasikan sebuah elemen HTML yang berisikan \textit{tag}, atri
 		\textbf{Kembalian:} \textit{child element}.	
 		
 		\item \textbf{public Element child()} \\
-		\textit{Method} Berfungsi untuk mendapatkan seluruh \textit{child element}. \\
+		Berfungsi untuk mendapatkan seluruh \textit{child element}. \\
 		\textbf{Kembalian:} seluruh \textit{child element}.	
 		
 		\item \textbf{public String className()} \\
-		\textit{Method} Berfungsi untuk mendapatkan nama kelas elemen. \\
+		Berfungsi untuk mendapatkan nama kelas elemen. \\
 		\textbf{Kembalian:} nama kelas elemen.	
 		
 		\item \textbf{public String text()} \\
-		\textit{Method} Berfungsi untuk mendapatkan teks dari elemen. \\
+		Berfungsi untuk mendapatkan teks dari elemen. \\
 		\textbf{Kembalian:} teks dalam \textit{string}.	
 \end{itemize}
 
