@@ -189,7 +189,7 @@ Pemeriksaan elemen akan memperlihatkan node DOM dan CSS dari elemen yang dipilih
 \end{figure}
 
 \subsection{Network}
-Panel Network secara otomatis merekam semua aktivitas jaringan saat DevTools terbuka. Pertama kali dibuka, panel Network masih kosong. Halaman web harus dimuat ulang untuk mulai merekam aktivitas jaringan atau menunggu adanya aktivitas jaringan pada halaman web. Panel Network akan mencatat sumber daya dari aktivitas jaringan yang terekam. Setiap sumber daya akan ditambahkan ke dalam sebuah baris dalam tabel Network seperti pada gambar \ref{fig:2_network_panel}. Sedangkan kolom dari tabel Network berisi:
+Panel Network secara otomatis merekam semua aktivitas jaringan saat DevTools terbuka. Pertama kali dibuka, panel Network masih kosong. Halaman web harus dimuat ulang untuk mulai merekam aktivitas jaringan atau menunggu adanya aktivitas jaringan pada halaman web. Panel Network akan mencatat sumber daya dari aktivitas jaringan yang terekam. Setiap sumber daya akan ditambahkan ke dalam sebuah baris dalam tabel Network seperti pada gambar \ref{fig:2_network_panel} dengan rincian kolom sebagai berikut:
 \begin{itemize}
 	\item \textbf{Name dan Path}, nama dan URL dari sumber daya.
 	\item \textbf{Method}, metode permintaan HTTP.
@@ -200,7 +200,6 @@ Panel Network secara otomatis merekam semua aktivitas jaringan saat DevTools ter
 	\item \textbf{Size dan Content}, \textit{size} merupakan ukuran dari \textit{header} dan \textit{body} jawaban yang dikirim server sedangkan \textit{content} merupakan ukuran konten sumber daya.
 	\item \textbf{Timeline}, alur waktu dari seluruh aktivitas jaringan yang diminta.
 \end{itemize}
-%yg di-hide ny gmn??
 
 \begin{figure}[H]
 	\centering
@@ -210,27 +209,27 @@ Panel Network secara otomatis merekam semua aktivitas jaringan saat DevTools ter
 \end{figure}
 
 
-Ketika nama \textit{resource} dalam tabel Network diklik, maka akan muncul tab baru. Beberapa detail dari tab baru tersebut adalah sebagai berikut:
+Ketika nama sumber daya dalam tabel Network diklik, maka akan muncul tautan baru yang berisi rincian tambahan sebagai berikut:
 \begin{itemize}
 	\item \textbf{Header}\\
-	Tab Header menampilkan \textit{request} URL, \textit{request method}, \textit{status code}, HTTP \textit{response} dan \textit{request header} beserta nilainya, dan \textit{query string parameter}. HTTP header dapat ditampilkan secara terformat atau dalam bentuk sumber dengan mengklik tombol \textit{toggle} ``view parsed''/``view source''. Nilai-nilai parameter dapat ditampilkan dalam bentuk yang sudah didekodekan atau dalam bentuk URL yang dienkode dengan mengklik tombol \textit{toggle} ``view decoded''/``view URL encoded''. Sebagai contoh pada gambar \ref{fig:2_network_get} menampilkan \textit{header} pada metode permintaan GET sedangkan gambar \ref{fig:2_network_post} menampilkan \textit{header} pada metode permintaan POST.
+	Tautan Header menampilkan \textit{request} URL, \textit{request method}, \textit{status code}, HTTP \textit{response} dan \textit{request header} beserta nilainya, dan \textit{query string parameter}. HTTP header dapat ditampilkan secara terformat atau dalam bentuk sumber dengan mengklik tombol \textit{toggle} ``view parsed''/``view source''. Nilai-nilai parameter dapat ditampilkan dalam bentuk yang sudah didekodekan atau dalam bentuk URL yang dienkode dengan mengklik tombol \textit{toggle} ``view decoded''/``view URL encoded''. Sebagai contoh pada gambar \ref{fig:2_network_get} menampilkan \textit{header} pada metode permintaan GET sedangkan gambar \ref{fig:2_network_post} menampilkan \textit{header} pada metode permintaan POST.
 	
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/network-header}
-	\caption{Contoh Tab Header pada Metode Permintaan GET} 
+	\caption{Contoh Tautan Header pada Metode Permintaan GET} 
 	\label{fig:2_network_get}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/network-post}
-	\caption{Contoh Tab Header pada Metode Permintaan POST} 
+	\caption{Contoh Tautan Header pada Metode Permintaan POST} 
 	\label{fig:2_network_post}
 \end{figure}
 
 	\item \textbf{Preview}\\
-	Tab Preview menampilkan \textit{preview} sumber daya jika tersedia. Gambar \ref{fig:2_network_prev_available} menampilkan \textit{preview} yang tersedia pada sumber daya. Jika \textit{preview} tidak tersedia maka akan tampilan akan sama dengan jawaban seperti yang terlihat pada gambar \ref{fig:2_network_prev_notavailable}.
+	Tautan Preview menampilkan \textit{preview} sumber daya jika tersedia. Gambar \ref{fig:2_network_prev_available} menampilkan \textit{preview} yang tersedia pada sumber daya. Jika \textit{preview} tidak tersedia maka akan tampilan akan sama dengan jawaban seperti yang terlihat pada gambar \ref{fig:2_network_prev_notavailable}.
 	
 \begin{figure}[H]
 	\centering
@@ -247,29 +246,40 @@ Ketika nama \textit{resource} dalam tabel Network diklik, maka akan muncul tab b
 \end{figure}
 
 	\item \textbf{Response}\\
-	Tab Response berisi konten symber daya yang tidak terformat. Sebagai contoh pada gambar \ref{fig:2_network_response} menampilkan Tab Response dari sumber daya \texttt{main.php}.
+	Tautan Response berisi konten symber daya yang tidak terformat. Sebagai contoh pada gambar \ref{fig:2_network_response} menampilkan Tautan Response dari sumber daya \texttt{main.php}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/network-response}
-	\caption{Contoh Tab Response} 
+	\caption{Contoh Tautan Response} 
 	\label{fig:2_network_response}
 \end{figure}
 
 	\item \textbf{Cookies}\\
-	Tab Cookies menampilkan sebuah tabel yang terdiri dari seluruh \textit{cookie} yang ditransmisikan dalam \textit{header} permintaan dan jawaban HTTP. Contoh dari tabel \textit{cookie} dapat dilihat pada gambar \ref{fig:2_network_cookies} dengan detail kolom sebagai berikut:
+	Tautan Cookies menampilkan sebuah tabel yang terdiri dari seluruh \textit{cookie} yang ditransmisikan dalam \textit{header} permintaan dan jawaban HTTP. Contoh dari tabel \textit{cookie} dapat dilihat pada gambar \ref{fig:2_network_cookies} dengan rincian kolom sebagai berikut:
+	\begin{itemize}
+		\item \textbf{Name}, nama \textit{cookie}
+		\item \textbf{Value}, nilai \textit{cookie}
+		\item \textbf{Domain}, domain yang memiliki \textit{cookie}
+		\item \textbf{Path}, URL asal \textit{cookie}
+		\item \textbf{Expires/Max-Age}, batas akhir nilai \textit{cookie}
+		\item \textbf{Size}, ukuran \textit{cookie} dalam byte
+		\item \textbf{HTTP}, menunjukkan bahwa \textit{cookie} harus ditetapkan oleh browser dalam permintaan HTTP, dan tidak dapat diakses dengan JavaScript
+		\item \textbf{Secure}, menunjukkan bahwa \textit{cookie} harus dikirim melalui koneksi yang aman
+	\end{itemize}
 	
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/network-cookies}
-	\caption{Contoh Tabel pada Tab Cookie} 
+	\caption{Contoh Tabel pada Tautan Cookie} 
 	\label{fig:2_network_cookies}
 \end{figure}
+
 \end{itemize}
 
 \section{Play Framework}
 \label{sec:play}
 
-Play Framework\cite{Leroux:2014} merupakan sebuah web framework berbasis bahasa Java dan Scala. Play Framework juga menggunakan \textit{design pattern} Model-View-Controller (MVC) di mana \textit{model} dan \textit{controller} menggunakan bahasa Java sedangkan \textit{view} menggunakan bahasa Scala dan HTML. Struktur aplikasi Play Framework dapat dilihat pada gambar \ref{fig:2_play_dir}.
+Play Framework\cite{Leroux:2014} merupakan sebuah web \textit{framework} berbasis bahasa Java dan Scala. Play Framework juga menggunakan \textit{design pattern} Model-View-Controller (MVC) di mana \textit{model} dan \textit{controller} menggunakan bahasa Java sedangkan \textit{view} menggunakan bahasa Scala dan HTML. Struktur aplikasi Play Framework dapat dilihat pada gambar \ref{fig:2_play_dir}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/play-dir}
@@ -277,16 +287,23 @@ Play Framework\cite{Leroux:2014} merupakan sebuah web framework berbasis bahasa 
 	\label{fig:2_play_dir}
 \end{figure}
 
-Dalam \textit{directory} \texttt{conf}, terdapat file \texttt{routes}. Melalui \texttt{routes}, Rute aplikasi dapat ditentukan dengan memetakan URL ke kode aplikasi. Setiap \texttt{route} memiliki tiga bagian yaitu HTTP \textit{method}, URL \textit{path}, dan \textit{action method} (Gambar \ref{fig:2_routes_example}). HTTP \textit{method} merupakan metode pengiriman HTTP. URL \textit{path} merupakan URL untuk mengakses halaman. \textit{Action method} merupakan \textit{method} pada \textit{package} \texttt{controller}, kelas \texttt{Application} yang menangani \textit{request}.
+Dalam direktori \texttt{conf}, terdapat file \texttt{routes}. Melalui \texttt{routes}, Rute aplikasi dapat ditentukan dengan memetakan URL ke kode aplikasi. Setiap \texttt{route} memiliki tiga bagian yaitu HTTP \textit{method}, URL \textit{path}, dan \textit{action method}.  HTTP \textit{method} merupakan metode pengiriman HTTP. URL \textit{path} merupakan URL untuk mengakses halaman. \textit{Action method} merupakan \textit{method} yang menangani permintaan metode pengiriman HTTP. Sebagai contoh pada gambar \ref{fig:2_routes_example}, setiap permintaan GET pada URL \texttt{/list} akan ditangani oleh \textit{method} \texttt{list}() milik kelas \texttt{Products} yang terdapat pada \textit{package} \texttt{controllers}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/contoh-routes}
-	\caption{Routes} 
+	\caption{Contoh Komponen \texttt{Route} \cite{Leroux:2014}} 
 	\label{fig:2_routes_example}
 \end{figure}
 
-\textit{Directory} \texttt{public} berisi \textit{resource} yang dapat diakses secara langsung sebagai \textit{public asset}. Biasanya \textit{public asset} mendukung file selain aplikasi yang dibuat seperti gambar, \textit{stylesheet}, Javascript dan halaman HTML statis. \textit{Public asset} tidak dihasilkan oleh aplikasi melainkan diatur secara langsung oleh pembuat program.
+Direktori \texttt{app} berisi kode program yaitu setiap bagian pada aplikasi yang membutuhkan penghimpunan seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \textit{app} berisi seperti pada gambar
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{Gambar/app-dir}
+	\caption{Direktori \texttt{app} yang Dibangkitkan Play Framework \cite{Leroux:2014}} 
+	\label{fig:2_routes_example}
+\end{figure}
 
-\textit{Directory} aplikasi berisi kode
-% 2.6
+
+Direktori \texttt{public} berisi sumber yang dapat diakses secara langsung sebagai aset publik. Biasanya aset publik mendukung file selain aplikasi yang dibuat seperti gambar, \textit{stylesheet}, Javascript, dan halaman HTML statis. Aset publik tidak dihasilkan oleh aplikasi melainkan diatur secara langsung oleh pembuat program.
+
