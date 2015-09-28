@@ -4,7 +4,7 @@
 \section{jsoup}
 \label{sec:jsoup}
 
-\textit{Web scraping} adalah teknik mendapatkan informasi dari sebuah situs web secara otomatis \cite{Vargiu:2013}. Dalam bahasa Java, \textit{web scraping} dapat diimplementasikan menggunakan \textit{library} jsoup \cite{jsoup}. API yang disediakan oleh jsoup dapat digunakan untuk mengekstrak dan memanipulasi data HTML. 
+\textit{Web scraping} adalah teknik mendapatkan informasi dari sebuah situs web secara otomatis\cite{Vargiu:2013}. Dalam bahasa Java, \textit{web scraping} dapat diimplementasikan menggunakan \textit{library} jsoup\cite{jsoup}. API yang disediakan oleh jsoup dapat digunakan untuk mengekstrak dan memanipulasi data HTML. 
 
 Subbab-subbab berikut menjelaskan beberapa kelas dari jsoup.
 
@@ -153,7 +153,7 @@ Kelas ini merepresentasikan sebuah elemen HTML yang berisikan \textit{tag}, atri
 \section{Chrome DevTools}
 \label{sec:devtools}
 
-Chrome Developer Tools (DevTools adalah perangkat \textit{debugging} yang dimiliki Google Chrome) \cite{devtools}. Saat menunjungi suatu halaman web, pengguna DevTools dapat melakukan \textit{debugging} pada halaman tersebut. DevTools dapat diakses dengan menekan ``Ctrl+Shift+I'' saat sedang membuka suatu halaman web.  
+Chrome Developer Tools (DevTools) adalah perangkat \textit{debugging} yang dimiliki Google Chrome\cite{devtools}. Saat menunjungi suatu halaman web, pengguna DevTools dapat melakukan \textit{debugging} pada halaman tersebut. DevTools dapat diakses dengan menekan ``Ctrl+Shift+I'' saat sedang membuka suatu halaman web.  
 
 Panel-panel yang dimiliki DevTools (Gambar \ref{fig:2_chrome_devtools}) antara lain:
 \begin{enumerate}
@@ -287,21 +287,21 @@ Play Framework\cite{Leroux:2014} merupakan sebuah web \textit{framework} berbasi
 	\label{fig:2_play_dir}
 \end{figure}
 
-Dalam direktori \texttt{conf}, terdapat file \texttt{routes}. Melalui \texttt{routes}, Rute aplikasi dapat ditentukan dengan memetakan URL ke kode aplikasi. Setiap \texttt{route} memiliki tiga bagian yaitu HTTP \textit{method}, URL \textit{path}, dan \textit{action method}.  HTTP \textit{method} merupakan metode pengiriman HTTP. URL \textit{path} merupakan URL untuk mengakses halaman. \textit{Action method} merupakan \textit{method} yang menangani permintaan metode pengiriman HTTP. Sebagai contoh pada gambar \ref{fig:2_routes_example}, setiap permintaan GET pada URL \texttt{/list} akan ditangani oleh \textit{method} \texttt{list}() milik kelas \texttt{Products} yang terdapat pada \textit{package} \texttt{controllers}.
+Dalam direktori \texttt{conf}, terdapat file \texttt{routes}. Melalui \texttt{routes}, rute aplikasi dapat ditentukan dengan memetakan URL ke kode aplikasi. Setiap \texttt{route} memiliki tiga bagian yaitu HTTP \textit{method}, URL \textit{path}, dan \textit{action method}.  HTTP \textit{method} merupakan metode pengiriman HTTP. URL \textit{path} merupakan URL untuk mengakses halaman. \textit{Action method} merupakan \textit{method} yang menangani permintaan metode pengiriman HTTP. Sebagai contoh pada gambar \ref{fig:2_routes_example}, setiap permintaan GET pada URL \texttt{/list} akan ditangani oleh \textit{method} \texttt{list}() milik kelas \texttt{Products} yang terdapat pada \textit{package} \texttt{controllers}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/contoh-routes}
-	\caption{Contoh Komponen \texttt{Route} \cite{Leroux:2014}} 
+	\caption{Contoh Komponen \texttt{Route}\cite{Leroux:2014}} 
 	\label{fig:2_routes_example}
 \end{figure}
 
-Direktori \texttt{app} berisi kode program yaitu setiap bagian pada aplikasi yang membutuhkan penghimpunan seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \textit{app} berisi seperti pada gambar
+Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \texttt{app} berisi file-file seperti pada gambar \ref{fig:2_app_dir}. Dalam folder \texttt{controllers}, terdapat file \texttt{Application.java} yang berisi kode Java untuk menghasilkan halaman web. Kelas yang menangani permintaan HTTP dan mengembalikan hasil HTTP disebut kelas \textit{controller}. Dalam folder views terdapat dua file yaitu \texttt{index.scala.html} dan \texttt{main.scala.html} yang berfungsi untuk mendefinisikan halaman HTML. Setiap konten yang dihasilkan pada server dan dikirim ke klien dalam \textit{body} HTTP, seperti halaman HTML, disebut \textit{view}. Folder-folder yang terdapat dalam direktori \texttt{app} akan menjadi \textit{package} dalam kode Java.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/app-dir}
-	\caption{Direktori \texttt{app} yang Dibangkitkan Play Framework \cite{Leroux:2014}} 
-	\label{fig:2_routes_example}
+	\caption{Direktori \texttt{app} yang Dibangkitkan Play Framework\cite{Leroux:2014}} 
+	\label{fig:2_app_dir}
 \end{figure}
 
 
