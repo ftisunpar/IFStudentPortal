@@ -60,7 +60,7 @@ Kelas ini merupakan \texttt{interface} yang menyediakan pengambilan data dari si
 		\textbf{Kembalian:} koneksi yang sama tetapi sudah diubah.
 		
 		\item \textbf{Connection validateTLSCertificates(boolean value)} \\
-		Berfungsi untuk mengatur pemeriksaan sertifikat TLS untuk permintaan HTTPS. Nilai ``true'' untuk memeriksa dan nilai ``false'' untuk tidak memeriksa.\\
+		Berfungsi untuk mengatur pemeriksaan sertifikat TLS untuk permintaan HTTPS. Nilai \texttt{true} untuk memeriksa dan nilai \texttt{false} untuk tidak memeriksa.\\
 		\textbf{Parameter:}
 		\begin{itemize}
 			\item \textbf{value} status pemeriksaan sertifikat TLS.
@@ -306,4 +306,302 @@ Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan 
 
 
 Direktori \texttt{public} berisi sumber yang dapat diakses secara langsung sebagai aset publik. Biasanya aset publik mendukung file selain aplikasi yang dibuat seperti gambar, \textit{stylesheet}, Javascript, dan halaman HTML statis. Aset publik tidak dihasilkan oleh aplikasi melainkan diatur secara langsung oleh pembuat program.
+
+\section{SIA Models}
+\label{sec:siamodels}
+SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem Informasi Akademik UNPAR\cite{siamodels}. Kelas-kelas yang dimiliki SIA Models terbagi ke dalam tiga package antara lain:
+
+\begin{enumerate}
+	\item \textit{Package} \texttt{id.ac.unpar.siamodels}\\
+	\textit{Package} ini memiliki kelas-kelas sebagai berikut:
+	\begin{enumerate}
+		\item Mahasiswa\\
+		Kelas ini merepresentasikan mahasiswa. \textit{Method-method} yang dimiliki kelas ini adalah sebagai berikut:
+		\begin{itemize}
+			\item \textbf{public Mahasiswa(String npm)}\\
+			Merupakan \textit{constructor} dari kelas Mahasiswa.\\
+			\textbf{Parameter:}
+			\begin{itemize}
+				\item \textbf{npm} nomor pokok mahasiswa.
+			\end{itemize}
+			
+			\item \textbf{public String getNama()}\\
+				Berfungsi untuk mendapatkan nama mahasiswa.\\
+				\textbf{Kembalian:} nama mahasiswa.
+
+			\item \textbf{public void setNama(String nama)}\\
+				Berfungsi untuk mengubah nama mahasiswa.\\
+				\textbf{Parameter:}
+				\begin{itemize}
+					\item \textbf{nama} nama mahasiswa.
+				\end{itemize}
+		
+			\item \textbf{public String getNpm()}\\
+				Berfungsi untuk mendapatkan nomor pokok mahasiswa.\\
+				\textbf{Kembalian:} nomor pokok mahasiswa.
+			
+			\item \textbf{public String getEmailAddress()}\\
+				Berfungsi untuk mendapatkan \textit{email} mahasiswa.\\
+				\textbf{Kembalian:} \textit{email} mahasiswa.
+			
+			\item \textbf{public List<Nilai> getRiwayatNilai()}\\
+				Berfungsi untuk mendapatkan riwayat nilai mahasiswa.\\
+				\textbf{Kembalian:} riwayat nilai mahasiswa dalam List.
+				
+			\item \textbf{public double calculateIPKLulus()}\\
+				Menghitung IPK mahasiswa sampai saat ini, dengan aturan kuliah yang tidak lulus tidak dihitung dan jika pengambilan beberapa kali, diambil nilai terbaik. Sebelum memanggil \textit{method} ini, \texttt{getRiwayatNilai()} harus sudah mengandung nilai per mata kuliah.\\
+				\textbf{Kembalian:} IPK lulus.
+				
+			\item \textbf{public double calculateIPS()}\\
+				Menghitung IPS semester terakhir sampai saat ini, dengan aturan kuliah yang tidak lulus dihitung. Sebelum memanggil \textit{method} ini, \texttt{getRiwayatNilai()} harus sudah mengandung nilai per mata kuliah.\\
+				\textbf{Kembalian:}  nilai IPS sampai saat ini.
+				
+			\item \textbf{public int calculateSKSLulus()}\\
+				Menghitung jumlah SKS lulus mahasiswa saat ini. Sebelum memanggil \textit{method} ini, \texttt{getRiwayatNilai()} harus sudah mengandung nilai per mata kuliah.\\
+				\textbf{Kembalian:} SKS lulus.
+				
+			\item \textbf{public boolean hasLulusKuliah(String kodeMataKuliah)}\\
+				Memeriksa apakah mahasiswa ini sudah lulus mata kuliah tertentu. Sebelum memanggil \textit{method} ini, \texttt{getRiwayatNilai()} harus sudah mengandung nilai per mata kuliah.\\
+				\textbf{Parameter:}
+				\begin{itemize}
+					\item \textbf{kodeMataKuliah} kode mata kuliah yang ingin diperiksa kelulusannya.
+				\end{itemize}
+				\textbf{Kembalian:} \texttt{true} jika sudah pernah mengambil dan lulus, \texttt{false} jika belum.
+				
+			\item \textbf{public boolean hasTempuhKuliah(String kodeMataKuliah)}\\
+				Memeriksa apakah mahasiswa ini sudah pernah menempuh mata kuliah tertentu. Sebelum memanggil \textit{method} ini, \texttt{getRiwayatNilai()} harus sudah mengandung nilai per mata kuliah.\\
+				\textbf{Parameter:}
+				\begin{itemize}
+					\item \textbf{kodeMataKuliah} kode mata kuliah yang ingin diperiksa kelulusannya.
+				\end{itemize}
+				\textbf{Kembalian:} \texttt{true} jika sudah pernah mengambil, \texttt{false} jika belum.
+			
+			\item \textbf{public int getTahunAngkatan()}\\
+				Mendapatkan tahun angkatan mahasiswa ini berdasarkan NPM-nya.\\
+				\textbf{Kembalian:} tahun angkatan.
+			\end{itemize}
+		
+		\item Nilai\\
+		Kelas ini merepresentasikan nilai yang ada pada riwayat nilai mahasiswa. \textit{Method-method} yang dimiliki kelas ini adalah sebagai berikut:
+		\begin{itemize}
+			\item \textbf{public Nilai(int tahunAjaran, int semester, MataKuliah mataKuliah, Character kelas, Double nilaiART, Double nilaiUTS, Double nilaiUAS, Character nilaiAkhir)}\\
+				Merupakan \textit{constructor} dari kelas Nilai.\\
+				\textbf{Parameter:}
+				\begin{itemize}
+					\item \textbf{tahunAjaran} tahun ajaran kuliah ini diambil.
+					\item \textbf{semester} semester kuliah ini diambil.
+					\item \textbf{mataKuliah} mata kuliah yang diambil.
+					\item \textbf{kelas} kelas kuliah.
+					\item \textbf{nilaiART} nilai ART.
+					\item \textbf{nilaiUTS} nilai UTS.
+					\item \textbf{nilaiUAS} nilai UAS.
+					\item \textbf{nilaiAkhir} nilai akhir.
+				\end{itemize}
+				
+			\item \textbf{public MataKuliah getMataKuliah()}\\
+				Mendapatkan mata kuliah yang diambil.\\
+				\textbf{Kembalian:} mata kuliah.
+				
+			\item \textbf{public Character getKelas()}\\
+				Mendapatkan kelas kuliah.\\
+				\textbf{Kembalian:} kelas kuliah.
+				
+			\item \textbf{public Double getNilaiART()}\\
+				Mendapatkan nilai ART.\\
+				\textbf{Kembalian:} nilai ART.
+				
+			\item \textbf{public Double getNilaiUTS()}\\
+				Mendapatkan nilai UTS.\\
+				\textbf{Kembalian:} nilai UTS.
+				
+			\item \textbf{public Double getNilaiUAS()}\\
+				Mendapatkan nilai UAS.\\
+				\textbf{Kembalian:} nilai UAS.
+				
+			\item \textbf{public Double getNilaikhir()}\\
+				Mendapatkan nilai akhir dalam bentuk angka.\\
+				\textbf{Kembalian:} nilai akhir dalam huruf atau \texttt{null} jika tidak ada.
+			
+			\item \textbf{public Double getAngkaAkhir()}\\
+				Mengembalikan nilai akhir dalam bentuk huruf (A, B, C, D, ...).\\
+				\textbf{Kembalian:} nilai akhir dalam angka, atau \texttt{null} jika \texttt{getNilaiAkhir()} mengembalikan \texttt{null}.
+			
+			\item \textbf{public int getTahunAjaran()}\\
+				Mendapatkan tahun ajaran saat pengambilan mata kuliah.\\
+				\textbf{Kembalian:} tahun ajaran saat pengambilan mata kuliah.
+			
+			\item \textbf{public int getTahunSemester()}\\
+				Mendapatkan semester pengambilan mata kuliah.\\
+				\textbf{Kembalian:} semester pengambilan mata kuliah.	
+		\end{itemize}
+		
+		\item ChronologicalComparator\\
+		Pembanding antara satu nilai dengan nilai lainnya, secara kronologis waktu pengambilan. \textit{Method} yang dimiliki kelas ini adalah sebagai berikut:
+		
+		\begin{itemize}
+			\item \textbf{public int compare(Nilai o1, Nilai o2) } \\
+			Berfungsi untuk membandingkan nilai. \\
+			\textbf{Parameter:}
+			\begin{itemize}
+				\item \textbf{o1} nilai pertama yang akan dibandingkan.
+				\item \textbf{o2} nilai kedua yang akan dibandingkan.
+			\end{itemize}
+			\textbf{Kembalian:} hasil perbandingan.
+		\end{itemize}
+		
+		\item MataKuliah\\
+		Kelas ini merepresentasikan sebuah mata kuliah. \textit{Method-method} yang dimiliki kelas ini adalah sebagai berikut:
+		\begin{itemize}
+			\item \textbf{protected MataKuliah(String kode, int sks, String nama)} \\
+			Merupakan \textit{constructor} dari kelas MataKuliah.\\
+			\textbf{Parameter:}
+			\begin{itemize}
+				\item \textbf{kode} kode mata kuliah.
+				\item \textbf{sks} bobot SKS mata kuliah.
+				\item \textbf{nama} nama mata kuliah.
+			\end{itemize}
+			
+			\item \textbf{public String getKode()}\\
+				Mendapatkan kode mata kuliah.\\
+				\textbf{Kembalian:} kode mata kuliah.
+				
+			\item \textbf{public int getSKS()}\\
+				Mendapatkan bobot SKS mata kuliah.\\
+				\textbf{Kembalian:} bobot SKS mata kuliah.
+				
+			\item \textbf{public String getNama()}\\
+				Mendapatkan nama mata kuliah.\\
+				\textbf{Kembalian:} nama mata kuliah.
+				
+			\item \textbf{public static MataKuliah createMataKuliah(String kode, int sks, String nama)} \\
+			Mendapatkan atau membuat mata kuliah baru.\\
+			\textbf{Parameter:}
+			\begin{itemize}
+				\item \textbf{kode} kode mata kuliah.
+				\item \textbf{sks} bobot SKS mata kuliah.
+				\item \textbf{nama} nama mata kuliah.
+			\end{itemize}
+			\textbf{Kembalian:} objek mata kuliah.
+			
+			\item \textbf{public static MataKuliah getMataKuliah(String kode)}\\
+				Mendapatkan mata kuliah.\\
+				\textbf{Parameter:}
+				\begin{itemize}
+					\item \textbf{kode} kode mata kuliah.
+				\end{itemize}
+				\textbf{Kembalian:} mata kuliah sesuai kode.	
+		\end{itemize}
+		
+		\item Semester\\
+		Kelas ini menyimpan konstanta untuk semester-semester di UNPAR. Nilai konstanta harus sesuai urutan kronologis dalam satu tahun ajaran. \textit{Method} yang dimiliki kelas ini adalah sebagai berikut:
+		\begin{itemize}
+			\item \textbf{public static final int fromString(String text)} \\
+			Berfungsi untuk mengubah semester dari bentuk teks ke konstanta. \\
+			\textbf{Parameter:}
+			\begin{itemize}
+				\item \textbf{text} semester dalam bentuk teks (GANJIL, GENAP, PENDEK).
+			\end{itemize}
+			\textbf{Kembalian:} konstanta semester.
+		\end{itemize}
+	\end{enumerate}
+	
+	\item \textit{Package} \texttt{id.ac.unpar.siamodels.matakuliah.interfaces}\\
+	\textit{Package} ini memiliki beberapa \textit{interface} antara lain:
+	\begin{enumerate}
+		\item HasPrasyarat\\
+		Mendefinisikan kelas-kelas yang memiliki prasyarat, terkustomisasi untuk seorang mahasiswa. \textit{Method} yang dimiliki \textit{interface} ini adalah sebagai berikut: 
+		\begin{itemize}
+			\item \textbf{public boolean checkPrasyarat(Mahasiswa mahasiswa, List<String> reasonsContainer)} \\
+			Memeriksa prasyarat-prasyarat dari kuliah, spesifik untuk mahasiswa yang dituju. Jika ada pesan-pesan khusus, akan ditambahkan pada parameter reasonsContainer.\\
+			\textbf{Parameter:}
+			\begin{itemize}
+				\item \textbf{mahasiswa} prasyarat kuliah akan diperiksa spesifik pada mahasiswa ini.
+				\item \textbf{reasonsContainer} jika pesan-pesan terkait prasyarat akan ditambahkan di sini.
+			\end{itemize}
+			\textbf{Kembalian:} \texttt{true} jika seluruh prasyarat dipenuhi, \texttt{false} jika tidak.
+		\end{itemize}
+		
+		\item Pilihan\\
+		Mendefinisikan kelas-kelas yang merupakan mata kuliah pilihan.
+		\item PilihanWajib\\
+		Mendefinisikan kelas-kelas yang merupakan mata kuliah pilihan wajib.
+		\item Wajib\\
+		Mendefinisikan kelas-kelas yang merupakan mata kuliah wajib.
+	\end{enumerate}
+	
+	\item \textit{Package} \texttt{id.ac.unpar.siamodels.matakuliah}\\
+	\textit{Package} ini berisi kelas-kelas yang merepresentasikan mata kuliah yang terdapat pada Program Studi Teknik Informatika UNPAR. Rincian dari kelas-kelas pada package ini dapat dilihat pada tabel \ref{tab:2_kelas_matakuliah}.
+
+\begin{table}
+	\centering
+    \begin{tabular}{{|c|l|}}
+		\hline
+		Kelas & \textit{Implements}\\
+		\hline
+    AIF101  & - \\
+    AIF102  & HasPrasyarat, Wajib        \\
+    AIF103  & -                          \\
+    AIF105  & -                          \\
+    AIF200  & -                          \\
+    AIF201  & HasPrasyarat, Wajib        \\
+    AIF202  & HasPrasyarat, Wajib        \\
+    AIF203  & HasPrasyarat, Wajib        \\
+    AIF204  & HasPrasyarat               \\
+    AIF205  & HasPrasyarat, Wajib        \\
+    AIF206  & HasPrasyarat               \\
+    AIF208  & HasPrasyarat               \\
+    AIF301  & HasPrasyarat, Wajib        \\
+    AIF302  & HasPrasyarat, Wajib        \\
+    AIF303  & HasPrasyarat, Wajib        \\
+    AIF304  & HasPrasyarat               \\
+    AIF305  & HasPrasyarat, Wajib        \\
+    AIF306  & HasPrasyarat               \\
+    AIF311  & HasPrasyarat, PilihanWajib \\
+    AIF312  & HasPrasyarat               \\
+    AIF314  & HasPrasyarat, PilihanWajib \\
+    AIF315  & HasPrasyarat, PilihanWajib \\
+    AIF316  & HasPrasyarat               \\
+    AIF317  & HasPrasyarat, PilihanWajib \\
+    AIF318  & HasPrasyarat               \\
+    AIF332  & HasPrasyarat               \\
+    AIF336  & -                          \\
+    AIF339  & HasPrasyarat               \\
+    AIF341  & -                          \\
+    AIF342  & HasPrasyarat               \\
+    AIF344  & HasPrasyarat               \\
+    AIF360  & HasPrasyarat               \\
+    AIF362  & HasPrasyarat, Pilihan      \\
+    AIF401  & HasPrasyarat, Wajib        \\
+    AIF402  & HasPrasyarat, Wajib        \\
+    AIF403  & -                          \\
+    AIF405  & HasPrasyarat, Wajib        \\
+    AIF438  & HasPrasyarat, Pilihan      \\
+    AIF441  & -                          \\
+    AIF445  & HasPrasyarat               \\
+    AIF453  & HasPrasyarat, Pilihan      \\
+    AIF456  & -                          \\
+    AIF457  & HasPrasyarat, Pilihan      \\
+    AIF458  & HasPrasyarat               \\
+    AIF461  & HasPrasyarat               \\
+    AIF462  & -                          \\
+    AIF469  & HasPrasyarat, Pilihan      \\
+    APS402  & HasPrasyarat, Wajib        \\
+    MKU001  & -                          \\
+    MKU002  & -                          \\
+    MKU003  & -                          \\
+    MKU004  & -                          \\
+    MKU008  & -                          \\
+    MKU009  & -                          \\
+    MKU010  & -                          \\
+    MKU011  & -                          \\
+    MKU012  & -                          \\
+    \end{tabular}
+		\caption{Tabel Rincian Kelas pada \textit{Package} \texttt{id.ac.unpar.siamodels.matakuliah}}
+	\label{tab:2_kelas_matakuliah}
+\end{table}
+
+\end{enumerate}
+
+
+
 
