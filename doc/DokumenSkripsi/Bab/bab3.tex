@@ -236,12 +236,17 @@ Dalam menganalisis kebutuhan IT Student Portal, penulis melakukan wawancara deng
 \begin{enumerate}
 	\item Prasyarat mata kuliah
 	\item Status perkuliahan
-	\item DPS dapat berubah sesuai riwayat nilai
-	\item Susunan jadwal terurut
-	\item Detail Kuliah
-	\item Tampilan \textit{desktop} pada sistem operasi selain Windows 
-	\item Daftar email dosen
-	\item Upload CV
+	\item Perubahan IPS dan IPK berdasarkan riwayat nilai
+	\item Jadwal kuliah yang tersusun
+	\item Kalender akademik
+	\item Rincian pembayaran
+	\item Rincian mata kuliah
+	\item Tampilan situs web sama di sistem operasi manapun 
+	\item Kontak dosen
+	\item Pohon kurikulum
+	\item Pemberitahuan
+	\item \textit{Chatting}
+	\item Unggah \textit{Curriculum Vitae}
 \end{enumerate}
 
 Fitur-fitur yang akan dipilih untuk diimplementasikan harus memenuhi kriteria:
@@ -260,13 +265,20 @@ Berdasarkan kriteria di atas dan batas waktu pembangunan aplikasi, maka akan dip
 
 
 \section{Analisis Komunikasi Portal Akademik Mahasiswa untuk Fitur IT Student Portal}
+Untuk memenuhi fitur IT Student Portal, penulis menganalisis komunikasi Portal Akademik Mahasiswa ke dalam beberapa kasus yang akan dijelaskan pada subbab-subbab berikut.
+
 \subsection{Kasus \textit{Login}}
 Di Portal Akademik Mahasiswa, mahasiswa dapat login dengan mengakses \url{https://studentportal.unpar.ac.id/} dan mengklik tombol \texttt{input#submit.login-button} (Gambar \ref{}). Saat tombol tersebut ditekan, mahasiswa akan dibawa ke halaman \texttt{index.login.submit.php} dengan form data berisi \texttt{Submit: Login}. Lalu mahasiswa akan diarahkan ke \url{https://cas.unpar.ac.id/login?service=https\%3A\%2F\%2Fstudentportal.unpar.ac.id\%2Fhome\%2Findex.login.submit.php}. Di sana, mahasiswa akan ditampilkan halaman \textit{login} CAS UNPAR di mana mahasiswa diminta mengisi ``Username'' pada \textit{textfield} \texttt{input#username.required} dan mengisi ``Password'' pada \textit{password field} \texttt{input#password.required}. Setelah itu mahasiswa harus menekan tombol \texttt{input.btn-submit}. Data tersebut akan dikirimkan ke URL \url{} yang mengandung form data seperti pada gambar \ref{}. Jika berhasil, akan dilakukan pengalihan ke \url{https://studentportal.unpar.ac.id/main.php} dengan cookie.
 
 \subsection{Kasus Nilai}
+Di halaman utama Portal Akademik Mahasiswa, mahasiswa dapat melihat nilai dengan mengklik \texttt{a.first-line-menu} dengan teks ``Nilai dan Indeks Prestasi'' kemudian akan muncul \texttt{ul.hidden}. Dalam \textit{list} tersebut, mahasiswa harus mengklik \texttt{a} dengan teks ``Riwayat Per Semester''. Mahasiswa akan diarahkan ke \url{https://studentportal.unpar.ac.id/includes/nilai.daftar_sem.php} yang menampilkan nilai semester terkini. Untuk melihat riwayat nilai seluruh semester, mahasiswa harus mengklik \textit{combo box} \texttt{select#tahun_akd_sec} kemudian memilih \texttt{option} ``Seluruh Tahun Akademik''. Mahasiswa akan diarahkan ke \url{https://studentportal.unpar.ac.id/includes/nilai.sem.php} yang mengandung form data seperti pada gambar \ref{}.
+
 \subsection{Kasus Jadwal}
+Mahasiswa dapat melihat nilai dengan mengklik \texttt{a.first-line-menu} dengan teks ``Jadwal'' kemudian akan muncul \texttt{ul.hidden}. Dalam \textit{list} tersebut, mahasiswa harus mengklik \texttt{a} dengan teks ``Kuliah, UTS dan UAS''. Kemudian mahasiswa diarahkan ke \url{https://studentportal.unpar.ac.id/includes/jadwal.aktif.php} yang menampilkan jadwal kuliah, UTS, dan UAS semester terkini. Mahasiswa juga dapat melihat jadwal semester sebelumnya dengan mengklik \textit{combo box} \texttt{select#tahun_akd_sec} kemudian memilih \texttt{option} semester yang diinginkan.
+
+Selain jadwal kuliah, UTS, dan UAS, mahasiswa juga dapat melihat jadwal seluruh fakultas. Dengan mengklik \texttt{a} dengan teks ``Seluruh Fakultas'' pada \textit{list} \texttt{ul.hidden}, mahasiswa akan diarahkan ke \url{https://studentportal.unpar.ac.id/includes/jadwal.all.php}. Halaman tersebut menampilkan jadwal seluruh fakultas semester terkini. Mahasiswa dapat melihat jadwal semester sebelumnya dengan mengklik \textit{combo box} \texttt{select#tahun_akd_sec} kemudian memilih \texttt{option} semester yang diinginkan dan dapat melihat jadwal fakultas lainnya dengan mengklik \textit{combo box} \texttt{select#jadwal_all_ps} kemudian memilih \texttt{option} fakultas yang diinginkan.
+
 \subsection{Kasus \textit{Logout}}
+Untuk melakukan logout, mahasiswa perlu mengklik \textit{link} \texttt{a} dengan teks ``logout'' pada bagian identitas portal. Setelah mengklik \textit{link} tersebut, mahasiswa akan diarahkan ke \url{https://studentportal.unpar.ac.id/home/index.logout.php} kemudian akan ditampilkan kembali halaman depan Portal Akademik Mahasiswa seperti pada gambar \ref{}.
 
-
-%Student Portal UNPAR diakses dengan melakukan request pada URL \url{https://studentportal.unpar.ac.id/}. Saat mengklik tombol \textit{login}, halaman akan melakukan \textit{request} ke URL \url{https://studentportal.unpar.ac.id/home/index.login.submit.php} dengan mengirim Form Data \texttt{Submit=Login}. Halaman yang diperoleh dari pengiriman tersebut adalah halaman CAS UNPAR. Di halaman CAS UNPAR, \textit{login} akan dilakukan dengan mengirimkan data \texttt{username} yang berisi email \textit{student} UNPAR, \texttt{password} berisi kata sandi dari email \textit{student} UNPAR, \texttt{lt} diperoleh dari nilai elemen \texttt{input} dengan nama ``lt'', execution diperoleh dari nilai elemen \texttt{input} dengan nama ``execution'', dan \texttt{\_eventId} berisi ``submit"'. Setelah data tersebut dikirim ke URL \url{https://cas.unpar.ac.id/login}, akan diperoleh respon halaman depan Student Portal UNPAR dan \textit{cookies}.
-
+\section{Analisis Diagram \textit{Use Case}}

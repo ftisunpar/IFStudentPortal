@@ -1,0 +1,25 @@
+Rincian Pembayaran -> batas akhir pembayaran, nominal tagihan perhitungan dari mana
+
+Tampilan sama pada OS apapun -> karena m.studport tidak lengkap, pada mobile tidak user friendly terlalu kecil, tampilan maka harus bisa berjalan di os manapun ubuntu,macos,android
+
+Rekap Tampilan jadwal kuliah, Sorting jadwal berdasarkan hari, susah lihat ny harus direkap lagi, tampilan jadwal sesuai hari
+
+Kalender akademik, tidak diupdate agar mengetahui tanggal penting
+
+pohon kurikulum
+
+prasyarat, mempermudah mencari informasi di satu tempat saja
+
+Rincian matkul, mana yg wajib, pilihan, pilihan wajib, deskripsi
+
+Kontak dosen , Informasi email seluruh dosen, memepermudah untuk mengontak dosen, kirim email lsgs
+
+Pengumuman pop up dari gadget
+
+status perkuliahan, sisa sks, lulus wajib brp, lulus pilihan wajib, lulus pilihan
+
+chat, antar pengguna student portal dapat berkomunikasi secara langsung
+
+Nilai IPK tidak diupdate secara langsung, di Riwayat nilai kluar tpi di dps belum
+
+UPLOAD CV, kegiatan di univ + keaktivan di univ agar dapat digunakan oleh perusahaan untuk mencari mahasiswa dgn kriteria tertentu misalnya untuk magang dan beasiswa
