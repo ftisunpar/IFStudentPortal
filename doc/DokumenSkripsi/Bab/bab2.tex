@@ -532,69 +532,41 @@ SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem
 	\item \textit{Package} \texttt{id.ac.unpar.siamodels.matakuliah}\\
 	\textit{Package} ini berisi kelas-kelas yang merepresentasikan mata kuliah yang terdapat pada Program Studi Teknik Informatika UNPAR. Rincian dari kelas-kelas pada package ini dapat dilihat pada tabel \ref{tab:2_kelas_matakuliah}.
 
-\begin{table}
+\begin{table}[H]
 	\centering
-    \begin{tabular}{|c|l|}
+    \begin{tabular}{|p{2.5cm}|p{4.5cm}|p{2.5cm}|p{4.5cm}|}
 		\hline
-		Kelas & \textit{Implements}\\
+		Kelas & \textit{Implements} & Kelas & \textit{Implements}\\
 		\hline
-    AIF101  & - \\
-    AIF102  & HasPrasyarat, Wajib        \\
-    AIF103  & -                          \\
-    AIF105  & -                          \\
-    AIF200  & -                          \\
-    AIF201  & HasPrasyarat, Wajib        \\
-    AIF202  & HasPrasyarat, Wajib        \\
-    AIF203  & HasPrasyarat, Wajib        \\
-    AIF204  & HasPrasyarat               \\
-    AIF205  & HasPrasyarat, Wajib        \\
-    AIF206  & HasPrasyarat               \\
-    AIF208  & HasPrasyarat               \\
-    AIF301  & HasPrasyarat, Wajib        \\
-    AIF302  & HasPrasyarat, Wajib        \\
-    AIF303  & HasPrasyarat, Wajib        \\
-    AIF304  & HasPrasyarat               \\
-    AIF305  & HasPrasyarat, Wajib        \\
-    AIF306  & HasPrasyarat               \\
-    AIF311  & HasPrasyarat, PilihanWajib \\
-    AIF312  & HasPrasyarat               \\
-    AIF314  & HasPrasyarat, PilihanWajib \\
-    AIF315  & HasPrasyarat, PilihanWajib \\
-    AIF316  & HasPrasyarat               \\
-    AIF317  & HasPrasyarat, PilihanWajib \\
-    AIF318  & HasPrasyarat               \\
-    AIF332  & HasPrasyarat               \\
-    AIF336  & -                          \\
-    AIF339  & HasPrasyarat               \\
-    AIF341  & -                          \\
-    AIF342  & HasPrasyarat               \\
-    AIF344  & HasPrasyarat               \\
-    AIF360  & HasPrasyarat               \\
-    AIF362  & HasPrasyarat, Pilihan      \\
-    AIF401  & HasPrasyarat, Wajib        \\
-    AIF402  & HasPrasyarat, Wajib        \\
-    AIF403  & -                          \\
-    AIF405  & HasPrasyarat, Wajib        \\
-    AIF438  & HasPrasyarat, Pilihan      \\
-    AIF441  & -                          \\
-    AIF445  & HasPrasyarat               \\
-    AIF453  & HasPrasyarat, Pilihan      \\
-    AIF456  & -                          \\
-    AIF457  & HasPrasyarat, Pilihan      \\
-    AIF458  & HasPrasyarat               \\
-    AIF461  & HasPrasyarat               \\
-    AIF462  & -                          \\
-    AIF469  & HasPrasyarat, Pilihan      \\
-    APS402  & HasPrasyarat, Wajib        \\
-    MKU001  & -                          \\
-    MKU002  & -                          \\
-    MKU003  & -                          \\
-    MKU004  & -                          \\
-    MKU008  & -                          \\
-    MKU009  & -                          \\
-    MKU010  & -                          \\
-    MKU011  & -                          \\
-    MKU012  & -                          \\
+    AIF101  & - &    AIF342  & HasPrasyarat               \\
+    AIF102  & HasPrasyarat, Wajib        &    AIF344  & HasPrasyarat               \\
+    AIF103  & -                          &    AIF360  & HasPrasyarat               \\
+    AIF105  & -                          &    AIF362  & HasPrasyarat, Pilihan      \\
+    AIF200  & -                          &    AIF401  & HasPrasyarat, Wajib        \\
+    AIF201  & HasPrasyarat, Wajib        &    AIF402  & HasPrasyarat, Wajib        \\
+    AIF202  & HasPrasyarat, Wajib        &    AIF403  & -                          \\
+    AIF203  & HasPrasyarat, Wajib        &    AIF405  & HasPrasyarat, Wajib        \\
+    AIF204  & HasPrasyarat               &    AIF438  & HasPrasyarat, Pilihan      \\
+    AIF205  & HasPrasyarat, Wajib        &    AIF441  & -                          \\
+    AIF206  & HasPrasyarat               &    AIF445  & HasPrasyarat               \\
+    AIF208  & HasPrasyarat               &    AIF453  & HasPrasyarat, Pilihan      \\
+    AIF301  & HasPrasyarat, Wajib        &    AIF456  & -                          \\
+    AIF302  & HasPrasyarat, Wajib        &    AIF457  & HasPrasyarat, Pilihan      \\
+    AIF303  & HasPrasyarat, Wajib        &    AIF458  & HasPrasyarat               \\
+    AIF304  & HasPrasyarat               &    AIF461  & HasPrasyarat               \\
+    AIF305  & HasPrasyarat, Wajib        &    AIF462  & -                          \\
+    AIF306  & HasPrasyarat               &    AIF469  & HasPrasyarat, Pilihan      \\
+    AIF311  & HasPrasyarat, PilihanWajib &    APS402  & HasPrasyarat, Wajib        \\
+    AIF312  & HasPrasyarat               &    MKU001  & -                          \\
+    AIF314  & HasPrasyarat, PilihanWajib &    MKU002  & -                          \\
+    AIF315  & HasPrasyarat, PilihanWajib &    MKU003  & -                          \\
+    AIF316  & HasPrasyarat               &    MKU004  & -                          \\
+    AIF317  & HasPrasyarat, PilihanWajib &    MKU008  & -                          \\
+    AIF318  & HasPrasyarat               &    MKU009  & -                          \\
+    AIF332  & HasPrasyarat               &    MKU010  & -                          \\
+    AIF336  & -                          &    MKU011  & -                          \\
+    AIF339  & HasPrasyarat               &    MKU012  & -                          \\
+    AIF341  & -                          &            &           				   \\
 		\hline
     \end{tabular}
 		\caption{Tabel Rincian Kelas pada \textit{Package} \texttt{id.ac.unpar.siamodels.matakuliah}}
