@@ -6,9 +6,9 @@ Rekap Tampilan jadwal kuliah, Sorting jadwal berdasarkan hari, susah lihat ny ha
 
 Kalender akademik, tidak diupdate agar mengetahui tanggal penting
 
-pohon kurikulum
+v	pohon kurikulum
 
-prasyarat, mempermudah mencari informasi di satu tempat saja
+v	prasyarat, mempermudah mencari informasi di satu tempat saja
 
 Rincian matkul, mana yg wajib, pilihan, pilihan wajib, deskripsi
 

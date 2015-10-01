@@ -8,6 +8,7 @@
 \pagestyle{myheadings}
 \usepackage{etoolbox}
 \usepackage{setspace} 
+\usepackage{lipsum} 
 \setlength{\headsep}{30pt}
 \usepackage[inner=2cm,outer=2.5cm,top=2.5cm,bottom=2cm]{geometry} %margin
 % \pagestyle{empty}
@@ -15,7 +16,7 @@
 \makeatletter
 \renewcommand{\@maketitle} {\begin{center} {\LARGE \textbf{ \textsc{\@title}} \par} \bigskip {\large \textbf{\textsc{\@author}} }\end{center} }
 \renewcommand{\thispagestyle}[1]{}
-\markright{\textbf{\textsc{AIF401 \textemdash Rencana Kerja Skripsi \textemdash Sem. Ganjil 2013/2014}}}
+\markright{\textbf{\textsc{Laporan Perkembangan Pengerjaan Skripsi\textemdash Sem. Ganjil 2015/2016}}}
 
 \onehalfspacing
  
@@ -24,57 +25,115 @@
 \title{\@judultopik}
 \author{\nama \textendash \@npm} 
 
-%tulis nama dan NPM anda di sini:
-\newcommand{\nama}{Lionov}
-\newcommand{\@npm}{1997730020}
-\newcommand{\@judultopik}{Median Trajectory} % Judul/topik anda
+%ISILAH DATA DATA BERIKUT INI:
+\newcommand{\nama}{Herfan Heryandi}
+\newcommand{\@npm}{2012730012}
+\newcommand{\tanggal}{01/10/2015} %Tanggal pembuatan dokumen
+\newcommand{\@judultopik}{IT STUDENT PORTAL: PEMANFAATAN \textit{WEB SCRAPING} UNTUK KUSTOMISASI PORTAL AKADEMIK MAHASISWA} % Judul/topik anda
+\newcommand{\kodetopik}{PAS3904}
 \newcommand{\jumpemb}{1} % Jumlah pembimbing, 1 atau 2
-\newcommand{\tanggal}{01/01/1900}
+\newcommand{\pembA}{Pascal Alfadian}
+\newcommand{\pembB}{-}
+\newcommand{\semesterPertama}{39 - Ganjil 15/16} % semester pertama kali topik diambil, angka 1 dimulai dari sem Ganjil 96/97
+\newcommand{\lamaSkripsi}{1} % Jumlah semester untuk mengerjakan skripsi s.d. dokumen ini dibuat
+\newcommand{\kulPertama}{Skripsi 1} % Kuliah dimana topik ini diambil pertama kali
+\newcommand{\tipePR}{B} % tipe progress report :
+% A : dokumen pendukung untuk pengambilan ke-2 di Skripsi 1
+% B : dokumen untuk reviewer pada presentasi dan review Skripsi 1
+% C : dokumen pendukung untuk pengambilan ke-2 di Skripsi 2
+
+% Dokumen hasil template ini harus dicetak bolak-balik !!!!
+
 \maketitle
 
 \pagenumbering{arabic}
 
-\section{Deskripsi Skripsi}
-{\it Trajectory} adalah jalur dari sebuah obyek yang bergerak. Analisis pada data-data {\it trajectory} merupakan bagian penting dari aplikasi yang di dalamnya terdapat pemrosesan data-data benda bergerak(seperti binatang, moda transportasi, olahraga dll).
-Walaupun penelitian mengenai Ada beberapa konsep penting \ldots (to be continued)
+\section{Data Skripsi} %TIDAK PERLU MENGUBAH BAGIAN INI !!!
+Pembimbing utama/tunggal: {\bf \pembA}\\
+Pembimbing pendamping: {\bf \pembB}\\
+Kode Topik : {\bf \kodetopik}\\
+Topik ini sudah dikerjakan selama : {\bf \lamaSkripsi} semester\\
+Pengambilan pertama kali topik ini pada : Semester {\bf \semesterPertama} \\
+Pengambilan pertama kali topik ini di kuliah : {\bf \kulPertama} \\
+Tipe Laporan : {\bf \tipePR} -
+\ifdefstring{\tipePR}{A}{
+			Dokumen pendukung untuk {\BF pengambilan ke-2 di Skripsi 1} }
+		{
+		\ifdefstring{\tipePR}{B} {
+				Dokumen untuk reviewer pada presentasi dan {\bf review Skripsi 1}}
+			{	Dokumen pendukung untuk {\bf pengambilan ke-2 di Skripsi 2}}
+		}
 
-\section{Deskripsi Perangkat Lunak}
-Perangkat lunak akhir yang akan dibuat memiliki fitur minimal sebagai berikut:
+\section{Detail Perkembangan Pengerjaan Skripsi}
+Detail bagian pekerjaan skripsi sesuai dengan rencana kerja/laporan perkembangan terakhir :
+	\begin{enumerate}
+		\item Melakukan studi mengenai \textit{library} jsoup, Chrome DevTools, Play Framework, dan SIA Models.\\
+		{\bf status :} Ada sejak rencana kerja skripsi kecuali SIA Models.\\
+		{\bf hasil :} \textit{library} jsoup, Chrome DevTools, Play Framework, dan SIA Models sudah berhasil dipelajari.
+		
+		\item Melakukan wawancara kepada mahasiswa Program Studi Teknik Informatika untuk mendapatkan informasi
+penggunaan Portal Akademik Mahasiswa.\\
+		{\bf status :} Ada sejak rencana kerja skripsi.\\
+		{\bf hasil :} Wawancara sudah dilakukan kepada 18 mahasiswa Program Studi Teknik Informatika. Bukti-bukti wawancara dapat dilihat pada %\url{https://github.com/herfanheryandi/Skripsi/tree/master/draft/Interview\%20.amr}.
+
+		\item Menganalisis Portal Akademik Mahasiswa.\\
+		{\bf status :} Ada sejak rencana kerja skripsi.\\
+		{\bf hasil :} Portal Akademik Mahasiswa sudah berhasil dianalisis untuk memenuhi fitur IT Student Portal baik secara fungsi maupun komunikasi.
+
+		\item Mengimplementasikan \textit{web scraping} menggunakan \textit{library} jsoup.\\
+		{\bf status :} Ada sejak rencana kerja skripsi.\\
+		{\bf hasil :} \textit{Web scraping} sudah diimplementasikan menggunakan \textit{library} jsoup pada bagian login dan pemeriksaan prasyarat mata kuliah.
+
+		\item Membangun perangkat lunak IT Student Portal.\\
+		{\bf status :} Ada sejak rencana kerja skripsi.\\
+		{\bf hasil :} Perangkat lunak sudah dibangun menggunakan Play Framework. Fitur yang tersedia yaitu prasyarat mata kuliah.
+
+		\item Melakukan eksperimen dan pengujian\\
+		{\bf status :} Ada sejak rencana kerja skripsi.\\
+		{\bf hasil :} Pengujian baru dilakukan pada fitur prasyarat mata kuliah oleh beberapa mahasiswa. Hasil pemeriksaan prasyarat mata kuliah sudah akurat.
+
+		\item Menulis dokumen skripsi\\
+		{\bf status :} Ada sejak rencana kerja skripsi.\\
+		{\bf hasil :} Dokumen skripsi sudah ditulis hingga BAB 3.
+
+	\end{enumerate}
+
+\section{Pencapaian Rencana Kerja}
+Persentase penyelesaian skripsi sampai dengan dokumen ini dibuat dapat dilihat pada tabel berikut :
+
+\begin{center}
+  \begin{tabular}{ | c | c | c | c | l | c |}
+    \hline
+    1*  & 2*(\%) & 3*(\%) & 4*(\%) &5* &6*(\%)\\ \hline \hline
+   1   & 14  & 14  &  &  & 13\\ \hline
+    2   & 14 & 14  &   &  & 14\\ \hline
+    3   & 14  & 14  &  &  & 13\\ \hline
+    4   & 14  &   &  14 &  & 6\\ \hline
+    5   & 14  &   & 14 &  & 5\\ \hline
+    6   & 14 &   & 14  &  & 3\\ \hline
+    7   & 16  & 8  & 8 &  {\footnotesize bab 1, bab 2, dan bab 3 di S1} & 8\\ \hline
+    Total  & 100  & 50  & 50 &  & 62\\ \hline
+                          \end{tabular}										
+\end{center}
+
+Keterangan (*)\\
+1 : Bagian pengerjaan Skripsi (nomor disesuaikan dengan detail pengerjaan di bagian 5)\\
+2 : Persentase total \\
+3 : Persentase yang akan diselesaikan di Skripsi 1 \\
+4 : Persentase yang akan diselesaikan di Skripsi 2 \\
+5 : Penjelasan singkat apa yang dilakukan di S1 (Skripsi 1) atau S2 (skripsi 2)\\
+6 : Persentase yang sudah diselesaikan sampai saat ini 
+
+\section{Kendala yang dihadapi}
+%TULISKAN BAGIAN INI JIKA DOKUMEN ANDA TIPE A ATAU C
+Kendala - kendala yang dihadapi selama mengerjakan skripsi :
 \begin{itemize}
-	\item Pengguna dapat membangkitkan data-data {\it trajectory} secara otomatis sesuai dengan aturan yang telah ditentukan.
-	\item Pengguna dapat memasukkan secara manual data-data {\it trajectory}, baik melalui suatu {\it GUI (Graphical User Interface)} maupun melalui file teks. 
-	\item PL dapat menampilkan data-data yang sudah dimasukkan ataupun yang dibangkitkan secara otomatis melalui {\it GUI (Graphical User Interface)}.
-	\item Pengguna dapat memasukkan parameter-parameter yang digunakan oleh algoritma.
-	\item PL dapat menghitung dan menampilkan median trajectory secara otomatis, berdasarkan data-data trajectory yang diberikan.
-	\item PL dapat secara otomatis melakukan pembangkitan data untuk digunakan pada beberapa ratus tes kasus yang akan diuji. Untuk setiap tes kasus, PL dapat membuat laporan lengkap mengenai tes kasus tersebut.
+	\item Terlalu banyak melakukan prokratinasi
+	\item Mengalami kesulitan dalam instalasi Play Framework
+	\item Kurang familiar dengan pemrograman Play Framework
 \end{itemize}
 
-\section{Hal-Hal Yang Akan Dikerjakan}
-Hal-hal yang harus dikerjakan untuk menyelesaikan skripsi ini:
-\begin{itemize}
-	\item Merancang algoritma/langkah-langkah untuk membuat secara otomatis pembangkit data trajectory
-	\item Mempelajari algoritma untuk menghitung Frechet Distance
-	\item Mempelajari fitur-fitur bahasa Java untuk membuat Graphical User Interface
-\end{itemize}
-
-\section{Isi {\it Progress Report 1}}
-Isi dari Progress Report 2 yang akan diselesaikan paling lambat pada tanggal 4 Desember 2013 adalah :
-\begin{enumerate}
-	\item Algoritma/langkah-langkah untuk membuat pembangkit otomatis data trajectory
-	\item Hasil eksperimen penggunaan fitur-fitur Graphical User Interface pada bahasa Java
-	\item \ldots (to be continued)
-\end{enumerate}
-Estimasi penyelesaian sampai Progress Report 2 adalah : 20\%
-
-\section{Isi {\it Progress Report 2}}
-Isi dari Progress Report 2 yang akan diselesaikan paling lambat pada tanggal 4 Desember 2013 adalah :
-\begin{enumerate}
-	\item Algoritma dan contoh perhitungan untuk kasus menghitung jarak dengan Frechet Distance
-	\item \ldots (to be continued)
-\end{enumerate}
-Estimasi persentase penyelesaian sampai Progress Report 2 adalah : 45\%
-\vspace{1.5cm}
-
+\vspace{1cm}
 \centering Bandung, \tanggal\\
 \vspace{2cm} \nama \\ 
 \vspace{1cm}
@@ -85,16 +144,16 @@ Menyetujui, \\
 \begin{centering} Menyetujui,\\ \end{centering} \vspace{0.75cm}
 \begin{minipage}[b]{0.45\linewidth}
 % \centering Bandung, \makebox[0.5cm]{\hrulefill}/\makebox[0.5cm]{\hrulefill}/2013 \\
-\vspace{2cm} Nama: \makebox[3cm]{\hrulefill}\\ Pembimbing Utama
+\vspace{2cm} Nama: \pembA \\ Pembimbing Utama
 \end{minipage} \hspace{0.5cm}
 \begin{minipage}[b]{0.45\linewidth}
 % \centering Bandung, \makebox[0.5cm]{\hrulefill}/\makebox[0.5cm]{\hrulefill}/2013\\
-\vspace{2cm} Nama: \makebox[3cm]{\hrulefill}\\ Pembimbing Pendamping
+\vspace{2cm} Nama: \pemB \\ Pembimbing Pendamping
 \end{minipage}
 \vspace{0.5cm}
 }{
 % \centering Bandung, \makebox[0.5cm]{\hrulefill}/\makebox[0.5cm]{\hrulefill}/2013\\
-\vspace{2cm} Nama: \makebox[3cm]{\hrulefill}\\ Pembimbing Tunggal
+\vspace{2cm} Nama: \pembA \\ Pembimbing Tunggal
 }
 `
 \end{document}
