@@ -27,7 +27,7 @@ import org.jsoup.select.Elements;
  * @author Herfan Heryandi
  */
 public class Scraper {
-	private Map<String,String> login_cookies;
+    private Map<String,String> login_cookies;
     private final String BASE_URL = "https://studentportal.unpar.ac.id/";
     private final String LOGIN_URL = BASE_URL + "home/index.login.submit.php";
     private final String CAS_URL = "https://cas.unpar.ac.id/login";
