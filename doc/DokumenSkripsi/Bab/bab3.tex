@@ -383,7 +383,7 @@ Di Portal Akademik Mahasiswa, mahasiswa dapat \textit{login} dengan cara:
 \subsection{Kasus Nilai}
 Di halaman utama Portal Akademik Mahasiswa, mahasiswa dapat melihat riwayat nilai dengan cara:
 \begin{enumerate}
-	\item Mengklik \texttt{a.first-line-menu} dengan teks ``Nilai dan Indeks Prestasi'' 
+	\item Mengklik ``a.first-line-menu'' dengan teks ``Nilai dan Indeks Prestasi'' 
 	\item Setelah diklik, akan muncul list ``ul.hidden'', kemudian mahasiswa harus mengklik elemen ``a'' dengan teks ``Riwayat Per Semester'' (Gambar \ref{fig:3_case_nilai_menu})
 	\begin{figure}[H]
 			\centering
@@ -395,20 +395,15 @@ Di halaman utama Portal Akademik Mahasiswa, mahasiswa dapat melihat riwayat nila
 \begin{itemize}
 	\item PHPSESSID: diambil dari \textit{cookie} yang di-\textit{set} saat pengalihan ke halaman utama
 \end{itemize}
-		\item Halaman ``Riwayat Per Semester'' menampilkan nilai semester terkini (Gambar \ref{fig:3_case_nilai_terkini}). Jika ingin melihat nilai semester sebelumnya, mahasiswa dapat mengklik \textit{combo box} ``select\#tahun\_akd\_sec'' seperti yang ditampilkan pada gambar \ref{fig:3_case_nilai_terkini} kemudian memilih ``option'' yang diinginkan atau ``Seluruh Tahun Akademik'' untuk melihat nilai seluruh semester(Gambar \ref{fig:3_case_nilai_pilih}).
-		\begin{figure}[H]
-			\centering
-			\includegraphics[scale=0.5]{Gambar/case-nilai-terkini}
-			\caption{Daftar Nilai Semester Terkini} 
-			\label{fig:3_case_nilai_terkini}
-		\end{figure}
+		\item Halaman ``Riwayat Per Semester'' menampilkan nilai semester terkini. Jika ingin melihat nilai semester sebelumnya, mahasiswa dapat mengklik \textit{combo box} ``select\#tahun\_akd\_sec'' kemudian memilih ``option'' yang diinginkan atau ``Seluruh Tahun Akademik'' untuk melihat nilai seluruh semester (Gambar \ref{fig:3_case_nilai_pilih}).
 		
 		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.5]{Gambar/case-nilai-pilih}
-			\caption{Pilihan Daftar Nilai Semester} 
+			\caption{\textit{Combo Box} ``select\#tahun\_akd\_sec'' pada Halaman Riwayat Per Semester} 
 			\label{fig:3_case_nilai_pilih}
 		\end{figure}
+		
 		\item  Setelah memilih ``option'', mahasiswa akan dibawa ke \url{https://studentportal.unpar.ac.id/includes/nilai.sem.php} (Gambar \ref{fig:3_case_nilai}) dengan \textit{cookie} PHPSESSID dan mengandung \textit{form data}:
 		\begin{itemize}
 			\item npm: diperoleh dari NPM mahasiswa
@@ -419,7 +414,7 @@ Di halaman utama Portal Akademik Mahasiswa, mahasiswa dapat melihat riwayat nila
 		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.5]{Gambar/case-nilai}
-			\caption{Daftar Nilai Semester Seluruh Tahun Akademik} 
+			\caption{\textit{Form Data} pada pengiriman Nilai Seluruh Tahun Akademik} 
 			\label{fig:3_case_nilai}
 		\end{figure}
 \end{enumerate}
@@ -427,7 +422,7 @@ Di halaman utama Portal Akademik Mahasiswa, mahasiswa dapat melihat riwayat nila
 \subsection{Kasus Jadwal}
 Di halaman utama Portal Akademik Mahasiswa, mahasiswa dapat melihat jadwal dengan cara:
 \begin{enumerate}
-	\item Mengklik \texttt{a.first-line-menu} dengan teks ``Jadwal'' 
+	\item Mengklik ``a.first-line-menu'' dengan teks ``Jadwal'' 
 	\item Setelah diklik, akan muncul list ``ul.hidden'', kemudian mahasiswa harus mengklik elemen ``a'' dengan teks ``Kuliah, UTS dan UAS''(Gambar \ref{fig:3_case_jadwal_menu})
 	\begin{figure}[H]
 			\centering
@@ -439,49 +434,65 @@ Di halaman utama Portal Akademik Mahasiswa, mahasiswa dapat melihat jadwal denga
 \begin{itemize}
 	\item PHPSESSID: diambil dari \textit{cookie} yang di-\textit{set} saat pengalihan ke halaman utama
 \end{itemize}
-\item Halaman ``Kuliah, UTS dan UAS'' menampilkan jadwal kuliah, UTS, dan UAS semester terkini. Jika ingin melihat jadwal semester sebelumnya, mahasiswa dapat mengklik \textit{combo box} ``select\#tahun\_akd\_sec'' (Gambar \ref{fig:3_case_jadwal_terkini}) kemudian memilih ``option'' yang diinginkan (Gambar \ref{fig:3_case_nilai_pilih}).
-		\begin{figure}[H]
-			\centering
-			\includegraphics[scale=0.5]{Gambar/case-jadwal-terkini}
-			\caption{Jadwal Semester Terkini} 
-			\label{fig:3_case_jadwal_terkini}
-		\end{figure}
+\item Halaman ``Kuliah, UTS dan UAS'' menampilkan jadwal kuliah, UTS, dan UAS semester terkini. Jika ingin melihat jadwal semester sebelumnya, mahasiswa dapat mengklik \textit{combo box} ``select\#tahun\_akd\_sec'' kemudian memilih ``option'' yang diinginkan (Gambar \ref{fig:3_case_jadwal_pilih}).
 		
 		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.5]{Gambar/case-jadwal-pilih}
-			\caption{Daftar Nilai Semester Seluruh Tahun Akademik} 
+			\caption{Combo Box ``select\#tahun\_akd\_sec'' pada Halaman Jadwal Kuliah, UTS, dan UAS} 
 			\label{fig:3_case_jadwal_pilih}
 		\end{figure}
 		
-		\item  Setelah memilih ``option'', mahasiswa akan dibawa ke \url{https://studentportal.unpar.ac.id/includes/nilai.sem.php} (Gambar \ref{fig:3_case_nilai}) dengan \textit{cookie} PHPSESSID dan mengandung \textit{form data}:
+		\item  Setelah memilih ``option'', mahasiswa akan ditampilkan jawaban dari \url{https://studentportal.unpar.ac.id/includes/jadwal.kuliah.php} dan \url{https://studentportal.unpar.ac.id/includes/jadwal.ujian.php} (Gambar \ref{fig:3_case_jadwal}) dengan \textit{cookie} PHPSESSID dan mengandung \textit{form data}:
 		\begin{itemize}
 			\item npm: diperoleh dari NPM mahasiswa
-			\item thn\_akd: berisi tahun akademik semester atau berisi ``ALL'' jika memilih ``Seluruh Tahun Akademik''
-			\item sem\_akd: berisi semester akademik dalam angka (1: ganjil, 2: genap, 4: pendek) atau tidak didefinisikan jika memilih ``Seluruh Tahun Akademik''
+			\item thn\_akd: berisi tahun akademik semester 
+			\item sem\_akd: berisi semester akademik dalam angka (1: ganjil, 2: genap, 4: pendek) 
 		\end{itemize}
 		
 		\begin{figure}[H]
 			\centering
-			\includegraphics[scale=0.5]{Gambar/case-nilai}
-			\caption{Daftar Nilai Semester Seluruh Tahun Akademik} 
-			\label{fig:3_case_nilai}
+			\includegraphics[scale=0.5]{Gambar/case-jadwal}
+			\caption{\textit{Form Data} pada pengiriman Jadwal Kuliah dan Ujian} 
+			\label{fig:3_case_jadwal}
+		\end{figure}
+		
 \end{enumerate}
 
 Mahasiswa juga dapat melihat jadwal seluruh fakultas dengan cara:
 \begin{enumerate}
-	\item Mengklik \texttt{a} dengan teks ``Seluruh Fakultas'' pada \textit{list} \texttt{ul.hidden}
-	\item Setelah diklik, mahasiswa akan diarahkan ke \url{https://studentportal.unpar.ac.id/includes/jadwal.all.php} (Gambar \ref{fig:3_case_jadwal_menu})
+	\item Mengklik ``a.second-line-menu'' dengan teks ``Seluruh Fakultas'' pada \textit{list} ``ul.hidden'' (Gambar \ref{fig:3_case_jadwal_seluruh})
 	\begin{figure}[H]
 			\centering
-			\includegraphics[scale=0.5]{Gambar/case-jadwal-menu}
-			\caption{Elemen ``a'' dengan teks ``Kuliah, UTS dan UAS'' pada Menu Jadwal} 
-			\label{fig:3_case_jadwal_menu}
+			\includegraphics[scale=0.5]{Gambar/case-jadwal-seluruh}
+			\caption{Elemen ``a'' dengan teks ``Seluruh Fakultas'' pada Menu Jadwal} 
+			\label{fig:3_case_jadwal_seluruh}
 		\end{figure}
-		\item Halaman tersebut menampilkan jadwal seluruh fakultas semester terkini
+	\item Setelah diklik, mahasiswa akan diarahkan ke \url{https://studentportal.unpar.ac.id/includes/jadwal.all.php} dengan \textit{cookie} sebagai berikut:
+\begin{itemize}
+	\item PHPSESSID: diambil dari \textit{cookie} yang di-\textit{set} saat pengalihan ke halaman utama
+\end{itemize}
+		\item Halaman ``Seluruh Fakultas'' menampilkan seluruh jadwal semester terkini pada fakultas tempat mahasiswa menempuh studi. Jika ingin melihat jadwal semester sebelumnya, mahasiswa dapat mengklik \textit{combo box} ``select\#tahun\_akd\_sec'' kemudian memilih ``option'' yang diinginkan. Jika ingin melihat jadwal fakultas lain, mahasiswa dapat mengklik \textit{combo box} ``select\#jadwal\_all\_ps'' kemudian memilih ``option'' fakultas yang diinginkan (Gambar \ref{fig:3_case_jadwal_pilihfak}).
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.5]{Gambar/case-jadwal-pilihfak}
+			\caption{Combo Box ``select\#jadwal\_all\_ps'' pada Halaman Jadwal Seluruh Fakultas} 
+			\label{fig:3_case_jadwal_pilihfak}
+		\end{figure}
+		\item  Setelah memilih ``option'', mahasiswa akan dibawa ke \url{https://studentportal.unpar.ac.id/includes/jadwal.all.content.php}(Gambar \ref{fig:3_case_jadwal_fakultas}) dengan \textit{cookie} PHPSESSID dan mengandung \textit{query string parameter}:
+		\begin{itemize}
+			\item kode\_fak: berisi kode fakultas 
+			\item thn\_akd: berisi tahun akademik semester 
+			\item sem\_akd: berisi semester akademik dalam angka (1: ganjil, 2: genap, 4: pendek) 
+		\end{itemize}
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.5]{Gambar/case-jadwal-fakultas}
+			\caption{\textit{Form Data} pada pengiriman Jadwal Seluruh Fakultas} 
+			\label{fig:3_case_jadwal_fakultas}
+		\end{figure}
 \end{enumerate}
-
-Selain jadwal kuliah, UTS, dan UAS, mahasiswa juga dapat melihat jadwal seluruh fakultas. Dengan mengklik \texttt{a} dengan teks ``Seluruh Fakultas'' pada \textit{list} \texttt{ul.hidden}, mahasiswa akan diarahkan ke \url{https://studentportal.unpar.ac.id/includes/jadwal.all.php}. Halaman tersebut menampilkan jadwal seluruh fakultas semester terkini. Mahasiswa dapat melihat jadwal semester sebelumnya dengan mengklik \textit{combo box} \texttt{select\#tahun\_akd\_sec} kemudian memilih \texttt{option} semester yang diinginkan dan dapat melihat jadwal fakultas lainnya dengan mengklik \textit{combo box} \texttt{select\#jadwal\_all\_ps} kemudian memilih \texttt{option} fakultas yang diinginkan.
 
 \subsection{Kasus \textit{Logout}}
 Mahasiswa dapat melakukan \textit{logout} dengan cara:
@@ -497,18 +508,18 @@ Mahasiswa dapat melakukan \textit{logout} dengan cara:
 		\begin{itemize}
 			\item PHPSESSID: diambil dari \textit{cookie} yang di-\textit{set} saat pengalihan ke halaman utama
 		\end{itemize} 
-	\item Kemudian dilakukan pengalihan ke \url{https://cas.unpar.ac.id/logout?service=https\%3A\%2F\%2Fstudentportal.unpar.ac.id} (Gambar \ref{fig:3_case_logout_expire}) lalu mengadaluarsakan \textit{cookie} CASTGC dan CASPRIVACY yang sebelumnya di-\textit{set} saat pengalihan ke halaman utama
+	\item Kemudian dilakukan pengalihan ke \url{https://cas.unpar.ac.id/logout?service=https\%3A\%2F\%2Fstudentportal.unpar.ac.id} lalu mengadaluarsakan \textit{cookie} CASTGC dan CASPRIVACY yang sebelumnya di-\textit{set} saat pengalihan ke halaman utama (Gambar \ref{fig:3_case_logout_expires}) 
 			\begin{figure}[H]
 				\centering
-				\includegraphics[scale=0.5]{Gambar/case-logout-expire}
-				\caption{} 
-				\label{fig:3_case_logout_expire}
+				\includegraphics[scale=0.5]{Gambar/case-logout-expires}
+				\caption{Pengadaluarsaan Cookie CASTGC dan CASPRIVACY} 
+				\label{fig:3_case_logout_expires}
 			\end{figure}
-	kembali ke \url{https://studentportal.unpar.ac.id/} (Gambar \ref{fig:3_case_logout})
+		\item Pengalihan diakhiri di \url{https://studentportal.unpar.ac.id/} yaitu halaman depan Portal Akademik Mahasiswa (Gambar \ref{fig:3_case_logout}) 
 		\begin{figure}[H]
 				\centering
 				\includegraphics[scale=0.5]{Gambar/case-logout}
-				\caption{} 
+				\caption{Pengalihan ke Halaman Depan Portal Akademik Mahasiswa} 
 				\label{fig:3_case_logout}
 			\end{figure}
 \end{enumerate}
