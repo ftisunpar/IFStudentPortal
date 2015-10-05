@@ -231,6 +231,7 @@ pilihan ``Seluruh Tahun Akademik'' untuk melihat seluruh nilai berdasarkan semes
 \end{enumerate}
 
 \section{Analisis Kebutuhan IT Student Portal}
+\label{sec:kebutuhan}
 Dalam menganalisis kebutuhan IT Student Portal, penulis melakukan wawancara dengan 18 mahasiswa Program Studi Teknik Informatika UNPAR. Kriteria dari 18 mahasiswa tersebut yaitu sembilan mahasiswa angkatan 2012, delapan mahasiswa angkatan 2013, dan satu mahasiswa angkatan 2014. Setelah melakukan wawancara, penulis memperoleh fitur-fitur yang diinginkan mahasiswa antara lain:
 \begin{enumerate}
 	\item Prasyarat mata kuliah\\
@@ -298,7 +299,7 @@ Hasil analisis fitur-fitur yang diinginkan berdasarkan kriteria di atas dan bata
 		\hline
 		Prasyarat mata kuliah                             & Dibuat       & Prasyarat mata kuliah Program Studi Teknik Informatika sudah tersedia di SIA Models                   \\
 		\hline
-    Status perkuliahan                                & Dibuat       & Data dapat diambil dari Portal Akademik Mahasiswa dan didukung oleh SIA Models                        \\
+    Ringkasan data akademik                               & Dibuat       & Data dapat diambil dari Portal Akademik Mahasiswa dan didukung oleh SIA Models                        \\
 		\hline
     Perubahan IPS dan IPK berdasarkan riwayat nilai   & Dibuat       &  IPS dan IPK dapat dihitung melalui riwayat nilai yang dapat diperoleh dari Portal Akademik Mahasiswa \\
 		\hline
@@ -525,17 +526,88 @@ Mahasiswa dapat melakukan \textit{logout} dengan cara:
 \end{enumerate}
 
 \section{Analisis \textit{Use Case}}
-Analisis Use Case IT Student Portal dapat dilihat pada gambar \ref{fig:3_usecase_diagram}. IT Student Portal hanya bisa diakses oleh mahasiswa. Mahasiswa harus melakukan \textit{login} untuk dapat menggunakan IT Student Portal. Setelah melakukan \textit{login}, mahasiswa dapat melakukan:
-\begin{itemize}
-	\item \textbf{Lihat Prasyarat Mata Kuliah}, mahasiswa dapat memeriksa mata kuliah yang dibuka pada semester terkini apakah memenuhi prasyarat atau tidak. 
-	\item \textbf{Lihat Jadwal Kuliah, UTS, dan UAS}, mahasiswa dapat melihat jadwal kuliah, UTS, dan UAS yang sudah tersusun berdasarkan hari.
-	\item \textbf{Lihat Status Perkuliahan}, mahasiswa dapat melihat data mengenai mata kuliah apa saja yang sudah lulus beserta jenis mata kuliahnya(wajib, pilihan, atau pilihan wajib), sisa SKS untuk mencapai kelulusan, mata kuliah wajib yang belum ditempuh, dan IPK.
-	\item \textbf{Logout}, mahasiswa \textit{logout} dari halaman IT Student Portal.
-\end{itemize}
+\subsection{Diagram \textit{Use Case}}
+Diagram \textit{use case} pada perangkat lunak yang akan dibangun hanya mengandung satu aktor, yaitu mahasiswa. Diagram \textit{use case} dapat dilihat pada gambar \ref{fig:3_usecase_diagram}. 
 		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.5]{Gambar/usecase-diagram}
-			\caption{Diagram \textit{Use Case }IT Student Portal} 
+			\caption{Diagram \textit{Use Case} IT Student Portal} 
 			\label{fig:3_usecase_diagram}
 		\end{figure}
+Berdasarkan hasil analisis pada subbab \ref{sec:kebutuhan}, dari lima fitur yang akan dibuat, dibentuk tiga \textit{use case} antara lain:
+\begin{itemize}
+	\item \textbf{Memeriksa Prasyarat Mata Kuliah}, mahasiswa dapat memeriksa mata kuliah yang dibuka pada semester terkini apakah memenuhi prasyarat atau tidak. 
+	\item \textbf{Melihat Jadwal Kuliah, UTS, dan UAS}, mahasiswa dapat melihat jadwal kuliah, UTS, dan UAS yang sudah tersusun dan terurut berdasarkan hari.
+	\item \textbf{Melihat Ringkasan Data Akademik}, mahasiswa dapat melihat data mengenai mata kuliah apa saja yang sudah lulus beserta jenis mata kuliahnya(wajib, pilihan, atau pilihan wajib), sisa SKS untuk mencapai kelulusan, dan mata kuliah wajib yang belum ditempuh. Mahasiswa juga dapat melihat IPS dan IPK yang berubah berdasarkan riwayat nilai.
+\end{itemize}
+
+\subsection{Skenario \textit{Use Case}}
+
+\begin{enumerate}
+	\item \textbf{Memeriksa Prasyarat Mata Kuliah}
+		\begin{itemize}
+			\item Nama: Memeriksa prasyarat mata kuliah
+			\item Aktor: Mahasiswa
+			\item Deskripsi: Memeriksa prasyarat mata kuliah yang dibuka pada semester terkini
+			\item Kondisi awal: Mahasiswa telah \textit{login}
+			\item Kondisi akhir: Halaman prasyarat mata kuliah ditampilkan dan berisi prasyarat mata kuliah yang dibuka pada semester terkini
+			\item Skenario utama: \\ \\
+				\begin{tabular}{|p{0.5cm} |p{6cm}| p{6cm}|}
+						\hline
+							No 	& Aksi Aktor & Reaksi Sistem \\ \hline
+							1 	& Mahasiswa memilih menu prasyarat mata kuliah. 	&	Sistem mendapatkan data mahasiswa kemudian menampilkan halaman prasyarat mata kuliah \\ \hline 
+						\end{tabular} 
+			\item Eksepsi: -
+		\end{itemize}
+		
+	\item \textbf{Melihat Jadwal Kuliah, UTS, dan UAS}
+		\begin{itemize}
+			\item Nama: Melihat jadwal kuliah, UTS, dan UAS
+			\item Aktor: Mahasiswa
+			\item Deskripsi: Melihat jadwal kuliah, UTS, dan UAS yang sudah tersusun dan terurut berdasarkan hari
+			\item Kondisi awal: Mahasiswa telah \textit{login}
+			\item Kondisi akhir: Halaman jadwal ditampilkan dan berisi jadwal kuliah, UTS, dan UAS yang sudah tersusun dan terurut berdasarkan hari te
+			\item Skenario utama: \\ \\
+				\begin{tabular}{|p{0.5cm} |p{6cm}| p{6cm}|}
+						\hline
+							No 	& Aksi Aktor & Reaksi Sistem \\ \hline
+							1 	& Mahasiswa memilih menu jadwal. 	&	Sistem menyusun dan mengurutkan jadwal mahasiswa berdasarkan hari kemudian menampilkan halaman jadwal \\ \hline 
+						\end{tabular} 
+			\item Eksepsi: Mahasiswa sedang cuti studi
+		\end{itemize}
+		
+	\item \textbf{Melihat Ringkasan Data Akademik}
+		\begin{itemize}
+			\item Nama: Melihat ringkasan data akademik
+			\item Aktor: Mahasiswa
+			\item Deskripsi: melihat data mengenai mata kuliah apa saja yang sudah lulus beserta jenis mata kuliahnya(wajib, pilihan, atau pilihan wajib), sisa SKS untuk mencapai kelulusan, dan mata kuliah wajib yang belum ditempuh. Mahasiswa juga dapat melihat IPS dan IPK yang berubah berdasarkan riwayat nilai
+			\item Kondisi awal: Mahasiswa telah \textit{login}
+			\item Kondisi akhir: Halaman jadwal ditampilkan dan berisi jadwal ringkasan data akademik
+			\item Skenario utama: \\ \\
+			\begin{tabular}{|p{0.5cm} |p{6cm}| p{6cm}|}
+						\hline
+							No 	& Aksi Aktor & Reaksi Sistem \\ \hline
+							1 	& Mahasiswa memilih menu ringkasan data akademik. 	&	Sistem meringkas data kademik mahasiswa kemudian menampilkan halaman ringkasan data akademik \\ \hline 
+						\end{tabular} 
+			\item Eksepsi: -
+		\end{itemize}
+\end{enumerate}
+
+\section{Analisis Kelas}
+Diagram kelas analisis untuk IT Student Portal ditunjukkan pada gambar \ref{fig:3_class_diagram}.
+	\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.5]{Gambar/class-diagram}
+			\caption{Diagram Kelas Analisis IT Student Portal} 
+			\label{fig:3_class_diagram}
+		\end{figure}
+Kelas-kelas dari package SIA Models telah dibahas pada subbab \ref{sec:siamodels}. Sedangkan enjelasan dari kelas-kelas lainnya sebagai berikut:
+\begin{enumerate}
+	\item Controller\\
+	Kelas ini merupakan kelas yang sudah disediakan oleh Play Framework. Turunan dari kelas ini akan berperan sebagai \textit{controller}.
+	\item Application\\
+	Kelas ini merupakan controller pada IT Student Portal yang berfungsi untuk menghubungkan \textit{model} dengan \textit{view}. 
+	\item Scraper\\
+	Kelas ini merupakan kelas yang mengimplementasikan \textit{web scraping} menggunakan \textit{library} jsoup. Kelas ini digunakan untuk memperoleh data dari Portal Akademik Mahasiswa kemudian menghubungkannya ke dalam SIA Models. Data-data yang sudah dihubungkan dengan SIA Models akan ditampilkan ke \textit{view} melalui kelas \texttt{Application}.
+\end{enumerate}
 		

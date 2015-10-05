@@ -296,7 +296,8 @@ Dalam direktori \texttt{conf}, terdapat file \texttt{routes}. Melalui \texttt{ro
 	\label{fig:2_routes_example}
 \end{figure}
 
-Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \texttt{app} berisi file-file seperti pada gambar \ref{fig:2_app_dir}. Dalam folder \texttt{controllers}, terdapat file \texttt{Application.java} yang berisi kode Java untuk menghasilkan halaman web. Kelas yang menangani permintaan HTTP dan mengembalikan hasil HTTP disebut kelas \textit{controller}. Dalam folder views terdapat dua file yaitu \texttt{index.scala.html} dan \texttt{main.scala.html} yang berfungsi untuk mendefinisikan halaman HTML. Setiap konten yang dihasilkan pada server dan dikirim ke klien dalam \textit{body} HTTP, seperti halaman HTML, disebut \textit{view}. Folder-folder yang terdapat dalam direktori \texttt{app} akan menjadi \textit{package} dalam kode Java.
+Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \texttt{app} berisi file-file seperti pada gambar \ref{fig:2_app_dir}. Dalam folder \texttt{controllers}, terdapat file \texttt{Application.java} yang berisi kode Java untuk menghasilkan halaman web. Kelas yang menangani permintaan HTTP dan mengembalikan hasil HTTP disebut kelas \textit{controller}. Kelas \textit{controller} merupakan kelas yang memiliki \textit{action method}. Setiap \textit{action method} memiliki tipe kembalian \textit{Result} yang merepresentasikan \textit{view}. \textit{Action method} kan berhubungan dengan \textit{view} setelah didefinisikan di \texttt{routes}. \textit{Controller} dapat mengirimkan \textit{parameter} pada \textit{view} melalui kembalian dari \textit{action method}. Sebagai contoh pada gambar \ref{fig:2_exam_ctrl}, \textit{method} \texttt{home()} mengembalikan \textit{view} \texttt{home} yang berada pada \textit{package} \texttt{views} dengan mengirim \textit{parameter} ``nama''.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/app-dir}
@@ -304,8 +305,43 @@ Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan 
 	\label{fig:2_app_dir}
 \end{figure}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.75]{Gambar/example-controller}
+	\caption{Contoh \textit{Method} pada Kelas \textit{Controller}} 
+	\label{fig:2_exam_ctrl}
+\end{figure}
+
+Dalam folder \texttt{views} terdapat dua file yaitu \texttt{index.scala.html} dan \texttt{main.scala.html} yang berfungsi untuk mendefinisikan halaman HTML. Setiap konten yang dihasilkan pada server dan dikirim ke klien dalam \textit{body} HTTP, seperti halaman HTML, disebut \textit{view}. \textit{View} dapat menerima \textit{parameter} dari \textit{controller} menggunakan bahasa Scala. Sebagai contoh pada gambar \ref{fig:2_exam_view}, pada baris pertama ``message'' mendefinisikan nama \textit{parameter} yang diterima dengan tipe \textit{String}. Tipe yang diterima \textit{view} harus sama dengan tipe yang dikirim \textit{controller} begitu pula banyak \textit{parameter}-nya. Baris ke-10 menampilkan ``message'' pada halaman HTML. Tanda ``@'' menandakan penggunaan bahasa Scala pada \textit{view}. Folder-folder yang terdapat dalam direktori \texttt{app} akan menjadi \textit{package} dalam kode Java.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.75]{Gambar/example-view}
+	\caption{Penerimaan \textit{Parameter} pada \textit{View}} 
+	\label{fig:2_exam_view}
+\end{figure}
 
 Direktori \texttt{public} berisi sumber yang dapat diakses secara langsung sebagai aset publik. Biasanya aset publik mendukung file selain aplikasi yang dibuat seperti gambar, \textit{stylesheet}, Javascript, dan halaman HTML statis. Aset publik tidak dihasilkan oleh aplikasi melainkan diatur secara langsung oleh pembuat program.
+
+Dalam Play Framework, objek yang disimpan pada \textit{session} memiliki masa hidup yaitu selama \textit{browser} dibuka. \textit{Session} tidak disimpan di server melainkan ditambahkan ke setiap permintaan HTTP berikutnya menggunakan mekanisme \textit{cookie}. Ukuran data \textit{session} sangat terbatas yaitu hingga 4 KB sehingga hanya dapat menyimpan \textit{String}. Pada controller, \textit{session} dapat disimpan dengan \textit{method}:
+	\begin{itemize}
+			\item \textbf{public static void session(String key, String value)} \\
+				\textbf{Parameter:}
+				\begin{itemize}
+					\item \textbf{key} kunci \textit{session}.
+					\item \textbf{value} nilai \textit{session}.
+				\end{itemize}
+	\end{itemize}
+ Sedangkan nilai \textit{session} dapat diperoleh menggunakan \textit{method}: 
+\begin{itemize}
+			\item \textbf{public static String session(String key)} \\
+				\textbf{Parameter:}
+				\begin{itemize}
+					\item \textbf{key} kunci \textit{session}.
+				\end{itemize}
+				\textbf{Kembalian:} nilai \textit{session}.
+	\end{itemize}
+
 
 \section{SIA Models}
 \label{sec:siamodels}
@@ -575,6 +611,47 @@ SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem
 
 \end{enumerate}
 
+\section{CSS \textit{Selector}}
+\label{sec:selector}
 
+CSS(\textit{Cascading Style Sheets}) memungkinkan adanya perubahan terhadap teks dari elemen HTML yang sudah didefinisikan\cite{Meyer:2012}. Seperti yang ditampilkan pada gambar \ref{fig:2_selector_ex}, defini CSS memiliki dua komponen yaitu selector dan properti. CSS \textit{selector} digunakan untuk mendefinisikan elemen HTML sedangkan properti mendefinisikan atribut beserta nilai. 
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.8]{Gambar/selector-ex}
+			\caption{Format Penulisan Definisi CSS} 
+			\label{fig:2_selector_ex}
+		\end{figure}
+Beberapa jenis CSS \textit{Selector} antara lain:
+\begin{enumerate}
+	\item \textit{\textbf{Element Selector}}, memilih \textit{tag} html.\\
+		Contoh: \texttt{h1}\\
+		Keterangan: \textit{selector} mendefinisikan elemen h1.
+	\item \textit{\textbf{Grouping Selector}}, memilih beberapa \textit{selector} sekaligus. Setiap \textit{selector} dipisahkan dengan ``,''.\\
+		Contoh: \texttt{h1, h2, p}\\
+		Keterangan: \textit{selector} mendefinisikan elemen h1, h2, dan p.
+	\item \textit{\textbf{Universal Selector}}, memilih seluruh elemen. \textit{Selector} ditampilkan sebagai ``*''.\\
+		Contoh: \texttt{*}\\
+		Keterangan: \textit{selector} mendefinisikan seluruh elemen.
+	\item \textit{\textbf{Class Selector}}, memilih kelas elemen. \textit{Selector} ditampilkan sebagai ``.'' kemudian diikuti nama kelas elemen.\\
+		Contoh: \texttt{.top}\\
+		Keterangan: \textit{selector} mendefinisikan elemen dengan kelas ``top''.
+	\item \textit{\textbf{ID Selector}}, memilih ID elemen. \textit{Selector} ditampilkan sebagai ``\#'' kemudian diikuti ID elemen.\\
+		Contoh: \texttt{\#top}\\
+		Keterangan: \textit{selector} mendefinisikan elemen dengan ID ``top''. 
+	\item \textit{\textbf{Attribute Selector}}, akan dijelaskan dua \textit{attribute selector} yaitu:
+		\begin{itemize}
+			\item \textit{\textbf{Simple Attribute}}, memilih atribut elemen. \textit{Selector} ditampilkan sebagai nama atribut kemudian diapit dengan kurung siku.
+			Contoh: \texttt{[name]}\\
+			Keterangan: \textit{selector} mendefinisikan elemen dengan atribut ``name''. 
+			
+			\item \textit{\textbf{Simple Attribute}}, memilih atribut elemen dengan nilai tertentu. \textit{Selector} ditampilkan sebagai definisi atribut kemudian diapit dengan kurung siku.
+			Contoh: \texttt{[name=Joe]}\\
+			Keterangan: \textit{selector} mendefinisikan elemen dengan atribut ``name'' yang memiliki nilai ``Joe''. 
+		\end{itemize}
+		
+	\item \textit{\textbf{Descendant Selector}}, memilih \textit{child} elemen yang merupakan keturunan \textit{parent} tertentu. \textit{Selector} ditampilkan dengan mendefinisikan parent kemudian diikuti oleh child dipisahkan dengan spasi.\\
+			Contoh: \texttt{p .top}\\
+			Keterangan: \textit{selector} mendefinisikan elemen dengan kelas ``top'' yang merupakan \textit{child} dari elemen p. 
+\end{enumerate}		
 
 

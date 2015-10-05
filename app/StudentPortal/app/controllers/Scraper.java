@@ -40,6 +40,8 @@ public class Scraper {
 
     public Mahasiswa getLoggedMahasiswa() {
         return logged_mhs;
+        Application.sess
+        
     }
     
     public void init() throws IOException{

@@ -32,6 +32,8 @@ public class Application extends Controller {
     	DynamicForm dynamicForm = Form.form().bindFromRequest();
     	String npm = dynamicForm.get("npm");
     	String pass = dynamicForm.get("pass");
+    	//session("npm",npm);
+    	this.ses
     	this.scrap.login(npm, pass);
     	return home();
     }
