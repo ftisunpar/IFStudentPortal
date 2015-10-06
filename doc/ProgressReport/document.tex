@@ -23,14 +23,14 @@
 \onehalfspacing
  
 \begin{document}
-
+\def\bibname{Daftar Referensi}
 \title{\@judultopik}
 \author{\nama \textendash \@npm} 
 
 %ISILAH DATA DATA BERIKUT INI:
 \newcommand{\nama}{Herfan Heryandi}
 \newcommand{\@npm}{2012730012}
-\newcommand{\tanggal}{03/10/2015} %Tanggal pembuatan dokumen
+\newcommand{\tanggal}{06/10/2015} %Tanggal pembuatan dokumen
 \newcommand{\@judultopik}{IT STUDENT PORTAL: PEMANFAATAN \textit{WEB SCRAPING} UNTUK KUSTOMISASI PORTAL AKADEMIK MAHASISWA} % Judul/topik anda
 \newcommand{\kodetopik}{PAS3904}
 \newcommand{\jumpemb}{1} % Jumlah pembimbing, 1 atau 2
@@ -1236,7 +1236,7 @@ Mahasiswa dapat melakukan \textit{logout} dengan cara:
 	\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.5]{Gambar/case-logout-link}
-			\caption{} 
+			\caption{Elemen ``a'' dengan teks ``logout'' pada Identitas Portal} 
 			\label{fig:3_case_logout_link}
 		\end{figure}
 	\item Setelah diklik, mahasiswa akan diarahkan ke \url{https://studentportal.unpar.ac.id/home/index.logout.php} dengan \textit{cookie} sebagai berikut:
@@ -1363,6 +1363,12 @@ Kelas-kelas dari \textit{package} SIA Models telah dibahas pada poin 1 bagian SI
 
 	\end{enumerate}
 \end{enumerate}
+
+
+\bibliographystyle{ieeetr}
+\bibliography{pustaka}
+
+
 \section{Pencapaian Rencana Kerja}
 Persentase penyelesaian skripsi sampai dengan dokumen ini dibuat dapat dilihat pada tabel berikut :
 
@@ -1421,8 +1427,5 @@ Menyetujui, \\
 \vspace{2cm} Nama: \pembA \\ Pembimbing Tunggal
 }
 `
-\bibliographystyle{ieeetr}
-\bibliography{pustaka}
-
 \end{document}
 
