@@ -22,7 +22,7 @@ public class Application extends Controller {
 	
     public Result index() {
     	if(session("npm")==null){
-    		return ok(views.html.login.render());
+    		return ok(views.html.login.render(""));
     	}
     	else{
     		return home();
@@ -31,7 +31,7 @@ public class Application extends Controller {
     
     public Result login() {
     	if(session("npm")==null){
-    		return ok(views.html.login.render());
+    		return index();
     	}
     	else{
     		return home();
@@ -40,26 +40,43 @@ public class Application extends Controller {
     
     public Result submitLogin() throws IOException{
     	DynamicForm dynamicForm = Form.form().bindFromRequest();
-    	String npm = dynamicForm.get("npm");
+    	String email = dynamicForm.get("email");
     	String pass = dynamicForm.get("pass");
+    	if(!email.matches("[0-9]{7}+@student.unpar.ac.id")){
+    		return ok(views.html.login.render("Email tidak valid"));
+    	}
+    	if(!(email.charAt(0)=='7'&&email.charAt(1)=='3')){
+    		return ok(views.html.login.render("Maaf, Anda bukan mahasiswa Teknik Informatika"));
+    	}
+    	String npm = "20" + email.substring(2,4) + email.substring(0,2)+ "0" + email.substring(4,7);
     	if(this.scrap.login(npm, pass)){
     		session("npm", npm);
     		return home();
     	}
 	    else{
-	    	return login();
+	    	return ok(views.html.login.render("Login gagal, password yang Anda masukkan salah atau Anda bukan mahasiswa aktif"));
 	    }
     }
     
     public Result home() {
-    	String nama = scrap.getLoggedMahasiswa().getNama();
-    	return ok(views.html.home.render(nama));
+    	if(session("npm")==null){
+    		return index();
+    	}
+    	else{
+	    	String nama = scrap.getLoggedMahasiswa().getNama();
+	    	return ok(views.html.home.render(nama));
+    	}
     }
     
     public Result prasyarat() throws IOException{
-    	ArrayList<PrasyaratTable> table = cekPrasyarat();
-    	int sz = table.size();
-    	return ok(views.html.prasyarat.render(table, sz));
+    	if(session("npm")==null){
+    		return index();
+    	}
+    	else{
+	    	ArrayList<PrasyaratTable> table = cekPrasyarat();
+	    	int sz = table.size();
+	    	return ok(views.html.prasyarat.render(table, sz));
+    	}
     }
     
     public Result logout() throws IOException {
