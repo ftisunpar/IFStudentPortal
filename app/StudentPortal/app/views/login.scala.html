@@ -7,8 +7,12 @@
 	<body>
 		<h3>Login</h3>
 		<form action="@routes.Application.submitLogin()" method="POST" name ="loginForm">
-			<input name="npm" type="text" placeholder="username"/>
-			<input name="pass" type="password" placeholder="password"/>
+			Email: <br>
+			<input name="npm" type="email" placeholder="contoh: 7312012(at)student.unpar.ac.id"/>
+			<br>
+			Password:
+			<br>
+			<input name="pass" type="password" placeholder="********"/>
 			<input name="submit" type="submit" value="login"/>
 		</form>
 	</body>

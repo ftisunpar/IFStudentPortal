@@ -21,21 +21,34 @@ public class Application extends Controller {
 	Scraper scrap = new Scraper();
 	
     public Result index() {
-        return ok(index.render("Student Portal"));
+    	if(session("npm")==null){
+    		return ok(views.html.login.render());
+    	}
+    	else{
+    		return home();
+    	}
     }
     
     public Result login() {
-    	return ok(views.html.login.render());
+    	if(session("npm")==null){
+    		return ok(views.html.login.render());
+    	}
+    	else{
+    		return home();
+    	}
     }
     
     public Result submitLogin() throws IOException{
     	DynamicForm dynamicForm = Form.form().bindFromRequest();
     	String npm = dynamicForm.get("npm");
     	String pass = dynamicForm.get("pass");
-    	//session("npm",npm);
-    	this.ses
-    	this.scrap.login(npm, pass);
-    	return home();
+    	if(this.scrap.login(npm, pass)){
+    		session("npm", npm);
+    		return home();
+    	}
+	    else{
+	    	return login();
+	    }
     }
     
     public Result home() {
@@ -47,6 +60,12 @@ public class Application extends Controller {
     	ArrayList<PrasyaratTable> table = cekPrasyarat();
     	int sz = table.size();
     	return ok(views.html.prasyarat.render(table, sz));
+    }
+    
+    public Result logout() throws IOException {
+    	session().clear();
+    	scrap.logout();
+    	return index();
     }
     
     private ArrayList<PrasyaratTable> cekPrasyarat() throws IOException{

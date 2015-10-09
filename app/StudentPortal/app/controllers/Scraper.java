@@ -40,8 +40,6 @@ public class Scraper {
 
     public Mahasiswa getLoggedMahasiswa() {
         return logged_mhs;
-        Application.sess
-        
     }
     
     public void init() throws IOException{
@@ -174,6 +172,7 @@ public class Scraper {
         logoutConn.validateTLSCertificates(false);
         logoutConn.method(Connection.Method.GET);
         logoutConn.execute();
+        this.logged_mhs = null;
     }
     
     private String[] parseSemester(String sem_raw){
