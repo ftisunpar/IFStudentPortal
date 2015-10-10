@@ -7,7 +7,7 @@ import java.util.List;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 
-import models.display.PrasyaratTable;
+import models.display.PrasyaratDisplay;
 import models.id.ac.unpar.siamodels.Mahasiswa;
 import models.id.ac.unpar.siamodels.MataKuliah;
 import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
@@ -64,7 +64,8 @@ public class Application extends Controller {
     	}
     	else{
 	    	String nama = scrap.getLoggedMahasiswa().getNama();
-	    	return ok(views.html.home.render(nama));
+	    	String photoPath = scrap.getPhotoPath();
+	    	return ok(views.html.home.render(nama,photoPath));
     	}
     }
     
@@ -73,9 +74,8 @@ public class Application extends Controller {
     		return index();
     	}
     	else{
-	    	ArrayList<PrasyaratTable> table = cekPrasyarat();
-	    	int sz = table.size();
-	    	return ok(views.html.prasyarat.render(table, sz));
+	    	List<PrasyaratDisplay> table = cekPrasyarat();
+	    	return ok(views.html.prasyarat.render(table));
     	}
     }
     
@@ -85,51 +85,53 @@ public class Application extends Controller {
     	return index();
     }
     
-    private ArrayList<PrasyaratTable> cekPrasyarat() throws IOException{
-    	ArrayList<PrasyaratTable> table = new ArrayList<PrasyaratTable>();
-    	ArrayList<String> mkl = scrap.requestKuliah();
+    private List<PrasyaratDisplay> cekPrasyarat() throws IOException{
+    	List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
+    	List<String> mkl = scrap.requestKuliah();
         scrap.setNilai();
         String MATAKULIAH_REPOSITORY_PACKAGE = "models.id.ac.unpar.siamodels.matakuliah"; 
     	List<Object> mkKnown = new ArrayList<Object>(); 
+    	List<String> mkUnknown = new ArrayList<String>(); 
         for(String kodeMK : mkl){
-            try {
-                Class<?> mkClass = Class.forName(MATAKULIAH_REPOSITORY_PACKAGE + "." + kodeMK);
-                Object matakuliah = mkClass.newInstance();
-                mkKnown.add(matakuliah);
-                //System.out.println(MataKuliah.getMataKuliah(kodeMK)+" added");
-            } catch (ClassNotFoundException e) {
-            		e.printStackTrace();
-            } catch (InstantiationException e) {
-                    e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-            }           
+	        try {
+	            Class<?> mkClass = Class.forName(MATAKULIAH_REPOSITORY_PACKAGE + "." + kodeMK);
+	            Object matakuliah = mkClass.newInstance();
+	            mkKnown.add(matakuliah);
+	        } catch (ClassNotFoundException e) {
+	        	mkUnknown.add(kodeMK);
+	        } catch (InstantiationException e) {
+	                e.printStackTrace();
+	        } catch (IllegalAccessException e) {
+	                e.printStackTrace();
+	        }           
         }
         
         for (Object mk: mkKnown) {
             if (mk instanceof HasPrasyarat) {
-                    List<String> reasons = new ArrayList<String>();
-                    ((HasPrasyarat)mk).checkPrasyarat(scrap.getLoggedMahasiswa(), reasons);
-                    if (!reasons.isEmpty()) {
-                            //System.out.println(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()) + ":");
-                            String status = new String();
-                    		for (String reason: reasons) {
-                                    status+="        " + reason + "\n";
-                            }
-                            table.add(new PrasyaratTable(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),status));
+                List<String> reasons = new ArrayList<String>();
+                ((HasPrasyarat)mk).checkPrasyarat(scrap.getLoggedMahasiswa(), reasons);
+                if (!reasons.isEmpty()) {
+                    String status = new String();
+            		for (String reason: reasons) {
+            			status+=reason + ", ";
                     }
-                    else{
-                        if(scrap.getLoggedMahasiswa().hasLulusKuliah(mk.getClass().getSimpleName())){
-                            //System.out.println(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()) + " sudah lulus");
-                        	table.add(new PrasyaratTable(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),"Sudah lulus"));
-                        }
-                        else{
-                            //System.out.println(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()) + " memenuhi syarat");
-                        	table.add(new PrasyaratTable(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),"memenuhi syarat"));
-                        }
+                    table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),status));
+                }
+                else{
+                    if(scrap.getLoggedMahasiswa().hasLulusKuliah(mk.getClass().getSimpleName())){
+                    	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),"sudah lulus"));
                     }
+                    else{ 
+                    	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),"memenuhi syarat"));
+                    }
+                }
             }
         }
+        
+        for (String mk: mkUnknown) {
+        	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk),"data tidak tersedia"));
+        }
+        
         return table;
     }
 }

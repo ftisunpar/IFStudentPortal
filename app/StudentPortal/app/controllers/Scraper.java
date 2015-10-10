@@ -8,6 +8,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import models.id.ac.unpar.siamodels.Mahasiswa;
@@ -36,10 +37,15 @@ public class Scraper {
     private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
     private final String KODE_FAK_FTIS = "7";
     private String thn_akd, sem_akd;
+    private String photoPath;
     private Mahasiswa logged_mhs; 
 
     public Mahasiswa getLoggedMahasiswa() {
         return logged_mhs;
+    }
+    
+    public String getPhotoPath(){
+    	return this.photoPath;
     }
     
     public void init() throws IOException{
@@ -82,6 +88,8 @@ public class Scraper {
             this.logged_mhs.setNama(nama);
             String curr_sem = doc.select(".main-info-semester a").text();
             String[] sem_set = this.parseSemester(curr_sem);
+            Element photo = doc.select(".student-photo img").first();
+            this.photoPath = photo.absUrl("src");
             this.thn_akd = sem_set[0];
             this.sem_akd = sem_set[1];
             return true;
@@ -91,7 +99,7 @@ public class Scraper {
         }
     }
     
-    public ArrayList<String> requestKuliah() throws IOException{
+    public List<String> requestKuliah() throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
         kuliahConn.cookies(this.login_cookies);
         kuliahConn.data("kode_fak",KODE_FAK_FTIS);
@@ -104,7 +112,7 @@ public class Scraper {
         Document doc = resp.parse();
         Elements jadwal = doc.select("tr");
         String prev = "";
-        ArrayList<String> mkList = new ArrayList<String>();
+        List<String> mkList = new ArrayList<String>();
         for (int i = 1; i < jadwal.size()-1; i++) {
             Elements row = jadwal.get(i).children();
             if(!row.get(1).text().equals("")){

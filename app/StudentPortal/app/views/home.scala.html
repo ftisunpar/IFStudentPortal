@@ -1,4 +1,4 @@
-@(message: String)
+@(nama: String, photoPath: String)
 
 <!DOCTYPE html>
 
@@ -7,7 +7,9 @@
         <title>IT Student Portal</title>    
     </head>
     <body>
-        @message 
+    	<img src="@photoPath"/>
+    	<br>
+        @nama 
         <br>
         <a href="@routes.Application.prasyarat()">Prasyarat</a>
         <br>
