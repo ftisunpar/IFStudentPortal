@@ -60,8 +60,6 @@ public class Scraper {
         conn.validateTLSCertificates(false);
         conn.method(Connection.Method.POST);
         Response resp = conn.execute();
-        System.out.println(resp.cookies().toString());
-        System.out.println(resp.body());
         Document doc = resp.parse();
         String lt = doc.select("input[name=lt]").val();
         String execution = doc.select("input[name=execution]").val();
@@ -126,6 +124,66 @@ public class Scraper {
         return mkList;
     }
     
+    /*
+        null jika jadwal belum keluar
+    */
+    public ArrayList<Jadwal> requestJadwalKuliah() throws IOException{
+        Connection jadwalConn = Jsoup.connect(BASE_URL+"includes/jadwal.aktif.php");
+        jadwalConn.cookies(this.login_cookies);
+        jadwalConn.timeout(0);
+        jadwalConn.validateTLSCertificates(false); 
+        jadwalConn.method(Connection.Method.GET);
+        Response resp = jadwalConn.execute();
+        Document doc = resp.parse();
+        Elements jadwalTable = doc.select(".portal-full-table"); 
+        ArrayList<Jadwal> jadwalList = new ArrayList<Jadwal>();
+        if(jadwalTable.size()>0){
+           Elements tableKuliah = jadwalTable.get(0).select("tbody tr");
+            //System.out.println(tableKuliah.toString());
+           String kode = new String(); 
+           String nama = new String();
+           for(Element elem : tableKuliah){
+               if(elem.className().contains("row")){       
+                    if(!(elem.child(1).text().isEmpty() && elem.child(2).text().isEmpty())){
+                        kode = elem.child(1).text();
+                        nama = elem.child(2).text();  
+                    }      
+                    System.out.print(kode + "/" + nama + "/" + elem.child(3).text()
+                        +"/"+ elem.child(4).text() + "/" + elem.child(5).text()+"/"+ elem.child(7).text() + "/" + elem.child(8).text() + "/" + elem.child(9).text());
+                    System.out.println("");
+               }
+            }
+        }
+        else{
+            System.out.println("Jadwal kuliah belum tersedia");
+        }
+        System.out.println("");
+        if(jadwalTable.size()>1){
+            Elements tableUTS = jadwalTable.get(1).select("tbody tr");
+            //System.out.println(tableKuliah.toString());
+            String kode = new String(); 
+            String nama = new String();
+            for(Element elem : tableUTS){
+               if(elem.className().contains("row")){            
+                    System.out.print(kode + "/" + nama + "/" + elem.child(3).text()
+                        +"/"+ elem.child(4).text() + "/" + elem.child(5).text()+"/"+ elem.child(6).text() + "/" + elem.child(7).text() + "/" + elem.child(8).text());
+                    System.out.println("");
+               }
+            }
+        }
+        else{
+            System.out.println("Jadwal UTS belum tersedia");
+        }
+        System.out.println("");
+        if(jadwalTable.size()>2){
+            
+        }
+        else{
+            System.out.println("Jadwal UAS belum tersedia");
+        }
+        return jadwalList;
+    }
+    
     public void setNilai() throws IOException{  
         Connection nilaiConn = Jsoup.connect(NILAI_URL);
         nilaiConn.cookies(this.login_cookies);
@@ -181,4 +239,5 @@ public class Scraper {
          String[] sem_set = sem_raw.split("/")[0].split("-");
          return new String[]{sem_set[1].trim(),sem_set[0].trim()};
     }    
+    
 }

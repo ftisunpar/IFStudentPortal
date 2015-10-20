@@ -18,11 +18,12 @@ public class TryJsoup {
      */
     public static void main(String[] args) throws IOException {
         Scraper scrap = new Scraper();
-        scrap.login("2012730012", "Ttdjq6Be");
+        scrap.login("2012730012", "");
         String nama = scrap.getLoggedMahasiswa().getNama();
-        scrap.requestKuliah();
-        scrap.setNilai();
-        System.out.println(scrap.getLoggedMahasiswa().calculateIPKLulus());
+        //scrap.requestKuliah();
+        //scrap.setNilai();
+        //System.out.println(scrap.getLoggedMahasiswa().calculateIPKLulus());
+        scrap.requestJadwalKuliah();
         
     }
     
