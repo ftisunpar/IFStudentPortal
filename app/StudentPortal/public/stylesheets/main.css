@@ -1,9 +1,17 @@
+html{
+  min-height: 100%;
+  /*border: 10px solid white; */
+}
 #login-body{
 	background-image: url("../images/home-bg.jpg");
 	background-size: cover;
+	min-height: 100%;
+	/*border: 1px	solid aqua; */
 }
-.col-md-4{
-	margin-top: 10%;
+#login-container{
+	/*border: 10px solid red; 
+	vertical-align: middle !important;*/
+	margin-top: 5%;
 }
 .panel-body{
 	margin-left: 10px;
