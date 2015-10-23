@@ -4,15 +4,59 @@
 
 <html lang="en">
     <head>
-        <title>IT Student Portal</title>    
+        <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>IT Student Portal</title>
+
+		<!-- CSS -->
+        <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")"> 
     </head>
     <body>
-    	<img src="@photoPath"/>
-    	<br>
-        @nama 
-        <br>
-        <a href="@routes.Application.prasyarat()">Prasyarat</a>
-        <br>
-        <a href="@routes.Application.logout()">Logout</a>
+		<div id="sidebar" class="toggled">
+			<h3 class="text-center">IT Student Portal</h3>
+			<ul>
+				<li><a href="@routes.Application.prasyarat()"><span class="glyphicon glyphicon-tasks"></span> Prasyarat Mata Kuliah</a></li>
+				<li><a><span class="glyphicon glyphicon-list-alt"></span> Jadwal</a>
+					<ul>
+						<li><a href="@routes.Application.prasyarat()"><span class="glyphicon glyphicon-calendar"></span> Jadwal Kuliah</a></li>
+						<li><a href="@routes.Application.prasyarat()"><span class="glyphicon glyphicon-calendar"></span> Jadwal UTS</a></li>
+						<li><a href="@routes.Application.prasyarat()"><span class="glyphicon glyphicon-calendar"></span> Jadwal UAS</a></li>
+					</ul>
+				</li>
+				<li><a href="@routes.Application.prasyarat()"><span class="glyphicon glyphicon-credit-card"></span> Ringkasan Data Akademik</a></li>
+			</ul>
+		</div>
+		
+		<div id="page-content" class="toggled">
+			<div class="container-fluid">
+				<div class="row">
+                    <div class="col-lg-12">
+						<a id="toggle-menu"><</a>
+						<img src="@photoPath"/>
+						<br>
+						@nama 
+						<br>
+						<a href="@routes.Application.logout()">Logout</a>
+					</div>
+                </div>
+			</div>
+		</div>
+		
+        
+		
+		<!-- Javascript -->
+		<script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")"></script>
+		<script>
+			$(document).ready(function(){
+				$("#toggle-menu").click(function(){
+					$("#sidebar").toggleClass("toggled");
+					$("#page-content").toggleClass("toggled");
+				});
+			});
+		</script>
+		<script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+		
     </body>
 </html>

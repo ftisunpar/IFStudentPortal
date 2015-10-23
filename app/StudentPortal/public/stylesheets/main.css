@@ -46,3 +46,56 @@ button[name=submit]{
 	background-color: #0066FF;
 	color: white;
 }
+#sidebar{
+	color: #0066FF;
+	width: 210px;
+	height: 100%;
+	position: absolute;
+	background: gray;
+	left:-210px;
+}
+#sidebar.toggled{
+	left: 0px;
+	transition: left 0.5s ease;
+}
+ul{
+	margin: 0px;
+	padding: 0px;
+}
+ul li{
+	list-style: none;
+}
+ul li a{
+	padding: 10px;
+	display: block;
+	color: #0066DD;
+}
+a:hover{
+	text-decoration: none;
+	color: #FFFFFE;
+	background: #0066DD;
+}
+li ul a{
+	padding-left: 25px;
+}
+#toggle-menu{
+	text-decoration: none;
+	background: gray;
+	cursor: pointer;
+	font-size: 18pt;
+	margin-left: -18px;
+	border-radius: 4px;
+	min-width: 50px;
+	min-height: 50px;
+}
+#page-content.toggled{
+    position: absolute;
+    left: 210px;
+	transition: left 0.5s ease;
+}
+#page-content{
+	left:0px;
+}
+
+
+

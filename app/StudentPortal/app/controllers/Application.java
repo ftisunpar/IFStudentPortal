@@ -54,7 +54,7 @@ public class Application extends Controller {
     		return home();
     	}
 	    else{
-	    	return ok(views.html.login.render("Login gagal, password yang Anda masukkan salah atau Anda bukan mahasiswa aktif"));
+	    	return ok(views.html.login.render("Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif"));
 	    }
     }
     
@@ -62,11 +62,15 @@ public class Application extends Controller {
     	if(session("npm")==null){
     		return index();
     	}
-    	else{
-	    	String nama = scrap.getLoggedMahasiswa().getNama();
-	    	String photoPath = scrap.getPhotoPath();
-	    	return ok(views.html.home.render(nama,photoPath));
+    	else if(scrap.getLoggedMahasiswa()==null){	
+			try{
+				return logout();
+			}catch(IOException e){}
     	}
+    	
+    	String nama = scrap.getLoggedMahasiswa().getNama();
+    	String photoPath = scrap.getPhotoPath();
+    	return ok(views.html.home.render(nama,photoPath));	
     }
     
     public Result prasyarat() throws IOException{
