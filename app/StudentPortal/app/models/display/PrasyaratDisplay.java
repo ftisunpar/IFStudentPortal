@@ -4,9 +4,9 @@ import models.id.ac.unpar.siamodels.MataKuliah;
 
 public class PrasyaratDisplay {
 	private MataKuliah mataKuliah;
-	private String status;
+	private String[] status;
 	
-	public PrasyaratDisplay(MataKuliah mataKuliah, String status){
+	public PrasyaratDisplay(MataKuliah mataKuliah, String[] status){
 		this.mataKuliah = mataKuliah;
 		this.status = status;
 	}
@@ -15,7 +15,7 @@ public class PrasyaratDisplay {
 		return mataKuliah;
 	}
 	
-	public String getStatus(){
+	public String[] getStatus(){
 		return status;
 	}
 }

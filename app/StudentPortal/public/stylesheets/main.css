@@ -1,16 +1,12 @@
-html{
-  min-height: 100%;
-  /*border: 10px solid white; */
+body,html{
+	height: 100%;
 }
+/*Login Page*/
 #login-body{
 	background-image: url("../images/home-bg.jpg");
 	background-size: cover;
-	min-height: 100%;
-	/*border: 1px	solid aqua; */
 }
 #login-container{
-	/*border: 10px solid red; 
-	vertical-align: middle !important;*/
 	margin-top: 5%;
 }
 .panel-body{
@@ -40,62 +36,153 @@ html{
 	background-color: #0066FF;
 	color: white;
 }
+.logo-set{
+	padding-top: 10px;
+}
 button[name=submit]{
 	margin-top: 5px;
 	margin-bottom: 25px;
 	background-color: #0066FF;
 	color: white;
 }
-#sidebar{
-	color: #0066FF;
-	width: 210px;
-	height: 100%;
-	position: absolute;
-	background: gray;
-	left:-210px;
-}
-#sidebar.toggled{
-	left: 0px;
-	transition: left 0.5s ease;
-}
-ul{
-	margin: 0px;
+/*Responsive sidebar*/
+.main .row{
 	padding: 0px;
+	margin: 0px;
 }
-ul li{
-	list-style: none;
+nav.sidebar.navbar {
+	border-radius: 0px;
 }
-ul li a{
-	padding: 10px;
-	display: block;
-	color: #0066DD;
+nav.sidebar, .main{
+	-webkit-transition: margin 200ms ease-out;
+	-moz-transition: margin 200ms ease-out;
+	-o-transition: margin 200ms ease-out;
+	transition: margin 200ms ease-out;
 }
-a:hover{
-	text-decoration: none;
-	color: #FFFFFE;
-	background: #0066DD;
+.main{
+	padding: 10px 10px 0 10px;
 }
-li ul a{
-	padding-left: 25px;
-}
-#toggle-menu{
-	text-decoration: none;
-	background: gray;
-	cursor: pointer;
-	font-size: 18pt;
-	margin-left: -18px;
-	border-radius: 4px;
-	min-width: 50px;
-	min-height: 50px;
-}
-#page-content.toggled{
-    position: absolute;
-    left: 210px;
-	transition: left 0.5s ease;
-}
-#page-content{
-	left:0px;
+/*small & medium display*/
+@media (min-width: 768px) {
+
+	/*Allow main to be next to Nav*/
+	.main{
+		position: absolute;
+		width: calc(100% - 40px); /*keeps 100% minus nav size*/
+		margin-left: 40px;
+		float: right;
+	}
+
+	/*lets nav bar to be showed on mouseover*/
+	nav.sidebar:hover + .main{
+		margin-left: 200px;
+	}
+
+	/*Center Brand*/
+	nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+		margin-left: 0px;
+	}
+	/*Center Brand*/
+	nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
+		text-align: center;
+		width: 100%;
+		margin-left: 0px;
+	}
+
+	/*Center Icons*/
+	nav.sidebar a{
+		padding-right: 13px;
+	}
+
+	/*adds border top to first nav box */
+	nav.sidebar .navbar-nav > li:first-child{
+		border-top: 1px #e5e5e5 solid;
+	}
+
+	/*adds border to bottom nav boxes*/
+	nav.sidebar .navbar-nav > li{
+		border-bottom: 1px #e5e5e5 solid;
+	}
+
+	/* Colors/style dropdown box*/
+	nav.sidebar .navbar-nav .open .dropdown-menu {
+		position: static;
+		float: none;
+		width: auto;
+		margin-top: 0;
+		background-color: transparent;
+		border: 0;
+		-webkit-box-shadow: none;
+		box-shadow: none;
+	}
+
+	/*allows nav box to use 100% width*/
+	nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
+		padding: 0 0px 0 0px;
+	}
+
+	/*colors dropdown box text */
+	.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+		color: #777;
+	}
+
+	/*gives sidebar width/height*/
+	nav.sidebar{
+		width: 200px;
+		height: 100%;
+		margin-left: -160px;
+		float: left;
+		z-index: 8000;
+		margin-bottom: 0px;
+	}
+
+	/*give sidebar 100% width;*/
+	nav.sidebar li {
+		width: 100%;
+	}
+
+	/* Move nav to full on mouse over*/
+	nav.sidebar:hover{
+		margin-left: 0px;
+	}
+	/*for hiden things when navbar hidden*/
+	.forAnimate{
+		opacity: 0;
+	}
 }
 
+/*Full Display*/
+@media (min-width: 1330px) {
+	/*Allow main to be next to Nav*/
+	.main{
+		width: calc(100% - 200px); /*keeps 100% minus nav size*/
+		margin-left: 200px;
+	}
 
+	/*Show all nav*/
+	nav.sidebar{
+		margin-left: 0px;
+		float: left;
+	}
+	/*Show hidden items on nav*/
+	nav.sidebar .forAnimate{
+		opacity: 1;
+	}
+}
 
+nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
+	color: #CCC;
+	background-color: transparent;
+}
+
+nav:hover .forAnimate{
+	opacity: 1;
+}
+
+section{
+	padding-left: 15px;
+}
+
+.navbar-brand:hover{
+	cursor: default;
+}

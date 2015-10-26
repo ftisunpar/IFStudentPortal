@@ -79,7 +79,8 @@ public class Application extends Controller {
     	}
     	else{
 	    	List<PrasyaratDisplay> table = cekPrasyarat();
-	    	return ok(views.html.prasyarat.render(table));
+	    	String semester = scrap.getSemester();
+	    	return ok(views.html.prasyarat.render(table,semester));
     	}
     }
     
@@ -117,23 +118,23 @@ public class Application extends Controller {
                 if (!reasons.isEmpty()) {
                     String status = new String();
             		for (String reason: reasons) {
-            			status+=reason + ", ";
+            			status+=reason + ",";
                     }
-                    table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),status));
+                    table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),status.split(",")));
                 }
                 else{
                     if(scrap.getLoggedMahasiswa().hasLulusKuliah(mk.getClass().getSimpleName())){
-                    	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),"sudah lulus"));
+                    	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),new String[]{"sudah lulus",""}));
                     }
                     else{ 
-                    	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),"memenuhi syarat"));
+                    	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),new String[]{"memenuhi syarat",""}));
                     }
                 }
             }
         }
         
         for (String mk: mkUnknown) {
-        	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk),"data tidak tersedia"));
+        	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk),new String[]{"data tidak tersedia",""}));
         }
         
         return table;

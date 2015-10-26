@@ -44,6 +44,10 @@ public class Scraper {
         return logged_mhs;
     }
     
+    public String getSemester() {
+        return sem_akd +" "+thn_akd+"/"+ (Integer.parseInt(thn_akd)+1);
+    }
+    
     public String getPhotoPath(){
     	return this.photoPath;
     }
