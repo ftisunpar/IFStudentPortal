@@ -1,3 +1,4 @@
+@(jadwalKuliah: models.display.JadwalDisplay)
 <!DOCTYPE html>
 
 <html lang="en">
@@ -36,12 +37,12 @@
 						<li><a href="@routes.Application.prasyarat()">
 							Prasyarat Mata Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tasks"></span>
 						</a></li>
-						<li class="dropdown">
+						<li class="dropdown active">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								Jadwal<span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-list-alt"></span>
 							</a>
 							<ul class="dropdown-menu forAnimate" role="menu">
-								<li class="active"><a href="#">
+								<li ><a href="#">
 									<span style="font-size:16px;" class="hidden-xs showopacity glyphicon glyphicon-calendar"></span> Jadwal Kuliah 
 								</a></li>
 								<li><a href="#">
@@ -62,29 +63,187 @@
 		<div class="main">
 		<!-- Konten Halaman -->
 			<div class="container-fluid">
-				<table>
-					<thead>
-						<tr>
-							<th>Senin</th>
-							<th>Selasa</th>
-							<th>Rabu</th>
-							<th>Kamis</th>
-							<th>Jumat</th>
-							<th>Sabtu</th>
-						</tr>
-					</thead>
-					<tbody>	
+				<div class="row">
+					<div class="col-md-2">
+						<table id="timeline" class="table hidden-xs">
+							<thead>
+								<tr>
+									<th>Pukul</th>
+								</tr>
+							</thead>
+							<tbody>	
+								@for(i <- 7 until 18) {
+									 <tr><td height="75" colspan="2">@(i).00 </td></tr>
+								}	
+							</tbody>
+						</table>
+					</div>	
+					<div class="col-md-5">
+						<div class="row">
+							<div class="col-md-4">
+								<table id="senin" class="table">
+									<thead>
+										<tr>
+											<th>Senin</th>
+										</tr>
+									</thead>
+									<tbody>	
+										@for(i <- 7 until 18) {
+											 <tr>
+												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>
+												@if(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah()!=null){	
+													<td rowspan="1" height="25">@(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah().getKode())</td>
+												}else{
+													<td height="25"> - </td>
+												}
+											 </tr>
+											 @if(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah()!=null){	
+												<tr><td height="25">@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode())</td></tr>
+											 }else{
+												<td height="25"> - </td>
+											 }
+										}	
+									</tbody>
+								</table>
+							</div>
+							<div class="col-md-4">
+								<table id="selasa" class="table">
+									<thead>
+										<tr>
+											<th>Selasa</th>
+										</tr>
+									</thead>
+									<tbody>	
+										@for(i <- 7 until 18) {
+											 <tr>
+												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>
+												@if(jadwalKuliah.getJadwalKuliah(1,(i-7)*2).getMataKuliah()!=null){	
+													<td rowspan="1" height="25">@(jadwalKuliah.getJadwalKuliah(1,(i-7)*2).getMataKuliah().getKode())</td>
+												}else{
+													<td height="25"> - </td>
+												}
+											 </tr>
+											 @if(jadwalKuliah.getJadwalKuliah(1,((i-7)*2)+1).getMataKuliah()!=null){	
+												<tr><td height="25">@(jadwalKuliah.getJadwalKuliah(1,((i-7)*2)+1).getMataKuliah().getKode())</td></tr>
+											 }else{
+												<td height="25"> - </td>
+											 }
+										}	
+									</tbody>
+								</table>
+							</div>
+							<div class="col-md-4">
+								<table id="rabu" class="table">
+									<thead>
+										<tr>
+											<th>Rabu</th>
+										</tr>
+									</thead>
+									<tbody>	
+										@for(i <- 7 until 18) {
+											 <tr>
+												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>
+												@if(jadwalKuliah.getJadwalKuliah(2,(i-7)*2).getMataKuliah()!=null){	
+													<td rowspan="1" height="25">@(jadwalKuliah.getJadwalKuliah(2,(i-7)*2).getMataKuliah().getKode())</td>
+												}else{
+													<td height="25"> - </td>
+												}
+											 </tr>
+											 @if(jadwalKuliah.getJadwalKuliah(2,((i-7)*2)+1).getMataKuliah()!=null){	
+												<tr><td height="25">@(jadwalKuliah.getJadwalKuliah(2,((i-7)*2)+1).getMataKuliah().getKode())</td></tr>
+											 }else{
+												<td height="25"> - </td>
+											 }
+										}	
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 					
-						@for(i <- 0 until 6) {
-							<tr>
-							@for(j <- 0 until 6) {
-								 <td>i</td>
-							}
-							</tr>
-						}
-						
-					</tbody>
-				</table>
+					<div class="col-md-5">
+						<div class="row">
+							<div class="col-md-4">
+								<table id="kamis" class="table">
+									<thead>
+										<tr>
+											<th>Kamis</th>
+										</tr>
+									</thead>
+									<tbody>	
+										@for(i <- 7 until 18) {
+											 <tr>
+												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>
+												@if(jadwalKuliah.getJadwalKuliah(3,(i-7)*2).getMataKuliah()!=null){	
+													<td rowspan="1" height="25">@(jadwalKuliah.getJadwalKuliah(3,(i-7)*2).getMataKuliah().getKode())</td>
+												}else{
+													<td height="25"> - </td>
+												}
+											 </tr>
+											 @if(jadwalKuliah.getJadwalKuliah(3,((i-7)*2)+1).getMataKuliah()!=null){	
+												<tr><td height="25">@(jadwalKuliah.getJadwalKuliah(3,((i-7)*2)+1).getMataKuliah().getKode())</td></tr>
+											 }else{
+												<td height="25"> - </td>
+											 }
+										}	
+									</tbody>
+								</table>
+							</div>
+							<div class="col-md-4">
+								<table id="jumat" class="table">
+									<thead>
+										<tr>
+											<th>Jumat</th>
+										</tr>
+									</thead>
+									<tbody>	
+										@for(i <- 7 until 18) {
+											 <tr>
+												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>
+												@if(jadwalKuliah.getJadwalKuliah(4,(i-7)*2).getMataKuliah()!=null){	
+													<td rowspan="1" height="25">@(jadwalKuliah.getJadwalKuliah(4,(i-7)*2).getMataKuliah().getKode())</td>
+												}else{
+													<td height="25"> - </td>
+												}
+											 </tr>
+											 @if(jadwalKuliah.getJadwalKuliah(4,((i-7)*2)+1).getMataKuliah()!=null){	
+												<tr><td height="25">@(jadwalKuliah.getJadwalKuliah(4,((i-7)*2)+1).getMataKuliah().getKode())</td></tr>
+											 }else{
+												<td height="25"> - </td>
+											 }
+										}	
+									</tbody>
+								</table>
+							</div>
+							<div class="col-md-4">
+								<table id="sabtu" class="table">
+									<thead>
+										<tr>
+											<th>Sabtu</th>
+										</tr>
+									</thead>
+									<tbody>	
+										@for(i <- 7 until 18) {
+											 <tr>
+												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>
+												@if(jadwalKuliah.getJadwalKuliah(5,(i-7)*2).getMataKuliah()!=null){	
+													<td rowspan="1" height="25">@(jadwalKuliah.getJadwalKuliah(5,(i-7)*2).getMataKuliah().getKode())</td>
+												}else{
+													<td height="25"> - </td>
+												}
+											 </tr>
+											 @if(jadwalKuliah.getJadwalKuliah(5,((i-7)*2)+1).getMataKuliah()!=null){	
+												<tr><td height="25">@(jadwalKuliah.getJadwalKuliah(5,((i-7)*2)+1).getMataKuliah().getKode())</td></tr>
+											 }else{
+												<td height="25"> - </td>
+											 }
+										}	
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		

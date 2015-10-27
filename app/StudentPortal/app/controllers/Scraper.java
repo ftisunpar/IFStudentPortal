@@ -15,6 +15,7 @@ import models.id.ac.unpar.siamodels.Mahasiswa;
 import models.id.ac.unpar.siamodels.Mahasiswa.Nilai;
 import models.id.ac.unpar.siamodels.MataKuliah;
 import models.id.ac.unpar.siamodels.Semester;
+import models.support.*;
 
 import org.jsoup.Connection;
 import org.jsoup.Connection.Response;
@@ -133,6 +134,59 @@ public class Scraper {
             }   
         }    
         return mkList;
+    }
+    
+    public JadwalBundle requestJadwal() throws IOException{
+        Connection jadwalConn = Jsoup.connect(BASE_URL+"includes/jadwal.aktif.php");
+        jadwalConn.cookies(this.login_cookies);
+        jadwalConn.timeout(0);
+        jadwalConn.validateTLSCertificates(false); 
+        jadwalConn.method(Connection.Method.GET);
+        Response resp = jadwalConn.execute();
+        Document doc = resp.parse();
+        Elements jadwalTable = doc.select(".portal-full-table"); 
+        JadwalBundle jadwalList = new JadwalBundle();
+        
+        /*Kuliah*/
+        if(jadwalTable.size()>0){
+           Elements tableKuliah = jadwalTable.get(0).select("tbody tr");
+           String kode = new String(); 
+           String nama = new String();
+           for(Element elem : tableKuliah){
+               if(elem.className().contains("row")){       
+                    if(!(elem.child(1).text().isEmpty() && elem.child(2).text().isEmpty())){
+                        kode = elem.child(1).text();
+                        nama = elem.child(2).text();  
+                    }  
+                    MataKuliah currMk = MataKuliah.createMataKuliah(kode, Integer.parseInt(elem.child(3).text()), nama);
+                    jadwalList.getJadwalKuliah().add(new JadwalKuliah(currMk,elem.child(4).text().charAt(0),elem.child(5).text(),elem.child(7).text(),elem.child(8).text(),elem.child(9).text()));
+               }
+            }
+        }
+        
+        /*UTS*/
+        if(jadwalTable.size()>1){
+            Elements tableUTS = jadwalTable.get(1).select("tbody tr");
+            for(Element elem : tableUTS){
+               if(elem.className().contains("row")){     
+                   MataKuliah currMk = MataKuliah.createMataKuliah(elem.child(1).text(), Integer.parseInt(elem.child(3).text()), elem.child(2).text());
+                   jadwalList.getJadwalUTS().add(new JadwalUjian(currMk, elem.child(4).text().charAt(0), elem.child(5).text(), elem.child(6).text(), elem.child(7).text(), elem.child(8).text()));
+               }
+            }
+        }
+
+        /*UAS*/
+        if(jadwalTable.size()>2){
+            Elements tableUAS = jadwalTable.get(2).select("tbody tr");
+            for(Element elem : tableUAS){
+               if(elem.className().contains("row")){     
+                   MataKuliah currMk = MataKuliah.createMataKuliah(elem.child(1).text(), Integer.parseInt(elem.child(3).text()), elem.child(2).text());
+                   jadwalList.getJadwalUAS().add(new JadwalUjian(currMk, elem.child(4).text().charAt(0), elem.child(5).text(), elem.child(6).text(), elem.child(7).text(), elem.child(8).text()));
+               }
+            }
+        }
+        
+        return jadwalList;
     }
     
     public void setNilai() throws IOException{  

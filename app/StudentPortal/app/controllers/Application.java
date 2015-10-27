@@ -7,10 +7,12 @@ import java.util.List;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 
+import models.display.JadwalDisplay;
 import models.display.PrasyaratDisplay;
 import models.id.ac.unpar.siamodels.Mahasiswa;
 import models.id.ac.unpar.siamodels.MataKuliah;
 import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
+import models.support.JadwalBundle;
 import play.*;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -77,11 +79,14 @@ public class Application extends Controller {
     	if(session("npm")==null){
     		return index();
     	}
-    	else{
-	    	List<PrasyaratDisplay> table = cekPrasyarat();
-	    	String semester = scrap.getSemester();
-	    	return ok(views.html.prasyarat.render(table,semester));
+    	else if(scrap.getLoggedMahasiswa()==null){	
+			try{
+				return logout();
+			}catch(IOException e){}
     	}
+    	List<PrasyaratDisplay> table = cekPrasyarat();
+    	String semester = scrap.getSemester();
+    	return ok(views.html.prasyarat.render(table,semester));
     }
     
     public Result jadwalKuliah() throws IOException{
@@ -89,7 +94,9 @@ public class Application extends Controller {
     		return index();
     	}
     	else{
-	    	return ok(views.html.jadwalKuliah.render());
+    		JadwalBundle jb = scrap.requestJadwal();
+    		JadwalDisplay table = new JadwalDisplay(jb);
+	    	return ok(views.html.jadwalKuliah.render(table));
     	}
     }
     
