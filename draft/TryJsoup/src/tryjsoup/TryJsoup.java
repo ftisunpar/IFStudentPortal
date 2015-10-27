@@ -18,20 +18,29 @@ public class TryJsoup {
      */
     public static void main(String[] args) throws IOException {
         Scraper scrap = new Scraper();
-        scrap.login("2012730012", "Ttdjq6Be");
+        scrap.login("2012730012", "");
         String nama = scrap.getLoggedMahasiswa().getNama();
         scrap.requestKuliah();
         scrap.setNilai();
         
         //System.out.println(scrap.getLoggedMahasiswa().calculateIPKLulus());
         JadwalBundle jb = scrap.requestJadwal();
+        JadwalKuliah[][] kuliahCalendar = new JadwalKuliah[6][24];
+        
         System.out.println("Kuliah");
         if(jb.getJadwalKuliah().isEmpty()){
             System.out.println("Jadwal kuliah belum tersedia");
         }
         else{
+            for (int i = 0; i < kuliahCalendar.length; i++) {
+                for (int j = 0; j < kuliahCalendar[i].length; j++) {
+                    kuliahCalendar[i][j] = new JadwalKuliah();
+                }
+            }
             for (int i = 0; i < jb.getJadwalKuliah().size(); i++) {
                 JadwalKuliah jdw = jb.getJadwalKuliah().get(i);
+                jdw.getHari();
+                jdw.getWaktu();
                 System.out.println(jdw.mataKuliah.getNama()+ " / " + jdw.getKelas() + " / " + jdw.getDosen()+ " / " + jdw.getHari() + " / " + jdw.getWaktu()+ " / "+ jdw.getRuang());
             }
         }

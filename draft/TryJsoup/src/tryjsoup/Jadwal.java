@@ -24,7 +24,11 @@ public class Jadwal {
         this.waktu = waktu;
         this.ruang = ruang;
     }
-
+    
+    public Jadwal() {
+        
+    }
+    
     public MataKuliah getMataKuliah() {
         return mataKuliah;
     }

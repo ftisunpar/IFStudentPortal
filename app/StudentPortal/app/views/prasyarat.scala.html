@@ -43,7 +43,7 @@
 								Jadwal<span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-list-alt"></span>
 							</a>
 							<ul class="dropdown-menu forAnimate" role="menu">
-								<li><a href="#">
+								<li><a href="@routes.Application.jadwalKuliah()">
 									<span style="font-size:16px;" class="hidden-xs showopacity glyphicon glyphicon-calendar"></span> Jadwal Kuliah 
 								</a></li>
 								<li><a href="#">
@@ -66,7 +66,7 @@
 			<div class="container-fluid">
 				<div class="row">
                     <div class="col-lg-12">
-						<h1>Periksa Prasyarat Mata Kuliah</h1> 
+						<h1>Pemeriksaan Prasyarat Mata Kuliah</h1> 
 						<h3>Semester @semester</h3> 
 						<div class="table-responsive">
 						<table class="table table-bordered">
@@ -84,7 +84,19 @@
 								<td rowspan="ls.getStatus().length-1">@ls.getMataKuliah().getNama()</td>
 								@for(stat<-ls.getStatus()){
 									@if(!stat.isEmpty){
-										<td>@stat</td>
+										@{
+											if(stat.contains("sudah")){
+												<td style="color: #0066FF;">{stat} <span class="glyphicon glyphicon-flag"></span></td>
+											}else if(stat.contains("memenuhi syarat")){
+												<td style="color: green;">{stat} <span class="glyphicon glyphicon-ok"></span></td>
+											}else if(stat.contains("CATATAN")){
+												<td style="color: #FF9900;">{stat} <span class="glyphicon glyphicon-warning-sign"></span></td>
+											}else if(stat.contains("data")){
+												<td style="color: gray;">{stat} <span class="glyphicon glyphicon-exclamation-sign"></span></td>
+											}else{
+												<td style="color: red;">{stat} <span class="glyphicon glyphicon-remove"></span></td>
+											}
+										}
 									}
 								}
 							</tr>

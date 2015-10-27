@@ -21,7 +21,11 @@ public class JadwalUjian extends Jadwal{
         this.tanggal = tanggal;
         this.kursi = kursi;
     }
-
+    
+    public JadwalUjian(){
+        super();
+    }
+    
     public String getTanggal() {
         return tanggal;
     }

@@ -21,7 +21,11 @@ public class JadwalKuliah extends Jadwal{
         this.dosen = dosen;
         this.hari = hari;
     }
-
+    
+    public JadwalKuliah(){
+        super();
+    }
+        
     public String getDosen() {
         return dosen;
     }

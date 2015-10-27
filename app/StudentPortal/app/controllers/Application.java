@@ -84,6 +84,15 @@ public class Application extends Controller {
     	}
     }
     
+    public Result jadwalKuliah() throws IOException{
+    	if(session("npm")==null){
+    		return index();
+    	}
+    	else{
+	    	return ok(views.html.jadwalKuliah.render());
+    	}
+    }
+    
     public Result logout() throws IOException {
     	session().clear();
     	scrap.logout();
