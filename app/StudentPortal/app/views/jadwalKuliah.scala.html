@@ -64,8 +64,17 @@
 		<!-- Konten Halaman -->
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-2">
-						<table id="timeline" class="table hidden-xs">
+					<h2 class="text-center">JADWAL KULIAH</h2> 
+					<h4 class="text-center">SEMESTER semester</h4>
+				</div>
+				@if(jadwalKuliah.isKuliahEmpty()){
+					<div class="row">
+						<h5 style="color: gray;">JADWAL KULIAH BELUM TERSEDIA <span class="glyphicon glyphicon-exclamation-sign"></span></h5>
+					</div>	
+				}else{
+				<div class="row">
+					<div class="col-md-1">
+						<table id="timeline" class="table hidden-xs hidden-sm">
 							<thead>
 								<tr>
 									<th>Pukul</th>
@@ -244,6 +253,7 @@
 						</div>
 					</div>
 				</div>
+				}
 			</div>
 		</div>
 		

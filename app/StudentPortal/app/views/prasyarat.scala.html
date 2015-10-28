@@ -66,8 +66,8 @@
 			<div class="container-fluid">
 				<div class="row">
                     <div class="col-lg-12">
-						<h1>Pemeriksaan Prasyarat Mata Kuliah</h1> 
-						<h3>Semester @semester</h3> 
+						<h2 class="text-center">PEMERIKSAAN PRASYARAT MATA KULIAH</h2> 
+						<h4 class="text-center">SEMESTER @semester</h4> 
 						<div class="table-responsive">
 						<table class="table table-bordered">
 						<thead>
@@ -80,21 +80,37 @@
 						<tbody>
 						@for(ls<-list){
 							<tr>
-								<td rowspan="ls.getStatus().length-1">@ls.getMataKuliah().getKode()</td>
-								<td rowspan="ls.getStatus().length-1">@ls.getMataKuliah().getNama()</td>
+								<td rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().getKode()</td>
+								<td rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().getNama()</td>
+								
 								@for(stat<-ls.getStatus()){
 									@if(!stat.isEmpty){
 										@{
-											if(stat.contains("sudah")){
-												<td style="color: #0066FF;">{stat} <span class="glyphicon glyphicon-flag"></span></td>
-											}else if(stat.contains("memenuhi syarat")){
-												<td style="color: green;">{stat} <span class="glyphicon glyphicon-ok"></span></td>
-											}else if(stat.contains("CATATAN")){
-												<td style="color: #FF9900;">{stat} <span class="glyphicon glyphicon-warning-sign"></span></td>
-											}else if(stat.contains("data")){
-												<td style="color: gray;">{stat} <span class="glyphicon glyphicon-exclamation-sign"></span></td>
-											}else{
-												<td style="color: red;">{stat} <span class="glyphicon glyphicon-remove"></span></td>
+											if(stat.equals(ls.getStatus()(0))){
+												if(stat.contains("sudah lulus")){
+													<td style="color: #0066FF;">{stat} <span class="glyphicon glyphicon-flag"></span></td>
+												}else if(stat.contains("memenuhi syarat")){
+													<td style="color: green;">{stat} <span class="glyphicon glyphicon-ok"></span></td>
+												}else if(stat.contains("CATATAN:")){
+													<td style="color: #FF9900;">{stat} <span class="glyphicon glyphicon-warning-sign"></span></td>
+												}else if(stat.contains("data")){
+													<td style="color: gray;">{stat} <span class="glyphicon glyphicon-exclamation-sign"></span></td>
+												}else{
+													<td style="color: red;">{stat} <span class="glyphicon glyphicon-remove"></span></td>
+												}	
+											}
+											else{
+												if(stat.contains("sudah lulus")){
+													<tr><td style="color: #0066FF;">{stat} <span class="glyphicon glyphicon-flag"></span></td></tr>
+												}else if(stat.contains("memenuhi syarat")){
+													<tr><td style="color: green;">{stat} <span class="glyphicon glyphicon-ok"></span></td></tr>
+												}else if(stat.contains("CATATAN:")){
+													<tr><td style="color: #FF9900;">{stat} <span class="glyphicon glyphicon-warning-sign"></span></td></tr>
+												}else if(stat.contains("data")){
+													<tr><td style="color: gray;">{stat} <span class="glyphicon glyphicon-exclamation-sign"></span></td></tr>
+												}else{
+													<tr><td style="color: red;">{stat} <span class="glyphicon glyphicon-remove"></span></td></tr>
+												}
 											}
 										}
 									}

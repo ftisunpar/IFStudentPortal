@@ -18,6 +18,18 @@ public class JadwalDisplay {
 		return kuliahCalendar[hari][waktu];
 	}
 	
+	public boolean isKuliahEmpty(){
+		return jb.getJadwalKuliah().isEmpty();
+	}
+	
+	public boolean isUTSEmpty(){
+		return jb.getJadwalUTS().isEmpty();
+	}
+	
+	public boolean isUASEmpty(){
+		return jb.getJadwalUAS().isEmpty();
+	}
+	
 	private void fillJadwalKuliah(){
 		if(!jb.getJadwalKuliah().isEmpty()){
             for (int i = 0; i < kuliahCalendar.length; i++) {

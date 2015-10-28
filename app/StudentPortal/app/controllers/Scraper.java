@@ -34,6 +34,7 @@ public class Scraper {
     private final String LOGIN_URL = BASE_URL + "home/index.login.submit.php";
     private final String CAS_URL = "https://cas.unpar.ac.id/login";
     private final String ALLJADWAL_URL = BASE_URL + "includes/jadwal.all.php";
+    private final String JADWAL_URL = BASE_URL + "includes/jadwal.aktif.php";
     private final String NILAI_URL = BASE_URL + "includes/nilai.sem.php";
     private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
     private final String KODE_FAK_FTIS = "7";
@@ -137,7 +138,7 @@ public class Scraper {
     }
     
     public JadwalBundle requestJadwal() throws IOException{
-        Connection jadwalConn = Jsoup.connect(BASE_URL+"includes/jadwal.aktif.php");
+        Connection jadwalConn = Jsoup.connect(JADWAL_URL);
         jadwalConn.cookies(this.login_cookies);
         jadwalConn.timeout(0);
         jadwalConn.validateTLSCertificates(false); 
