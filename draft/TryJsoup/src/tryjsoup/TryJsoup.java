@@ -5,8 +5,16 @@
  */
 package tryjsoup;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.lang.reflect.*;
+import models.id.ac.unpar.siamodels.Mahasiswa.Nilai;
 import models.id.ac.unpar.siamodels.MataKuliah;
+import models.id.ac.unpar.siamodels.Semester;
+
 
 /**
  *
@@ -17,122 +25,60 @@ public class TryJsoup {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scraper scrap = new Scraper();
         scrap.login("2012730012", "Ttdjq6Be");
         String nama = scrap.getLoggedMahasiswa().getNama();
         scrap.requestKuliah();
         scrap.setNilai();
-        
-        //System.out.println(scrap.getLoggedMahasiswa().calculateIPKLulus());
-        JadwalBundle jb = scrap.requestJadwal();
-        MataKuliah mkx = MataKuliah.createMataKuliah("XYZ000",1 ,"dummy");
-        jb.getJadwalKuliah().add(new JadwalKuliah( mkx,'Z' ,"Thugsgino" , "Sabtu", "07.30-09.30", "9999"));
-        JadwalKuliah[][] kuliahCalendar = new JadwalKuliah[6][22];
-        if(kuliahCalendar[0][0]==null){
-            System.out.println("xxx");
-        }
-        System.out.println("Kuliah");
-        if(jb.getJadwalKuliah().isEmpty()){
-            System.out.println("Jadwal kuliah belum tersedia");
+        int last = scrap.getLoggedMahasiswa().getRiwayatNilai().size()-1;
+        Nilai latest = scrap.getLoggedMahasiswa().getRiwayatNilai().get(last);
+        System.out.println(nama);
+        if(latest.getTahunAjaran()==Integer.parseInt(scrap.thn_akd) && latest.getSemester() == Semester.fromString(scrap.sem_akd)){
+            System.out.println("IPS: "+scrap.getLoggedMahasiswa().calculateIPS());
         }
         else{
-            for (int i = 0; i < kuliahCalendar.length; i++) {
-                for (int j = 0; j < kuliahCalendar[i].length; j++) {
-                    kuliahCalendar[i][j] = new JadwalKuliah();
-                }
+            System.out.println("IPS: belum tersedia");
+        }
+        System.out.println("IPK: "+scrap.getLoggedMahasiswa().calculateIPKLulus());
+        System.out.println("Anda telah lulus: "+scrap.getLoggedMahasiswa().calculateSKSLulus()+" sks");
+        int sisa = 144-scrap.getLoggedMahasiswa().calculateSKSLulus();
+        if(sisa<0){
+            sisa = 0;
+        }
+        System.out.println("Sisa sks yang perlu Anda tempuh minimal " + sisa + " sks");
+        String[] pilWajib = new String[]{"AIF311","AIF312","AIF313","AIF314","AIF315","AIF316","AIF317","AIF318"}; 
+        MataKuliah.createMataKuliah("AIF311", 2, "Pemrograman Fungsional");
+        MataKuliah.createMataKuliah("AIF312", 2, "Keamanan Informasi");
+        MataKuliah.createMataKuliah("AIF313", 2, "Grafika Komputer");
+        MataKuliah.createMataKuliah("AIF314", 2, "Pemrograman Basis Data");
+        MataKuliah.createMataKuliah("AIF315", 2, "Pemrograman Berbasis Web");
+        MataKuliah.createMataKuliah("AIF316", 2, "Komputasi Paralel");
+        MataKuliah.createMataKuliah("AIF317", 2, "Desain Antarmuka Grafis");
+        MataKuliah.createMataKuliah("AIF318", 2, "Pemrograman Aplikasi Bergerak");
+       
+        String pilWajibLulus = new String();
+        String pilWajibBelumLulus = new String();
+        for (int i = 0; i < pilWajib.length; i++) {
+            if(scrap.getLoggedMahasiswa().hasLulusKuliah(pilWajib[i])){
+               pilWajibLulus += pilWajib[i] + ";";
             }
-            for (int i = 0; i < jb.getJadwalKuliah().size(); i++) {
-                JadwalKuliah jdw = jb.getJadwalKuliah().get(i);
-                int day = dayTranslate(jdw.getHari());
-                //System.out.println(day);
-                //kuliahCalendar[day][0] = jdw;
-                if(day!=-1){
-                    System.out.println("masuk " + jdw.getMataKuliah().getNama() + " " + jdw.getWaktu());
-                    String[] timePair = jdw.getWaktu().split("-");
-                    String start = timePair[0];
-                    String end = timePair[1];
-                    int range = (Integer.parseInt(end.substring(0, 2))- Integer.parseInt(start.substring(0, 2)))*2;
-                    System.out.println("range: " +range);
-                    int beginIndex = 0;
-                    if(start.charAt(3)=='0'){
-                        beginIndex = (Integer.parseInt(start.substring(0, 2))-7)*2;
-                        System.out.println("BI: " + beginIndex);
-                    }
-                    else if(start.charAt(3)=='3'){
-                        beginIndex =((Integer.parseInt(start.substring(0, 2))-7)*2)+1;
-                       // System.out.println("BI: " + beginIndex);
-                    }
-                    for (int j = beginIndex; j < beginIndex+range; j++) {
-                        kuliahCalendar[day][j] = jdw;  
-                    }
-                }
-                //System.out.println(jdw.mataKuliah.getNama()+ " / " + jdw.getKelas() + " / " + jdw.getDosen()+ " / " + jdw.getHari() + " / " + jdw.getWaktu()+ " / "+ jdw.getRuang());
+            else{
+               pilWajibBelumLulus += pilWajib[i] + ";";  
             }
         }
-
-        for (int i = 0; i < kuliahCalendar.length; i++) {
-            System.out.println("Hari " + i);
-            for (int j = 0; j < kuliahCalendar[i].length; j++) {
-                if(kuliahCalendar[i][j].getMataKuliah()!=null){
-                    System.out.println(j+" "+kuliahCalendar[i][j].getMataKuliah().getNama());
-                }
-                else{
-                    System.out.println(j+ " -");
-                }
-            }
-        }
-        /*
-        System.out.println("");
-        System.out.println("UTS");
-        if(jb.getJadwalUTS().isEmpty()){
-            System.out.println("Jadwal UTS belum tersedia");
+        System.out.println("Pilihan Wajib");
+        System.out.println("Lulus: " + pilWajibLulus);
+        System.out.println("Belum lulus: " + pilWajibBelumLulus);
+        System.out.println("Pilihan wajib minimal lulus 4 dari 8");
+        if(pilWajibLulus.split(";").length>=4){
+            System.out.println("Syarat kelulusan pilihan wajib terpenuhi");
         }
         else{
-            for (int i = 0; i < jb.getJadwalUTS().size(); i++) {
-                JadwalUjian jdw = jb.getJadwalUTS().get(i);
-                System.out.println(jdw.mataKuliah.getNama()+ " / " + jdw.getKelas() + " / " + jdw.getTanggal()+ " / " + jdw.getWaktu()+ " / " + jdw.getRuang() + jdw.getKursi());
-            }
+            System.out.println("Syarat kelulusan pilihan wajib belum terpenuhi");
+            System.out.println("Anda hanya lulus " + pilWajibLulus.split(";").length + " mata kuliah pilihan wajib");
+            System.out.println("Anda perlu lulus setidaknya " + (4-pilWajibLulus.split(";").length) + " mata kuliah pilihan wajib lagi");
         }
-        System.out.println("");
-        System.out.println("UAS");
-        if(jb.getJadwalUAS().isEmpty()){
-            System.out.println("Jadwal UAS belum tersedia");
-        }
-        else{
-            for (int i = 0; i < jb.getJadwalUAS().size(); i++) {
-                JadwalUjian jdw = jb.getJadwalUAS().get(i);
-                System.out.println(jdw.mataKuliah.getNama()+ " / " + jdw.getKelas() + " / " + jdw.getTanggal()+ " / " + jdw.getWaktu()+ " / " + jdw.getRuang() + jdw.getKursi());
-            }
-        }
-         */
     }
     
-    public static int dayTranslate(String hari){
-        int day = -1;
-        switch(hari){
-            case "Senin": 
-                day = 0;
-                break;
-            case "Selasa": 
-                day = 1;
-                break;
-            case "Rabu": 
-                day = 2;
-                break;
-            case "Kamis": 
-                day = 3;
-                break;
-            case "Jumat": 
-                day = 4;
-                break;
-            case "Sabtu": 
-                day = 5;
-                break;
-            default:
-                day = -1;
-                break;
-        }
-        return day;
-    }
 }

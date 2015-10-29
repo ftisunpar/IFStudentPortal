@@ -35,7 +35,7 @@ public class Scraper {
     private final String NILAI_URL = BASE_URL + "includes/nilai.sem.php";
     private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
     private final String KODE_FAK_FTIS = "7";
-    private String thn_akd, sem_akd;
+    String thn_akd, sem_akd;
     private Mahasiswa logged_mhs; 
 
     public Mahasiswa getLoggedMahasiswa() {

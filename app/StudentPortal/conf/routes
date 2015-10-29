@@ -10,6 +10,7 @@ POST 	/login						controllers.Application.submitLogin()
 GET     /home                     	controllers.Application.home()
 GET     /prasyarat                  controllers.Application.prasyarat()
 GET     /jadwalkuliah               controllers.Application.jadwalKuliah()
+GET     /ringkasan               	controllers.Application.ringkasan()
 GET     /logout                  	controllers.Application.logout()
 
 
