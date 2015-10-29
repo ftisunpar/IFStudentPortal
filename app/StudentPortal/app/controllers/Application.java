@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 
 import models.display.JadwalDisplay;
 import models.display.PrasyaratDisplay;
+import models.display.RingkasanDisplay;
 import models.id.ac.unpar.siamodels.Mahasiswa;
 import models.id.ac.unpar.siamodels.MataKuliah;
 import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
@@ -93,10 +94,64 @@ public class Application extends Controller {
     	if(session("npm")==null){
     		return index();
     	}
+    	else if(scrap.getLoggedMahasiswa()==null){	
+			try{
+				return logout();
+			}catch(IOException e){}
+    	}
+		JadwalBundle jb = scrap.requestJadwal();
+		JadwalDisplay table = new JadwalDisplay(jb);
+    	return ok(views.html.jadwalKuliah.render(table));
+    }
+    
+    public Result jadwalUTS() throws IOException{
+    	if(session("npm")==null){
+    		return index();
+    	}
+    	else if(scrap.getLoggedMahasiswa()==null){	
+			try{
+				return logout();
+			}catch(IOException e){}
+    	}
+		JadwalBundle jb = scrap.requestJadwal();
+		JadwalDisplay table = new JadwalDisplay(jb);
+    	return ok(views.html.jadwalUTS.render(table));
+    }
+    
+    public Result jadwalUAS() throws IOException{
+    	if(session("npm")==null){
+    		return index();
+    	}
+    	else if(scrap.getLoggedMahasiswa()==null){	
+			try{
+				return logout();
+			}catch(IOException e){}
+    	}
+		JadwalBundle jb = scrap.requestJadwal();
+		JadwalDisplay table = new JadwalDisplay(jb);
+    	return ok(views.html.jadwalUAS.render(table));
+    }
+    
+    public Result ringkasan() throws IOException{
+    	if(session("npm")==null){
+    		return index();
+    	}
     	else{
-    		JadwalBundle jb = scrap.requestJadwal();
-    		JadwalDisplay table = new JadwalDisplay(jb);
-	    	return ok(views.html.jadwalKuliah.render(table));
+    		scrap.setNilai();
+    		RingkasanDisplay display = new RingkasanDisplay(scrap.getLoggedMahasiswa().calculateIPS(),scrap.getLoggedMahasiswa().calculateIPKLulus(),scrap.getLoggedMahasiswa().calculateSKSLulus());
+	    	String pilWajibLulus = new String();
+	    	String pilWajibBelumLulus = new String();
+    		for(int i=0; i<display.getPilWajib().length; i++){
+	    		if(scrap.getLoggedMahasiswa().hasLulusKuliah(display.getPilWajib()[i])){
+	    			pilWajibLulus += display.getPilWajib()[i]+";";
+	    		}
+	    		else{
+	    			pilWajibBelumLulus += display.getPilWajib()[i]+";";
+	    		}
+	    	}
+    		display.setPilWajibLulus(pilWajibLulus.split(";"));
+    		display.setPilWajibBelumLulus(pilWajibBelumLulus.split(";"));
+    		return ok(views.html.ringkasan.render(display));
     	}
     }
     
