@@ -2,7 +2,9 @@ package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
@@ -22,6 +24,7 @@ import views.html.*;
 
 public class Application extends Controller {
 	Scraper scrap = new Scraper();
+	Map<String,Mahasiswa> mahasiswaList = new HashMap<String,Mahasiswa>();
 	
     public Result index() {
     	if(session("npm")==null){
@@ -52,8 +55,10 @@ public class Application extends Controller {
     		return ok(views.html.login.render("Maaf, Anda bukan mahasiswa Teknik Informatika"));
     	}
     	String npm = "20" + email.substring(2,4) + email.substring(0,2)+ "0" + email.substring(4,7);
-    	if(this.scrap.login(npm, pass)){
+    	Mahasiswa login_mhs = this.scrap.login(npm, pass);
+    	if(login_mhs!=null){
     		session("npm", npm);
+    		mahasiswaList.put(session("npm"), login_mhs);
     		return home();
     	}
 	    else{
@@ -65,25 +70,15 @@ public class Application extends Controller {
     	if(session("npm")==null){
     		return index();
     	}
-    	else if(scrap.getLoggedMahasiswa()==null){	
-			try{
-				return logout();
-			}catch(IOException e){}
-    	}
     	
-    	String nama = scrap.getLoggedMahasiswa().getNama();
-    	String photoPath = scrap.getPhotoPath();
+    	String nama = mahasiswaList.get(session("npm")).getNama();
+    	String photoPath = mahasiswaList.get(session("npm")).getPhotoPath();
     	return ok(views.html.home.render(nama,photoPath));	
     }
     
     public Result prasyarat() throws IOException{
     	if(session("npm")==null){
     		return index();
-    	}
-    	else if(scrap.getLoggedMahasiswa()==null){	
-			try{
-				return logout();
-			}catch(IOException e){}
     	}
     	List<PrasyaratDisplay> table = cekPrasyarat();
     	String semester = scrap.getSemester();
@@ -94,12 +89,7 @@ public class Application extends Controller {
     	if(session("npm")==null){
     		return index();
     	}
-    	else if(scrap.getLoggedMahasiswa()==null){	
-			try{
-				return logout();
-			}catch(IOException e){}
-    	}
-		JadwalBundle jb = scrap.requestJadwal();
+		JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
 		JadwalDisplay table = new JadwalDisplay(jb);
     	return ok(views.html.jadwalKuliah.render(table));
     }
@@ -108,12 +98,7 @@ public class Application extends Controller {
     	if(session("npm")==null){
     		return index();
     	}
-    	else if(scrap.getLoggedMahasiswa()==null){	
-			try{
-				return logout();
-			}catch(IOException e){}
-    	}
-		JadwalBundle jb = scrap.requestJadwal();
+    	JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
 		JadwalDisplay table = new JadwalDisplay(jb);
     	return ok(views.html.jadwalUTS.render(table));
     }
@@ -122,12 +107,7 @@ public class Application extends Controller {
     	if(session("npm")==null){
     		return index();
     	}
-    	else if(scrap.getLoggedMahasiswa()==null){	
-			try{
-				return logout();
-			}catch(IOException e){}
-    	}
-		JadwalBundle jb = scrap.requestJadwal();
+    	JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
 		JadwalDisplay table = new JadwalDisplay(jb);
     	return ok(views.html.jadwalUAS.render(table));
     }
@@ -137,12 +117,11 @@ public class Application extends Controller {
     		return index();
     	}
     	else{
-    		scrap.setNilai();
-    		RingkasanDisplay display = new RingkasanDisplay(scrap.getLoggedMahasiswa().calculateIPS(),scrap.getLoggedMahasiswa().calculateIPKLulus(),scrap.getLoggedMahasiswa().calculateSKSLulus());
+    		RingkasanDisplay display = new RingkasanDisplay( mahasiswaList.get(session("npm")).calculateIPS(), mahasiswaList.get(session("npm")).calculateIPKLulus(), mahasiswaList.get(session("npm")).calculateSKSLulus());
 	    	String pilWajibLulus = new String();
 	    	String pilWajibBelumLulus = new String();
     		for(int i=0; i<display.getPilWajib().length; i++){
-	    		if(scrap.getLoggedMahasiswa().hasLulusKuliah(display.getPilWajib()[i])){
+	    		if( mahasiswaList.get(session("npm")).hasLulusKuliah(display.getPilWajib()[i])){
 	    			pilWajibLulus += display.getPilWajib()[i]+";";
 	    		}
 	    		else{
@@ -158,13 +137,13 @@ public class Application extends Controller {
     public Result logout() throws IOException {
     	session().clear();
     	scrap.logout();
+    	mahasiswaList.remove(session("npm"));
     	return index();
     }
     
     private List<PrasyaratDisplay> cekPrasyarat() throws IOException{
     	List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
-    	List<String> mkl = scrap.requestKuliah();
-        scrap.setNilai();
+    	List<String> mkl = scrap.getMkList();
         String MATAKULIAH_REPOSITORY_PACKAGE = "models.id.ac.unpar.siamodels.matakuliah"; 
     	List<Object> mkKnown = new ArrayList<Object>(); 
     	List<String> mkUnknown = new ArrayList<String>(); 
@@ -185,7 +164,7 @@ public class Application extends Controller {
         for (Object mk: mkKnown) {
             if (mk instanceof HasPrasyarat) {
                 List<String> reasons = new ArrayList<String>();
-                ((HasPrasyarat)mk).checkPrasyarat(scrap.getLoggedMahasiswa(), reasons);
+                ((HasPrasyarat)mk).checkPrasyarat(mahasiswaList.get(session("npm")), reasons);
                 if (!reasons.isEmpty()) {
                     String status = new String();
             		for (String reason: reasons) {
@@ -194,7 +173,7 @@ public class Application extends Controller {
                     table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),status.split(";")));
                 }
                 else{
-                    if(scrap.getLoggedMahasiswa().hasLulusKuliah(mk.getClass().getSimpleName())){
+                    if(mahasiswaList.get(session("npm")).hasLulusKuliah(mk.getClass().getSimpleName())){
                     	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),new String[]{"sudah lulus"}));
                     }
                     else{ 

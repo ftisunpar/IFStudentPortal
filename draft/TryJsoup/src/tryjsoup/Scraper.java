@@ -8,13 +8,13 @@ package tryjsoup;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-
+import java.util.TreeMap;
 import models.id.ac.unpar.siamodels.Mahasiswa;
 import models.id.ac.unpar.siamodels.Mahasiswa.Nilai;
 import models.id.ac.unpar.siamodels.MataKuliah;
 import models.id.ac.unpar.siamodels.Semester;
-
 import org.jsoup.Connection;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
@@ -78,6 +78,14 @@ public class Scraper {
         //System.out.println(resp.cookies().toString());
         if(resp.body().contains("Data Akademik")){
             this.login_cookies = resp.cookies();
+            String conci = this.login_cookies.toString().substring(1, this.login_cookies.toString().length()-1);
+            String[] arrConci = conci.split(", ");
+            Map<String,String> test = new TreeMap<String,String>();
+            for (int i = 0; i < arrConci.length; i++) {
+                test.put(arrConci[i].split("=")[0], arrConci[i].split("=")[1]);
+            }
+            System.out.println(this.login_cookies);
+            System.out.println(test);
             doc = resp.parse();
             String nama = doc.select("p[class=student-name]").text();
             this.logged_mhs.setNama(nama);
