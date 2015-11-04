@@ -1,4 +1,4 @@
-@(nama: String, photoPath: String)
+@(mhs: models.id.ac.unpar.siamodels.Mahasiswa)
 
 <!DOCTYPE html>
 
@@ -7,7 +7,7 @@
         <meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>IT Student Portal</title>
+		<title>Informatika Student Portal</title>
 
 		<!-- CSS -->
         <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
@@ -27,7 +27,7 @@
 						<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
 						<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
 					</div>
-					<a class="navbar-brand">IT Student Portal</a>
+					<p class="navbar-brand">INFORMATIKA STUDENT PORTAL</p>
 				</div>
 				<!-- Menu Navigasi -->
 				<div class="collapse navbar-collapse" id="sidebar-navbar-collapse">
@@ -66,9 +66,9 @@
 			<div class="container-fluid">
 				<div class="row">
                     <div class="col-lg-12">
-						<img src="@photoPath"/>
+						<img src="@mhs.getPhotoPath()"/>
 						<br>
-						@nama 
+						@mhs.getNama() 
 						<br>
 						<a href="@routes.Application.logout()">Logout</a>
 					</div>

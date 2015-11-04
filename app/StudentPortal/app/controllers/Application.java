@@ -70,10 +70,7 @@ public class Application extends Controller {
     	if(session("npm")==null){
     		return index();
     	}
-    	
-    	String nama = mahasiswaList.get(session("npm")).getNama();
-    	String photoPath = mahasiswaList.get(session("npm")).getPhotoPath();
-    	return ok(views.html.home.render(nama,photoPath));	
+    	return ok(views.html.home.render(mahasiswaList.get(session("npm"))));	
     }
     
     public Result prasyarat() throws IOException{
@@ -128,8 +125,18 @@ public class Application extends Controller {
 	    			pilWajibBelumLulus += display.getPilWajib()[i]+";";
 	    		}
 	    	}
-    		display.setPilWajibLulus(pilWajibLulus.split(";"));
-    		display.setPilWajibBelumLulus(pilWajibBelumLulus.split(";"));
+    		if(!pilWajibLulus.isEmpty()){
+	    		display.setPilWajibLulus(pilWajibLulus.split(";"));
+    		}
+    		else{
+    			display.setPilWajibLulus(new String[]{});
+    		}
+    		if(!pilWajibBelumLulus.isEmpty()){
+	    		display.setPilWajibBelumLulus(pilWajibBelumLulus.split(";"));
+    		}
+    		else{
+    			display.setPilWajibBelumLulus(new String[]{});
+    		}
     		return ok(views.html.ringkasan.render(display));
     	}
     }

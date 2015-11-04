@@ -89,7 +89,7 @@ public class Scraper {
             String curr_sem = doc.select(".main-info-semester a").text();
             String[] sem_set = this.parseSemester(curr_sem);
             Element photo = doc.select(".student-photo img").first();
-            String photoPath = photo.absUrl("src");
+            String photoPath = photo.absUrl("src"); 
             logged_mhs.setPhotoPath(photoPath);
             this.thn_akd = sem_set[0];
             this.sem_akd = sem_set[1];

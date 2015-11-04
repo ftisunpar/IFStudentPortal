@@ -7,7 +7,7 @@
         <meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>IT Student Portal</title>
+		<title>Informatika Student Portal</title>
 
 		<!-- CSS -->
         <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
@@ -27,7 +27,7 @@
 						<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
 						<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
 					</div>
-					<a class="navbar-brand">IT Student Portal</a>
+					<p class="navbar-brand">INFORMATIKA STUDENT PORTAL</p>
 				</div>
 				<!-- Menu Navigasi -->
 				<div class="collapse navbar-collapse" id="sidebar-navbar-collapse">
@@ -70,22 +70,41 @@
 						IPK: @ringkasan.getIPK()<br>
 						sks lulus: @ringkasan.getSKSLulus()<br>
 						Sisa sks untuk kelulusan: @ringkasan.getMinSisaSKS()<br>
-						<h5>Pilihan Wajib</h5>
-						Lulus: <br>
-						@for(list<-ringkasan.getPilWajibLulus()){
-							@list @(models.id.ac.unpar.siamodels.MataKuliah.getMataKuliah(list).getNama())<br>
-						}
-						Belum lulus: <br>
-						@for(list<-ringkasan.getPilWajibBelumLulus()){
-							@list @(models.id.ac.unpar.siamodels.MataKuliah.getMataKuliah(list).getNama())<br>
-						}
-						@if(ringkasan.getPilWajib().length-ringkasan.getPilWajibBelumLulus().length>=4){
-							Sudah memenuhi syarat kelulusan pilihan wajib
-						}else{
-							Belum memenuhi syarat kelulusan pilihan wajib, minimal 
-							@(4-ringkasan.getPilWajibLulus().length)
-						}
-						<br>
+						
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div class="page-header">
+									<h5>Pilihan Wajib</h5>
+								</div>
+								Lulus: <br>
+								<ul>
+									@if(ringkasan.getPilWajibLulus().length==0){
+										<li>	-	</li>
+									}else{
+										@for(list<-ringkasan.getPilWajibLulus()){
+											<li>@list @(models.id.ac.unpar.siamodels.MataKuliah.getMataKuliah(list).getNama())</li>
+										}
+									}
+								</ul>
+								Belum lulus: <br>
+								<ul>
+									@if(ringkasan.getPilWajibBelumLulus().length==0){
+										<li>	-	</li>
+									}else{
+										@for(list<-ringkasan.getPilWajibBelumLulus()){
+											<li>@list @(models.id.ac.unpar.siamodels.MataKuliah.getMataKuliah(list).getNama())</li>
+										}
+									}
+								</ul>
+								@if(ringkasan.getPilWajib().length-ringkasan.getPilWajibBelumLulus().length>=4){
+									Sudah memenuhi syarat kelulusan pilihan wajib
+								}else{
+									Belum memenuhi syarat kelulusan pilihan wajib, minimal lulus
+									@(4-ringkasan.getPilWajibLulus().length) mata kuliah pilihan wajib.
+								}
+							</div>
+						</div>
+
 					</div>
                 </div>
 			</div>
