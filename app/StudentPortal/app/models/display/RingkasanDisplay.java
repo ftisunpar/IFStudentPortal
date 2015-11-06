@@ -4,6 +4,8 @@ import models.id.ac.unpar.siamodels.MataKuliah;
 
 public class RingkasanDisplay {
 	private String[] pilWajib;
+	private String[] pilWajibLulus;
+	private String[] pilWajibBelumLulus;
 	private double IPS;
 	private double IPK;
 	private int sksLulus;
@@ -21,6 +23,29 @@ public class RingkasanDisplay {
         MataKuliah.createMataKuliah("AIF316", 2, "Komputasi Paralel");
         MataKuliah.createMataKuliah("AIF317", 2, "Desain Antarmuka Grafis");
         MataKuliah.createMataKuliah("AIF318", 2, "Pemrograman Aplikasi Bergerak");
+	}
+	
+	
+	
+	public String[] getPilWajibLulus() {
+		return pilWajibLulus;
+	}
+
+	public void setPilWajibLulus(String[] pilWajibLulus) {
+		this.pilWajibLulus = pilWajibLulus;
+	}
+
+	public String[] getPilWajibBelumLulus() {
+		return pilWajibBelumLulus;
+	}
+
+
+	public void setPilWajibBelumLulus(String[] pilWajibBelumLulus) {
+		this.pilWajibBelumLulus = pilWajibBelumLulus;
+	}
+
+	public String[] getPilWajib(){
+		return this.pilWajib;
 	}
 	
 	public double getIPS(){

@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>IT Student Portal</title>
+		<title>Informatika Student Portal</title>
 
 		<!-- CSS -->
         <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
@@ -26,7 +26,7 @@
 						<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
 						<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
 					</div>
-					<a class="navbar-brand">IT Student Portal</a>
+					<p class="navbar-brand">INFORMATIKA STUDENT PORTAL</p>
 				</div>
 				<!-- Menu Navigasi -->
 				<div class="collapse navbar-collapse" id="sidebar-navbar-collapse">
@@ -42,18 +42,18 @@
 								Jadwal<span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-list-alt"></span>
 							</a>
 							<ul class="dropdown-menu forAnimate" role="menu">
-								<li ><a href="#">
+								<li ><a href="@routes.Application.jadwalKuliah()">
 									<span style="font-size:16px;" class="hidden-xs showopacity glyphicon glyphicon-calendar"></span> Jadwal Kuliah 
 								</a></li>
-								<li><a href="#">
+								<li><a href="@routes.Application.jadwalUTS()">
 									<span style="font-size:16px;" class="hidden-xs showopacity glyphicon glyphicon-calendar"></span> Jadwal UTS 
 								</a></li>
-								<li><a href="#">
+								<li><a href="@routes.Application.jadwalUAS()">
 									<span style="font-size:16px;" class="hidden-xs showopacity glyphicon glyphicon-calendar"></span> Jadwal UAS
 								</a></li>
 							</ul>
 						</li>
-						<li ><a href="#">
+						<li ><a href="@routes.Application.ringkasan()">
 							Data Akademik<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-book"></span>
 						</a></li>
 					</ul>
