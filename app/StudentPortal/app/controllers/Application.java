@@ -70,52 +70,73 @@ public class Application extends Controller {
     	if(session("npm")==null){
     		return index();
     	}
-    	return ok(views.html.home.render(mahasiswaList.get(session("npm"))));	
+    	else{
+    		return ok(views.html.home.render(mahasiswaList.get(session("npm"))));	
+    	}
     }
     
     public Result prasyarat() throws IOException{
     	if(session("npm")==null){
     		return index();
     	}
-    	List<PrasyaratDisplay> table = cekPrasyarat();
-    	String semester = scrap.getSemester();
-    	return ok(views.html.prasyarat.render(table,semester));
+    	else if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
+    		List<PrasyaratDisplay> table = null;
+	    	String semester = scrap.getSemester();
+	    	return ok(views.html.prasyarat.render(table,semester));
+    	}
+    	else{
+	    	List<PrasyaratDisplay> table = cekPrasyarat();
+	    	String semester = scrap.getSemester();
+	    	return ok(views.html.prasyarat.render(table,semester));
+    	}
     }
     
     public Result jadwalKuliah() throws IOException{
     	if(session("npm")==null){
     		return index();
     	}
-		JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
-		JadwalDisplay table = new JadwalDisplay(jb);
-    	return ok(views.html.jadwalKuliah.render(table));
+    	else{
+			JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
+			JadwalDisplay table = new JadwalDisplay(jb);
+	    	return ok(views.html.jadwalKuliah.render(table));
+    	}
     }
     
     public Result jadwalUTS() throws IOException{
     	if(session("npm")==null){
     		return index();
     	}
-    	JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
-		JadwalDisplay table = new JadwalDisplay(jb);
-    	return ok(views.html.jadwalUTS.render(table));
+    	else{
+	    	JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
+			JadwalDisplay table = new JadwalDisplay(jb);
+	    	return ok(views.html.jadwalUTS.render(table));
+    	}
     }
     
     public Result jadwalUAS() throws IOException{
     	if(session("npm")==null){
     		return index();
     	}
-    	JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
-		JadwalDisplay table = new JadwalDisplay(jb);
-    	return ok(views.html.jadwalUAS.render(table));
+    	else{
+	    	JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
+			JadwalDisplay table = new JadwalDisplay(jb);
+	    	return ok(views.html.jadwalUAS.render(table));
+    	}
     }
     
     public Result ringkasan() throws IOException{
     	if(session("npm")==null){
     		return index();
     	}
+    	else if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
+    		RingkasanDisplay display  = null;;
+	    	return ok(views.html.ringkasan.render(display));
+    	}
     	else{
-    		RingkasanDisplay display = new RingkasanDisplay( mahasiswaList.get(session("npm")).calculateIPS(), mahasiswaList.get(session("npm")).calculateIPKLulus(), mahasiswaList.get(session("npm")).calculateSKSLulus());
-	    	String pilWajibLulus = new String();
+    		Mahasiswa currMahasiswa = mahasiswaList.get(session("npm"));
+    		RingkasanDisplay display = new RingkasanDisplay(currMahasiswa.calculateIPS(), currMahasiswa.calculateIPKLulus(), currMahasiswa.calculateSKSLulus());
+	    	
+    		String pilWajibLulus = new String();
 	    	String pilWajibBelumLulus = new String();
     		for(int i=0; i<display.getPilWajib().length; i++){
 	    		if( mahasiswaList.get(session("npm")).hasLulusKuliah(display.getPilWajib()[i])){

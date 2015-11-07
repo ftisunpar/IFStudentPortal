@@ -96,7 +96,9 @@ public class Scraper {
             this.requestKuliah(login_cookies);
             JadwalBundle jadwalList = this.requestJadwal(login_cookies);
             logged_mhs.setJadwalList(jadwalList);
-            this.setNilai(login_cookies, logged_mhs);
+            if(!(logged_mhs.getTahunAngkatan()==Integer.parseInt(thn_akd)&&sem_akd=="1")){
+            	this.setNilai(login_cookies, logged_mhs);
+            }  
             return logged_mhs;
         }       
         else{
