@@ -14,6 +14,8 @@ import models.display.PrasyaratDisplay;
 import models.display.RingkasanDisplay;
 import models.id.ac.unpar.siamodels.Mahasiswa;
 import models.id.ac.unpar.siamodels.MataKuliah;
+import models.id.ac.unpar.siamodels.Mahasiswa.Nilai;
+import models.id.ac.unpar.siamodels.Semester;
 import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
 import models.support.JadwalBundle;
 import play.*;
@@ -134,8 +136,36 @@ public class Application extends Controller {
     	}
     	else{
     		Mahasiswa currMahasiswa = mahasiswaList.get(session("npm"));
-    		RingkasanDisplay display = new RingkasanDisplay(currMahasiswa.calculateIPS(), currMahasiswa.calculateIPKLulus(), currMahasiswa.calculateSKSLulus());
-	    	
+    		RingkasanDisplay display = new RingkasanDisplay(
+				String.format("%.2f", currMahasiswa.calculateIPS()), 
+				String.format("%.2f", currMahasiswa.calculateIPKLulus()), 
+				currMahasiswa.calculateSKSLulus()
+			);
+	    	List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();	
+	    	int lastIndex = riwayatNilai.size() - 1;
+			int semester = riwayatNilai.get(lastIndex).getSemester();
+			int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
+			int totalSKS = 0;
+			for (int i = lastIndex; i >= 0; i--) {
+				Nilai nilai = riwayatNilai.get(i);
+				if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
+					if (nilai.getAngkaAkhir() != null) {
+						totalSKS += nilai.getMataKuliah().getSKS();
+					}
+				} else {
+					break;
+				}
+			}
+			String semString = new String();
+			switch (semester) {
+				case 1: semString = "GANJIL"; break;
+				case 2: semString = "GENAP"; break;
+				case 4: semString = "PENDEK"; break;
+				case 5: semString = "UNKNOWN5"; break;
+				case 6: semString = "TRANSFER"; break;
+			}
+			String semTerakhir = semString +" "+tahunAjaran+"/"+(tahunAjaran+1);
+	    	display.setDataSemTerakhir(semTerakhir, totalSKS);
     		String pilWajibLulus = new String();
 	    	String pilWajibBelumLulus = new String();
     		for(int i=0; i<display.getPilWajib().length; i++){
@@ -217,5 +247,6 @@ public class Application extends Controller {
         
         return table;
     }
+    
 }
 

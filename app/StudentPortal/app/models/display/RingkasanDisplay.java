@@ -6,14 +6,16 @@ public class RingkasanDisplay {
 	private String[] pilWajib;
 	private String[] pilWajibLulus;
 	private String[] pilWajibBelumLulus;
-	private double IPS;
-	private double IPK;
-	private int sksLulus;
+	private String IPS;
+	private String IPK;
+	private int sksLulusTotal;
+	private int sksLulusSemTerakhir;
+	private String semesterTerakhir;
 	
-	public RingkasanDisplay(double IPS, double IPK, int sksLulus){
+	public RingkasanDisplay(String IPS, String IPK, int sksLulusTotal){
 		this.IPS = IPS;
 		this.IPK = IPK;
-		this.sksLulus = sksLulus;
+		this.sksLulusTotal = sksLulusTotal;
 		pilWajib = new String[]{"AIF311","AIF312","AIF313","AIF314","AIF315","AIF316","AIF317","AIF318"}; 
 		MataKuliah.createMataKuliah("AIF311", 2, "Pemrograman Fungsional");
         MataKuliah.createMataKuliah("AIF312", 2, "Keamanan Informasi");
@@ -48,24 +50,36 @@ public class RingkasanDisplay {
 		return this.pilWajib;
 	}
 	
-	public double getIPS(){
+	public String getIPS(){
 		return this.IPS;
 	}
 	
-	public double getIPK(){
+	public String getIPK(){
 		return this.IPK;
 	}
 	
-	public int getSKSLulus(){
-		return this.sksLulus;
+	public void setDataSemTerakhir(String semTerakhir, int sksLulusSemTerakhir) {
+		this.semesterTerakhir = semTerakhir;
+		this.sksLulusSemTerakhir = sksLulusSemTerakhir;
+	}
+	
+	public String getSemesterTerakhir(){
+		return semesterTerakhir;
+	}
+	public int getSKSLulusTotal(){
+		return this.sksLulusTotal;
+	}
+	
+	public int getSKSLulusSemTerakhir(){
+		return this.sksLulusSemTerakhir;
 	}
 	
 	public int getMinSisaSKS(){
-		if(sksLulus>=144){
+		if(sksLulusTotal>=144){
 			return 0;
 		}
 		else{
-			return 144-sksLulus;
+			return 144-sksLulusTotal;
 		}
 	}
 }
