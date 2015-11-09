@@ -24,8 +24,8 @@
 						<span class="icon-bar"></span>
 					</button>
 					<div class="logo-set">
-						<img src="@routes.Assets.versioned("images/logo-IT.png")" width="25%" height="25%"/>
 						<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
+						<img src="@routes.Assets.versioned("images/logo-IT.png")" width="25%" height="25%"/>
 					</div>
 					<p class="navbar-brand">INFORMATIKA STUDENT PORTAL</p>
 				</div>
@@ -65,9 +65,16 @@
 		<!-- Konten Halaman -->
 			<div class="container-fluid">
 				<div class="row">
+					<h2 class="text-center">PEMERIKSAAN PRASYARAT MATA KULIAH</h2> 
+					<h4 class="text-center">SEMESTER @semester</h4> 
+				</div>
+				@if(list==null){
+					<div class="row">
+						<h5 style="color: gray;">PRASYARAT BELUM TERSEDIA <span class="glyphicon glyphicon-exclamation-sign"></span></h5>
+					</div>	
+				}else{
+				<div class="row">
                     <div class="col-lg-12">
-						<h2 class="text-center">PEMERIKSAAN PRASYARAT MATA KULIAH</h2> 
-						<h4 class="text-center">SEMESTER @semester</h4> 
 						<div class="table-responsive">
 						<table class="table table-bordered">
 						<thead>
@@ -122,6 +129,7 @@
 						</div>
 					</div>
                 </div>
+                }
 			</div>
 		</div>
 		

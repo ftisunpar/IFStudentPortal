@@ -65,6 +65,14 @@
 		<!-- Konten Halaman -->
 			<div class="container-fluid">
 				<div class="row">
+					<h2 class="text-center">RINGKASAN DATA AKADEMIK</h2> 
+				</div>
+				@if(ringkasan==null){
+					<div class="row">
+						<h5 style="color: gray;">DATA AKADEMIK BELUM TERSEDIA <span class="glyphicon glyphicon-exclamation-sign"></span></h5>
+					</div>	
+				}else{
+				<div class="row">
                     <div class="col-lg-12">
 						IPS @ringkasan.getSemesterTerakhir: @ringkasan.getIPS() dari @ringkasan.getSKSLulusSemTerakhir SKS<br>
 						IPK: @ringkasan.getIPK()<br>
@@ -107,6 +115,7 @@
 
 					</div>
                 </div>
+                }
 			</div>
 		</div>
 		<div>

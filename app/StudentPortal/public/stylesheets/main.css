@@ -36,11 +36,9 @@ body,html{
 	background-color: #0066FF;
 	color: white;
 }
-.logo-set{
-	padding-top: 10px;
-}
+
 button[name=submit]{
-	margin-top: 5px;
+	margin-top: 30px !important;
 	margin-bottom: 25px;
 	background-color: #0066FF;
 	color: white;
@@ -181,6 +179,16 @@ nav:hover .forAnimate{
 
 section{
 	padding-left: 15px;
+}
+
+p.navbar-brand{
+	color: #9d9d9d !important;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.navbar-header{
+	padding-bottom: 10px;
 }
 
 .navbar-brand:hover{
