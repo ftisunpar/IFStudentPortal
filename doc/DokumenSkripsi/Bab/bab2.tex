@@ -97,7 +97,7 @@ Kelas ini merepresentasikan dokumen HTML. Salah satu \textit{method} yang dimili
 		\textit{Method} ini diturunkan dari kelas Element, berfungsi untuk menemukan elemen HTML yang sesuai dengan kueri CSS. \\
 		\textbf{Parameter:} 
 		\begin{itemize}
-			\item \textbf{cssQuery} kueri CSS.
+			\item \textbf{cssQuery} kueri CSS berupa CSS Selector.
 		\end{itemize}
 		\textbf{Kembalian:} elemen-elemen HTML yang sesuai dengan kueri CSS.	
 \end{itemize}
@@ -110,7 +110,7 @@ Kelas ini merepresentasikan kumpulan elemen HTML. Beberapa \textit{method} yang 
 		Berfungsi untuk menemukan elemen-elemen yang sesuai dalam \textit{list} elemen. \\
 		\textbf{Parameter:} 
 		\begin{itemize}
-			\item \textbf{query} kueri CSS.
+			\item \textbf{query} kueri CSS berupa CSS Selector.
 		\end{itemize}
 		\textbf{Kembalian:} elemen-elemen yang sudah diseleksi sesuai kueri.	
 		
@@ -148,7 +148,48 @@ Kelas ini merepresentasikan sebuah elemen HTML yang berisikan \textit{tag}, atri
 		\textbf{Kembalian:} teks dalam \textit{string}.	
 \end{itemize}
 
+\section{CSS \textit{Selector}}
+\label{sec:selector}
 
+CSS(\textit{Cascading Style Sheets}) memungkinkan adanya perubahan elemen HTML yang sudah didefinisikan\cite{Meyer:2012}. Seperti yang ditampilkan pada Gambar \ref{fig:2_selector_ex}, definisi CSS memiliki dua komponen yaitu selector dan properti. CSS \textit{selector} digunakan untuk mendefinisikan elemen HTML sedangkan properti mendefinisikan atribut beserta nilai. 
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.8]{Gambar/selector-ex}
+			\caption{Format Penulisan Definisi CSS} 
+			\label{fig:2_selector_ex}
+		\end{figure}
+Beberapa jenis CSS \textit{Selector} antara lain:
+\begin{enumerate}
+	\item \textit{\textbf{Element Selector}}, memilih \textit{tag} html.\\
+		Contoh: \texttt{h1}\\
+		Keterangan: \textit{selector} mendefinisikan elemen h1.
+	\item \textit{\textbf{Grouping Selector}}, memilih beberapa \textit{selector} sekaligus. Setiap \textit{selector} dipisahkan dengan ``,''.\\
+		Contoh: \texttt{h1, h2, p}\\
+		Keterangan: \textit{selector} mendefinisikan elemen h1, h2, dan p.
+	\item \textit{\textbf{Universal Selector}}, memilih seluruh elemen. \textit{Selector} ditampilkan sebagai ``*''.\\
+		Contoh: \texttt{*}\\
+		Keterangan: \textit{selector} mendefinisikan seluruh elemen.
+	\item \textit{\textbf{Class Selector}}, memilih kelas elemen. \textit{Selector} ditampilkan sebagai ``.'' kemudian diikuti nama kelas elemen.\\
+		Contoh: \texttt{.top}\\
+		Keterangan: \textit{selector} mendefinisikan elemen dengan kelas ``top''.
+	\item \textit{\textbf{ID Selector}}, memilih ID elemen. \textit{Selector} ditampilkan sebagai ``\#'' kemudian diikuti ID elemen.\\
+		Contoh: \texttt{\#top}\\
+		Keterangan: \textit{selector} mendefinisikan elemen dengan ID ``top''. 
+	\item \textit{\textbf{Attribute Selector}}, akan dijelaskan dua \textit{attribute selector} yaitu:
+		\begin{itemize}
+			\item \textit{\textbf{Simple Attribute}}, memilih atribut elemen. \textit{Selector} ditampilkan sebagai nama atribut kemudian diapit dengan kurung siku.
+			Contoh: \texttt{[name]}\\
+			Keterangan: \textit{selector} mendefinisikan elemen dengan atribut ``name''. 
+			
+			\item \textit{\textbf{Exact Value Attribute}}, memilih atribut elemen dengan nilai tertentu. \textit{Selector} ditampilkan sebagai definisi atribut kemudian diapit dengan kurung siku.
+			Contoh: \texttt{[name=Joe]}\\
+			Keterangan: \textit{selector} mendefinisikan elemen dengan atribut ``name'' yang memiliki nilai ``Joe''. 
+		\end{itemize}
+		
+	\item \textit{\textbf{Descendant Selector}}, memilih \textit{child} elemen yang merupakan keturunan \textit{parent} tertentu. \textit{Selector} ditampilkan dengan mendefinisikan parent kemudian diikuti oleh child dipisahkan dengan spasi.\\
+			Contoh: \texttt{p .top}\\
+			Keterangan: \textit{selector} mendefinisikan elemen dengan kelas ``top'' yang merupakan \textit{child} dari elemen p. 
+\end{enumerate}		
 
 \section{Chrome DevTools}
 \label{sec:devtools}
@@ -610,48 +651,3 @@ SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem
 \end{table}
 
 \end{enumerate}
-
-\section{CSS \textit{Selector}}
-\label{sec:selector}
-
-CSS(\textit{Cascading Style Sheets}) memungkinkan adanya perubahan terhadap teks dari elemen HTML yang sudah didefinisikan\cite{Meyer:2012}. Seperti yang ditampilkan pada gambar \ref{fig:2_selector_ex}, defini CSS memiliki dua komponen yaitu selector dan properti. CSS \textit{selector} digunakan untuk mendefinisikan elemen HTML sedangkan properti mendefinisikan atribut beserta nilai. 
-		\begin{figure}[H]
-			\centering
-			\includegraphics[scale=0.8]{Gambar/selector-ex}
-			\caption{Format Penulisan Definisi CSS} 
-			\label{fig:2_selector_ex}
-		\end{figure}
-Beberapa jenis CSS \textit{Selector} antara lain:
-\begin{enumerate}
-	\item \textit{\textbf{Element Selector}}, memilih \textit{tag} html.\\
-		Contoh: \texttt{h1}\\
-		Keterangan: \textit{selector} mendefinisikan elemen h1.
-	\item \textit{\textbf{Grouping Selector}}, memilih beberapa \textit{selector} sekaligus. Setiap \textit{selector} dipisahkan dengan ``,''.\\
-		Contoh: \texttt{h1, h2, p}\\
-		Keterangan: \textit{selector} mendefinisikan elemen h1, h2, dan p.
-	\item \textit{\textbf{Universal Selector}}, memilih seluruh elemen. \textit{Selector} ditampilkan sebagai ``*''.\\
-		Contoh: \texttt{*}\\
-		Keterangan: \textit{selector} mendefinisikan seluruh elemen.
-	\item \textit{\textbf{Class Selector}}, memilih kelas elemen. \textit{Selector} ditampilkan sebagai ``.'' kemudian diikuti nama kelas elemen.\\
-		Contoh: \texttt{.top}\\
-		Keterangan: \textit{selector} mendefinisikan elemen dengan kelas ``top''.
-	\item \textit{\textbf{ID Selector}}, memilih ID elemen. \textit{Selector} ditampilkan sebagai ``\#'' kemudian diikuti ID elemen.\\
-		Contoh: \texttt{\#top}\\
-		Keterangan: \textit{selector} mendefinisikan elemen dengan ID ``top''. 
-	\item \textit{\textbf{Attribute Selector}}, akan dijelaskan dua \textit{attribute selector} yaitu:
-		\begin{itemize}
-			\item \textit{\textbf{Simple Attribute}}, memilih atribut elemen. \textit{Selector} ditampilkan sebagai nama atribut kemudian diapit dengan kurung siku.
-			Contoh: \texttt{[name]}\\
-			Keterangan: \textit{selector} mendefinisikan elemen dengan atribut ``name''. 
-			
-			\item \textit{\textbf{Exact Value Attribute}}, memilih atribut elemen dengan nilai tertentu. \textit{Selector} ditampilkan sebagai definisi atribut kemudian diapit dengan kurung siku.
-			Contoh: \texttt{[name=Joe]}\\
-			Keterangan: \textit{selector} mendefinisikan elemen dengan atribut ``name'' yang memiliki nilai ``Joe''. 
-		\end{itemize}
-		
-	\item \textit{\textbf{Descendant Selector}}, memilih \textit{child} elemen yang merupakan keturunan \textit{parent} tertentu. \textit{Selector} ditampilkan dengan mendefinisikan parent kemudian diikuti oleh child dipisahkan dengan spasi.\\
-			Contoh: \texttt{p .top}\\
-			Keterangan: \textit{selector} mendefinisikan elemen dengan kelas ``top'' yang merupakan \textit{child} dari elemen p. 
-\end{enumerate}		
-
-

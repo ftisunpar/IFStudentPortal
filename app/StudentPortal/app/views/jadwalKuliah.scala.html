@@ -1,4 +1,4 @@
-@(jadwalKuliah: models.display.JadwalDisplay)
+@(jadwalKuliah: models.display.JadwalDisplay, semester: String)
 <!DOCTYPE html>
 
 <html lang="en">
@@ -65,7 +65,8 @@
 			<div class="container-fluid">
 				<div class="row">
 					<h2 class="text-center">JADWAL KULIAH</h2> 
-					<h4 class="text-center">SEMESTER semester</h4>
+					<h4 class="text-center">SEMESTER @semester</h4>
+					@import scala.Predef; var x= 0
 				</div>
 				@if(jadwalKuliah.isKuliahEmpty()){
 					<div class="row">
@@ -99,15 +100,48 @@
 									<tbody>	
 										@for(i <- 7 until 18) {
 											 <tr>
-												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>
+												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>												
 												@if(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah()!=null){	
-													<td rowspan="1" height="25">@(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah().getKode())</td>
+													@if(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah().getKode().equals(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode())){
+														@(x = x + 1)
+													}else{
+														@(x = x + 1)
+														<td rowspan=@x height="25">
+															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode()) 
+															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getNama()) 
+															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getRuang()) 
+															Kelas: @(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getKelas())
+														</td>
+														@(x = 0)
+													}
 												}else{
 													<td height="25"> - </td>
 												}
 											 </tr>
 											 @if(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah()!=null){	
-												<tr><td height="25">@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode())</td></tr>
+												@if(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+2).getMataKuliah()!=null){
+													@if(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode().equals(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+2).getMataKuliah().getKode())){
+														@(x = x + 1)
+													}else{
+														@(x = x + 1)
+														<tr><td colspan=@x height="25">
+															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode()) 
+															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getNama()) 
+															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getRuang()) 
+															Kelas: @(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getKelas())
+														</td></tr>
+														@(x = 0)
+													}
+												}else{
+													@(x = x + 1)
+													<tr><td colspan=@x height="25">
+														@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode()) 
+														@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getNama()) 
+														@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getRuang()) 
+														Kelas: @(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getKelas()) 
+													</td></tr>
+													@(x = 0)
+												}
 											 }else{
 												<td height="25"> - </td>
 											 }

@@ -24,7 +24,7 @@ jsoup\cite{jsoup} merupakan \textit{library} Java yang digunakan untuk menelusur
 	\label{fig:1_prasyarat_student_portal}
 \end{figure}
 
-Untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika, fitur-fitur yang diperlukan akan dianalisa kemudian diimplementasikan ke dalam program IT Student Portal. Program yang akan dibuat merupakan program berbasis web menggunakan Play Framework. Selain itu, data-data yang akan ditampilkan diambil langsung dari Portal Akademik Mahasiswa dengan \textit{web scraping} menggunakan \textit{library} jsoup. Untuk melakukan pengambilan data, jsoup harus mengetahui cara kerja dari Portal Akademik Mahasiswa. Analisis komunikasi Portal Akademik Mahasiswa akan dilakukan dengan menggunakan Chrome DevTools. 
+Untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika, fitur-fitur yang diperlukan akan dianalisis kemudian diimplementasikan ke dalam sebuah program yang akan dinamakan Informatika Student Portal. Informatika Student Portal merupakan program berbasis web menggunakan Play Framework. Selain itu, data-data yang akan ditampilkan diambil langsung dari Portal Akademik Mahasiswa dengan \textit{web scraping} menggunakan \textit{library} jsoup. Untuk melakukan pengambilan data, jsoup harus mengetahui cara kerja dari Portal Akademik Mahasiswa. Analisis komunikasi Portal Akademik Mahasiswa akan dilakukan dengan menggunakan Chrome DevTools. 
 
 \section{Rumusan Masalah}
 \label{sec:rumusan_masalah}
@@ -32,9 +32,9 @@ Untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika, f
 Rumusan dari masalah yang akan dibahas pada skripsi ini adalah sebagai
 berikut:
 \begin{enumerate}
-	\item Fitur-fitur apa saja yang akan dibuat untuk IT Student Portal?
+	\item Fitur-fitur apa saja yang akan dibuat untuk Informatika Student Portal?
 	\item Bagaimana mengimplementasikan \textit{web scraping} menggunakan \textit{library} jsoup?
-	\item Bagaimana membangun aplikasi IT Student Portal?
+	\item Bagaimana membangun aplikasi Informatika Student Portal?
 \end{enumerate}
 
 \section{Tujuan}
@@ -42,9 +42,9 @@ berikut:
 
 Tujuan-tujuan yang hendak dicapai pada skripsi ini adalah sebagai berikut:
 \begin{enumerate}
-	\item	Mengetahui fitur-fitur yang akan dibuat dalam IT Student Portal.
+	\item	Mengetahui fitur-fitur yang akan dibuat dalam Informatika Student Portal.
 	\item	Mengimplementasikan \textit{web scraping} menggunakan \textit{library} jsoup.
-	\item Membangun aplikasi IT Student Portal.
+	\item Membangun aplikasi Informatika Student Portal.
 \end{enumerate}
 
 \section{Batasan Masalah}
@@ -53,7 +53,6 @@ Tujuan-tujuan yang hendak dicapai pada skripsi ini adalah sebagai berikut:
 Beberapa batasan yang dibuat terkait dengan pengerjaan skripsi ini adalah sebagai berikut:
 \begin{enumerate}
 	\item Prasyarat mata kuliah yang tersedia hanya mata kuliah yang didukung SIA Models.
-	\item Aplikasi akan diuji pada server FTIS sehingga tidak bisa diakses dari luar jaringan FTIS.
 \end{enumerate}
 
 \section{Metode Penelitian}
@@ -62,9 +61,10 @@ Beberapa batasan yang dibuat terkait dengan pengerjaan skripsi ini adalah sebaga
 Metode-metode yang dilakukan pada skripsi ini adalah sebagai berikut:
 
 \begin{enumerate}
-	\item Melakukan studi mengenai \textit{library} jsoup, Chrome DevTools, dan Play Framework.
+	\item Melakukan studi mengenai \textit{library} jsoup untuk mengambil data dari Portal Akademik Mahasiswa, CSS Selector yang akan digunakan jsoup untuk menyeleksi data yang akan diambil, Chrome DevTools untuk menganalisis komunikasi Portal Akademik Mahasiswa, dan Play Framework untuk membangun Informatika Student Portal.
 	\item Melakukan wawancara.
 	\item Menganalisis Portal Akademik Mahasiswa.
+	\item Merancang Informatika Student Portal.
 	\item Mengimplementasikan \textit{web scraping} menggunakan \textit{library} jsoup.
 	\item Melakukan eksperimen dan pengujian.
 \end{enumerate}
@@ -82,5 +82,5 @@ Sistematika penulisan setiap bab pada skripsi ini adalah sebagai berikut:
   Bab 2 berisikan teori-teori yang digunakan dalam pembuatan skripsi ini. Teori
   yang digunakan yaitu \textit{library} jsoup, Chrome DevTools, Play Framework, SIA Models, dan CSS \textit{selector}.
   \item Bab Analisis \\
-  Bab 3 berisikan analisis yang dilakukan pada skripsi ini, meliputi analisis Portal Akademik Mahasiswa, analisis kebutuhan IT Student Portal, analisis komunikasi Portal Akademik Mahasiswa untuk fitur IT Student Portal, analisis \textit{use case} meliputi diagram \textsl{use case} dan skenario, serta analisis kelas. 
+  Bab 3 berisikan analisis yang dilakukan pada skripsi ini, meliputi analisis Portal Akademik Mahasiswa, analisis kebutuhan Informatika Student Portal, analisis komunikasi Portal Akademik Mahasiswa untuk fitur Informatika Student Portal, analisis \textit{use case} meliputi diagram \textsl{use case} dan skenario, serta analisis kelas. 
 \end{enumerate}

@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -100,7 +101,8 @@ public class Application extends Controller {
     	else{
 			JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
 			JadwalDisplay table = new JadwalDisplay(jb);
-	    	return ok(views.html.jadwalKuliah.render(table));
+			String semester = scrap.getSemester();
+	    	return ok(views.html.jadwalKuliah.render(table,semester));
     	}
     }
     
