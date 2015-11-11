@@ -525,6 +525,18 @@ Mahasiswa dapat melakukan \textit{logout} dengan cara:
 			\end{figure}
 \end{enumerate}
 
+Hasil analisis komunikasi Portal Akademik Mahasiswa akan digunakan untuk membangun koneksi yang akan diimplementasikan menggunakan jsoup. Berdasarkan hasil analisis tersebut, terdapat tiga hal yang perlu diperhatikan. Hal yang pertama adalah perpindahan halaman. Saat pengguna melakukan suatu aksi seperti klik dan memilih \textit{option}, Portal Akademik Mahasiswa akan mengarahkan pengguna ke suatu halaman. Alamat dari halaman tersebut perlu diketahui untuk koneksi jsoup. Kedua adalah penggunaan \textit{cookie} yaitu kapan \textit{cookie} di-\textit{set} dan kapan \textit{cookie} tersebut didapatkan. Hal terakhir yang perlu diperhatikan adalah parameter. Saat berpindah halaman, terkadang halaman tersebut membutuhkan parameter data. Dalam membangun koneksi, jsoup memerlukan juga memerlukan parameter data, karena itu perlu diketahui parameter data apa saja yang harus dilewatkan saat menuju suatu halaman.
+
+\section{Analisis Arsitektur Informatika Student Portal}.
+Arsitektur Informatika Student Portal dapat dilihat pada Gambar \ref{fig:3_ars_portal}. Saat \textit{client} mengakses Informatika Student Portal, Informatika Student Portal akan mengambil data dari Portal Akademik Mahasiswa. Data yang telah diambil akan diolah dan ditampilkan melalui fitur-fitur yang dimilikinya kepada \textit{client} . Portal Akademik Mahasiswa dapat diakses langsung oleh client \textit{namun} \textit{client} tidak bisa mendapatkan data yang telah diolah.
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.5]{Gambar/arsitekturIFPortal}
+			\caption{Arsitektur Informatika Student Portal} 
+			\label{fig:3_ars_portal}
+		\end{figure}
+		
 \section{Analisis \textit{Use Case}}
 \subsection{Diagram \textit{Use Case}}
 Diagram \textit{use case} pada perangkat lunak yang akan dibangun hanya mengandung satu aktor, yaitu mahasiswa. Diagram \textit{use case} dapat dilihat pada gambar \ref{fig:3_usecase_diagram}. 

@@ -127,8 +127,6 @@ public class Scraper {
                 String nama = row.get(2).text();
                 String sks = row.get(3).text();
                 if(!kode.equals(prev)){
-                    //
-                    //System.out.println(kode + " : " + nama + " -> "  + sks + " sks");
                     MataKuliah curr = MataKuliah.createMataKuliah(kode, Integer.parseInt(sks), nama);
                     mkList.add(curr.getKode());
                 }
@@ -229,8 +227,6 @@ public class Scraper {
                 }
             }
         }
-        //
-        //System.out.println(this.logged_mhs.calculateIPKLulus());
     }
     
     public void logout() throws IOException{
