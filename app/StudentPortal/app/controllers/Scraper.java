@@ -109,9 +109,9 @@ public class Scraper {
     public void requestKuliah(Map<String,String> login_cookies) throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
         kuliahConn.cookies(login_cookies);
-        kuliahConn.data("kode_fak",KODE_FAK_FTIS);
+        /*kuliahConn.data("kode_fak",KODE_FAK_FTIS);
         kuliahConn.data("thn_akd",this.thn_akd);
-        kuliahConn.data("sem_akd",Semester.fromString(this.sem_akd)+"");
+        kuliahConn.data("sem_akd",Semester.fromString(this.sem_akd)+"");*/
         kuliahConn.timeout(0);
         kuliahConn.validateTLSCertificates(false); 
         kuliahConn.method(Connection.Method.GET);

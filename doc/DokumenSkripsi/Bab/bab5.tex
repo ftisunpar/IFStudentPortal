@@ -1,0 +1,53 @@
+\chapter{Implementasi dan Pengujian}
+\label{chap:implementasiPengujian}
+
+\section{Implementasi}
+\label{sec:implementasi}
+
+\subsection{Lingkungan Implementasi}
+		\label{sec:lingkungan_implementasi}
+			Implementasi perangkat lunak ini dilakukan di dua buah komputer. Implementasi pertama dilakukan pada komputer peneliti untuk keperluan pengujian fungsional. Komputer tersebut memiliki spesifikasi sebagai berikut:
+				\begin{enumerate}
+					\item Processor: 3.40Ghz 
+					\item RAM: 8.00 GB DDR3	
+					\item Sistem Operasi: Windows 8.1 Pro 64-bit 
+					\item IDE: Eclipse Luna
+					\item Versi Java: 1.8.0\_40
+					\item Versi Play Framework: 2.4
+					\item Versi jsoup: 1.8.2
+				\end{enumerate}
+			Implementasi kedua dilakukan pada komputer yang terhubung pada jaringan FTIS untuk keperluan pengujian fungsional dan eksperimental. Komputer tersebut memiliki spesifikasi sebagai berikut:
+					\begin{enumerate}
+						\item Processor: 2.50Ghz 
+						\item RAM: 4.00 GB DDR3	
+						\item Sistem Operasi: Windows 8.1 Pro 64-bit 
+						\item IDE: Eclipse Luna
+						\item Versi Java: 1.8.0\_40
+						\item Versi Play Framework: 2.4
+						\item Versi jsoup: 1.8.2
+					\end{enumerate}
+						
+	\section{Pengujian}
+			\subsection{Pengujian Fungsional} 
+			Pengujian fungsional dilakukan untuk mengetahui kesesuaian reaksi perangkat lunak dengan reaksi yang diharapkan berdasarkan aksi pengguna terhadap perangkat lunak. Ada 6 tes kasus yang diujikan, dan detail serta hasilnya dapat dilihat di tabel \ref{table:hasilFungsional}
+			
+			\begin{table}[H]
+			\centering
+			\caption{Tabel Pengujian Fungsional}
+				\begin{tabular}{|p{0.5cm}| p{5cm}| p{6cm}| p{1.75cm}|} \hline
+				No.	&	Aksi Pengguna	&	Reaksi yang diharapkan	&	Reaksi Perangkat Lunak \\ \hline
+				1.	&	Pengguna menjalankan aplikasi	&	Halaman \textit{login} akan ditampilkan	&	sesuai	\\ \hline
+				2.	&	Pengguna memasukkan \textit{email} dan \textit{password}	&	Jika \textit{email} dan \textit{password}	sesuai, pengguna akan diarahkan ke halaman utama. & sesuai\\ \hline
+					&	&	Jika \textit{email} yang dimasukkan bukan \textit{email} \textit{student} UNPAR, akan ditampilkan pesan ``Email tidak valid''&	sesuai	\\ \hline
+					&	&	Jika \textit{email} yang dimasukkan bukan \textit{email} mahasiswa teknik informatika, akan ditampilkan pesan ``Maaf, Anda bukan mahasiswa teknik informatika''	&	sesuai	\\ \hline
+					&	&	Jika \textit{email} dan \textit{password} tidak sesuai atau mahasiswa bukan mahasiswa aktif, akan ditampilkan pesan ``Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif''	&	sesuai	\\ \hline
+				3.	&	Pengguna memilih menu ``Prasyarat Mata Kuliah'' &	Jika pengguna belum memiliki riwayat nilai(masih menempuh semester 1), akan ditampilkan pesan ``PRASYARAT BELUM TERSEDIA''	&	sesuai	\\ \hline
+					&	&	Jika pengguna sudah memiliki riwayat nilai	akan ditampilkan tabel prasyarat mata kuliah beserta status pengambilannya &	sesuai	\\ \hline
+				4.	&	Pengguna memilih menu ``Jadwal Kuliah'' &	Jika pengguna belum melakukan FRS, cuti studi, atau jadwal kuliah pengguna belum tersedia, akan ditampilkan pesan ``JADWAL KULIAH BELUM TERSEDIA''	&	sesuai	\\ \hline
+					&	&	Jika jadwal kuliah pengguna sudah tersedia, akan ditampilkan jadwal kuliah dalam bentuk kalendar yang sudah diurutkan berdasarkan hari &	sesuai	\\ \hline
+				5.	&	Pengguna memilih menu ``Data Akademik'' &	Jika pengguna belum memiliki riwayat nilai(masih menempuh semester 1), akan ditampilkan pesan ``DATA AKADEMIK BELUM TERSEDIA'' &	sesuai	\\ \hline
+					&	&	Jika pengguna sudah memiliki riwayat nilai, akan ditampilkan ringkasan data akademik mahasiswa berupa IPS semester terakhir, IPK, SKS lulus, sisa SKS kelulusan, dan ringkasan data mengenai mata kuliah pilihan wajib &	sesuai	\\ \hline
+				6.	&	Pengguna memilih tombol \textit{logout}	&	Pengguna akan diarahkan kembali ke halaman \textit{login} &	sesuai	\\ \hline
+				\end{tabular}
+				\label{table:hasilFungsional}
+			\end{table}

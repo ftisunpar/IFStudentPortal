@@ -55,7 +55,7 @@ public class Application extends Controller {
     		return ok(views.html.login.render("Email tidak valid"));
     	}
     	if(!(email.charAt(0)=='7'&&email.charAt(1)=='3')){
-    		return ok(views.html.login.render("Maaf, Anda bukan mahasiswa Teknik Informatika"));
+    		return ok(views.html.login.render("Maaf, Anda bukan mahasiswa teknik informatika"));
     	}
     	String npm = "20" + email.substring(2,4) + email.substring(0,2)+ "0" + email.substring(4,7);
     	Mahasiswa login_mhs = this.scrap.login(npm, pass);
