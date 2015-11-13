@@ -1,5 +1,6 @@
 package models.display;
 
+import models.id.ac.unpar.siamodels.MataKuliah;
 import models.support.*;
 
 public class JadwalDisplay {
@@ -10,6 +11,10 @@ public class JadwalDisplay {
 	
 	public JadwalDisplay(JadwalBundle jb){
 		this.jb = jb;
+		/*
+		JadwalKuliah test = new JadwalKuliah(MataKuliah.createMataKuliah("AIFT3S",5,"Test"),'A',"X","Sabtu","07.00-08.40","AMX0903");
+		jb.getJadwalKuliah().add(test);
+		*/
 		kuliahCalendar = new JadwalKuliah[6][22];
 		fillJadwalKuliah();
 	}
@@ -46,10 +51,11 @@ public class JadwalDisplay {
                     String end = timePair[1];
                     int range = (Integer.parseInt(end.substring(0, 2))- Integer.parseInt(start.substring(0, 2)))*2;
                     int beginIndex = 0;
-                    if(start.charAt(3)=='0'){
+                    int half = Character.getNumericValue(start.charAt(3));
+                    if(half<3){
                         beginIndex = (Integer.parseInt(start.substring(0, 2))-7)*2;
                     }
-                    else if(start.charAt(3)=='3'){
+                    else if(half>=3){
                         beginIndex =((Integer.parseInt(start.substring(0, 2))-7)*2)+1;
                     }
                     for (int j = beginIndex; j < beginIndex+range; j++) {
