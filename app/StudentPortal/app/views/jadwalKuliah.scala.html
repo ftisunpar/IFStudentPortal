@@ -11,7 +11,6 @@
 		<!-- CSS -->
         <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
         <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")"> 
-        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/fullcalendar.css")"> 
     </head>
     <body>
 		<nav class="navbar navbar-inverse sidebar" role="navigation">
@@ -38,24 +37,14 @@
 						<li><a href="@routes.Application.prasyarat()">
 							Prasyarat Mata Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tasks"></span>
 						</a></li>
-						<li class="dropdown active">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								Jadwal<span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-list-alt"></span>
-							</a>
-							<ul class="dropdown-menu forAnimate" role="menu">
-								<li ><a href="@routes.Application.jadwalKuliah()">
-									<span style="font-size:16px;" class="hidden-xs showopacity glyphicon glyphicon-calendar"></span> Jadwal Kuliah 
-								</a></li>
-								<li><a href="@routes.Application.jadwalUTS()">
-									<span style="font-size:16px;" class="hidden-xs showopacity glyphicon glyphicon-calendar"></span> Jadwal UTS 
-								</a></li>
-								<li><a href="@routes.Application.jadwalUAS()">
-									<span style="font-size:16px;" class="hidden-xs showopacity glyphicon glyphicon-calendar"></span> Jadwal UAS
-								</a></li>
-							</ul>
-						</li>
+						<li class="active"><a href="@routes.Application.jadwalKuliah()">
+							 Jadwal Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span>
+						</a></li>
 						<li ><a href="@routes.Application.ringkasan()">
 							Data Akademik<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-book"></span>
+						</a></li>
+						<li ><a href="@routes.Application.logout()">
+							Logout<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span>
 						</a></li>
 					</ul>
 				</div>
@@ -125,7 +114,7 @@
 														@(x = x + 1)
 													}else{
 														@(x = x + 1)
-														<tr><td colspan=@x height="25">
+														<tr><td rowspan=@x height="25">
 															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode()) 
 															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getNama()) 
 															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getRuang()) 
@@ -135,7 +124,7 @@
 													}
 												}else{
 													@(x = x + 1)
-													<tr><td colspan=@x height="25">
+													<tr><td rowspan=@x height="25">
 														@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode()) 
 														@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getNama()) 
 														@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getRuang()) 
@@ -144,7 +133,7 @@
 													@(x = 0)
 												}
 											 }else{
-												<td height="25"> - </td>
+												<tr><td height="25"> - </td></tr>
 											 }
 										}	
 									</tbody>
@@ -170,7 +159,7 @@
 											 @if(jadwalKuliah.getJadwalKuliah(1,((i-7)*2)+1).getMataKuliah()!=null){	
 												<tr><td height="25">@(jadwalKuliah.getJadwalKuliah(1,((i-7)*2)+1).getMataKuliah().getKode())</td></tr>
 											 }else{
-												<td height="25"> - </td>
+												<tr><td height="25"> - </td></tr>
 											 }
 										}	
 									</tbody>
@@ -295,7 +284,6 @@
 		<!-- Javascript -->
 		<script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")"></script>
 		<script src="@routes.Assets.versioned("javascripts/script.js")"></script>
-		<script src="@routes.Assets.versioned("javascripts/fullcalendar.js")"></script>
 		<script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
     </body>
 </html>

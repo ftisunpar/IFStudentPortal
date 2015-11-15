@@ -1,22 +1,23 @@
 package models.display;
 
+import java.util.List;
+
 import models.id.ac.unpar.siamodels.MataKuliah;
 import models.support.*;
 
 public class JadwalDisplay {
-	private JadwalBundle jb;
+	private List<JadwalKuliah> jadwalList;
 	private JadwalKuliah[][] kuliahCalendar;
-	private JadwalUjian[][] UTSCalendar;
-	private JadwalUjian[][] UASCalendar;
+
 	
-	public JadwalDisplay(JadwalBundle jb){
-		this.jb = jb;
-		/*
+	public JadwalDisplay(List<JadwalKuliah> jadwalList){
+		this.jadwalList = jadwalList;
+		/*07.00-08.40*/
 		JadwalKuliah test = new JadwalKuliah(MataKuliah.createMataKuliah("AIFT3S",5,"Test"),'A',"X","Sabtu","07.00-08.40","AMX0903");
-		jb.getJadwalKuliah().add(test);
-		*/
+		jadwalList.add(test);
+		
 		kuliahCalendar = new JadwalKuliah[6][22];
-		fillJadwalKuliah();
+		fillKuliahCalendar();
 	}
 	
 	public JadwalKuliah getJadwalKuliah(int hari, int waktu){
@@ -24,26 +25,18 @@ public class JadwalDisplay {
 	}
 	
 	public boolean isKuliahEmpty(){
-		return jb.getJadwalKuliah().isEmpty();
+		return jadwalList.isEmpty();
 	}
 	
-	public boolean isUTSEmpty(){
-		return jb.getJadwalUTS().isEmpty();
-	}
-	
-	public boolean isUASEmpty(){
-		return jb.getJadwalUAS().isEmpty();
-	}
-	
-	private void fillJadwalKuliah(){
-		if(!jb.getJadwalKuliah().isEmpty()){
+	private void fillKuliahCalendar(){
+		if(!jadwalList.isEmpty()){
             for (int i = 0; i < kuliahCalendar.length; i++) {
                 for (int j = 0; j < kuliahCalendar[i].length; j++) {
                     kuliahCalendar[i][j] = new JadwalKuliah();
                 }
             }
-            for (int i = 0; i < jb.getJadwalKuliah().size(); i++) {
-                JadwalKuliah jdw = jb.getJadwalKuliah().get(i);
+            for (int i = 0; i < jadwalList.size(); i++) {
+                JadwalKuliah jdw = jadwalList.get(i);
                 int day = dayTranslate(jdw.getHari());
                 if(day!=-1){
                 	String[] timePair = jdw.getWaktu().split("-");
@@ -57,6 +50,10 @@ public class JadwalDisplay {
                     }
                     else if(half>=3){
                         beginIndex =((Integer.parseInt(start.substring(0, 2))-7)*2)+1;
+                    }
+                    int endHalf = Character.getNumericValue(end.charAt(3));
+                    if(endHalf>3){
+                    	range++;  
                     }
                     for (int j = beginIndex; j < beginIndex+range; j++) {
                         kuliahCalendar[day][j] = jdw;  

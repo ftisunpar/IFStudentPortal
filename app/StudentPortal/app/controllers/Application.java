@@ -18,7 +18,8 @@ import models.id.ac.unpar.siamodels.MataKuliah;
 import models.id.ac.unpar.siamodels.Mahasiswa.Nilai;
 import models.id.ac.unpar.siamodels.Semester;
 import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
-import models.support.JadwalBundle;
+import models.support.CustomMahasiswa;
+import models.support.JadwalKuliah;
 import play.*;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -27,7 +28,7 @@ import views.html.*;
 
 public class Application extends Controller {
 	Scraper scrap = new Scraper();
-	Map<String,Mahasiswa> mahasiswaList = new HashMap<String,Mahasiswa>();
+	Map<String,CustomMahasiswa> mahasiswaList = new HashMap<String,CustomMahasiswa>();
 	
     public Result index() {
     	if(session("npm")==null){
@@ -48,24 +49,28 @@ public class Application extends Controller {
     }
     
     public Result submitLogin() throws IOException{
+    	String errorHtml = 
+    	"<div class='alert alert-danger' role='alert'>" +
+    	  "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+
+    	  "<span class='sr-only'>Error:</span>";
     	DynamicForm dynamicForm = Form.form().bindFromRequest();
     	String email = dynamicForm.get("email");
     	String pass = dynamicForm.get("pass");
     	if(!email.matches("[0-9]{7}+@student.unpar.ac.id")){
-    		return ok(views.html.login.render("Email tidak valid"));
+    		return ok(views.html.login.render(errorHtml+ "Email tidak valid" + "</div>"));
     	}
     	if(!(email.charAt(0)=='7'&&email.charAt(1)=='3')){
-    		return ok(views.html.login.render("Maaf, Anda bukan mahasiswa teknik informatika"));
+    		return ok(views.html.login.render(errorHtml+"Maaf, Anda bukan mahasiswa teknik informatika"+ "</div>"));
     	}
     	String npm = "20" + email.substring(2,4) + email.substring(0,2)+ "0" + email.substring(4,7);
-    	Mahasiswa login_mhs = this.scrap.login(npm, pass);
+    	CustomMahasiswa login_mhs = this.scrap.login(npm, pass);
     	if(login_mhs!=null){
     		session("npm", npm);
     		mahasiswaList.put(session("npm"), login_mhs);
     		return home();
     	}
 	    else{
-	    	return ok(views.html.login.render("Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif"));
+	    	return ok(views.html.login.render(errorHtml+"Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif"+ "</div>"));
 	    }
     }
     
@@ -99,35 +104,12 @@ public class Application extends Controller {
     		return index();
     	}
     	else{
-			JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
-			JadwalDisplay table = new JadwalDisplay(jb);
+			JadwalDisplay table = new JadwalDisplay(mahasiswaList.get(session("npm")).getJadwalList());
 			String semester = scrap.getSemester();
 	    	return ok(views.html.jadwalKuliah.render(table,semester));
     	}
     }
-    
-    public Result jadwalUTS() throws IOException{
-    	if(session("npm")==null){
-    		return index();
-    	}
-    	else{
-	    	JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
-			JadwalDisplay table = new JadwalDisplay(jb);
-	    	return ok(views.html.jadwalUTS.render(table));
-    	}
-    }
-    
-    public Result jadwalUAS() throws IOException{
-    	if(session("npm")==null){
-    		return index();
-    	}
-    	else{
-	    	JadwalBundle jb = mahasiswaList.get(session("npm")).getJadwalList();
-			JadwalDisplay table = new JadwalDisplay(jb);
-	    	return ok(views.html.jadwalUAS.render(table));
-    	}
-    }
-    
+
     public Result ringkasan() throws IOException{
     	if(session("npm")==null){
     		return index();

@@ -232,12 +232,12 @@ pilihan ``Seluruh Tahun Akademik'' untuk melihat seluruh nilai berdasarkan semes
 
 \section{Analisis Kebutuhan Informatika Student Portal}
 \label{sec:kebutuhan}
-Dalam menganalisis kebutuhan Informatika Student Portal, penulis melakukan wawancara dengan mahasiswa Program Studi Teknik Informatika UNPAR. Sample yang diambil adalah 5 orang mahasiswa dari setiap angkatan dalam 4 tahun terakhir yaitu angkatan 2012 sampai 2015. Setelah melakukan wawancara, penulis memperoleh fitur-fitur yang diinginkan mahasiswa antara lain:
+Dalam menganalisis kebutuhan Informatika Student Portal, penulis melakukan wawancara dengan mahasiswa Program Studi Teknik Informatika UNPAR. Sampel yang diambil adalah lima orang mahasiswa dari setiap angkatan dalam empat tahun terakhir yaitu angkatan 2012 sampai 2015. Setelah melakukan wawancara, penulis memperoleh fitur-fitur yang diinginkan mahasiswa antara lain:
 \begin{enumerate}
 	\item Prasyarat mata kuliah\\
-	Mahasiswa bisa memeriksa prasyarat mata kuliah saat FRS sehingga tidak terjadi kesalahan pengambilan mata kuliah. Prasyarat mata kuliah yang ditampilkan di Portal Akademik Mahasiswa kurang akurat. Selain itu, dari 18 mahasiswa yang diwawancara, hanya ada satu mahasiswa yang mengetahui bahwa Portal Akademik Mahasiswa memiliki fitur prasyarat. Prasyarat mata kuliah untuk Program Studi Teknik Informatika juga tersedia di \url{http://tinyurl.com/lionov}, namun mahasiswa merasa kurang praktis karena harus memeriksa secara manual. Mahasiswa menginginkan agar fitur ini bisa dibuat untuk mempermudah FRS. Fitur ini akan menampilkan seluruh mata kuliah yang dibuka
+	Mahasiswa bisa memeriksa prasyarat mata kuliah saat FRS sehingga tidak terjadi kesalahan pengambilan mata kuliah. Prasyarat mata kuliah yang ditampilkan di Portal Akademik Mahasiswa kurang akurat. Selain itu, dari 20 mahasiswa yang diwawancara, hanya ada satu mahasiswa yang mengetahui bahwa Portal Akademik Mahasiswa memiliki fitur prasyarat. Prasyarat mata kuliah untuk Program Studi Teknik Informatika juga tersedia di \url{http://tinyurl.com/lionov}\footnote{\url{http://tinyurl.com/lionov}, diakses 5 September 2015}, namun mahasiswa merasa kurang praktis karena harus memeriksa secara manual. Mahasiswa menginginkan agar fitur ini bisa dibuat untuk mempermudah FRS. Fitur ini akan menampilkan seluruh mata kuliah yang dibuka beserta status pengambilannya.
 	\item Ringkasan data akademik\\
-	Ringkasan data akademik menampilkan data mengenai mata kuliah wajib, pilihan, dan pilihan wajib yang sudah lulus, mata kuliah wajib yang belum lulus, dan sisa SKS untuk mencapai kelulusan. Mahasiswa menginginkan fitur ini dibuat untuk membantu mahasiswa dalam mengatur perkuliahannya.
+	Ringkasan data akademik menampilkan data mengenai mata kuliah pilihan wajib dan sisa SKS untuk mencapai kelulusan. Mahasiswa menginginkan fitur ini dibuat untuk membantu mereka dalam mengatur perkuliahannya.
 	\item Perubahan IPS dan IPK berdasarkan riwayat nilai\\
 	Dalam Portal Akademik Mahasiswa, nilai pertama kali muncul dalam riwayat nilai. Riwayat IP tidak berubah secara otomatis saat seluruh nilai di riwayat nilai sudah muncul. Mahasiswa menginginkan agar IPS dan IPK dapat berubah secara otomatis saat nilai muncul.
 	\item Jadwal kuliah yang tersusun\\
@@ -282,12 +282,12 @@ Dalam menganalisis kebutuhan Informatika Student Portal, penulis melakukan wawan
 	Mahasiswa menginginkan agar dapat mengunggah data mengenai kegiatan dan keaktifan di universitas agar dapat digunakan oleh perusahaan untuk mencari mahasiswa dengan kriteria tertentu misalnya untuk kepentingan magang dan beasiswa.
 \end{enumerate}
 
-Fitur-fitur yang akan dipilih untuk diimplementasikan harus memenuhi kriteria:
+Penulis menetapkan fitur-fitur yang akan dipilih untuk diimplementasikan harus memenuhi kriteria:
 \begin{itemize}
 	\item Data yang dibutuhkan dapat diambil dari Portal Akademik Mahasiwa \\
 	Aplikasi Informatika Student Portal merupakan aplikasi hasil kustomisasi Portal Akademik Mahasiswa. Informasi yang ditampilkan Informatika Student Portal diperoleh dengan cara mengolah data dari Portal Akademik Mahasiswa. Jadi data yang dibutuhkan Informatika Student Portal harus dapat diambil dari Portal Akademik Mahasiswa. 
-	\item Fitur tidak tersedia di Portal Akademik Mahasiswa\\
-	Fitur yang sudah tersedia di Portal Akademik Mahasiswa tidak perlu dibuat lagi di Informatika Student Portal karena mahasiswa dapat mengakses langsung Portal Akademik Mahasiswa
+	\item Data hasil olahan tidak tersedia di Portal Akademik Mahasiswa\\
+	Jika data hasil olahan yang sudah tersedia di Portal Akademik Mahasiswa, maka fitur tidak perlu dibuat lagi di Informatika Student Portal karena mahasiswa dapat mengakses langsung Portal Akademik Mahasiswa.
 	\item Fitur mendukung fungsi Portal Akademik Mahasiswa sebagai sumber informasi akademik \\
 	Portal Akademik Mahasiswa berfungsi sebagai sumber informasi akademik karena itu Informatika Student Portal juga harus mememiliki fitur yang dapat mendukung fungsi tersebut.
 \end{itemize}
@@ -295,12 +295,12 @@ Fitur-fitur yang akan dipilih untuk diimplementasikan harus memenuhi kriteria:
 Hasil analisis fitur-fitur yang diinginkan berdasarkan kriteria di atas dan batas waktu pembangunan aplikasi dapat dilihat pada tabel \ref{tab:3_hasil_fitur}.
 \begin{table}[H]
 	\centering
+		\caption{Tabel Hasil Analisis Kebutuhan Informatika Student Portal}
     \begin{tabular}{|p{4.5cm}|p{2.5cm}|p{8cm}|}
-		\hline
 		\hline
 		Fitur & Dibuat/Tidak dibuat & Alasan\\
 		\hline
-		Prasyarat mata kuliah                             & Dibuat       & Prasyarat mata kuliah Program Studi Teknik Informatika sudah tersedia di SIA Models                   \\
+		Prasyarat mata kuliah                             & Dibuat       & Data dapat diambil dari Portal Akademik Mahasiswa dan aturan prasyarat mata kuliah Program Studi Teknik Informatika sudah tersedia di SIA Models                   \\
 		\hline
     Ringkasan data akademik                               & Dibuat       & Data dapat diambil dari Portal Akademik Mahasiswa dan didukung oleh SIA Models                        \\
 		\hline
@@ -320,18 +320,15 @@ Hasil analisis fitur-fitur yang diinginkan berdasarkan kriteria di atas dan bata
 		\hline
     Pemberitahuan                                     & Tidak dibuat & Waktu pengerjaan yang terbatas                                                                        \\
 		\hline
-    \textit{Chatting}                                          & Tidak dibuat & Waktu pengerjaan yang terbatas                                                                        \\
-		\hline
     Unggah \textit{Curriculum Vitae}                           & Tidak dibuat & Tidak mendukung Portal Akademik Mahasiswa sebagai sumber informasi akademik                           \\
 		\hline
 		\end{tabular}
-		\caption{Tabel Hasil Analisis Kebutuhan Informatika Student Portal}
 	\label{tab:3_hasil_fitur}
 \end{table}
 
 
 \section{Analisis Komunikasi Portal Akademik Mahasiswa untuk Fitur Informatika Student Portal}
-Untuk memenuhi fitur Informatika Student Portal, penulis menganalisis komunikasi Portal Akademik Mahasiswa ke dalam beberapa kasus yang akan dijelaskan pada subbab-subbab berikut.
+Untuk memenuhi fitur Informatika Student Portal, peneliti menganalisis komunikasi Portal Akademik Mahasiswa ke dalam beberapa kasus yang akan dijelaskan pada subbab-subbab berikut.
 
 \subsection{Kasus \textit{Login}}
 Di Portal Akademik Mahasiswa, mahasiswa dapat \textit{login} dengan cara:
@@ -528,10 +525,18 @@ Mahasiswa dapat melakukan \textit{logout} dengan cara:
 			\end{figure}
 \end{enumerate}
 
-Hasil analisis komunikasi Portal Akademik Mahasiswa akan digunakan untuk membangun koneksi yang akan diimplementasikan menggunakan jsoup. Berdasarkan hasil analisis tersebut, terdapat tiga hal yang perlu diperhatikan. Hal yang pertama adalah perpindahan halaman. Saat pengguna melakukan suatu aksi seperti klik dan memilih \textit{option}, Portal Akademik Mahasiswa akan mengarahkan pengguna ke suatu halaman. Alamat dari halaman tersebut perlu diketahui untuk koneksi jsoup. Kedua adalah penggunaan \textit{cookie} yaitu kapan \textit{cookie} di-\textit{set} dan kapan \textit{cookie} tersebut didapatkan. Hal terakhir yang perlu diperhatikan adalah parameter. Saat berpindah halaman, terkadang halaman tersebut membutuhkan parameter data. Dalam membangun koneksi, jsoup memerlukan juga memerlukan parameter data, karena itu perlu diketahui parameter data apa saja yang harus dilewatkan saat menuju suatu halaman.
+Hasil analisis komunikasi Portal Akademik Mahasiswa akan digunakan untuk membangun koneksi yang akan diimplementasikan menggunakan jsoup. Berdasarkan hasil analisis tersebut, terdapat tiga hal yang perlu diperhatikan antara lain:
+	\begin{itemize}
+	\item Perpindahan halaman \\
+		Saat pengguna melakukan suatu aksi seperti klik dan memilih \textit{option}, Portal Akademik Mahasiswa akan mengarahkan pengguna ke suatu halaman. Alamat dari halaman tersebut perlu diketahui untuk koneksi jsoup. Metode pengirimannya juga perlu diketahui. Dari seluruh halaman yang dianalisis, metode pengirimannya adalah \texttt{GET} kecuali halaman \textit{login} CAS UNPAR yang menggunakan metode POST.
+	\item\textit{Cookie} \\
+		Hal yang harus diperhatikan dalam penggunaan \textit{cookie} yaitu kapan suatu \textit{cookie} di-\textit{set} dan kapan \textit{cookie} tersebut dikirimkan. Jika suatu halaman memerlukan \textit{cookie} saat membangun koneksi, maka perlu diketahui kapan \textit{cookie} tersebut di-\textit{set} sehingga \textit{cookie} tersebut bisa diperoleh menggunakan jsoup. Pengiriman \textit{cookie} tersebut akan diimplementasikan dengan jsoup saat membangun koneksi ke suatu halaman yang memerlukan \textit{cookie} tersebut.
+	\item Parameter\\
+	Saat berpindah halaman, terkadang halaman tersebut membutuhkan parameter data. Dalam membangun koneksi, jsoup memerlukan juga memerlukan parameter data, karena itu perlu diketahui parameter data apa saja yang harus dilewatkan saat menuju suatu halaman.
+\end{itemize}
 
-\section{Analisis Arsitektur Informatika Student Portal}.
-Arsitektur Informatika Student Portal dapat dilihat pada Gambar \ref{fig:3_ars_portal}. Saat \textit{client} mengakses Informatika Student Portal, Informatika Student Portal akan mengambil data dari Portal Akademik Mahasiswa. Data yang telah diambil akan diolah dan ditampilkan melalui fitur-fitur yang dimilikinya kepada \textit{client} . Portal Akademik Mahasiswa dapat diakses langsung oleh client \textit{namun} \textit{client} tidak bisa mendapatkan data yang telah diolah.
+\section{Analisis Arsitektur Informatika Student Portal}
+Arsitektur Informatika Student Portal dapat dilihat pada Gambar \ref{fig:3_ars_portal}. \textit{Client} dapat mengakses Portal Akademik Mahasiswa dan Informatika Student Portal untuk mendapatkan informasi akademik. Namun saat mengakses Informatika Student Portal, \textit{client} akan diberikan data akademik dengan fitur-fitur yang berbeda. Saat \textit{client} mengakses Informatika Student Portal, Informatika Student Portal akan mengambil data dari Portal Akademik Mahasiswa. Data yang telah diambil akan diolah kemudian ditampilkan kepada \textit{client}.
 
 		\begin{figure}[H]
 			\centering
@@ -552,7 +557,7 @@ Diagram \textit{use case} pada perangkat lunak yang akan dibangun hanya mengandu
 Berdasarkan hasil analisis pada subbab \ref{sec:kebutuhan}, dari lima fitur yang akan dibuat, dibentuk tiga \textit{use case} antara lain:
 \begin{itemize}
 	\item \textbf{Memeriksa Prasyarat Mata Kuliah}, mahasiswa dapat memeriksa mata kuliah yang dibuka pada semester terkini apakah memenuhi prasyarat atau tidak. 
-	\item \textbf{Melihat Jadwal Kuliah, UTS, dan UAS}, mahasiswa dapat melihat jadwal kuliah, UTS, dan UAS yang sudah tersusun dan terurut berdasarkan hari.
+	\item \textbf{Melihat Jadwal Kuliah}, mahasiswa dapat melihat jadwal kuliah yang sudah tersusun dan terurut berdasarkan hari.
 	\item \textbf{Melihat Ringkasan Data Akademik}, mahasiswa dapat melihat data mengenai mata kuliah apa saja yang sudah lulus beserta jenis mata kuliahnya(wajib, pilihan, atau pilihan wajib), sisa SKS untuk mencapai kelulusan, dan mata kuliah wajib yang belum ditempuh. Mahasiswa juga dapat melihat IPS dan IPK yang berubah berdasarkan riwayat nilai.
 \end{itemize}
 
@@ -572,14 +577,14 @@ Berdasarkan hasil analisis pada subbab \ref{sec:kebutuhan}, dari lima fitur yang
 							No 	& Aksi Aktor & Reaksi Sistem \\ \hline
 							1 	& Mahasiswa memilih menu prasyarat mata kuliah. 	&	Sistem mendapatkan data mahasiswa kemudian menampilkan halaman prasyarat mata kuliah \\ \hline 
 						\end{tabular} 
-			\item Eksepsi: -
+			\item Eksepsi: Mahasiswa sedang menempuh semester 1
 		\end{itemize}
 		
-	\item \textbf{Melihat Jadwal Kuliah, UTS, dan UAS}
+	\item \textbf{Melihat Jadwal Kuliah}
 		\begin{itemize}
-			\item Nama: Melihat jadwal kuliah, UTS, dan UAS
+			\item Nama: Melihat jadwal kuliah
 			\item Aktor: Mahasiswa
-			\item Deskripsi: Melihat jadwal kuliah, UTS, dan UAS yang sudah tersusun dan terurut berdasarkan hari
+			\item Deskripsi: Melihat jadwal kuliah yang sudah tersusun dan terurut berdasarkan hari
 			\item Kondisi awal: Mahasiswa telah \textit{login}
 			\item Kondisi akhir: Halaman jadwal ditampilkan dan berisi jadwal kuliah, UTS, dan UAS yang sudah tersusun dan terurut berdasarkan hari te
 			\item Skenario utama: \\ \\
@@ -588,7 +593,7 @@ Berdasarkan hasil analisis pada subbab \ref{sec:kebutuhan}, dari lima fitur yang
 							No 	& Aksi Aktor & Reaksi Sistem \\ \hline
 							1 	& Mahasiswa memilih menu jadwal. 	&	Sistem menyusun dan mengurutkan jadwal mahasiswa berdasarkan hari kemudian menampilkan halaman jadwal \\ \hline 
 						\end{tabular} 
-			\item Eksepsi: Mahasiswa sedang cuti studi
+			\item Eksepsi: Mahasiswa sedang cuti studi atau jadwal kuliah belum keluar
 		\end{itemize}
 		
 	\item \textbf{Melihat Ringkasan Data Akademik}
@@ -604,7 +609,7 @@ Berdasarkan hasil analisis pada subbab \ref{sec:kebutuhan}, dari lima fitur yang
 							No 	& Aksi Aktor & Reaksi Sistem \\ \hline
 							1 	& Mahasiswa memilih menu ringkasan data akademik. 	&	Sistem meringkas data kademik mahasiswa kemudian menampilkan halaman ringkasan data akademik \\ \hline 
 						\end{tabular} 
-			\item Eksepsi: -
+			\item Eksepsi: Mahasiswa sedang menempuh semester 1
 		\end{itemize}
 \end{enumerate}
 

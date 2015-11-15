@@ -32,30 +32,20 @@
 				<!-- Menu Navigasi -->
 				<div class="collapse navbar-collapse" id="sidebar-navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li ><a href="@routes.Application.home()">
+						<li><a href="@routes.Application.home()">
 							Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span>
 						</a></li>
 						<li class="active"><a href="@routes.Application.prasyarat()">
 							Prasyarat Mata Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tasks"></span>
 						</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								Jadwal<span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-list-alt"></span>
-							</a>
-							<ul class="dropdown-menu forAnimate" role="menu">
-								<li><a href="@routes.Application.jadwalKuliah()">
-									<span style="font-size:16px;" class="hidden-xs showopacity glyphicon glyphicon-calendar"></span> Jadwal Kuliah 
-								</a></li>
-								<li><a href="@routes.Application.jadwalUTS()">
-									<span style="font-size:16px;" class="hidden-xs showopacity glyphicon glyphicon-calendar"></span> Jadwal UTS 
-								</a></li>
-								<li><a href="@routes.Application.jadwalUAS()">
-									<span style="font-size:16px;" class="hidden-xs showopacity glyphicon glyphicon-calendar"></span> Jadwal UAS
-								</a></li>
-							</ul>
-						</li>
+						<li><a href="@routes.Application.jadwalKuliah()">
+							 Jadwal Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span>
+						</a></li>
 						<li ><a href="@routes.Application.ringkasan()">
 							Data Akademik<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-book"></span>
+						</a></li>
+						<li ><a href="@routes.Application.logout()">
+							Logout<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span>
 						</a></li>
 					</ul>
 				</div>

@@ -8,14 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import models.support.JadwalBundle;
+import models.support.JadwalKuliah;
 
 public class Mahasiswa {
 	protected final String npm;
 	protected String nama;
 	protected final List<Nilai> riwayatNilai;
-	protected JadwalBundle jadwalList;;
-	protected String photoPath;
+
 	
 	public Mahasiswa(String npm) throws NumberFormatException {
 		super();
@@ -24,6 +23,7 @@ public class Mahasiswa {
 		}
 		this.npm = npm;
 		this.riwayatNilai = new ArrayList<Nilai>();
+		
 	}
 
 	public String getNama() {
@@ -38,25 +38,13 @@ public class Mahasiswa {
 		return npm;
 	}
 	
-	public String getPhotoPath(){
-    	return photoPath;
-    }
 	
-	public void setPhotoPath(String photoPath) {
-		this.photoPath = photoPath;
-	}
 	
 	public String getEmailAddress() {
 		return npm.substring(4, 6) + npm.substring(2, 4) + npm.substring(7, 10) + "@student.unpar.ac.id";
 	}
 	
-	public JadwalBundle getJadwalList(){
-    	return jadwalList;
-    }
 	
-	public void setJadwalList(JadwalBundle jadwalList){
-    	this.jadwalList = jadwalList;
-    }
 	
 	public List<Nilai> getRiwayatNilai() {
 		return riwayatNilai;

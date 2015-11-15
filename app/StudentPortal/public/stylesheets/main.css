@@ -14,33 +14,30 @@ body,html{
 	margin-right: 10px;
 }
 .panel{
-	border: 1px	solid black; 
+	border: 1px	solid #222;
+	background-color: #222;
 }
 .panel-body label{
-	color: #0066FF;;
+	color: #222;;
 }
 .page-header .logo-set{
 	margin: 0 auto 10px;
 	display: block;
 }
 .page-header .text-center{
-	color: #0066FF;
+	color: white;
 	font-weight: bold;
 }
-.error-message{
-	color: #c7254e;
-	background-color: #f9e1f4;
-	border-radius: 4px;
-}
 .input-group-addon{
-	background-color: #0066FF;
+	background-color: #222;
 	color: white;
 }
-
+.alert{
+	padding: 5px 10px;
+}
 button[name=submit]{
-	margin-top: 30px !important;
 	margin-bottom: 25px;
-	background-color: #0066FF;
+	background-color: #222;
 	color: white;
 }
 /*Responsive sidebar*/

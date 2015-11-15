@@ -36,7 +36,6 @@ public class Scraper {
     private final String JADWAL_URL = BASE_URL + "includes/jadwal.aktif.php";
     private final String NILAI_URL = BASE_URL + "includes/nilai.sem.php";
     private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
-    private final String KODE_FAK_FTIS = "7";
     private String thn_akd, sem_akd;
     private List<String> mkList;
     
@@ -56,9 +55,9 @@ public class Scraper {
         baseConn.execute(); 
     }
     
-    public Mahasiswa login(String npm, String pass) throws IOException{
+    public CustomMahasiswa login(String npm, String pass) throws IOException{
         init();
-    	Mahasiswa logged_mhs = new Mahasiswa(npm);
+    	CustomMahasiswa logged_mhs = new CustomMahasiswa(npm);	
         String user = logged_mhs.getEmailAddress();
         Connection conn = Jsoup.connect(LOGIN_URL);
         conn.data("Submit", "Login");
@@ -94,7 +93,7 @@ public class Scraper {
             this.thn_akd = sem_set[0];
             this.sem_akd = sem_set[1];
             this.requestKuliah(login_cookies);
-            JadwalBundle jadwalList = this.requestJadwal(login_cookies);
+            List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
             logged_mhs.setJadwalList(jadwalList);
             if(!(logged_mhs.getTahunAngkatan()==Integer.parseInt(thn_akd)&&sem_akd=="1")){
             	this.setNilai(login_cookies, logged_mhs);
@@ -109,9 +108,6 @@ public class Scraper {
     public void requestKuliah(Map<String,String> login_cookies) throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
         kuliahConn.cookies(login_cookies);
-        /*kuliahConn.data("kode_fak",KODE_FAK_FTIS);
-        kuliahConn.data("thn_akd",this.thn_akd);
-        kuliahConn.data("sem_akd",Semester.fromString(this.sem_akd)+"");*/
         kuliahConn.timeout(0);
         kuliahConn.validateTLSCertificates(false); 
         kuliahConn.method(Connection.Method.GET);
@@ -135,7 +131,7 @@ public class Scraper {
         }    
     }
     
-    public JadwalBundle requestJadwal(Map<String,String> login_cookies) throws IOException{
+    public List<JadwalKuliah> requestJadwal(Map<String,String> login_cookies) throws IOException{
         Connection jadwalConn = Jsoup.connect(JADWAL_URL);
         jadwalConn.cookies(login_cookies);
         jadwalConn.timeout(0);
@@ -144,7 +140,7 @@ public class Scraper {
         Response resp = jadwalConn.execute();
         Document doc = resp.parse();
         Elements jadwalTable = doc.select(".portal-full-table"); 
-        JadwalBundle jadwalList = new JadwalBundle();
+        List<JadwalKuliah> jadwalList = new ArrayList<JadwalKuliah>();
         
         /*Kuliah*/
         if(jadwalTable.size()>0){
@@ -158,33 +154,10 @@ public class Scraper {
                         nama = elem.child(2).text();  
                     }  
                     MataKuliah currMk = MataKuliah.createMataKuliah(kode, Integer.parseInt(elem.child(3).text()), nama);
-                    jadwalList.getJadwalKuliah().add(new JadwalKuliah(currMk,elem.child(4).text().charAt(0),elem.child(5).text(),elem.child(7).text(),elem.child(8).text(),elem.child(9).text()));
+                    jadwalList.add(new JadwalKuliah(currMk,elem.child(4).text().charAt(0),elem.child(5).text(),elem.child(7).text(),elem.child(8).text(),elem.child(9).text()));
                }
             }
-        }
-        
-        /*UTS*/
-        if(jadwalTable.size()>1){
-            Elements tableUTS = jadwalTable.get(1).select("tbody tr");
-            for(Element elem : tableUTS){
-               if(elem.className().contains("row")){     
-                   MataKuliah currMk = MataKuliah.createMataKuliah(elem.child(1).text(), Integer.parseInt(elem.child(3).text()), elem.child(2).text());
-                   jadwalList.getJadwalUTS().add(new JadwalUjian(currMk, elem.child(4).text().charAt(0), elem.child(5).text(), elem.child(6).text(), elem.child(7).text(), elem.child(8).text()));
-               }
-            }
-        }
-
-        /*UAS*/
-        if(jadwalTable.size()>2){
-            Elements tableUAS = jadwalTable.get(2).select("tbody tr");
-            for(Element elem : tableUAS){
-               if(elem.className().contains("row")){     
-                   MataKuliah currMk = MataKuliah.createMataKuliah(elem.child(1).text(), Integer.parseInt(elem.child(3).text()), elem.child(2).text());
-                   jadwalList.getJadwalUAS().add(new JadwalUjian(currMk, elem.child(4).text().charAt(0), elem.child(5).text(), elem.child(6).text(), elem.child(7).text(), elem.child(8).text()));
-               }
-            }
-        }
-        
+        }      
         return jadwalList;
     }
     

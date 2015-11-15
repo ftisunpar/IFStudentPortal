@@ -337,7 +337,7 @@ Dalam direktori \texttt{conf}, terdapat file \texttt{routes}. Melalui \texttt{ro
 	\label{fig:2_routes_example}
 \end{figure}
 
-Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \texttt{app} berisi file-file seperti pada gambar \ref{fig:2_app_dir}. Dalam folder \texttt{controllers}, terdapat file \texttt{Application.java} yang berisi kode Java untuk menghasilkan halaman web. Kelas yang menangani permintaan HTTP dan mengembalikan hasil HTTP disebut kelas \textit{controller}. Kelas \textit{controller} merupakan kelas yang memiliki \textit{action method}. Setiap \textit{action method} memiliki tipe kembalian \textit{Result} yang merepresentasikan \textit{view}. Pada referensi\cite{Leroux:2014} tertulis bahwa kembalian dari \textit{Action method} harus \texttt{static} tetapi pada versi Play Framework 2.4 \texttt{static} dihilangkan. \textit{Action method} kan berhubungan dengan \textit{view} setelah didefinisikan di \texttt{routes}. \textit{Controller} dapat mengirimkan \textit{parameter} pada \textit{view} melalui kembalian dari \textit{action method}. Sebagai contoh pada gambar \ref{fig:2_exam_ctrl}, \textit{method} \texttt{home()} mengembalikan \textit{view} \texttt{home} yang berada pada \textit{package} \texttt{views} dengan mengirim \textit{parameter} ``nama''.
+Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \texttt{app} berisi file-file seperti pada gambar \ref{fig:2_app_dir}. Dalam folder \texttt{controllers}, terdapat file \texttt{Application.java} yang berisi kode Java untuk menghasilkan halaman web. Kelas yang menangani permintaan HTTP dan mengembalikan hasil HTTP disebut kelas \textit{controller}. Kelas \textit{controller} merupakan kelas yang memiliki \textit{action method}. Setiap \textit{action method} memiliki tipe kembalian \textit{Result} yang merepresentasikan \textit{view}. Pada buku referensi\cite{Leroux:2014}, tertulis bahwa kembalian dari \textit{Action method} harus \texttt{static} tetapi pada versi Play Framework 2.4, \texttt{static} dihilangkan. \textit{Action method} kan berhubungan dengan \textit{view} setelah didefinisikan di \texttt{routes}. \textit{Controller} dapat mengirimkan \textit{parameter} pada \textit{view} melalui kembalian dari \textit{action method}. Sebagai contoh pada gambar \ref{fig:2_exam_ctrl}, \textit{method} \texttt{home()} mengembalikan \textit{view} \texttt{home} yang berada pada \textit{package} \texttt{views} dengan mengirim \textit{parameter} ``nama''.
 
 \begin{figure}[H]
 	\centering
@@ -611,7 +611,8 @@ SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem
 
 \begin{table}[H]
 	\centering
-    \begin{tabular}{|p{2.5cm}|p{4.5cm}|p{2.5cm}|p{4.5cm}|}
+	\caption{Tabel Rincian Kelas pada \textit{Package} \texttt{id.ac.unpar.siamodels.matakuliah}}
+    \begin{tabular}{|p{2.125cm}|p{4.5cm}|p{2.125cm}|p{4.5cm}|}
 		\hline
 		Kelas & \textit{Implements} & Kelas & \textit{Implements}\\
 		\hline
@@ -646,7 +647,7 @@ SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem
     AIF341  & -                          &            &           				   \\
 		\hline
     \end{tabular}
-		\caption{Tabel Rincian Kelas pada \textit{Package} \texttt{id.ac.unpar.siamodels.matakuliah}}
+		
 	\label{tab:2_kelas_matakuliah}
 \end{table}
 
