@@ -8,14 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import models.support.JadwalKuliah;
-
 public class Mahasiswa {
 	protected final String npm;
 	protected String nama;
 	protected final List<Nilai> riwayatNilai;
 
-	
 	public Mahasiswa(String npm) throws NumberFormatException {
 		super();
 		if (!npm.matches("[0-9]{10}")) {
@@ -37,9 +34,7 @@ public class Mahasiswa {
 	public String getNpm() {
 		return npm;
 	}
-	
-	
-	
+		
 	public String getEmailAddress() {
 		return npm.substring(4, 6) + npm.substring(2, 4) + npm.substring(7, 10) + "@student.unpar.ac.id";
 	}
