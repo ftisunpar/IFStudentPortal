@@ -1,25 +1,20 @@
 package models.id.ac.unpar.siamodels;
 
-/**
- * Menyimpan konstanta untuk semester-semester di UNPAR. Nilai konstanta
- * harus sesuai urutan kronologis dalam satu tahun ajaran.
- * @author pascal
- *
- */
-public final class Semester {
-	public static final int PENDEK = 0;
-	public static final int GANJIL = 1;
-	public static final int GENAP = 2;
+public enum Semester {
+	UNKNOWN5(5), TRANSFER(6), PENDEK(10), GANJIL(20), GENAP(30);
 
-	public static final int fromString(String text) {
-		switch (text.toUpperCase()) {
-		case "PENDEK":
-			return Semester.PENDEK;
-		case "GANJIL":
-			return Semester.GANJIL;
-		case "GENAP":
-			return Semester.GENAP;
-		}
-		return -1;
+	public static Semester fromString(String text) {
+		return Semester.valueOf(text.toUpperCase());
 	}
+	
+	private int order;
+	
+	private Semester(int order) {
+		this.order = order;
+	}
+	
+	int getOrder() {
+		return order;
+	}
+	
 }

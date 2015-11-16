@@ -1,8 +1,8 @@
 package models.id.ac.unpar.siamodels.matakuliah.interfaces;
 
-import java.util.List;
-
 import models.id.ac.unpar.siamodels.Mahasiswa;
+
+import java.util.List;
 
 /**
  * Mendefinisikan kelas-kelas yang memiliki prasyarat, terkustomisasi

@@ -1,6 +1,6 @@
 package models.display;
 
-import models.id.ac.unpar.siamodels.MataKuliah;
+import models.id.ac.unpar.siamodels.MataKuliahFactory;
 
 public class RingkasanDisplay {
 	private String[] pilWajib;
@@ -17,14 +17,14 @@ public class RingkasanDisplay {
 		this.IPK = IPK;
 		this.sksLulusTotal = sksLulusTotal;
 		pilWajib = new String[]{"AIF311","AIF312","AIF313","AIF314","AIF315","AIF316","AIF317","AIF318"}; 
-		MataKuliah.createMataKuliah("AIF311", 2, "Pemrograman Fungsional");
-        MataKuliah.createMataKuliah("AIF312", 2, "Keamanan Informasi");
-        MataKuliah.createMataKuliah("AIF313", 2, "Grafika Komputer");
-        MataKuliah.createMataKuliah("AIF314", 2, "Pemrograman Basis Data");
-        MataKuliah.createMataKuliah("AIF315", 2, "Pemrograman Berbasis Web");
-        MataKuliah.createMataKuliah("AIF316", 2, "Komputasi Paralel");
-        MataKuliah.createMataKuliah("AIF317", 2, "Desain Antarmuka Grafis");
-        MataKuliah.createMataKuliah("AIF318", 2, "Pemrograman Aplikasi Bergerak");
+		MataKuliahFactory.createMataKuliah("AIF311", 2, "Pemrograman Fungsional");
+		MataKuliahFactory.createMataKuliah("AIF312", 2, "Keamanan Informasi");
+		MataKuliahFactory.createMataKuliah("AIF313", 2, "Grafika Komputer");
+		MataKuliahFactory.createMataKuliah("AIF314", 2, "Pemrograman Basis Data");
+		MataKuliahFactory.createMataKuliah("AIF315", 2, "Pemrograman Berbasis Web");
+		MataKuliahFactory.createMataKuliah("AIF316", 2, "Komputasi Paralel");
+		MataKuliahFactory.createMataKuliah("AIF317", 2, "Desain Antarmuka Grafis");
+		MataKuliahFactory.createMataKuliah("AIF318", 2, "Pemrograman Aplikasi Bergerak");
 	}
 	
 	
