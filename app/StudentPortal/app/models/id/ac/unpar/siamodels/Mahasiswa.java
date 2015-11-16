@@ -7,20 +7,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
+
+import models.support.JadwalKuliah;
 
 public class Mahasiswa {
 	protected final String npm;
 	protected String nama;
 	protected final List<Nilai> riwayatNilai;
+
 	
 	public Mahasiswa(String npm) throws NumberFormatException {
 		super();
 		if (!npm.matches("[0-9]{10}")) {
-			throw new NumberFormatException("NPM tidak valid: " + npm);
+			throw new NumberFormatException("NPM tidak valid!");
 		}
 		this.npm = npm;
 		this.riwayatNilai = new ArrayList<Nilai>();
+		
 	}
 
 	public String getNama() {
@@ -30,14 +33,18 @@ public class Mahasiswa {
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
-
+	
 	public String getNpm() {
 		return npm;
 	}
-
+	
+	
+	
 	public String getEmailAddress() {
 		return npm.substring(4, 6) + npm.substring(2, 4) + npm.substring(7, 10) + "@student.unpar.ac.id";
 	}
+	
+	
 	
 	public List<Nilai> getRiwayatNilai() {
 		return riwayatNilai;
@@ -50,12 +57,13 @@ public class Mahasiswa {
 	 *   <li>Jika pengambilan beberapa kali, diambil <em>nilai terbaik</em>.
 	 * </ul>
 	 * Sebelum memanggil method ini, {@link #getRiwayatNilai()} harus sudah mengandung nilai per mata kuliah!
-	 * @return IPK Lulus, atau {#link {@link Double#NaN}} jika belum mengambil satu kuliah pun.
+	 * @return IPK Lulus
+	 * @throws ArrayIndexOutOfBoundsException jika tidak ada nilai
 	 */
 	public double calculateIPKLulus() throws ArrayIndexOutOfBoundsException {
 		List<Nilai> riwayatNilai = getRiwayatNilai();
 		if (riwayatNilai.size() == 0) {
-			return Double.NaN;
+			throw new ArrayIndexOutOfBoundsException("Minimal harus ada satu nilai untuk menghitung IPK Lulus");
 		}		
 		Map<String, Double> nilaiTerbaik = new HashMap<String, Double>();
 		int totalSKS = 0;
@@ -64,17 +72,12 @@ public class Mahasiswa {
 			if (nilai.getNilaiAkhir() == null || nilai.getNilaiAkhir().equals('E')) {
 				continue;
 			}
-			String kodeMK = nilai.getMataKuliah().kode();
-			Double angkaAkhir = nilai.getAngkaAkhir();
-			if (angkaAkhir != null) {
-				if (!nilaiTerbaik.containsKey(kodeMK)) {
-					totalSKS += nilai.getMataKuliah().sks();
-					nilaiTerbaik.put(kodeMK, nilai.getMataKuliah().sks() * nilai.getAngkaAkhir());
-				} else if (nilai.getAngkaAkhir() > nilaiTerbaik.get(kodeMK)) {
-					nilaiTerbaik.put(kodeMK, nilai.getMataKuliah().sks() * nilai.getAngkaAkhir());
-				}
-			} else {
-				// void: Nilai Akhir 'K' atau null
+			String kodeMK = nilai.getMataKuliah().getKode();
+			if (!nilaiTerbaik.containsKey(kodeMK)) {
+				totalSKS += nilai.getMataKuliah().getSKS();
+				nilaiTerbaik.put(kodeMK, nilai.getMataKuliah().getSKS() * nilai.getAngkaAkhir());
+			} else if (nilai.getAngkaAkhir() > nilaiTerbaik.get(kodeMK)) {
+				nilaiTerbaik.put(kodeMK, nilai.getMataKuliah().getSKS() * nilai.getAngkaAkhir());
 			}
 		}
 		// Hitung IPK dari nilai-nilai terbaik
@@ -100,15 +103,16 @@ public class Mahasiswa {
 			throw new ArrayIndexOutOfBoundsException("Minimal harus ada satu nilai untuk menghitung IPS");
 		}
 		int lastIndex = riwayatNilai.size() - 1;
-		TahunSemester tahunSemester = riwayatNilai.get(lastIndex).getTahunSemester();
+		int semester = riwayatNilai.get(lastIndex).getSemester();
+		int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
 		double totalNilai = 0;
 		double totalSKS = 0;
 		for (int i = lastIndex; i >= 0; i--) {
 			Nilai nilai = riwayatNilai.get(i);
-			if (nilai.tahunSemester.equals(tahunSemester)) {
+			if (nilai.semester == semester && nilai.tahunAjaran == tahunAjaran) {
 				if (nilai.getAngkaAkhir() != null) {
-					totalNilai += nilai.getMataKuliah().sks() * nilai.getAngkaAkhir();
-					totalSKS += nilai.getMataKuliah().sks();
+					totalNilai += nilai.getMataKuliah().getSKS() * nilai.getAngkaAkhir();
+					totalSKS += nilai.getMataKuliah().getSKS();
 				}
 			} else {
 				break;
@@ -135,41 +139,25 @@ public class Mahasiswa {
 			if (nilai.getNilaiAkhir() == null || nilai.getNilaiAkhir().equals('E')) {
 				continue;
 			}
-			String kodeMK = nilai.getMataKuliah().kode();
+			String kodeMK = nilai.getMataKuliah().getKode();
 			if (!sksTerhitung.contains(kodeMK)) {
-				totalSKS += nilai.getMataKuliah().sks();
+				totalSKS += nilai.getMataKuliah().getSKS();
 				sksTerhitung.add(kodeMK);
 			}			
 		}
 		return totalSKS;
-	}
-	
-	/**
-	 * Mendapatkan seluruh tahun semester di mana mahasiswa ini tercatat
-	 * sebagai mahasiswa aktif, dengan strategi memeriksa riwayat nilainya.
-	 * Jika ada satu nilai saja pada sebuah tahun semester, maka dianggap
-	 * aktif pada semester tersebut.
-	 * @return kumpulan tahun semester di mana mahasiswa ini aktif
-	 */
-	public Set<TahunSemester> calculateTahunSemesterAktif() {
-		Set<TahunSemester> tahunSemesterAktif = new TreeSet<TahunSemester>();
-		List<Nilai> riwayatNilai = getRiwayatNilai();
-		for (Nilai nilai: riwayatNilai) {
-			tahunSemesterAktif.add(nilai.getTahunSemester());
-		}
-		return tahunSemesterAktif;
-	}
+	}	
 	
 	/**
 	 * Memeriksa apakah mahasiswa ini sudah lulus mata kuliah tertentu. Kompleksitas O(n).
 	 * Sebelum memanggil method ini, {@link #getRiwayatNilai()} harus sudah mengandung nilai per mata kuliah!
-	 * Note: jika yang dimiliki adalah {@link MataKuliah}, gunakanlah {@link MataKuliah#kode()}.
+	 * Note: jika yang dimiliki adalah {@link MataKuliah}, gunakanlah {@link MataKuliah#getKode()}.
 	 * @param kodeMataKuliah kode mata kuliah yang ingin diperiksa kelulusannya.
 	 * @return true jika sudah pernah mengambil dan lulus, false jika belum
 	 */
 	public boolean hasLulusKuliah(String kodeMataKuliah) {
 		for (Nilai nilai: riwayatNilai) {
-			if (nilai.getMataKuliah().kode().equals(kodeMataKuliah)) {
+			if (nilai.getMataKuliah().getKode().equals(kodeMataKuliah)) {
 				Character na = nilai.getNilaiAkhir();
 				if (na != null && na >= 'A' && na <= 'D') {
 					return true;
@@ -182,13 +170,13 @@ public class Mahasiswa {
 	/**
 	 * Memeriksa apakah mahasiswa ini sudah pernah menempuh mata kuliah tertentu. Kompleksitas O(n).
 	 * Sebelum memanggil method ini, {@link #getRiwayatNilai()} harus sudah ada isinya!
-	 * Note: jika yang dimiliki adalah {@link MataKuliah}, gunakanlah {@link MataKuliah#kode()}.
+	 * Note: jika yang dimiliki adalah {@link MataKuliah}, gunakanlah {@link MataKuliah#getKode()}.
 	 * @param kodeMataKuliah kode mata kuliah yang ingin diperiksa.
 	 * @return true jika sudah pernah mengambil, false jika belum
 	 */
 	public boolean hasTempuhKuliah(String kodeMataKuliah) {
 		for (Nilai nilai: riwayatNilai) {
-			if (nilai.getMataKuliah().kode().equals(kodeMataKuliah)) {
+			if (nilai.getMataKuliah().getKode().equals(kodeMataKuliah)) {
 				return true;
 			}
 		}
@@ -214,8 +202,10 @@ public class Mahasiswa {
 	 *
 	 */
 	public static class Nilai {
-		/** Tahun dan Semester kuliah ini diambil */
-		protected final TahunSemester tahunSemester;
+		/** Tahun ajaran kuliah ini diambil */
+		protected final int tahunAjaran;
+		/** Semester kuliah ini diambil, salah satu dari {@link Semester} */
+		protected final int semester;
 		/** Mata kuliah yang diambil */
 		protected final MataKuliah mataKuliah;
 		/** Kelas kuliah */
@@ -229,11 +219,12 @@ public class Mahasiswa {
 		/** Nilai Akhir */
 		protected final Character nilaiAkhir;
 
-		public Nilai(TahunSemester tahunSemester, MataKuliah mataKuliah,
+		public Nilai(int tahunAjaran, int semester, MataKuliah mataKuliah,
 				Character kelas, Double nilaiART, Double nilaiUTS, Double nilaiUAS,
 				Character nilaiAkhir) {
 			super();
-			this.tahunSemester = tahunSemester;
+			this.tahunAjaran = tahunAjaran;
+			this.semester = semester;
 			this.mataKuliah = mataKuliah;
 			this.kelas = kelas;
 			this.nilaiART = nilaiART;
@@ -263,7 +254,7 @@ public class Mahasiswa {
 		}
 
 		/**
-		 * Mengembalikan nilai akhir dalam bentuk huruf (A, B, C, D, ..., atau K)
+		 * Mengembalikan nilai akhir dalam bentuk huruf (A, B, C, D, ...)
 		 * @return nilai akhir dalam huruf, atau null jika tidak ada.
 		 */
 		public Character getNilaiAkhir() {
@@ -272,7 +263,7 @@ public class Mahasiswa {
 		
 		/**
 		 * Mendapatkan nilai akhir dalam bentuk angka
-		 * @return nilai akhir dalam angka, atau null jika {@link #getNilaiAkhir() mengembalikan 'K' atau null}
+		 * @return nilai akhir dalam angka, atau null jika {@link #getNilaiAkhir() mengembalikan null}
 		 */
 		public Double getAngkaAkhir() {
 			if (nilaiAkhir == null) {
@@ -289,28 +280,24 @@ public class Mahasiswa {
 				return 1.0;
 			case 'E':
 				return 0.0;
-			case 'K':
-				return null;
 			}
 			return null;
 		}
 
-		public TahunSemester getTahunSemester() {
-			return tahunSemester;
+		public int getTahunAjaran() {
+			return tahunAjaran;
 		}
 
-		public int getTahunAjaran() {
-			return tahunSemester.getTahun();
-		}
-		
-		public Semester getSemester() {
-			return tahunSemester.getSemester();
+		public int getSemester() {
+			return semester;
 		}
 
 		@Override
 		public String toString() {
-			return "Nilai [tahunSemester=" + tahunSemester + ", mataKuliah=" + mataKuliah + ", kelas=" + kelas
-					+ ", nilaiART=" + nilaiART + ", nilaiUTS=" + nilaiUTS + ", nilaiUAS=" + nilaiUAS + ", nilaiAkhir="
+			return "Nilai [tahunAjaran=" + tahunAjaran + ", semester="
+					+ semester + ", mataKuliah=" + mataKuliah + ", kelas="
+					+ kelas + ", nilaiART=" + nilaiART + ", nilaiUTS="
+					+ nilaiUTS + ", nilaiUAS=" + nilaiUAS + ", nilaiAkhir="
 					+ nilaiAkhir + "]";
 		}
 
@@ -324,8 +311,21 @@ public class Mahasiswa {
 
 			@Override
 			public int compare(Nilai o1, Nilai o2) {
-				return o1.getTahunSemester().compareTo(o2.getTahunSemester());
+				if (o1.tahunAjaran < o2.tahunAjaran) {
+					return -1;
+				}
+				if (o1.tahunAjaran > o2.tahunAjaran) {
+					return + 1;
+				}
+				if (o1.semester < o2.semester) {
+					return -1;
+				}
+				if (o1.semester > o2.semester) {
+					return +1;
+				}
+				return 0;
 			}
 		}
 	}
+
 }

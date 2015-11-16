@@ -6,8 +6,6 @@ alc
  */
 package controllers;
 
-import models.id.ac.unpar.siamodels.MataKuliahFactory;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,6 @@ import models.id.ac.unpar.siamodels.Mahasiswa;
 import models.id.ac.unpar.siamodels.Mahasiswa.Nilai;
 import models.id.ac.unpar.siamodels.MataKuliah;
 import models.id.ac.unpar.siamodels.Semester;
-import models.id.ac.unpar.siamodels.TahunSemester;
 import models.support.*;
 
 import org.jsoup.Connection;
@@ -126,8 +123,8 @@ public class Scraper {
                 String nama = row.get(2).text();
                 String sks = row.get(3).text();
                 if(!kode.equals(prev)){
-                    MataKuliah curr = MataKuliahFactory.createMataKuliah(kode, Integer.parseInt(sks), nama);
-                    mkList.add(curr.kode());
+                    MataKuliah curr = MataKuliah.createMataKuliah(kode, Integer.parseInt(sks), nama);
+                    mkList.add(curr.getKode());
                 }
                 prev = kode;
             }   
@@ -156,7 +153,7 @@ public class Scraper {
                         kode = elem.child(1).text();
                         nama = elem.child(2).text();  
                     }  
-                    MataKuliah currMk = MataKuliahFactory.createMataKuliah(kode, Integer.parseInt(elem.child(3).text()), nama);
+                    MataKuliah currMk = MataKuliah.createMataKuliah(kode, Integer.parseInt(elem.child(3).text()), nama);
                     jadwalList.add(new JadwalKuliah(currMk,elem.child(4).text().charAt(0),elem.child(5).text(),elem.child(7).text(),elem.child(8).text(),elem.child(9).text()));
                }
             }
@@ -187,7 +184,7 @@ public class Scraper {
                       String kode = td.child(1).text();
                       int sks = Integer.parseInt(td.child(3).text());
                       String nama_mk = td.child(2).text();
-                      MataKuliah curr_mk = MataKuliahFactory.createMataKuliah(kode, sks, nama_mk);
+                      MataKuliah curr_mk = MataKuliah.createMataKuliah(kode, sks, nama_mk);
                       char kelas = td.child(4).text().charAt(0);
                       double ART = 0;
                       double UTS = 0;
@@ -198,8 +195,7 @@ public class Scraper {
                         UAS = Double.parseDouble(td.child(7).text());
                       }
                       char NA = td.child(9).text().charAt(0);
-                      
-                      logged_mhs.getRiwayatNilai().add(new Nilai(new TahunSemester(thn.substring(2, 3)+Semester.fromString(sem)), curr_mk, kelas, ART, UTS, UAS, NA));
+                      logged_mhs.getRiwayatNilai().add(new Nilai(Integer.parseInt(thn), Semester.fromString(sem), curr_mk, kelas, ART, UTS, UAS, NA));
                     }
                 }
             }

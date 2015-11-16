@@ -1,12 +1,10 @@
-package id.ac.unpar.siamodels.matakuliah;
+package models.id.ac.unpar.siamodels.matakuliah;
 
-import id.ac.unpar.siamodels.Mahasiswa;
-import id.ac.unpar.siamodels.MataKuliah;
-import id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
+import models.id.ac.unpar.siamodels.Mahasiswa;
+import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
 
 import java.util.List;
 
-@MataKuliah(kode = "AIF339", nama = "Pemodelan Formal", sks = 3)
 public class AIF339 implements HasPrasyarat {
 
 	@Override

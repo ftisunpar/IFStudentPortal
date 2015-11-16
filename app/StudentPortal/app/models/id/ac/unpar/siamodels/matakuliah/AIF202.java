@@ -1,13 +1,11 @@
-package id.ac.unpar.siamodels.matakuliah;
-
-import id.ac.unpar.siamodels.Mahasiswa;
-import id.ac.unpar.siamodels.MataKuliah;
-import id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
-import id.ac.unpar.siamodels.matakuliah.interfaces.Wajib;
+package models.id.ac.unpar.siamodels.matakuliah;
 
 import java.util.List;
 
-@MataKuliah(kode = "AIF202", nama = "Desain & Analisis Algoritma", sks = 4)
+import models.id.ac.unpar.siamodels.Mahasiswa;
+import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
+import models.id.ac.unpar.siamodels.matakuliah.interfaces.Wajib;
+
 public class AIF202 implements HasPrasyarat, Wajib {
 
 	@Override

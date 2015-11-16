@@ -1,31 +1,72 @@
 package models.id.ac.unpar.siamodels;
 
-import java.lang.annotation.Target;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface MataKuliah {
-	/**
-	 * Kode Mata Kuliah. Harus sama dengan nama kelas nya.
-	 * 
-	 * @return kode mata kuliah
-	 */
-	public String kode();
+/**
+ * Merepresentasikan sebuah mata kuliah.
+ * TODO: baiknya kelas-kelas id.ac.unpar.siamodels.matakuliah terkait ke sini.
+ * @author pascal
+ *
+ */
+public class MataKuliah {
+	protected final String kode;
+	protected final int sks;
+	protected final String nama;
+
+	public String getKode() {
+		return kode;
+	}
+
+	public int getSKS() {
+		return sks;
+	}
+
+	public String getNama() {
+		return nama;
+	}
+
+	protected MataKuliah(String kode, int sks, String nama) {
+		super();
+		this.kode = kode;
+		this.sks = sks;
+		this.nama = nama;
+	}
+
+	protected static SortedMap<String, MataKuliah> daftarMataKuliah = null;
 
 	/**
-	 * Jumlah bobot sks dari mata kuliah ini
-	 * 
-	 * @return jumlah bobot sks
+	 * Mendapatkan atau membuat mata kuliah baru
+	 * @param kode kode MK
+	 * @param sks bobot SKS
+	 * @param nama Nama mata kuliah
+	 * @return objek mata kuliah singleton
 	 */
-	public int sks();
+	public static MataKuliah createMataKuliah(String kode, int sks, String nama) {
+		if (daftarMataKuliah == null) {
+			daftarMataKuliah = new TreeMap<String, MataKuliah>();
+		}
+		MataKuliah mataKuliah = daftarMataKuliah.get(kode);
+		if (mataKuliah == null) {
+			mataKuliah = new MataKuliah(kode, sks, nama);
+			daftarMataKuliah.put(kode, mataKuliah);
+		} else {
+			assert mataKuliah.sks == sks;
+			assert mataKuliah.nama.equals(nama);
+		}
+		return mataKuliah;
+	}
+	
+	public static MataKuliah getMataKuliah(String kode) {
+		if (daftarMataKuliah == null) {
+			daftarMataKuliah = new TreeMap<String, MataKuliah>();
+		}
+		return daftarMataKuliah.get(kode);
+	}
 
-	/**
-	 * Nama mata kuliah ini
-	 * 
-	 * @return nama mata kuliah
-	 */
-	public String nama();
+	@Override
+	public String toString() {
+		return "MataKuliah [kode=" + kode + ", sks=" + sks + ", nama=" + nama
+				+ "]";
+	}
 }

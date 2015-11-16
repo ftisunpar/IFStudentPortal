@@ -1,5 +1,5 @@
 package models.id.ac.unpar.siamodels.matakuliah;
 
-public class MKU003 {
+public class MKU002 {
 
 }

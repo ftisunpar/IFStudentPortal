@@ -16,7 +16,6 @@ import models.display.RingkasanDisplay;
 import models.id.ac.unpar.siamodels.Mahasiswa;
 import models.id.ac.unpar.siamodels.MataKuliah;
 import models.id.ac.unpar.siamodels.Mahasiswa.Nilai;
-import models.id.ac.unpar.siamodels.MataKuliahFactory;
 import models.id.ac.unpar.siamodels.Semester;
 import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
 import models.support.CustomMahasiswa;
@@ -128,14 +127,14 @@ public class Application extends Controller {
 			);
 	    	List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();	
 	    	int lastIndex = riwayatNilai.size() - 1;
-			int semester = riwayatNilai.get(lastIndex).getSemester().ordinal();
+			int semester = riwayatNilai.get(lastIndex).getSemester();
 			int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
 			int totalSKS = 0;
 			for (int i = lastIndex; i >= 0; i--) {
 				Nilai nilai = riwayatNilai.get(i);
-				if (nilai.getSemester().ordinal() == semester && nilai.getTahunAjaran() == tahunAjaran) {
+				if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
 					if (nilai.getAngkaAkhir() != null) {
-						totalSKS += nilai.getMataKuliah().sks();
+						totalSKS += nilai.getMataKuliah().getSKS();
 					}
 				} else {
 					break;
@@ -213,7 +212,7 @@ public class Application extends Controller {
             		for (String reason: reasons) {
             			status+=reason + ";";
                     }
-                    table.add(new PrasyaratDisplay(MataKuliahFactory.getMataKuliah(mk.getClass().getSimpleName()),status.split(";")));
+                    table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),status.split(";")));
                 }
                 else{
                     if(mahasiswaList.get(session("npm")).hasLulusKuliah(mk.getClass().getSimpleName())){
