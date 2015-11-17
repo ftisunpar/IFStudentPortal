@@ -40,7 +40,7 @@ button[name=submit]{
 	background-color: #222;
 	color: white;
 }
-.prasyarat-header th{
+th{
 	background-color: #222;
 	color: white;
 }
@@ -194,4 +194,7 @@ p.navbar-brand{
 
 .navbar-brand:hover{
 	cursor: default;
+}
+.jadwal-cell{
+	cursor: pointer;
 }

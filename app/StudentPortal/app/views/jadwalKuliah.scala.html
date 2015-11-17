@@ -91,13 +91,13 @@
 											 <tr>
 												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>
 												@if(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah()!=null){	
-													<td rowspan="1" height="25">@(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah().getKode())</td>
+													<td class="jadwal-cell" rowspan="1" height="25" data-toggle="modal" data-target="#modalDialog" onclick="setModal('@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getNama()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getKelas()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getDosen()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getWaktu()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getRuang()')">@(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah().getKode())</td>
 												}else{
 													<td height="25"> - </td>
 												}
 											 </tr>
 											 @if(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah()!=null){	
-												<tr><td height="25">@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode())</td></tr>
+												<tr><td class="jadwal-cell" height="25" data-toggle="modal" data-target="#modalDialog" onclick="setModal('@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getNama()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getKelas()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getDosen()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getWaktu()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getRuang()')">@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode())</td></tr>
 											 }else{
 												<tr><td height="25"> - </td></tr>
 											 }
@@ -244,6 +244,24 @@
 					</div>
 				</div>
 				}
+				
+				<div class="modal fade" id="modalDialog" role="dialog">
+					<div class="modal-dialog modal-sm">
+					  <div class="modal-content">
+						<div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal">&times;</button>
+						  <h4 class="modal-title">Modal Header</h4>
+						</div>
+						<div class="modal-body">
+						  <p>Modal Content.</p>
+						</div>
+						<div class="modal-footer">
+						  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					  </div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 		
@@ -251,5 +269,11 @@
 		<script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")"></script>
 		<script src="@routes.Assets.versioned("javascripts/script.js")"></script>
 		<script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+		<script>
+			function setModal(kodeMk, namaMk, kelas, dosen, waktu, ruang) {
+				$(".modal-title").html(kodeMk + " " + namaMk);
+				$(".modal-body").html("<table> <tr> <td>"+waktu+"</td></tr><tr><td>Kelas "+kelas+"</td></tr><tr><td>"+dosen+"</td></tr><tr><td>"+ruang+"</td></tr></table>");
+			}
+		</script>
     </body>
 </html>
