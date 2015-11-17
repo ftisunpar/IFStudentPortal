@@ -56,7 +56,7 @@ public class JadwalDisplay {
                     	range++;  
                     }
                     for (int j = beginIndex; j < beginIndex+range; j++) {
-                        kuliahCalendar[day][j] = jdw;  
+                    	kuliahCalendar[day][j] = jdw;      	
                     }
                 }
             }

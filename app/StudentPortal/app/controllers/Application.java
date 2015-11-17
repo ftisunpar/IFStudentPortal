@@ -223,6 +223,14 @@ public class Application extends Controller {
                     }
                 }
             }
+            else{ 
+            	if(mahasiswaList.get(session("npm")).hasLulusKuliah(mk.getClass().getSimpleName())){
+                	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),new String[]{"sudah lulus"}));
+                }
+                else{ 
+                	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),new String[]{"tidak memiliki prasyarat"}));
+                }
+            }
         }
         
         for (String mk: mkUnknown) {

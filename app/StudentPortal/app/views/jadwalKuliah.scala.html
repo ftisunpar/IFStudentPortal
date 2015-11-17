@@ -56,7 +56,6 @@
 				<div class="row">
 					<h2 class="text-center">JADWAL KULIAH</h2> 
 					<h4 class="text-center">SEMESTER @semester</h4>
-					@import scala.Predef; var x= 0
 				</div>
 				@if(jadwalKuliah.isKuliahEmpty()){
 					<div class="row">
@@ -84,66 +83,33 @@
 								<table id="senin" class="table">
 									<thead>
 										<tr>
-											<th>Senin</th>
+											<th colspan="2">Senin</th>
 										</tr>
 									</thead>
 									<tbody>	
 										@for(i <- 7 until 18) {
 											 <tr>
-												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>												
+												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>
 												@if(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah()!=null){	
-													@if(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah().getKode().equals(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode())){
-														@(x = x + 1)
-													}else{
-														@(x = x + 1)
-														<td rowspan=@x height="25">
-															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode()) 
-															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getNama()) 
-															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getRuang()) 
-															Kelas: @(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getKelas())
-														</td>
-														@(x = 0)
-													}
+													<td rowspan="1" height="25">@(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah().getKode())</td>
 												}else{
 													<td height="25"> - </td>
 												}
 											 </tr>
 											 @if(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah()!=null){	
-												@if(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+2).getMataKuliah()!=null){
-													@if(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode().equals(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+2).getMataKuliah().getKode())){
-														@(x = x + 1)
-													}else{
-														@(x = x + 1)
-														<tr><td rowspan=@x height="25">
-															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode()) 
-															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getNama()) 
-															@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getRuang()) 
-															Kelas: @(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getKelas())
-														</td></tr>
-														@(x = 0)
-													}
-												}else{
-													@(x = x + 1)
-													<tr><td rowspan=@x height="25">
-														@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode()) 
-														@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getNama()) 
-														@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getRuang()) 
-														Kelas: @(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getKelas()) 
-													</td></tr>
-													@(x = 0)
-												}
+												<tr><td height="25">@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().getKode())</td></tr>
 											 }else{
 												<tr><td height="25"> - </td></tr>
 											 }
 										}	
 									</tbody>
-								</table>
+								</table>	
 							</div>
 							<div class="col-md-4">
 								<table id="selasa" class="table">
 									<thead>
 										<tr>
-											<th>Selasa</th>
+											<th colspan="2">Selasa</th>
 										</tr>
 									</thead>
 									<tbody>	
@@ -169,7 +135,7 @@
 								<table id="rabu" class="table">
 									<thead>
 										<tr>
-											<th>Rabu</th>
+											<th colspan="2">Rabu</th>
 										</tr>
 									</thead>
 									<tbody>	
@@ -200,7 +166,7 @@
 								<table id="kamis" class="table">
 									<thead>
 										<tr>
-											<th>Kamis</th>
+											<th colspan="2">Kamis</th>
 										</tr>
 									</thead>
 									<tbody>	
@@ -226,7 +192,7 @@
 								<table id="jumat" class="table">
 									<thead>
 										<tr>
-											<th>Jumat</th>
+											<th colspan="2">Jumat</th>
 										</tr>
 									</thead>
 									<tbody>	
@@ -252,7 +218,7 @@
 								<table id="sabtu" class="table">
 									<thead>
 										<tr>
-											<th>Sabtu</th>
+											<th colspan="2">Sabtu</th>
 										</tr>
 									</thead>
 									<tbody>	

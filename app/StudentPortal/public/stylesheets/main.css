@@ -40,6 +40,10 @@ button[name=submit]{
 	background-color: #222;
 	color: white;
 }
+.prasyarat-header th{
+	background-color: #222;
+	color: white;
+}
 /*Responsive sidebar*/
 .main .row{
 	padding: 0px;
