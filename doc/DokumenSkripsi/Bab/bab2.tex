@@ -337,7 +337,14 @@ Dalam direktori \texttt{conf}, terdapat file \texttt{routes}. Melalui \texttt{ro
 	\label{fig:2_routes_example}
 \end{figure}
 
-Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \texttt{app} berisi file-file seperti pada gambar \ref{fig:2_app_dir}. Dalam folder \texttt{controllers}, terdapat file \texttt{Application.java} yang berisi kode Java untuk menghasilkan halaman web. Kelas yang menangani permintaan HTTP dan mengembalikan hasil HTTP disebut kelas \textit{controller}. Kelas \textit{controller} merupakan kelas yang memiliki \textit{action method}. Setiap \textit{action method} memiliki tipe kembalian \textit{Result} yang merepresentasikan \textit{view}. Pada buku referensi\cite{Leroux:2014}, tertulis bahwa kembalian dari \textit{Action method} harus \texttt{static} tetapi pada versi Play Framework 2.4, \texttt{static} dihilangkan. \textit{Action method} kan berhubungan dengan \textit{view} setelah didefinisikan di \texttt{routes}. \textit{Controller} dapat mengirimkan \textit{parameter} pada \textit{view} melalui kembalian dari \textit{action method}. Sebagai contoh pada gambar \ref{fig:2_exam_ctrl}, \textit{method} \texttt{home()} mengembalikan \textit{view} \texttt{home} yang berada pada \textit{package} \texttt{views} dengan mengirim \textit{parameter} ``nama''.
+Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \texttt{app} berisi file-file seperti pada gambar \ref{fig:2_app_dir}. Dalam folder \texttt{controllers}, terdapat file \texttt{Application.java} yang berisi kode Java untuk menghasilkan halaman web. Kelas yang menangani permintaan HTTP dan mengembalikan hasil HTTP disebut kelas \textit{controller}. Kelas \textit{controller} merupakan kelas yang memiliki \textit{action method}. Setiap \textit{action method} memiliki tipe kembalian \textit{Result} yang merepresentasikan \textit{view}. Pada buku referensi\cite{Leroux:2014}, tertulis bahwa kembalian dari \textit{Action method} harus \texttt{static} tetapi pada versi Play Framework 2.4, \texttt{static} dihilangkan. \textit{Action method} kan berhubungan dengan \textit{view} setelah didefinisikan di \texttt{routes}. \textit{Controller} dapat mengirimkan parameter pada \textit{view} melalui kembalian dari \textit{action method}. Berikut ini adalah contoh \textit{method} pada kelas \textit{Controller}:
+\begin{lstlisting}
+public Result home(){
+	String nama = mahasiswa.getNama();
+	return ok(views.html.home.render(nama));
+}
+\end{lstlisting}
+\textit{Method} \texttt{home()} mengembalikan \textit{view} \texttt{home} yang berada pada \textit{package} \texttt{views} dengan mengirim \textit{parameter} ``nama''.
 
 \begin{figure}[H]
 	\centering
@@ -346,21 +353,22 @@ Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan 
 	\label{fig:2_app_dir}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.75]{Gambar/example-controller}
-	\caption{Contoh \textit{Method} pada Kelas \textit{Controller}} 
-	\label{fig:2_exam_ctrl}
-\end{figure}
+Dalam folder \texttt{views} terdapat dua file yaitu \texttt{index.scala.html} dan \texttt{main.scala.html} yang berfungsi untuk mendefinisikan halaman HTML. Setiap konten yang dihasilkan pada server dan dikirim ke klien dalam \textit{body} HTTP, seperti halaman HTML, disebut \textit{view}. \textit{View} dapat menerima parameter dari \textit{controller} menggunakan bahasa Scala. Berikut contoh penggunaan bahasa Scala pada \textit{view} dalam penerimaan parameter:
+\begin{lstlisting}
+@(message: String)
 
-Dalam folder \texttt{views} terdapat dua file yaitu \texttt{index.scala.html} dan \texttt{main.scala.html} yang berfungsi untuk mendefinisikan halaman HTML. Setiap konten yang dihasilkan pada server dan dikirim ke klien dalam \textit{body} HTTP, seperti halaman HTML, disebut \textit{view}. \textit{View} dapat menerima \textit{parameter} dari \textit{controller} menggunakan bahasa Scala. Sebagai contoh pada gambar \ref{fig:2_exam_view}, pada baris pertama ``message'' mendefinisikan nama \textit{parameter} yang diterima dengan tipe \textit{String}. Tipe yang diterima \textit{view} harus sama dengan tipe yang dikirim \textit{controller} begitu pula banyak \textit{parameter}-nya. Baris ke-10 menampilkan ``message'' pada halaman HTML. Tanda ``@'' menandakan penggunaan bahasa Scala pada \textit{view}. Folder-folder yang terdapat dalam direktori \texttt{app} akan menjadi \textit{package} dalam kode Java.
+<!DOCTYPE HTML>
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.75]{Gambar/example-view}
-	\caption{Penerimaan \textit{Parameter} pada \textit{View}} 
-	\label{fig:2_exam_view}
-\end{figure}
+<html lang=``en''>
+	<head>
+		<title>Informatika Student Portal</title>
+	</head>
+	<body>
+		Nama: @message
+	</body>
+<html>
+\end{lstlisting}
+Pada baris pertama ``message'' mendefinisikan nama parameter yang diterima dengan tipe \textit{String}. Tipe yang diterima \textit{view} harus sama dengan tipe yang dikirim \textit{controller} begitu pula banyak parameternya. Baris ke-10 menampilkan ``message'' pada halaman HTML. Tanda ``@'' menandakan penggunaan bahasa Scala pada \textit{view}. 
 
 Direktori \texttt{public} berisi sumber yang dapat diakses secara langsung sebagai aset publik. Biasanya aset publik mendukung file selain aplikasi yang dibuat seperti gambar, \textit{stylesheet}, Javascript, dan halaman HTML statis. Aset publik tidak dihasilkan oleh aplikasi melainkan diatur secara langsung oleh pembuat program.
 
@@ -607,7 +615,7 @@ SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem
 	\end{enumerate}
 	
 	\item \textit{Package} \texttt{id.ac.unpar.siamodels.matakuliah}\\
-	\textit{Package} ini berisi kelas-kelas yang merepresentasikan mata kuliah yang terdapat pada Program Studi Teknik Informatika UNPAR. Rincian dari kelas-kelas pada package ini dapat dilihat pada tabel \ref{tab:2_kelas_matakuliah}.
+	\textit{Package} ini berisi kelas-kelas yang merepresentasikan mata kuliah yang terdapat pada Program Studi Teknik Informatika UNPAR beserta aturan prasyaratnya. Rincian dari kelas-kelas pada package ini dapat dilihat pada tabel \ref{tab:2_kelas_matakuliah}.
 
 \begin{table}[H]
 	\centering

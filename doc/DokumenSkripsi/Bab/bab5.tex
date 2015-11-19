@@ -8,33 +8,29 @@
 		\label{sec:lingkungan_implementasi}
 			Implementasi perangkat lunak ini dilakukan di dua buah komputer. Implementasi pertama dilakukan pada komputer peneliti untuk keperluan pengujian fungsional. Komputer tersebut memiliki spesifikasi sebagai berikut:
 				\begin{enumerate}
-					\item Processor: 3.40Ghz 
-					\item RAM: 8.00 GB DDR3	
+					\item Processor: 2.40Ghz 
+					\item RAM: 4.00 GB DDR3	
 					\item Sistem Operasi: Windows 8.1 Pro 64-bit 
-					\item IDE: Eclipse Luna
 					\item Versi Java: 1.8.0\_40
-					\item Versi Play Framework: 2.4
-					\item Versi jsoup: 1.8.2
 				\end{enumerate}
-			Implementasi kedua dilakukan pada komputer yang terhubung pada jaringan FTIS untuk keperluan pengujian fungsional dan eksperimental. Komputer tersebut memiliki spesifikasi sebagai berikut:
-					\begin{enumerate}
-						\item Processor: 2.50Ghz 
-						\item RAM: 4.00 GB DDR3	
-						\item Sistem Operasi: Windows 8.1 Pro 64-bit 
-						\item IDE: Eclipse Luna
-						\item Versi Java: 1.8.0\_40
-						\item Versi Play Framework: 2.4
-						\item Versi jsoup: 1.8.2
-					\end{enumerate}
-						
-	\section{Pengujian}
+				Implementasi kedua dilakukan pada komputer server yang terhubung dengan jaringan FTIS untuk keperluan pengujian eksperimental. Komputer tersebut memiliki spesifikasi sebagai berikut:
+				\begin{enumerate}
+					\item Processor: 2.40Ghz 
+					\item RAM: 4.00 GB DDR3	
+					\item Sistem Operasi: Ubuntu server amd-64 
+					\item Versi Java: 1.7.0\_40
+				\end{enumerate}
+
+\subsection{Hasil Implementasi}
+				
+\section{Pengujian}
 			\subsection{Pengujian Fungsional} 
-			Pengujian fungsional dilakukan untuk mengetahui kesesuaian reaksi perangkat lunak dengan reaksi yang diharapkan berdasarkan aksi pengguna terhadap perangkat lunak. Ada 6 tes kasus yang diujikan, dan detail serta hasilnya dapat dilihat di tabel \ref{table:hasilFungsional}
+			Pengujian fungsional dilakukan untuk mengetahui kesesuaian reaksi perangkat lunak dengan reaksi yang diharapkan berdasarkan aksi pengguna terhadap perangkat lunak. Ada tujuh tes kasus yang diujikan, dan detail serta hasilnya dapat dilihat di tabel \ref{table:hasilFungsional}.
 			
 			\begin{table}[H]
 			\centering
 			\caption{Tabel Pengujian Fungsional}
-				\begin{tabular}{|p{0.5cm}| p{4cm}| p{7cm}| p{1.75cm}|} \hline
+				\begin{tabular}{|p{0.5cm}| p{3.5cm}| p{7cm}| p{2.25cm}|} \hline
 				No.	&	Aksi Pengguna	&	Reaksi yang diharapkan	&	Reaksi Perangkat Lunak \\ \hline
 				1.	&	Pengguna menjalankan aplikasi	&	Halaman \textit{login} akan ditampilkan	&	sesuai	\\ \hline
 				2.	&	Pengguna memasukkan \textit{email} dan \textit{password}	&	Jika \textit{email} dan \textit{password}	sesuai, pengguna akan diarahkan ke halaman utama. & sesuai, namun foto profil tidak muncul jika belum validasi sertifikat SSL UNPAR\\ \hline
@@ -48,6 +44,7 @@
 				5.	&	Pengguna memilih menu ``Data Akademik'' &	Jika pengguna belum memiliki riwayat nilai(masih menempuh semester 1), akan ditampilkan pesan ``DATA AKADEMIK BELUM TERSEDIA'' &	sesuai	\\ \hline
 					&	&	Jika pengguna sudah memiliki riwayat nilai, akan ditampilkan ringkasan data akademik mahasiswa berupa IPS semester terakhir, IPK, SKS lulus, sisa SKS kelulusan, dan ringkasan data mengenai mata kuliah pilihan wajib &	sesuai	\\ \hline
 				6.	&	Pengguna memilih tombol \textit{logout}	&	Pengguna akan diarahkan kembali ke halaman \textit{login} &	sesuai	\\ \hline
+				7.	& Dua pengguna menggunakan aplikasi secara bersamaan	&	Pengguna dapat menggunakan aplikasi dengan akun yang sesuai &	sesuai	\\ \hline
 				\end{tabular}
 				\label{table:hasilFungsional}
 			\end{table}
