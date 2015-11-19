@@ -93,7 +93,7 @@ public class Application extends Controller {
 	    	return ok(views.html.prasyarat.render(table,semester));
     	}
     	else{
-	    	List<PrasyaratDisplay> table = cekPrasyarat();
+	    	List<PrasyaratDisplay> table = checkPrasyarat();
 	    	String semester = scrap.getSemester();
 	    	return ok(views.html.prasyarat.render(table,semester));
     	}
@@ -183,7 +183,7 @@ public class Application extends Controller {
     	return index();
     }
     
-    private List<PrasyaratDisplay> cekPrasyarat() throws IOException{
+    private List<PrasyaratDisplay> checkPrasyarat() throws IOException{
     	List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
     	List<String> mkl = scrap.getMkList();
         String MATAKULIAH_REPOSITORY_PACKAGE = "models.id.ac.unpar.siamodels.matakuliah"; 
