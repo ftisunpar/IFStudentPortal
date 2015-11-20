@@ -2,21 +2,17 @@ package models.display;
 
 import java.util.List;
 
-import models.id.ac.unpar.siamodels.MataKuliah;
-import models.support.*;
+import models.support.JadwalKuliah;
 
 public class JadwalDisplay {
 	private List<JadwalKuliah> jadwalList;
 	private JadwalKuliah[][] kuliahCalendar;
-
+	private String[] hariList;
 	
 	public JadwalDisplay(List<JadwalKuliah> jadwalList){
 		this.jadwalList = jadwalList;
-		/*07.00-08.40*/
-		JadwalKuliah test = new JadwalKuliah(MataKuliah.createMataKuliah("AIFT3S",5,"Test"),'A',"X","Sabtu","07.00-08.40","AMX0903");
-		jadwalList.add(test);
-		
 		kuliahCalendar = new JadwalKuliah[6][22];
+		hariList = new String[]{"Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"};
 		fillKuliahCalendar();
 	}
 	

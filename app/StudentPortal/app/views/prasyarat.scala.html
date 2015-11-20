@@ -78,11 +78,11 @@
 						@for(ls<-list){
 							<tr>
 								@if(ls.getStatus()(0).contains("data prasyarat tidak tersedia")){
-									<td class="text-center" rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().getKode()</td>
+									<td class="text-center" rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().kode()</td>
 								}else{
-									<td class="text-center" rowspan="@(ls.getStatus().length)"><a target="_blank" href= @{val ref = "https://github.com/herfanheryandi/SIAModels/blob/master/src/id/ac/unpar/siamodels/matakuliah/"+ls.getMataKuliah().getKode()+".java"; ref}>@ls.getMataKuliah().getKode()</a></td>
+									<td class="text-center" rowspan="@(ls.getStatus().length)"><a target="_blank" href= @{val ref = "https://github.com/herfanheryandi/Skripsi/blob/master/app/StudentPortal/app/models/id/ac/unpar/siamodels/matakuliah/"+ls.getMataKuliah().kode()+".java"; ref}>@ls.getMataKuliah().kode()</a></td>
 								}
-								<td rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().getNama()</td>
+								<td rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().nama()</td>
 								
 								@for(stat<-ls.getStatus()){
 									@if(!stat.isEmpty){

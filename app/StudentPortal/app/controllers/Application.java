@@ -16,10 +16,12 @@ import models.display.RingkasanDisplay;
 import models.id.ac.unpar.siamodels.Mahasiswa;
 import models.id.ac.unpar.siamodels.MataKuliah;
 import models.id.ac.unpar.siamodels.Mahasiswa.Nilai;
+import models.id.ac.unpar.siamodels.MataKuliahFactory;
 import models.id.ac.unpar.siamodels.Semester;
 import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
 import models.support.CustomMahasiswa;
 import models.support.JadwalKuliah;
+import models.support.Scraper;
 import play.*;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -127,28 +129,21 @@ public class Application extends Controller {
 			);
 	    	List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();	
 	    	int lastIndex = riwayatNilai.size() - 1;
-			int semester = riwayatNilai.get(lastIndex).getSemester();
+			Semester semester = riwayatNilai.get(lastIndex).getSemester();
 			int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
 			int totalSKS = 0;
 			for (int i = lastIndex; i >= 0; i--) {
 				Nilai nilai = riwayatNilai.get(i);
 				if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
 					if (nilai.getAngkaAkhir() != null) {
-						totalSKS += nilai.getMataKuliah().getSKS();
+						totalSKS += nilai.getMataKuliah().sks();
 					}
 				} else {
 					break;
 				}
 			}
-			String semString = new String();
-			switch (semester) {
-				case 1: semString = "GANJIL"; break;
-				case 2: semString = "GENAP"; break;
-				case 4: semString = "PENDEK"; break;
-				case 5: semString = "UNKNOWN5"; break;
-				case 6: semString = "TRANSFER"; break;
-			}
-			String semTerakhir = semString +" "+tahunAjaran+"/"+(tahunAjaran+1);
+
+			String semTerakhir = semester +" "+tahunAjaran+"/"+(tahunAjaran+1);
 	    	display.setDataSemTerakhir(semTerakhir, totalSKS);
     		String pilWajibLulus = new String();
 	    	String pilWajibBelumLulus = new String();
@@ -212,29 +207,29 @@ public class Application extends Controller {
             		for (String reason: reasons) {
             			status+=reason + ";";
                     }
-                    table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),status.split(";")));
+                    table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),status.split(";")));
                 }
                 else{
                     if(mahasiswaList.get(session("npm")).hasLulusKuliah(mk.getClass().getSimpleName())){
-                    	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),new String[]{"sudah lulus"}));
+                    	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"sudah lulus"}));
                     }
                     else{ 
-                    	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),new String[]{"memenuhi syarat"}));
+                    	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"memenuhi syarat"}));
                     }
                 }
             }
             else{ 
             	if(mahasiswaList.get(session("npm")).hasLulusKuliah(mk.getClass().getSimpleName())){
-                	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),new String[]{"sudah lulus"}));
+                	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"sudah lulus"}));
                 }
                 else{ 
-                	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk.getClass().getSimpleName()),new String[]{"tidak memiliki prasyarat"}));
+                	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"tidak memiliki prasyarat"}));
                 }
             }
         }
         
         for (String mk: mkUnknown) {
-        	table.add(new PrasyaratDisplay(MataKuliah.getMataKuliah(mk),new String[]{"data prasyarat tidak tersedia"}));
+        	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk,MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"data prasyarat tidak tersedia"}));
         }
         
         return table;

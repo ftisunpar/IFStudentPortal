@@ -1,11 +1,13 @@
 package models.id.ac.unpar.siamodels.matakuliah;
 
-import java.util.List;
-
 import models.id.ac.unpar.siamodels.Mahasiswa;
+import models.id.ac.unpar.siamodels.MataKuliah;
 import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
 import models.id.ac.unpar.siamodels.matakuliah.interfaces.Wajib;
 
+import java.util.List;
+
+@MataKuliah(kode = "AIF102", nama = "Algoritma dan Struktur Data", sks = 4)
 public class AIF102 implements HasPrasyarat, Wajib {
 
 	@Override

@@ -80,7 +80,7 @@
 										<li>	-	</li>
 									}else{
 										@for(list<-ringkasan.getPilWajibLulus()){
-											<li>@list @(models.id.ac.unpar.siamodels.MataKuliah.getMataKuliah(list).getNama())</li>
+											<li>@list @ringkasan.getNamaPilWajib(list)</li>
 										}
 									}
 								</ul>
@@ -90,7 +90,7 @@
 										<li>	-	</li>
 									}else{
 										@for(list<-ringkasan.getPilWajibBelumLulus()){
-											<li>@list @(models.id.ac.unpar.siamodels.MataKuliah.getMataKuliah(list).getNama())</li>
+											<li>@list @ringkasan.getNamaPilWajib(list)</li>
 										}
 									}
 								</ul>

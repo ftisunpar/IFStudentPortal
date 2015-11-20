@@ -1,11 +1,13 @@
 package models.id.ac.unpar.siamodels.matakuliah;
 
 import models.id.ac.unpar.siamodels.Mahasiswa;
+import models.id.ac.unpar.siamodels.MataKuliah;
 import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
 import models.id.ac.unpar.siamodels.matakuliah.interfaces.Pilihan;
 
 import java.util.List;
 
+@MataKuliah(kode = "AIF438", nama = "Penambangan Data", sks = 3)
 public class AIF438 implements HasPrasyarat, Pilihan {
 
 	@Override
