@@ -12,10 +12,13 @@ public class JadwalDisplay {
 	public JadwalDisplay(List<JadwalKuliah> jadwalList){
 		this.jadwalList = jadwalList;
 		kuliahCalendar = new JadwalKuliah[6][22];
-		hariList = new String[]{"Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"};
+		hariList = new String[]{"Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"};
 		fillKuliahCalendar();
 	}
 	
+	public String getHariByIndex(int index){
+		return this.hariList[index];
+	}
 	public JadwalKuliah getJadwalKuliah(int hari, int waktu){
 		return kuliahCalendar[hari][waktu];
 	}

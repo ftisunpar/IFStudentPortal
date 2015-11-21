@@ -77,99 +77,36 @@
 							</tbody>
 						</table>
 					</div>	
-					<div class="col-md-5">
+					<div class="col-md-10">
 						<div class="row">
-							<div class="col-md-4">
-								<table id="senin" class="table">
+						@for(day <- 0 until 6) {
+							<div class="col-md-2">
+								<table id=@jadwalKuliah.getHariByIndex(day) class="table">
 									<thead>
 										<tr>
-											<th colspan="2">Senin</th>
+											<th class="text-center" colspan="2">@jadwalKuliah.getHariByIndex(day)</th>
 										</tr>
 									</thead>
 									<tbody>	
 										@for(i <- 7 until 18) {
 											 <tr>
 												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>
-												@if(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah()!=null){	
-													<td class="jadwal-cell" rowspan="1" height="25" data-toggle="modal" data-target="#modalDialog" onclick="setModal('@jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah().kode()','@jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah().nama()','@jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getKelas()','@jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getDosen()','@jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getWaktu()','@jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getRuang()')">@(jadwalKuliah.getJadwalKuliah(0,(i-7)*2).getMataKuliah().kode())</td>
+												@if(jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah()!=null){	
+													<td class="jadwal-cell text-center" rowspan="1" height="25" data-toggle="modal" data-target="#modalDialog" onclick="setModal('@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah().kode()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah().nama()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getKelas()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getDosen()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getWaktu()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getRuang()')">@(jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah().kode())</td>
 												}else{
-													<td height="25"> - </td>
+													<td class="text-center" height="25"> - </td>
 												}
 											 </tr>
-											 @if(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah()!=null){	
-												<tr><td class="jadwal-cell" height="25" data-toggle="modal" data-target="#modalDialog" onclick="setModal('@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().kode()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().nama()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getKelas()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getDosen()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getWaktu()','@jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getRuang()')">@(jadwalKuliah.getJadwalKuliah(0,((i-7)*2)+1).getMataKuliah().kode())</td></tr>
+											 @if(jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah()!=null){	
+												<tr><td class="jadwal-cell text-center" height="25" data-toggle="modal" data-target="#modalDialog" onclick="setModal('@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah().kode()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah().nama()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getKelas()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getDosen()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getWaktu()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getRuang()')">@(jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah().kode())</td></tr>
 											 }else{
-												<tr><td height="25"> - </td></tr>
+												<tr><td class="text-center" height="25"> - </td></tr>
 											 }
 										}	
 									</tbody>
 								</table>	
 							</div>
-							<div class="col-md-4">
-								<table id="selasa" class="table">
-									<thead>
-										<tr>
-											<th colspan="2">Selasa</th>
-										</tr>
-									</thead>
-									<tbody>	
-										
-									</tbody>
-								</table>
-							</div>
-							<div class="col-md-4">
-								<table id="rabu" class="table">
-									<thead>
-										<tr>
-											<th colspan="2">Rabu</th>
-										</tr>
-									</thead>
-									<tbody>	
-											
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					
-					<div class="col-md-5">
-						<div class="row">
-							<div class="col-md-4">
-								<table id="kamis" class="table">
-									<thead>
-										<tr>
-											<th colspan="2">Kamis</th>
-										</tr>
-									</thead>
-									<tbody>	
-										
-									</tbody>
-								</table>
-							</div>
-							<div class="col-md-4">
-								<table id="jumat" class="table">
-									<thead>
-										<tr>
-											<th colspan="2">Jumat</th>
-										</tr>
-									</thead>
-									<tbody>	
-										
-									</tbody>
-								</table>
-							</div>
-							<div class="col-md-4">
-								<table id="sabtu" class="table">
-									<thead>
-										<tr>
-											<th colspan="2">Sabtu</th>
-										</tr>
-									</thead>
-									<tbody>	
-										
-									</tbody>
-								</table>
-							</div>
+							}	
 						</div>
 					</div>
 				</div>

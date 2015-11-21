@@ -59,15 +59,24 @@
 				</div>
 				<p><br></p>
 				<div class="row">
-                    <div class="col-lg-3">
-						<img src="@mhs.getPhotoPath()"/>
+                    <div class="col-lg-6">
+						<div class="table-responsive profile-table">
+							<table class="table table-bordered">
+								<tr>
+									<td width="50" rowspan="3"><center><img src="@mhs.getPhotoPath()"/></center></td>
+									<td><h6>@mhs.getNama()</h6></td>
+								</tr>
+								<tr>
+									<td><h6>@mhs.getNpm()</h6></td>
+								</tr>
+								<tr>
+									<td><h6>@mhs.getEmailAddress()</h6></td>
+								</tr>
+							</table>
+						</div>
 					</div>
-					<div class="col-lg-3">
-						@mhs.getNama() 
-						@mhs.getNpm() 
-						@mhs.getEmailAddress()
-					</div>
-                </div>
+				</div>
+				<p><br></p>
 				<div class="row">
 					<a href="https://github.com/herfanheryandi/Skripsi/tree/master/app/StudentPortal" target="_blank">Source code Informatika Student Portal</a>
 				</div>

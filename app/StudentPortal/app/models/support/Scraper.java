@@ -39,9 +39,9 @@ public class Scraper {
     private final String NILAI_URL = BASE_URL + "includes/nilai.sem.php";
     private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
     private TahunSemester currTahunSemester;
-    private List<String> mkList;
+    private List<MataKuliah> mkList;
     
-    public List<String> getMkList(){
+    public List<MataKuliah> getMkList(){
     	return this.mkList;
     }
     
@@ -117,7 +117,7 @@ public class Scraper {
         Document doc = resp.parse();
         Elements jadwal = doc.select("tr");
         String prev = "";
-        mkList = new ArrayList<String>();
+        mkList = new ArrayList<MataKuliah>();
         for (int i = 1; i < jadwal.size()-1; i++) {
             Elements row = jadwal.get(i).children();
             if(!row.get(1).text().equals("")){
@@ -126,7 +126,7 @@ public class Scraper {
                 String sks = row.get(3).text();
                 if(!kode.equals(prev)){
                     MataKuliah curr = MataKuliahFactory.createMataKuliah(kode, Integer.parseInt(sks), nama);
-                    mkList.add(curr.kode());
+                    mkList.add(curr);
                 }
                 prev = kode;
             }   

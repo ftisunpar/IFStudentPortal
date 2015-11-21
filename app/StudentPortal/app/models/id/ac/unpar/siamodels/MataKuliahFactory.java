@@ -1,6 +1,7 @@
 package models.id.ac.unpar.siamodels;
 
 import java.lang.annotation.Annotation;
+import java.util.SortedMap;
 import java.util.logging.Logger;
 
 public class MataKuliahFactory {
@@ -19,7 +20,7 @@ public class MataKuliahFactory {
 	 * Menandakan nama mata kuliah tidak diketahui.
 	 */
 	public static String UNKNOWN_NAMA = null;
-
+	
 	/**
 	 * Membuat objek mata kuliah baru. Jika memungkinkan mengambil dari kelas
 	 * yang sudah ada.
@@ -51,6 +52,7 @@ public class MataKuliahFactory {
 		} catch (ClassNotFoundException e) {
 			Logger.getGlobal().warning("Class is not listed: " + kode);
 		}
+
 		// Do default return
 		return new MataKuliah() {
 

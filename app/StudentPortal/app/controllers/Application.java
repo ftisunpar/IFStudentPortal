@@ -180,17 +180,17 @@ public class Application extends Controller {
     
     private List<PrasyaratDisplay> checkPrasyarat() throws IOException{
     	List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
-    	List<String> mkl = scrap.getMkList();
+    	List<MataKuliah> mkList = scrap.getMkList();
         String MATAKULIAH_REPOSITORY_PACKAGE = "models.id.ac.unpar.siamodels.matakuliah"; 
     	List<Object> mkKnown = new ArrayList<Object>(); 
-    	List<String> mkUnknown = new ArrayList<String>(); 
-        for(String kodeMK : mkl){
+    	List<MataKuliah> mkUnknown = new ArrayList<MataKuliah>(); 
+        for(MataKuliah mk : mkList){
 	        try {
-	            Class<?> mkClass = Class.forName(MATAKULIAH_REPOSITORY_PACKAGE + "." + kodeMK);
+	            Class<?> mkClass = Class.forName(MATAKULIAH_REPOSITORY_PACKAGE + "." + mk.kode());
 	            Object matakuliah = mkClass.newInstance();
 	            mkKnown.add(matakuliah);
 	        } catch (ClassNotFoundException e) {
-	        	mkUnknown.add(kodeMK);
+	        	mkUnknown.add(mk);
 	        } catch (InstantiationException e) {
 	                e.printStackTrace();
 	        } catch (IllegalAccessException e) {
@@ -228,8 +228,8 @@ public class Application extends Controller {
             }
         }
         
-        for (String mk: mkUnknown) {
-        	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk,MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"data prasyarat tidak tersedia"}));
+        for (MataKuliah mk: mkUnknown) {
+        	table.add(new PrasyaratDisplay(mk,new String[]{"data prasyarat tidak tersedia"}));
         }
         
         return table;

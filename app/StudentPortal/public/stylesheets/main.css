@@ -44,6 +44,26 @@ th{
 	background-color: #222;
 	color: white;
 }
+.profile-table .table{
+	background-color: #222;
+	color: white;
+}
+.ringkasan-panel .page-header{
+	background-color: #222;
+	color: white;
+	margin: 0px;
+	padding-top: 5px;
+}
+.ringkasan-body{
+	background-color: white;
+	color: black;
+	border: 2px solid #222;
+	padding: 20px 20px 20px 20px;
+}
+.jadwal-cell{
+	background-color: #9d9d9d;
+	color: white;
+}
 /*Responsive sidebar*/
 .main .row{
 	padding: 0px;

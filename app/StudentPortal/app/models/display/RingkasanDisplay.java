@@ -12,6 +12,7 @@ public class RingkasanDisplay {
 	private int sksLulusTotal;
 	private int sksLulusSemTerakhir;
 	private String semesterTerakhir;
+	private final int MIN_LULUS_PIL_WAJIB = 4;
 	
 	public RingkasanDisplay(String IPS, String IPK, int sksLulusTotal){
 		this.IPS = IPS;
@@ -19,6 +20,10 @@ public class RingkasanDisplay {
 		this.sksLulusTotal = sksLulusTotal;
 		/*Manual create mata kuliah pilihan wajib*/
 		pilWajib = new String[]{"AIF311","AIF312","AIF313","AIF314","AIF315","AIF316","AIF317","AIF318"}; 
+	}
+	
+	public int getMinLulusPilWajib(){
+		return this.MIN_LULUS_PIL_WAJIB;
 	}
 	
 	public String getNamaPilWajib(String kode){
