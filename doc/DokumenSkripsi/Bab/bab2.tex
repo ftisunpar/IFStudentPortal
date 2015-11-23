@@ -394,14 +394,20 @@ Dalam Play Framework, objek yang disimpan pada \textit{session} memiliki masa hi
 
 \section{SIA Models}
 \label{sec:siamodels}
-SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem Informasi Akademik UNPAR\cite{siamodels}. Kelas-kelas yang dimiliki SIA Models terbagi ke dalam tiga package antara lain:
+SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem Informasi Akademik UNPAR\cite{siamodels}. Kelas-kelas yang dimiliki SIA Models terbagi ke dalam tiga \textit{package} antara lain:
 
 \begin{enumerate}
 	\item \textit{Package} \texttt{id.ac.unpar.siamodels}\\
 	\textit{Package} ini memiliki kelas-kelas sebagai berikut:
 	\begin{enumerate}
 		\item Mahasiswa\\
-		Kelas ini merepresentasikan mahasiswa. \textit{Method-method} yang dimiliki kelas ini adalah sebagai berikut:
+		Kelas ini merepresentasikan mahasiswa. Atribut yang dimiliki kelas ini antara lain:
+		\begin{itemize}
+			\item \textbf{String npm:} Nomor Pokok Mahasiswa (NPM).
+			\item \textbf{String nama:} nama mahasiswa.
+			\item \textbf{List<Nilai> riwayatNilai:} riwayat nilai yang dimiliki mahasiswa.
+		\end{itemize}
+	\textit{Method-method} yang dimiliki kelas ini adalah sebagai berikut:
 		\begin{itemize}
 			\item \textbf{public Mahasiswa(String npm)}\\
 			Merupakan \textit{constructor} dari kelas Mahasiswa.\\
@@ -445,6 +451,10 @@ SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem
 				Menghitung jumlah SKS lulus mahasiswa saat ini. Sebelum memanggil \textit{method} ini, \texttt{getRiwayatNilai()} harus sudah mengandung nilai per mata kuliah.\\
 				\textbf{Kembalian:} SKS lulus.
 				
+			\item \textbf{public Set<TahunSemester> calculateTahunSemesterAktif()}\\
+				Mendapatkan seluruh tahun semester di mana mahasiswa ini tercatat sebagai mahasiswa aktif, dengan strategi memeriksa riwayat nilainya.Jika ada satu nilai saja pada sebuah tahun semester, maka dianggap aktif pada semester tersebut.\\
+				\textbf{Kembalian:} kumpulan tahun semester di mana mahasiswa ini aktif.
+				
 			\item \textbf{public boolean hasLulusKuliah(String kodeMataKuliah)}\\
 				Memeriksa apakah mahasiswa ini sudah lulus mata kuliah tertentu. Sebelum memanggil \textit{method} ini, \texttt{getRiwayatNilai()} harus sudah mengandung nilai per mata kuliah.\\
 				\textbf{Parameter:}
@@ -467,14 +477,23 @@ SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem
 			\end{itemize}
 		
 		\item Nilai\\
-		Kelas ini merepresentasikan nilai yang ada pada riwayat nilai mahasiswa. \textit{Method-method} yang dimiliki kelas ini adalah sebagai berikut:
+		Kelas ini merepresentasikan nilai yang ada pada riwayat nilai mahasiswa. Atribut yang dimiliki kelas ini antara lain:
 		\begin{itemize}
-			\item \textbf{public Nilai(int tahunAjaran, int semester, MataKuliah mataKuliah, Character kelas, Double nilaiART, Double nilaiUTS, Double nilaiUAS, Character nilaiAkhir)}\\
+			\item \textbf{TahunSemester tahunSemester:} tahun dan semester kuliah ini diambil
+			\item \textbf{MataKuliah mataKuliah:} mata kuliah yang diambil.
+			\item \textbf{Character kelas:} kelas kuliah.
+			\item \textbf{Double nilaiART:} nilai Angka Rata-rata Tugas (ART).
+			\item \textbf{Double nilaiUTS:} nilai Ujian Tengah Semester (UTS).
+			\item \textbf{Double nilaiUAS:} nilai Ujian Akhir Semester (UAS).
+			\item \textbf{Character nilaiAkhir:} nilai akhir.
+		\end{itemize}
+	\textit{Method-method} yang dimiliki kelas ini adalah sebagai berikut:
+		\begin{itemize}
+			\item \textbf{public Nilai(TahunSemester tahunSemester, MataKuliah mataKuliah, Character kelas, Double nilaiART, Double nilaiUTS, Double nilaiUAS, Character nilaiAkhir)}\\
 				Merupakan \textit{constructor} dari kelas Nilai.\\
 				\textbf{Parameter:}
 				\begin{itemize}
-					\item \textbf{tahunAjaran} tahun ajaran kuliah ini diambil.
-					\item \textbf{semester} semester kuliah ini diambil.
+					\item \textbf{tahunSemester} tahun dan semester kuliah ini diambil.
 					\item \textbf{mataKuliah} mata kuliah yang diambil.
 					\item \textbf{kelas} kelas kuliah.
 					\item \textbf{nilaiART} nilai ART.
@@ -515,9 +534,13 @@ SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem
 				Mendapatkan tahun ajaran saat pengambilan mata kuliah.\\
 				\textbf{Kembalian:} tahun ajaran saat pengambilan mata kuliah.
 			
-			\item \textbf{public int getTahunSemester()}\\
+			\item \textbf{public TahunSemester getTahunSemester()}\\
+				Mendapatkan tahun dan semester pengambilan mata kuliah.\\
+				\textbf{Kembalian:} tahun dan semester pengambilan mata kuliah.	
+				
+			\item \textbf{public Semester getSemester()}\\
 				Mendapatkan semester pengambilan mata kuliah.\\
-				\textbf{Kembalian:} semester pengambilan mata kuliah.	
+				\textbf{Kembalian:} semester pengambilan mata kuliah
 		\end{itemize}
 		
 		\item ChronologicalComparator\\
@@ -535,58 +558,88 @@ SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem
 		\end{itemize}
 		
 		\item MataKuliah\\
-		Kelas ini merepresentasikan sebuah mata kuliah. \textit{Method-method} yang dimiliki kelas ini adalah sebagai berikut:
+		Kelas ini merepresentasikan sebuah mata kuliah.\textit{Method-method} yang dimiliki kelas ini adalah sebagai berikut:	
 		\begin{itemize}
-			\item \textbf{protected MataKuliah(String kode, int sks, String nama)} \\
-			Merupakan \textit{constructor} dari kelas MataKuliah.\\
-			\textbf{Parameter:}
-			\begin{itemize}
-				\item \textbf{kode} kode mata kuliah.
-				\item \textbf{sks} bobot SKS mata kuliah.
-				\item \textbf{nama} nama mata kuliah.
-			\end{itemize}
-			
-			\item \textbf{public String getKode()}\\
-				Mendapatkan kode mata kuliah.\\
-				\textbf{Kembalian:} kode mata kuliah.
-				
-			\item \textbf{public int getSKS()}\\
-				Mendapatkan bobot SKS mata kuliah.\\
-				\textbf{Kembalian:} bobot SKS mata kuliah.
-				
-			\item \textbf{public String getNama()}\\
-				Mendapatkan nama mata kuliah.\\
-				\textbf{Kembalian:} nama mata kuliah.
-				
+			\item \textbf{public String kode()} \\
+			Mendapatkan kode mata kuliah sesuai dengan nama kelas mata kuliah tersebut. \\
+			\textbf{Kembalian:} kode mata kuliah.
+			\item \textbf{public int sks()} \\
+			Mendapatkan bobot sks. \\
+			\textbf{Kembalian:} bobot SKS.
+			\item \textbf{public String kode()} \\
+			Mendapatkan nama mata kuliah. \\
+			\textbf{Kembalian:} nama mata kuliah.
+		\end{itemize}
+		
+		\item MataKuliahFactory\\
+		Kelas ini berperan dalam pembuatan objek mata kuliah baru. Atribut yang dimiliki kelas ini antara lain:
+		\begin{itemize}
+			\item \textbf{String DEFAULT\_MATAKULIAH\_PACKAGE:} lokasi \textit{package} untuk daftar mata kuliah.
+			\item \textbf{int UNKNOWN\_SKS:} menandakan jumlah SKS tidak diketahui.
+			\item \textbf{String UNKNOWN\_NAMA:} menandakan nama mata kuliah tidak diketahui.
+		\end{itemize}
+		\textit{Method} yang dimiliki kelas ini adalah sebagai berikut:
+		\begin{itemize}	
 			\item \textbf{public static MataKuliah createMataKuliah(String kode, int sks, String nama)} \\
-			Mendapatkan atau membuat mata kuliah baru.\\
+			Membuat objek mata kuliah baru. Jika memungkinkan mengambil dari kelas yang sudah ada.\\
 			\textbf{Parameter:}
 			\begin{itemize}
 				\item \textbf{kode} kode mata kuliah.
-				\item \textbf{sks} bobot SKS mata kuliah.
-				\item \textbf{nama} nama mata kuliah.
+				\item \textbf{sks} bobot SKS mata kuliah, dapat diisi dengan \texttt{UNKNOWN\_SKS} jika tidak diketahui.
+				\item \textbf{nama} nama mata kuliah, dapat diisi dengan.
 			\end{itemize}
-			\textbf{Kembalian:} objek mata kuliah.
-			
-			\item \textbf{public static MataKuliah getMataKuliah(String kode)}\\
-				Mendapatkan mata kuliah.\\
-				\textbf{Parameter:}
-				\begin{itemize}
-					\item \textbf{kode} kode mata kuliah.
-				\end{itemize}
-				\textbf{Kembalian:} mata kuliah sesuai kode.	
+			\textbf{Kembalian:} objek mata kuliah \texttt{UNKNOWN\_NAMA} jika tidak diketahui.
 		\end{itemize}
 		
 		\item Semester\\
-		Kelas ini menyimpan konstanta untuk semester-semester di UNPAR. Nilai konstanta harus sesuai urutan kronologis dalam satu tahun ajaran. \textit{Method} yang dimiliki kelas ini adalah sebagai berikut:
+		Kelas ini merepresentasikan semester
+		\textit{Method} yang dimiliki kelas ini adalah sebagai berikut:
 		\begin{itemize}
-			\item \textbf{public static final int fromString(String text)} \\
+			\item \textbf{public static final Semester fromString(String text)} \\
 			Berfungsi untuk mengubah semester dari bentuk teks ke konstanta. \\
 			\textbf{Parameter:}
 			\begin{itemize}
-				\item \textbf{text} semester dalam bentuk teks (GANJIL, GENAP, PENDEK).
+				\item \textbf{text} semester dalam bentuk teks (GANJIL, GENAP, PENDEK, TRANSFER, dan UNKNOWN5).
 			\end{itemize}
 			\textbf{Kembalian:} konstanta semester.
+		\end{itemize}
+		
+		\item TahunSemester\\
+		Kelas ini menyimpan konstanta untuk semester beserta tahunnya di UNPAR. Atribut yang dimiliki kelas ini antara lain:
+		\begin{itemize}
+			\item \textbf{String kodeTahunSemester:} kode semester 3 dijit, 2 dijit pertama berupa tahun, dijit terakhir menandakan semester dengan definisi 1 untuk ganjil, 2 untuk genap, 4 untuk pendek, dan 6 untuk transfer.
+		\end{itemize}
+		\textit{Method-method} yang dimiliki kelas ini adalah sebagai berikut:
+		\begin{itemize}
+			\item \textbf{public TahunSemester(String kodeTahunSemester)} \\
+			\textit{Method} ini merupakan constructor dari kelas TahunSemester. \\
+			\textbf{Parameter:}
+			\begin{itemize}
+				\item \textbf{kodeTahunSemester} semester dalam bentuk teks (GANJIL, GENAP, PENDEK, TRANSFER, dan UNKNOWN5).
+			\end{itemize}
+			
+			\item \textbf{public TahunSemester(int tahun, Semester semester)} \\
+			\textit{Method} ini merupakan constructor dari kelas TahunSemester. \\
+			\textbf{Parameter:}
+			\begin{itemize}
+				\item \textbf{tahun} tahun ajaran.
+				\item \textbf{semester} semester dari tahun ajaran.
+			\end{itemize}
+			
+			\item \textbf{public Semester getSemester()} \\
+			\textit{Method} ini berfungsi untuk mendapatkan semester. \\
+			\textbf{Kembalian:} semester dalam teks.
+			
+			\item \textbf{public int getTahun()} \\
+			\textit{Method} ini berfungsi untuk mendapatkan tahun. \\
+			\textbf{Kembalian:} tahun ajaran.
+			
+			\item \textbf{private static void validateKodeSemester(String kodeTahunSemester)} \\
+			\textit{Method} ini berfungsi untuk melakukan  validasi terhadap kode tahun semester. \\
+			\textbf{Parameter:}
+			\begin{itemize}
+				\item \textbf{kodeTahunSemester} kode tahun semester.
+			\end{itemize}
 		\end{itemize}
 	\end{enumerate}
 	

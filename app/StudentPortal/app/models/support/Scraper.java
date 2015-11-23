@@ -97,9 +97,9 @@ public class Scraper {
             List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
             logged_mhs.setJadwalList(jadwalList);
             /*Periksa maba atau bukan*/
-            if(!(logged_mhs.getTahunAngkatan()==currTahunSemester.getTahun()&&currTahunSemester.getSemester()==Semester.GANJIL)){
-            	this.setNilai(login_cookies, logged_mhs);
-            }  
+            //if(!(logged_mhs.getTahunAngkatan()==currTahunSemester.getTahun()&&currTahunSemester.getSemester()==Semester.GANJIL)){
+            this.setNilai(login_cookies, logged_mhs);
+            //}  
             return logged_mhs;
         }       
         else{
@@ -195,10 +195,12 @@ public class Scraper {
                         ART = Double.parseDouble(td.child(5).text());
                         UTS = Double.parseDouble(td.child(6).text());
                         UAS = Double.parseDouble(td.child(7).text());
-                      }
-                      char NA = td.child(9).text().charAt(0);
-                      TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn),Semester.fromString(sem));
-                      logged_mhs.getRiwayatNilai().add(new Nilai(tahunSemesterNilai, curr_mk, kelas, ART, UTS, UAS, NA));
+                      }  
+                      if(!td.child(9).text().equals("")){
+                    	  char NA = td.child(9).text().charAt(0);
+                    	  TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn),Semester.fromString(sem));
+                          logged_mhs.getRiwayatNilai().add(new Nilai(tahunSemesterNilai, curr_mk, kelas, ART, UTS, UAS, NA));
+                      }	    
                     }
                 }
             }
