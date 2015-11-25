@@ -19,6 +19,7 @@ public class JadwalDisplay {
 	public String getHariByIndex(int index){
 		return this.hariList[index];
 	}
+	
 	public JadwalKuliah getJadwalKuliah(int indexHari, int indexWaktu){
 		return kuliahCalendar[indexHari][indexWaktu];
 	}
