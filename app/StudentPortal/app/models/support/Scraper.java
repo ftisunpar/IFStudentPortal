@@ -100,6 +100,7 @@ public class Scraper {
             //if(!(logged_mhs.getTahunAngkatan()==currTahunSemester.getTahun()&&currTahunSemester.getSemester()==Semester.GANJIL)){
             this.setNilai(login_cookies, logged_mhs);
             //}  
+            logout();
             return logged_mhs;
         }       
         else{

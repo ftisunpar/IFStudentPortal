@@ -19,8 +19,8 @@ public class JadwalDisplay {
 	public String getHariByIndex(int index){
 		return this.hariList[index];
 	}
-	public JadwalKuliah getJadwalKuliah(int hari, int waktu){
-		return kuliahCalendar[hari][waktu];
+	public JadwalKuliah getJadwalKuliah(int indexHari, int indexWaktu){
+		return kuliahCalendar[indexHari][indexWaktu];
 	}
 	
 	public boolean isKuliahEmpty(){

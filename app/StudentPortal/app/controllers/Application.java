@@ -173,7 +173,6 @@ public class Application extends Controller {
     
     public Result logout() throws IOException {
     	session().clear();
-    	scrap.logout();
     	mahasiswaList.remove(session("npm"));
     	return index();
     }
