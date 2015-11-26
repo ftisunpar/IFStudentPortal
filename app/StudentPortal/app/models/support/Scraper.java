@@ -181,29 +181,29 @@ public class Scraper {
             String[] sem_set = this.parseSemester(tr.get(0).text());
             String thn = sem_set[0];
             String sem = sem_set[1]; 
-            if(!((Integer.parseInt(thn)==currTahunSemester.getTahun())&&sem.equals(currTahunSemester.getSemester().toString()))){
-                for(Element td:tr){           
-                    if(td.className().contains("row")){
-                      String kode = td.child(1).text();
-                      int sks = Integer.parseInt(td.child(3).text());
-                      String nama_mk = td.child(2).text();
-                      MataKuliah curr_mk = MataKuliahFactory.createMataKuliah(kode, sks, nama_mk);
-                      char kelas = td.child(4).text().charAt(0);
-                      double ART = 0;
-                      double UTS = 0;
-                      double UAS = 0;
-                      if(kelas!='*'){
-                        ART = Double.parseDouble(td.child(5).text());
-                        UTS = Double.parseDouble(td.child(6).text());
-                        UAS = Double.parseDouble(td.child(7).text());
-                      }  
-                      if(!td.child(9).text().equals("")){
-                    	  char NA = td.child(9).text().charAt(0);
-                    	  TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn),Semester.fromString(sem));
-                          logged_mhs.getRiwayatNilai().add(new Nilai(tahunSemesterNilai, curr_mk, kelas, ART, UTS, UAS, NA));
-                      }	    
-                    }
+            
+            for(Element td:tr){           
+                if(td.className().contains("row")){
+                  String kode = td.child(1).text();
+                  int sks = Integer.parseInt(td.child(3).text());
+                  String nama_mk = td.child(2).text();
+                  MataKuliah curr_mk = MataKuliahFactory.createMataKuliah(kode, sks, nama_mk);
+                  char kelas = td.child(4).text().charAt(0);
+                  double ART = 0;
+                  double UTS = 0;
+                  double UAS = 0;
+                  if(kelas!='*'){
+                    ART = Double.parseDouble(td.child(5).text());
+                    UTS = Double.parseDouble(td.child(6).text());
+                    UAS = Double.parseDouble(td.child(7).text());
+                  }  
+                  if(!td.child(9).text().equals("")){
+                	  char NA = td.child(9).text().charAt(0);
+                	  TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn),Semester.fromString(sem));
+                      logged_mhs.getRiwayatNilai().add(new Nilai(tahunSemesterNilai, curr_mk, kelas, ART, UTS, UAS, NA));
+                  }	    
                 }
+                
             }
         }
     }
