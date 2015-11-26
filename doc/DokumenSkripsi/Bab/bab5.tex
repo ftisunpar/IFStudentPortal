@@ -77,7 +77,7 @@
 				
 \section{Pengujian}
 			\subsection{Pengujian Fungsional} 
-			Pengujian fungsional dilakukan untuk mengetahui kesesuaian reaksi perangkat lunak dengan reaksi yang diharapkan berdasarkan aksi pengguna terhadap perangkat lunak. Ada tujuh tes kasus yang diujikan, dan detail serta hasilnya dapat dilihat di tabel \ref{table:hasilFungsional}.
+			Pengujian fungsional dilakukan untuk mengetahui kesesuaian reaksi perangkat lunak dengan reaksi yang diharapkan berdasarkan aksi pengguna terhadap perangkat lunak. Ada delapan tes kasus yang diujikan, dan detail serta hasilnya dapat dilihat di tabel \ref{table:hasilFungsional}.
 			
 			\begin{table}[H]
 			\centering
@@ -97,9 +97,20 @@
 					&	&	Jika pengguna sudah memiliki riwayat nilai, akan ditampilkan ringkasan data akademik mahasiswa berupa IPS semester terakhir, IPK, SKS lulus, sisa SKS kelulusan, dan ringkasan data mengenai mata kuliah pilihan wajib &	sesuai	\\ \hline
 				6.	&	Pengguna memilih tombol \textit{logout}	&	Pengguna akan diarahkan kembali ke halaman \textit{login} &	sesuai	\\ \hline
 				7.	& Dua pengguna menggunakan aplikasi secara bersamaan	&	Pengguna dapat menggunakan aplikasi dengan akun yang sesuai &	sesuai	\\ \hline
+				7.	& Pengguna menggunakan aplikasi pada sistem operasi selain Windows	&	Aplikasi dapat menjalankan fungsi yang sama seperti pada sistem operasi Windows &	sesuai	\\ \hline
 				\end{tabular}
 				\label{table:hasilFungsional}
 			\end{table}
 			
 		\subsection{Pengujian Eksperimental} 
-		Pengujian eksperimental dilakukan oleh mahasiswa angkatan 2012 sampai 2015.
+		Pengujian eksperimental dilakukan terhadap mahasiswa angkatan 2012 sampai 2015. Dari setiap angkatan, diambil 3 orang untuk melakukan pengujian. Hasil dari pengujian tersebut sebagai berikut:
+		\begin{itemize}
+			\item Angkatan 2012\\
+			Saat melakukan pemeriksaan prasyarat, terdapat mahasiswa dengan status belum lulus mata kuliah ``AIF101 Pemrograman Berorientasi Objek''. Hal ini disebabkan oleh perubahan kurikulum. Kode mata kuliah Pemrograman Berorientasi Objek yang sudah ditempuh angkatan 2012 adalah AIF 191. ``AIF191 Pemrograman Berorientasi Objek'' merupakan hasil konversi mata kuliah ``Dasar-dasar Pemrograman''. Selain itu, terdapat juga mahasiswa yang pernah cuti studi. Hasil pengujian eksperimental mahasiswa angkatan 2012 sesuai dengan hasil yang diharapkan.
+			\item Angkatan 2013\\
+			Dalam pengujian terhadap mahasiswa angkatan 2013, terdapat mahasiswa yang pernah melakukan transfer studi. Total SKS lulus dari mahasiswa tersebut tidak sesuai dikarenakan aplikasi hanya menghitung SKS lulus saat dia melakukan perkuliahan di Program Studi Teknik Informatika. Akibatnya, pemeriksaan prasyarat mata kuliah dengan aturan SKS lulus memberikan hasil yang tidak sesuai. Selain itu, IPS, IPK, dan sisa SKS juga memberikan hasil yang tidak sesuai. Hasil pengujian eksperimental mahasiswa angkatan 2013 sesuai dengan hasil yang diharapkan kecuali terhadap mahasiswa yang transfer studi.
+			\item Angkatan 2014\\
+			Mahasiswa angkatan 2014 belum pernah menempuh mata kuliah pilihan wajib. Pada halaman data akademik, ditampilkan bahwa mata kuliah pilihan wajib yang sudah lulus masih belum ada. Hasil pengujian eksperimental mahasiswa angkatan 2014 sesuai dengan hasil yang diharapkan.
+			\item Angkatan 2015\\
+			Mahasiswa angkatan 2015 belum memiliki riwayat nilai sehingga belum bisa melihat ringkasan data akademik dan prasyarat mata kuliah. Hasil pengujian eksperimental mahasiswa angkatan 2015 sesuai dengan hasil yang diharapkan.
+		\end{itemize}
