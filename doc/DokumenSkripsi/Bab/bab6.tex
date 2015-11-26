@@ -1,0 +1,20 @@
+\chapter{Kesimpilan dan Saran}
+\label{chap:kesimpulan_saran}
+
+\section{Kesimpulan}
+\label{sec:kesimpulan}
+Dari hasil pembangunan aplikasi Informatika Student Portal, didapatkanlah kesimpulan-kesimpulan sebagai berikut:
+		\begin{enumerate}
+			\item Fitur-fitur yang dibuat untuk Informatika Student Portal antara lain prasyarat mata kuliah, jadwal kuliah yang tersusun dan terurut berdasarkan hari, data akademik berupa IPS dan IPK yang langsung berubah ketika nilai sudah muncul, sisa SKS, dan status kelulusan mata kuliah pilihan wajib, dan aplikasi yang dapat diakses dari sistem operasi manapun.
+			\item Telah berhasil mengimplementasikan \textit{web scraping} menggunakan \textit{library} jsoup. Dengan \textit{library} jsoup, data dari Portal Akademik Mahasiswa dapat diperoleh secara langsung.
+			\item Aplikasi Informatika Student Portal telah berhasil dibangun dengan menggunakan Play Framework. Selain itu, aplikasi Informatika Student Portal juga memperoleh data dari Portal Akademik Mahasiswa secara langsung menggunakan \textit{library} jsoup kemudian mengolah data tersebut dengan bantuan SIA Models. 
+		\end{enumerate}
+
+\section{Saran}
+\label{sec:saran}
+Dari hasil penelitian termasuk kesimpulan yang didapat, berikut adalah beberapa saran untuk pengembangan:
+	\begin{enumerate}
+		\item URL dan tampilan antarmuka dari Portal Akademik Mahasiswa perlu diperhatikan untuk pengembangan aplikasi ini. Jika URL atau tampilan antarmuka berubah, maka cara pengambilan data menggunakan \textit{library} jsoup perlu diubah.
+		\item Pengambilan data menggunakan \textit{library} jsoup memerlukan analisis komunikasi Portal Akademik Mahasiswa. Untuk pengembangan aplikasi ini, perlu diperhatikan lagi komunikasi Portal Akademik Mahasiswa. Jika komunikasi tersebut berubah, cara pengambilan data juga berubah.
+		\item Penelitian ini memanfaatkan SIA Model terutama \textit{package} id.ac.unpar.siamodels.matakuliah yang berisi aturan mengenai prasyarat mata kuliah. Aturan-aturan tersebut dapat berubah suatu saat. Kelas-kelas yang terdapat pada \textit{package} id.ac.unpar.siamodels.matakuliah harus mengikuti aturan yang berlaku sehingga diperlukan perubahan pada kelas-kelas tersebut jika terjadi perubahan peraturan prasyarat mata kuliah.
+	\end{enumerate}
