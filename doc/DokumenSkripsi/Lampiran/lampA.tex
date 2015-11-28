@@ -1,0 +1,785 @@
+\chapter{Kode Program}
+
+%selalu gunakan single spacing untuk source code !!!!!
+\singlespacing 
+% language: bahasa dari kode program
+% terdapat beberapa pilihan : Java, C, C++, PHP, Matlab, R, dll
+%
+% basicstyle : ukuran font untuk kode program
+% terdapat beberapa pilihan : tiny, scriptsize, footnotesize, dll
+%
+% caption : nama yang akan ditampilkan di dokumen akhir, lihat contoh
+\begin{lstlisting}[language=Java,basicstyle=\tiny,caption=Application.java]
+package controllers;
+
+import java.io.IOException;
+import java.lang.instrument.Instrumentation;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.jsoup.Connection;
+import org.jsoup.nodes.Document;
+
+import models.display.JadwalDisplay;
+import models.display.PrasyaratDisplay;
+import models.display.RingkasanDisplay;
+import models.id.ac.unpar.siamodels.Mahasiswa;
+import models.id.ac.unpar.siamodels.MataKuliah;
+import models.id.ac.unpar.siamodels.Mahasiswa.Nilai;
+import models.id.ac.unpar.siamodels.MataKuliahFactory;
+import models.id.ac.unpar.siamodels.Semester;
+import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
+import models.support.CustomMahasiswa;
+import models.support.JadwalKuliah;
+import models.support.Scraper;
+import play.*;
+import play.data.DynamicForm;
+import play.data.Form;
+import play.mvc.*;
+import views.html.*;
+
+public class Application extends Controller {
+	Scraper scrap = new Scraper();
+	Map<String,CustomMahasiswa> mahasiswaList = new HashMap<String,CustomMahasiswa>();
+	
+    public Result index() {
+    	if(session("npm")==null){
+    		return ok(views.html.login.render(""));
+    	}
+    	else{
+    		return home();
+    	}
+    }
+    
+    public Result login() {
+    	if(session("npm")==null){
+    		return index();
+    	}
+    	else{
+    		return home();
+    	}
+    }
+    
+    public Result submitLogin() throws IOException{
+    	String errorHtml = 
+    	"<div class='alert alert-danger' role='alert'>" +
+    	  "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+
+    	  "<span class='sr-only'>Error:</span>";
+    	DynamicForm dynamicForm = Form.form().bindFromRequest();
+    	String email = dynamicForm.get("email");
+    	String pass = dynamicForm.get("pass");
+    	if(!email.matches("[0-9]{7}+@student.unpar.ac.id")){
+    		return ok(views.html.login.render(errorHtml+ "Email tidak valid" + "</div>"));
+    	}
+    	if(!(email.charAt(0)=='7'&&email.charAt(1)=='3')){
+    		return ok(views.html.login.render(errorHtml+"Maaf, Anda bukan mahasiswa teknik informatika"+ "</div>"));
+    	}
+    	String npm = "20" + email.substring(2,4) + email.substring(0,2)+ "0" + email.substring(4,7);
+    	CustomMahasiswa login_mhs = this.scrap.login(npm, pass);
+    	if(login_mhs!=null){
+    		session("npm", npm);
+    		mahasiswaList.put(session("npm"), login_mhs);
+    		return home();
+    	}
+	    else{
+	    	return ok(views.html.login.render(errorHtml+"Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif"+ "</div>"));
+	    }
+    }
+    
+    public Result home() {
+    	if(session("npm")==null){
+    		return index();
+    	}
+    	else{
+    		return ok(views.html.home.render(mahasiswaList.get(session("npm"))));	
+    	}
+    }
+    
+    public Result prasyarat() throws IOException{
+    	if(session("npm")==null){
+    		return index();
+    	}
+    	else if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
+    		List<PrasyaratDisplay> table = null;
+	    	String semester = scrap.getSemester();
+	    	return ok(views.html.prasyarat.render(table,semester));
+    	}
+    	else{
+	    	List<PrasyaratDisplay> table = checkPrasyarat();
+	    	String semester = scrap.getSemester();
+	    	return ok(views.html.prasyarat.render(table,semester));
+    	}
+    }
+    
+    public Result jadwalKuliah() throws IOException{
+    	if(session("npm")==null){
+    		return index();
+    	}
+    	else{
+			JadwalDisplay table = new JadwalDisplay(mahasiswaList.get(session("npm")).getJadwalList());
+			String semester = scrap.getSemester();
+	    	return ok(views.html.jadwalKuliah.render(table,semester));
+    	}
+    }
+
+    public Result ringkasan() throws IOException{
+    	if(session("npm")==null){
+    		return index();
+    	}
+    	else if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
+    		RingkasanDisplay display  = null;;
+	    	return ok(views.html.ringkasan.render(display));
+    	}
+    	else{
+    		Mahasiswa currMahasiswa = mahasiswaList.get(session("npm"));
+    		RingkasanDisplay display = new RingkasanDisplay(
+				String.format("%.2f", currMahasiswa.calculateIPS()), 
+				String.format("%.2f", currMahasiswa.calculateIPKLulus()), 
+				currMahasiswa.calculateSKSLulus()
+			);
+	    	List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();	
+	    	int lastIndex = riwayatNilai.size() - 1;
+			Semester semester = riwayatNilai.get(lastIndex).getSemester();
+			int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
+			int totalSKS = 0;
+			for (int i = lastIndex; i >= 0; i--) {
+				Nilai nilai = riwayatNilai.get(i);
+				if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
+					if (nilai.getAngkaAkhir() != null) {
+						totalSKS += nilai.getMataKuliah().sks();
+					}
+				} else {
+					break;
+				}
+			}
+
+			String semTerakhir = semester +" "+tahunAjaran+"/"+(tahunAjaran+1);
+	    	display.setDataSemTerakhir(semTerakhir, totalSKS);
+    		String pilWajibLulus = new String();
+	    	String pilWajibBelumLulus = new String();
+    		for(int i=0; i<display.getPilWajib().length; i++){
+	    		if( mahasiswaList.get(session("npm")).hasLulusKuliah(display.getPilWajib()[i])){
+	    			pilWajibLulus += display.getPilWajib()[i]+";";
+	    		}
+	    		else{
+	    			pilWajibBelumLulus += display.getPilWajib()[i]+";";
+	    		}
+	    	}
+    		if(!pilWajibLulus.isEmpty()){
+	    		display.setPilWajibLulus(pilWajibLulus.split(";"));
+    		}
+    		else{
+    			display.setPilWajibLulus(new String[]{});
+    		}
+    		if(!pilWajibBelumLulus.isEmpty()){
+	    		display.setPilWajibBelumLulus(pilWajibBelumLulus.split(";"));
+    		}
+    		else{
+    			display.setPilWajibBelumLulus(new String[]{});
+    		}
+    		return ok(views.html.ringkasan.render(display));
+    	}
+    }
+    
+    public Result logout() throws IOException {
+    	session().clear();
+    	mahasiswaList.remove(session("npm"));
+    	return index();
+    }
+    
+    private List<PrasyaratDisplay> checkPrasyarat() throws IOException{
+    	List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
+    	List<MataKuliah> mkList = scrap.getMkList();
+        String MATAKULIAH_REPOSITORY_PACKAGE = "models.id.ac.unpar.siamodels.matakuliah"; 
+    	List<Object> mkKnown = new ArrayList<Object>(); 
+    	List<MataKuliah> mkUnknown = new ArrayList<MataKuliah>(); 
+        for(MataKuliah mk : mkList){
+	        try {
+	            Class<?> mkClass = Class.forName(MATAKULIAH_REPOSITORY_PACKAGE + "." + mk.kode());
+	            Object matakuliah = mkClass.newInstance();
+	            mkKnown.add(matakuliah);
+	        } catch (ClassNotFoundException e) {
+	        	mkUnknown.add(mk);
+	        } catch (InstantiationException e) {
+	                e.printStackTrace();
+	        } catch (IllegalAccessException e) {
+	                e.printStackTrace();
+	        }           
+        }
+        
+        for (Object mk: mkKnown) {
+            if (mk instanceof HasPrasyarat) {
+                List<String> reasons = new ArrayList<String>();
+                ((HasPrasyarat)mk).checkPrasyarat(mahasiswaList.get(session("npm")), reasons);
+                if (!reasons.isEmpty()) {
+                    String status = new String();
+            		for (String reason: reasons) {
+            			status+=reason + ";";
+                    }
+                    table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),status.split(";")));
+                }
+                else{
+                    if(mahasiswaList.get(session("npm")).hasLulusKuliah(mk.getClass().getSimpleName())){
+                    	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"sudah lulus"}));
+                    }
+                    else{ 
+                    	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"memenuhi syarat"}));
+                    }
+                }
+            }
+            else{ 
+            	if(mahasiswaList.get(session("npm")).hasLulusKuliah(mk.getClass().getSimpleName())){
+                	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"sudah lulus"}));
+                }
+                else{ 
+                	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"tidak memiliki prasyarat"}));
+                }
+            }
+        }
+        
+        for (MataKuliah mk: mkUnknown) {
+        	table.add(new PrasyaratDisplay(mk,new String[]{"data prasyarat tidak tersedia"}));
+        }
+        
+        return table;
+    }
+    
+}
+\end{lstlisting}
+
+\singlespacing 
+\begin{lstlisting}[language=Java,basicstyle=\tiny,caption=JadwalDisplay.java]
+	package models.display;
+
+import java.util.List;
+
+import models.support.JadwalKuliah;
+
+public class JadwalDisplay {
+	private List<JadwalKuliah> jadwalList;
+	private JadwalKuliah[][] kuliahCalendar;
+	private String[] hariList;
+	
+	public JadwalDisplay(List<JadwalKuliah> jadwalList){
+		this.jadwalList = jadwalList;
+		kuliahCalendar = new JadwalKuliah[6][22];
+		hariList = new String[]{"Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"};
+		fillKuliahCalendar();
+	}
+	
+	public String getHariByIndex(int index){
+		return this.hariList[index];
+	}
+	
+	public JadwalKuliah getJadwalKuliah(int indexHari, int indexWaktu){
+		return kuliahCalendar[indexHari][indexWaktu];
+	}
+	
+	public boolean isKuliahEmpty(){
+		return jadwalList.isEmpty();
+	}
+	
+	private void fillKuliahCalendar(){
+		if(!jadwalList.isEmpty()){
+            for (int i = 0; i < kuliahCalendar.length; i++) {
+                for (int j = 0; j < kuliahCalendar[i].length; j++) {
+                    kuliahCalendar[i][j] = new JadwalKuliah();
+                }
+            }
+            for (int i = 0; i < jadwalList.size(); i++) {
+                JadwalKuliah jdw = jadwalList.get(i);
+                int day = dayTranslate(jdw.getHari());
+                if(day!=-1){
+                	String[] timePair = jdw.getWaktu().split("-");
+                    String start = timePair[0];
+                    String end = timePair[1];
+                    int range = (Integer.parseInt(end.substring(0, 2))- Integer.parseInt(start.substring(0, 2)))*2;
+                    int beginIndex = 0;
+                    int half = Character.getNumericValue(start.charAt(3));
+                    if(half<3){
+                        beginIndex = (Integer.parseInt(start.substring(0, 2))-7)*2;
+                    }
+                    else if(half>=3){
+                        beginIndex =((Integer.parseInt(start.substring(0, 2))-7)*2)+1;
+                    }
+                    int endHalf = Character.getNumericValue(end.charAt(3));
+                    if(endHalf>3){
+                    	range++;  
+                    }
+                    for (int j = beginIndex; j < beginIndex+range; j++) {
+                    	kuliahCalendar[day][j] = jdw;      	
+                    }
+                }
+            }
+        }
+	}
+	
+	private int dayTranslate(String hari){
+        int day = -1;
+        switch(hari){
+            case "Senin": 
+                day = 0;
+                break;
+            case "Selasa": 
+                day = 1;
+                break;
+            case "Rabu": 
+                day = 2;
+                break;
+            case "Kamis": 
+                day = 3;
+                break;
+            case "Jumat": 
+                day = 4;
+                break;
+            case "Sabtu": 
+                day = 5;
+                break;
+            default:
+                day = -1;
+                break;
+        }
+        return day;
+    }
+}
+\end{lstlisting}
+
+\singlespacing 
+\begin{lstlisting}[language=Java,basicstyle=\tiny,caption=PrasyaratDisplay.java]
+	package models.display;
+
+import models.id.ac.unpar.siamodels.MataKuliah;
+
+public class PrasyaratDisplay {
+	private MataKuliah mataKuliah;
+	private String[] status;
+	
+	public PrasyaratDisplay(MataKuliah mataKuliah, String[] status){
+		this.mataKuliah = mataKuliah;
+		this.status = status;
+	}
+	
+	public MataKuliah getMataKuliah(){
+		return mataKuliah;
+	}
+	
+	public String[] getStatus(){
+		return status;
+	}
+}
+\end{lstlisting}
+
+\singlespacing 
+\begin{lstlisting}[language=Java,basicstyle=\tiny,caption=RingkasanDisplay.java]
+	package models.display;
+
+import models.id.ac.unpar.siamodels.MataKuliahFactory;
+
+
+public class RingkasanDisplay {
+	private String[] pilWajib;
+	private String[] pilWajibLulus;
+	private String[] pilWajibBelumLulus;
+	private String IPS;
+	private String IPK;
+	private int sksLulusTotal;
+	private int sksLulusSemTerakhir;
+	private String semesterTerakhir;
+	private final int MIN_LULUS_PIL_WAJIB = 4;
+	
+	public RingkasanDisplay(String IPS, String IPK, int sksLulusTotal){
+		this.IPS = IPS;
+		this.IPK = IPK;
+		this.sksLulusTotal = sksLulusTotal;
+		/*create mata kuliah pilihan wajib*/
+		pilWajib = new String[]{"AIF311","AIF312","AIF313","AIF314","AIF315","AIF316","AIF317","AIF318"}; 
+	}
+	
+	public int getMinLulusPilWajib(){
+		return this.MIN_LULUS_PIL_WAJIB;
+	}
+	
+	public String getNamaPilWajib(String kode){
+		return MataKuliahFactory.createMataKuliah(kode, MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA).nama()+"";
+	}
+	
+	public String[] getPilWajibLulus() {
+		return pilWajibLulus;
+	}
+
+	public void setPilWajibLulus(String[] pilWajibLulus) {
+		this.pilWajibLulus = pilWajibLulus;
+	}
+
+	public String[] getPilWajibBelumLulus() {
+		return pilWajibBelumLulus;
+	}
+
+
+	public void setPilWajibBelumLulus(String[] pilWajibBelumLulus) {
+		this.pilWajibBelumLulus = pilWajibBelumLulus;
+	}
+
+	public String[] getPilWajib(){
+		return this.pilWajib;
+	}
+	
+	public String getIPS(){
+		return this.IPS;
+	}
+	
+	public String getIPK(){
+		return this.IPK;
+	}
+	
+	public void setDataSemTerakhir(String semTerakhir, int sksLulusSemTerakhir) {
+		this.semesterTerakhir = semTerakhir;
+		this.sksLulusSemTerakhir = sksLulusSemTerakhir;
+	}
+	
+	public String getSemesterTerakhir(){
+		return semesterTerakhir;
+	}
+	public int getSKSLulusTotal(){
+		return this.sksLulusTotal;
+	}
+	
+	public int getSKSLulusSemTerakhir(){
+		return this.sksLulusSemTerakhir;
+	}
+	
+	public int getMinSisaSKS(){
+		if(sksLulusTotal>=144){
+			return 0;
+		}
+		else{
+			return 144-sksLulusTotal;
+		}
+	}
+}
+\end{lstlisting}
+
+\singlespacing 
+\begin{lstlisting}[language=Java,basicstyle=\tiny,caption=CustomMahasiswa.java]
+package models.support;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import models.id.ac.unpar.siamodels.Mahasiswa;
+
+public class CustomMahasiswa extends Mahasiswa{
+	protected List<JadwalKuliah> jadwalList;
+	protected String photoPath;
+	
+	public CustomMahasiswa(String npm) throws NumberFormatException {
+		super(npm);
+		this.jadwalList = new ArrayList<JadwalKuliah>();
+	}
+	
+	public String getPhotoPath(){
+    	return photoPath;
+    }
+	
+	public void setPhotoPath(String photoPath) {
+		this.photoPath = photoPath;
+	}
+	
+	public List<JadwalKuliah> getJadwalList(){
+    	return jadwalList;
+    }
+	
+	public void setJadwalList(List<JadwalKuliah> jadwalList){
+    	this.jadwalList = jadwalList;
+    }
+
+}
+\end{lstlisting}
+
+\singlespacing 
+\begin{lstlisting}[language=Java,basicstyle=\tiny,caption=Jadwal.java]
+package models.support;
+
+import models.id.ac.unpar.siamodels.MataKuliah;
+
+public class Jadwal {
+    protected MataKuliah mataKuliah;
+    protected char kelas;
+    protected String waktu;
+    protected String ruang;
+
+    public Jadwal(MataKuliah mataKuliah, char kelas, String waktu, String ruang) {
+        this.mataKuliah = mataKuliah;
+        this.kelas = kelas;
+        this.waktu = waktu;
+        this.ruang = ruang;
+    }
+    
+    public Jadwal() {
+        
+    }
+    
+    public MataKuliah getMataKuliah() {
+        return mataKuliah;
+    }
+
+    public char getKelas() {
+        return kelas;
+    }
+
+    public String getWaktu() {
+        return waktu;
+    }
+
+    public String getRuang() {
+        return ruang;
+    }
+    
+}
+\end{lstlisting}
+
+\singlespacing 
+\begin{lstlisting}[language=Java,basicstyle=\tiny,caption=JadwalKuliah.java]
+	package models.support;
+
+import models.id.ac.unpar.siamodels.MataKuliah;
+
+public class JadwalKuliah extends Jadwal{
+    private String dosen;
+    private String hari;
+
+    public JadwalKuliah(MataKuliah mataKuliah, char kelas, String dosen, String hari, String waktu, String ruang) {
+        super(mataKuliah, kelas, waktu, ruang);
+        this.dosen = dosen;
+        this.hari = hari;
+    }
+    
+    public JadwalKuliah(){
+        super();
+    }
+        
+    public String getDosen() {
+        return dosen;
+    }
+
+    public String getHari() {
+        return hari;
+    }
+
+}
+\end{lstlisting}
+
+\singlespacing 
+\begin{lstlisting}[language=Java,basicstyle=\tiny,caption=Scraper.java]
+package models.support;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import models.id.ac.unpar.siamodels.Mahasiswa;
+import models.id.ac.unpar.siamodels.Mahasiswa.Nilai;
+import models.id.ac.unpar.siamodels.MataKuliah;
+import models.id.ac.unpar.siamodels.MataKuliahFactory;
+import models.id.ac.unpar.siamodels.Semester;
+import models.id.ac.unpar.siamodels.TahunSemester;
+
+import org.jsoup.Connection;
+import org.jsoup.Connection.Response;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class Scraper {
+    private final String BASE_URL = "https://studentportal.unpar.ac.id/";
+    private final String LOGIN_URL = BASE_URL + "home/index.login.submit.php";
+    private final String CAS_URL = "https://cas.unpar.ac.id/login";
+    private final String ALLJADWAL_URL = BASE_URL + "includes/jadwal.all.php";
+    private final String JADWAL_URL = BASE_URL + "includes/jadwal.aktif.php";
+    private final String NILAI_URL = BASE_URL + "includes/nilai.sem.php";
+    private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
+    private TahunSemester currTahunSemester;
+    private List<MataKuliah> mkList;
+    
+    public List<MataKuliah> getMkList(){
+    	return this.mkList;
+    }
+    
+    public String getSemester() {
+        return currTahunSemester.getSemester() +" "+currTahunSemester.getTahun()+"/"+(currTahunSemester.getTahun()+1);
+    }
+    
+    public void init() throws IOException{
+        Connection baseConn = Jsoup.connect(BASE_URL);
+        baseConn.timeout(0);
+        baseConn.validateTLSCertificates(false);
+        baseConn.method(Connection.Method.GET);
+        baseConn.execute(); 
+    }
+    
+    public CustomMahasiswa login(String npm, String pass) throws IOException{
+        init();
+    	CustomMahasiswa logged_mhs = new CustomMahasiswa(npm);	
+        String user = logged_mhs.getEmailAddress();
+        Connection conn = Jsoup.connect(LOGIN_URL);
+        conn.data("Submit", "Login");
+        conn.timeout(0);
+        conn.validateTLSCertificates(false);
+        conn.method(Connection.Method.POST);
+        Response resp = conn.execute();
+        Document doc = resp.parse();
+        String lt = doc.select("input[name=lt]").val();
+        String execution = doc.select("input[name=execution]").val();
+        /*CAS LOGIN*/
+        Connection loginConn = Jsoup.connect(CAS_URL);
+        loginConn.cookies(resp.cookies());
+        loginConn.data("username",user);
+        loginConn.data("password", pass);
+        loginConn.data("lt", lt);
+        loginConn.data("execution", execution);
+        loginConn.data("_eventId","submit");
+        loginConn.timeout(0);
+        loginConn.validateTLSCertificates(false);
+        loginConn.method(Connection.Method.GET);
+        resp = loginConn.execute();
+        if(resp.body().contains("Data Akademik")){
+        	Map<String,String> login_cookies = resp.cookies();
+            doc = resp.parse();
+            String nama = doc.select("p[class=student-name]").text();
+            logged_mhs.setNama(nama);
+            String curr_sem = doc.select(".main-info-semester a").text();
+            String[] sem_set = this.parseSemester(curr_sem);
+            Element photo = doc.select(".student-photo img").first();
+            String photoPath = photo.absUrl("src"); 
+            logged_mhs.setPhotoPath(photoPath);
+            currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
+            this.requestKuliah(login_cookies);
+            List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
+            logged_mhs.setJadwalList(jadwalList);
+            this.setNilai(login_cookies, logged_mhs);
+            logout();
+            return logged_mhs;
+        }       
+        else{
+            return null;
+        }
+    }
+    
+    public void requestKuliah(Map<String,String> login_cookies) throws IOException{
+        Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
+        kuliahConn.cookies(login_cookies);
+        kuliahConn.timeout(0);
+        kuliahConn.validateTLSCertificates(false); 
+        kuliahConn.method(Connection.Method.GET);
+        Response resp = kuliahConn.execute();
+        Document doc = resp.parse();
+        Elements jadwal = doc.select("tr");
+        String prev = "";
+        mkList = new ArrayList<MataKuliah>();
+        for (int i = 1; i < jadwal.size()-1; i++) {
+            Elements row = jadwal.get(i).children();
+            if(!row.get(1).text().equals("")){
+                String kode = row.get(1).text();
+                String nama = row.get(2).text();
+                String sks = row.get(3).text();
+                if(!kode.equals(prev)){
+                    MataKuliah curr = MataKuliahFactory.createMataKuliah(kode, Integer.parseInt(sks), nama);
+                    mkList.add(curr);
+                }
+                prev = kode;
+            }   
+        }    
+    }
+    
+    public List<JadwalKuliah> requestJadwal(Map<String,String> login_cookies) throws IOException{
+        Connection jadwalConn = Jsoup.connect(JADWAL_URL);
+        jadwalConn.cookies(login_cookies);
+        jadwalConn.timeout(0);
+        jadwalConn.validateTLSCertificates(false); 
+        jadwalConn.method(Connection.Method.GET);
+        Response resp = jadwalConn.execute();
+        Document doc = resp.parse();
+        Elements jadwalTable = doc.select(".portal-full-table"); 
+        List<JadwalKuliah> jadwalList = new ArrayList<JadwalKuliah>();
+        
+        /*Kuliah*/
+        if(jadwalTable.size()>0){
+           Elements tableKuliah = jadwalTable.get(0).select("tbody tr");
+           String kode = new String(); 
+           String nama = new String();
+           for(Element elem : tableKuliah){
+               if(elem.className().contains("row")){       
+                    if(!(elem.child(1).text().isEmpty() && elem.child(2).text().isEmpty())){
+                        kode = elem.child(1).text();
+                        nama = elem.child(2).text();  
+                    }  
+                    MataKuliah currMk = MataKuliahFactory.createMataKuliah(kode, Integer.parseInt(elem.child(3).text()), nama);
+                    jadwalList.add(new JadwalKuliah(currMk,elem.child(4).text().charAt(0),elem.child(5).text(),elem.child(7).text(),elem.child(8).text(),elem.child(9).text()));
+               }
+            }
+        }      
+        return jadwalList;
+    }
+    
+    public void setNilai(Map<String,String> login_cookies, Mahasiswa logged_mhs) throws IOException{  
+        Connection nilaiConn = Jsoup.connect(NILAI_URL);
+        nilaiConn.cookies(login_cookies);
+        nilaiConn.data("npm",logged_mhs.getNpm());
+        nilaiConn.data("thn_akd","ALL");
+        nilaiConn.timeout(0);
+        nilaiConn.validateTLSCertificates(false); 
+        nilaiConn.method(Connection.Method.POST);
+        Response resp = nilaiConn.execute();
+        Document doc = resp.parse();
+        Elements mk = doc.select("table");
+
+        for(Element tb:mk){
+            Elements tr = tb.select("tr");
+            String[] sem_set = this.parseSemester(tr.get(0).text());
+            String thn = sem_set[0];
+            String sem = sem_set[1]; 
+            
+            for(Element td:tr){           
+                if(td.className().contains("row")){
+                  String kode = td.child(1).text();
+                  int sks = Integer.parseInt(td.child(3).text());
+                  String nama_mk = td.child(2).text();
+                  MataKuliah curr_mk = MataKuliahFactory.createMataKuliah(kode, sks, nama_mk);
+                  char kelas = td.child(4).text().charAt(0);
+                  double ART = 0;
+                  double UTS = 0;
+                  double UAS = 0;
+                  if(kelas!='*'){
+                    ART = Double.parseDouble(td.child(5).text());
+                    UTS = Double.parseDouble(td.child(6).text());
+                    UAS = Double.parseDouble(td.child(7).text());
+                  }  
+                  if(!td.child(9).text().equals("")){
+                	  char NA = td.child(9).text().charAt(0);
+                	  TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn),Semester.fromString(sem));
+                      logged_mhs.getRiwayatNilai().add(new Nilai(tahunSemesterNilai, curr_mk, kelas, ART, UTS, UAS, NA));
+                  }	    
+                }
+                
+            }
+        }
+    }
+    
+    public void logout() throws IOException{
+        Connection logoutConn = Jsoup.connect(LOGOUT_URL);
+        logoutConn.timeout(0);
+        logoutConn.validateTLSCertificates(false);
+        logoutConn.method(Connection.Method.GET);
+        logoutConn.execute();
+    }
+    
+    private String[] parseSemester(String sem_raw){
+         String[] sem_set = sem_raw.split("/")[0].split("-");
+         return new String[]{sem_set[1].trim(),sem_set[0].trim()};
+    }    
+}
+\end{lstlisting}

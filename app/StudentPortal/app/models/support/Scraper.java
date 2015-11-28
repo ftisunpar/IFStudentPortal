@@ -1,9 +1,3 @@
-/*
-alc
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package models.support;
 
 import java.io.IOException;
@@ -17,7 +11,6 @@ import models.id.ac.unpar.siamodels.MataKuliah;
 import models.id.ac.unpar.siamodels.MataKuliahFactory;
 import models.id.ac.unpar.siamodels.Semester;
 import models.id.ac.unpar.siamodels.TahunSemester;
-import models.support.*;
 
 import org.jsoup.Connection;
 import org.jsoup.Connection.Response;
@@ -26,10 +19,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-/**
- *
- * @author Herfan Heryandi
- */
 public class Scraper {
     private final String BASE_URL = "https://studentportal.unpar.ac.id/";
     private final String LOGIN_URL = BASE_URL + "home/index.login.submit.php";
@@ -96,10 +85,7 @@ public class Scraper {
             this.requestKuliah(login_cookies);
             List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
             logged_mhs.setJadwalList(jadwalList);
-            /*Periksa maba atau bukan*/
-            //if(!(logged_mhs.getTahunAngkatan()==currTahunSemester.getTahun()&&currTahunSemester.getSemester()==Semester.GANJIL)){
             this.setNilai(login_cookies, logged_mhs);
-            //}  
             logout();
             return logged_mhs;
         }       

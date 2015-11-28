@@ -18,7 +18,7 @@ public class RingkasanDisplay {
 		this.IPS = IPS;
 		this.IPK = IPK;
 		this.sksLulusTotal = sksLulusTotal;
-		/*Manual create mata kuliah pilihan wajib*/
+		/*create mata kuliah pilihan wajib*/
 		pilWajib = new String[]{"AIF311","AIF312","AIF313","AIF314","AIF315","AIF316","AIF317","AIF318"}; 
 	}
 	
