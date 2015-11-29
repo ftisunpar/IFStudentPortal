@@ -160,7 +160,7 @@ CSS(\textit{Cascading Style Sheets}) memungkinkan adanya perubahan elemen HTML y
 		\end{figure}
 Beberapa jenis CSS \textit{Selector} antara lain:
 \begin{enumerate}
-	\item \textit{\textbf{Element Selector}}, memilih \textit{tag} html.\\
+	\item \textit{\textbf{Element selector}}, memilih \textit{tag} HTML.\\
 		Contoh: \texttt{h1}\\
 		Keterangan: \textit{selector} mendefinisikan elemen h1.
 	\item \textit{\textbf{Grouping Selector}}, memilih beberapa \textit{selector} sekaligus. Setiap \textit{selector} dipisahkan dengan ``,''.\\
@@ -220,7 +220,7 @@ Pada subbab-subbab berikut akan dijelaskan mengenai dua panel dari DevTools.
 \subsection{Elements}
 Panel Elements memungkinkan untuk memperlihatkan informasi yang terstruktur tentang halaman yang sedang dibuka. HTML akan ditampilkan dalam bentuk pohon \textit{Document Object Model} (DOM). DOM adalah sebuah struktur seperti pohon yang dibuat oleh browser untuk menemukan elemen HTML \footnote{\url{http://try.jquery.com/}, diakses 24 September 2015}. Tampilan pohon DOM memperlihatkan struktur DOM dari halaman yang sedang dibuka. Pohon DOM adalah pohon dari node-node yang mewakili setiap elemen HTML seperti \texttt{<body>} dan \texttt{<p>}. 
 
-Pemeriksaan elemen akan memperlihatkan node DOM dan CSS dari elemen yang dipilih pada \textit{browser}. Pemeriksaan elemen dapat dilakukan dengan cara klik kanan pada elemen yang ingin diperiksa kemudian pilih ``Inspect element''. Dengan melakukan pemeriksaan elemen, jendela panel Elements akan muncul. Sebagai contoh pada gambar \ref{fig:2_elements_panel}, saat melakukan ``Inspect element'' pada nama mahasiswa, panel Elements akan muncul dan menunjukkan pohon DOM dari halaman tersebut. Selain itu panel Elements juga menunjukkan CSS selector dari elemen tersebut yaitu \texttt{p.student-name}.
+Pemeriksaan elemen akan memperlihatkan node DOM dan CSS dari elemen yang dipilih pada \textit{browser}. Pemeriksaan elemen dapat dilakukan dengan cara klik kanan pada elemen yang ingin diperiksa kemudian pilih ``Inspect element''. Dengan melakukan pemeriksaan elemen, jendela panel Elements akan muncul. Sebagai contoh pada Gambar \ref{fig:2_elements_panel}, saat melakukan ``Inspect element'' pada nama mahasiswa, panel Elements akan muncul dan menunjukkan pohon DOM dari halaman tersebut. Selain itu panel Elements juga menunjukkan CSS selector dari elemen tersebut yaitu \texttt{p.student-name}.
 
 \begin{figure}[H]
 	\centering
@@ -230,7 +230,7 @@ Pemeriksaan elemen akan memperlihatkan node DOM dan CSS dari elemen yang dipilih
 \end{figure}
 
 \subsection{Network}
-Panel Network secara otomatis merekam semua aktivitas jaringan saat DevTools terbuka. Pertama kali dibuka, panel Network masih kosong. Halaman web harus dimuat ulang untuk mulai merekam aktivitas jaringan atau menunggu adanya aktivitas jaringan pada halaman web. Panel Network akan mencatat sumber daya dari aktivitas jaringan yang terekam. Setiap sumber daya akan ditambahkan ke dalam sebuah baris dalam tabel Network seperti pada gambar \ref{fig:2_network_panel} dengan rincian kolom sebagai berikut:
+Panel Network secara otomatis merekam semua aktivitas jaringan saat DevTools terbuka. Pertama kali dibuka, panel Network masih kosong. Halaman web harus dimuat ulang untuk mulai merekam aktivitas jaringan atau menunggu adanya aktivitas jaringan pada halaman web. Panel Network akan mencatat sumber daya dari aktivitas jaringan yang terekam. Setiap sumber daya akan ditambahkan ke dalam sebuah baris dalam tabel Network seperti pada Gambar \ref{fig:2_network_panel} dengan rincian kolom sebagai berikut:
 \begin{itemize}
 	\item \textbf{Name dan Path}, nama dan URL dari sumber daya.
 	\item \textbf{Method}, metode permintaan HTTP.
@@ -253,7 +253,7 @@ Panel Network secara otomatis merekam semua aktivitas jaringan saat DevTools ter
 Ketika nama sumber daya dalam tabel Network diklik, maka akan muncul tautan baru yang berisi rincian tambahan sebagai berikut:
 \begin{itemize}
 	\item \textbf{Header}\\
-	Tautan Header menampilkan \textit{request} URL, \textit{request method}, \textit{status code}, HTTP \textit{response} dan \textit{request header} beserta nilainya, dan \textit{query string parameter}. HTTP header dapat ditampilkan secara terformat atau dalam bentuk sumber dengan mengklik tombol \textit{toggle} ``view parsed''/``view source''. Nilai-nilai parameter dapat ditampilkan dalam bentuk yang sudah didekodekan atau dalam bentuk URL yang dienkode dengan mengklik tombol \textit{toggle} ``view decoded''/``view URL encoded''. Sebagai contoh pada gambar \ref{fig:2_network_get} menampilkan \textit{header} pada metode permintaan GET sedangkan gambar \ref{fig:2_network_post} menampilkan \textit{header} pada metode permintaan POST.
+	Tautan Header menampilkan \textit{request} URL, \textit{request method}, \textit{status code}, HTTP \textit{response} dan \textit{request header} beserta nilainya, dan \textit{query string parameter}. HTTP header dapat ditampilkan secara terformat atau dalam bentuk sumber dengan mengklik tombol \textit{toggle} ``view parsed''/``view source''. Nilai-nilai parameter dapat ditampilkan dalam bentuk yang sudah didekodekan atau dalam bentuk URL yang dienkode dengan mengklik tombol \textit{toggle} ``view decoded''/``view URL encoded''. Sebagai contoh, Gambar \ref{fig:2_network_get} menampilkan \textit{header} pada metode permintaan GET sedangkan Gambar \ref{fig:2_network_post} menampilkan \textit{header} pada metode permintaan POST.
 	
 \begin{figure}[H]
 	\centering
@@ -270,7 +270,7 @@ Ketika nama sumber daya dalam tabel Network diklik, maka akan muncul tautan baru
 \end{figure}
 
 	\item \textbf{Preview}\\
-	Tautan Preview menampilkan \textit{preview} sumber daya jika tersedia. Gambar \ref{fig:2_network_prev_available} menampilkan \textit{preview} yang tersedia pada sumber daya. Jika \textit{preview} tidak tersedia maka akan tampilan akan sama dengan jawaban seperti yang terlihat pada gambar \ref{fig:2_network_prev_notavailable}.
+	Tautan Preview menampilkan \textit{preview} sumber daya jika tersedia. Gambar \ref{fig:2_network_prev_available} menampilkan \textit{preview} yang tersedia pada sumber daya. Jika \textit{preview} tidak tersedia maka akan tampilan akan sama dengan jawaban seperti yang terlihat pada Gambar \ref{fig:2_network_prev_notavailable}.
 	
 \begin{figure}[H]
 	\centering
@@ -287,7 +287,7 @@ Ketika nama sumber daya dalam tabel Network diklik, maka akan muncul tautan baru
 \end{figure}
 
 	\item \textbf{Response}\\
-	Tautan Response berisi konten symber daya yang tidak terformat. Sebagai contoh pada gambar \ref{fig:2_network_response} menampilkan Tautan Response dari sumber daya \texttt{main.php}.
+	Tautan Response berisi konten symber daya yang tidak terformat. Sebagai contoh pada Gambar \ref{fig:2_network_response} menampilkan Tautan Response dari sumber daya \texttt{main.php}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/network-response}
@@ -296,7 +296,7 @@ Ketika nama sumber daya dalam tabel Network diklik, maka akan muncul tautan baru
 \end{figure}
 
 	\item \textbf{Cookies}\\
-	Tautan Cookies menampilkan sebuah tabel yang terdiri dari seluruh \textit{cookie} yang ditransmisikan dalam \textit{header} permintaan dan jawaban HTTP. Contoh dari tabel \textit{cookie} dapat dilihat pada gambar \ref{fig:2_network_cookies} dengan rincian kolom sebagai berikut:
+	Tautan Cookies menampilkan sebuah tabel yang terdiri dari seluruh \textit{cookie} yang ditransmisikan dalam \textit{header} permintaan dan jawaban HTTP. Contoh dari tabel \textit{cookie} dapat dilihat pada Gambar \ref{fig:2_network_cookies} dengan rincian kolom sebagai berikut:
 	\begin{itemize}
 		\item \textbf{Name}, nama \textit{cookie}
 		\item \textbf{Value}, nilai \textit{cookie}
@@ -320,7 +320,7 @@ Ketika nama sumber daya dalam tabel Network diklik, maka akan muncul tautan baru
 \section{Play Framework}
 \label{sec:play}
 
-Play Framework\cite{Leroux:2014} merupakan sebuah web \textit{framework} berbasis bahasa Java dan Scala. Play Framework juga menggunakan \textit{design pattern} Model-View-Controller (MVC) di mana \textit{model} dan \textit{controller} menggunakan bahasa Java sedangkan \textit{view} menggunakan bahasa Scala dan HTML. Struktur aplikasi Play Framework dapat dilihat pada gambar \ref{fig:2_play_dir}.
+Play Framework\cite{Leroux:2014} merupakan sebuah web \textit{framework} berbasis bahasa Java dan Scala. Play Framework juga menggunakan \textit{design pattern} Model-View-Controller (MVC) di mana \textit{model} dan \textit{controller} menggunakan bahasa Java sedangkan \textit{view} menggunakan bahasa Scala dan HTML. Struktur aplikasi Play Framework dapat dilihat pada Gambar \ref{fig:2_play_dir}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/play-dir}
@@ -337,7 +337,7 @@ Dalam direktori \texttt{conf}, terdapat file \texttt{routes}. Melalui \texttt{ro
 	\label{fig:2_routes_example}
 \end{figure}
 
-Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \texttt{app} berisi file-file seperti pada gambar \ref{fig:2_app_dir}. Dalam folder \texttt{controllers}, terdapat file \texttt{Application.java} yang berisi kode Java untuk menghasilkan halaman web. Kelas yang menangani permintaan HTTP dan mengembalikan hasil HTTP disebut kelas \textit{controller}. Kelas \textit{controller} merupakan kelas yang memiliki \textit{action method}. Setiap \textit{action method} memiliki tipe kembalian \textit{Result} yang merepresentasikan \textit{view}. Pada buku referensi\cite{Leroux:2014}, tertulis bahwa kembalian dari \textit{Action method} harus \texttt{static} tetapi pada versi Play Framework 2.4, \texttt{static} dihilangkan. \textit{Action method} kan berhubungan dengan \textit{view} setelah didefinisikan di \texttt{routes}. \textit{Controller} dapat mengirimkan parameter pada \textit{view} melalui kembalian dari \textit{action method}. Berikut ini adalah contoh \textit{method} pada kelas \textit{Controller}:
+Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \texttt{app} berisi file-file seperti pada Gambar \ref{fig:2_app_dir}. Dalam folder \texttt{controllers}, terdapat file \texttt{Application.java} yang berisi kode Java untuk menghasilkan halaman web. Kelas yang menangani permintaan HTTP dan mengembalikan hasil HTTP disebut kelas \textit{controller}. Kelas \textit{controller} merupakan kelas yang memiliki \textit{action method}. Setiap \textit{action method} memiliki tipe kembalian \textit{Result} yang merepresentasikan \textit{view}. Pada buku referensi\cite{Leroux:2014}, tertulis bahwa kembalian dari \textit{Action method} harus \texttt{static} tetapi pada versi Play Framework 2.4, \texttt{static} dihilangkan. \textit{Action method} kan berhubungan dengan \textit{view} setelah didefinisikan di \texttt{routes}. \textit{Controller} dapat mengirimkan parameter pada \textit{view} melalui kembalian dari \textit{action method}. Berikut ini adalah contoh \textit{method} pada kelas \textit{Controller}:
 \begin{lstlisting}
 public Result home(){
 	String nama = mahasiswa.getNama();
@@ -675,7 +675,7 @@ SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem
 	\end{enumerate}
 	
 	\item \textit{Package} \texttt{id.ac.unpar.siamodels.matakuliah}\\
-	\textit{Package} ini berisi kelas-kelas yang merepresentasikan mata kuliah yang terdapat pada Program Studi Teknik Informatika UNPAR beserta aturan prasyaratnya. Rincian dari kelas-kelas pada package ini dapat dilihat pada tabel \ref{tab:2_kelas_matakuliah}.
+	\textit{Package} ini berisi kelas-kelas yang merepresentasikan mata kuliah yang terdapat pada Program Studi Teknik Informatika UNPAR beserta aturan prasyaratnya. Rincian dari kelas-kelas pada package ini dapat dilihat pada Tabel \ref{tab:2_kelas_matakuliah}.
 
 \begin{table}[H]
 	\centering
