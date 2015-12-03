@@ -1,8 +1,10 @@
 package models.display;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 
-import models.support.JadwalKuliah;
+import id.ac.unpar.siamodels.JadwalKuliah;
 
 public class JadwalDisplay {
 	private List<JadwalKuliah> jadwalList;
@@ -39,19 +41,18 @@ public class JadwalDisplay {
                 JadwalKuliah jdw = jadwalList.get(i);
                 int day = dayTranslate(jdw.getHari());
                 if(day!=-1){
-                	String[] timePair = jdw.getWaktu().split("-");
-                    String start = timePair[0];
-                    String end = timePair[1];
-                    int range = (Integer.parseInt(end.substring(0, 2))- Integer.parseInt(start.substring(0, 2)))*2;
+                    LocalTime start = jdw.getWaktuMulai();
+                    LocalTime end = jdw.getWaktuSelesai();
+                    int range = (end.getHour() - start.getHour())*2;
                     int beginIndex = 0;
-                    int half = Character.getNumericValue(start.charAt(3));
+                    int half = start.getMinute() / 10;
                     if(half<3){
-                        beginIndex = (Integer.parseInt(start.substring(0, 2))-7)*2;
+                        beginIndex = (start.getHour()-7)*2;
                     }
                     else if(half>=3){
-                        beginIndex =((Integer.parseInt(start.substring(0, 2))-7)*2)+1;
+                        beginIndex =((start.getHour()-7)*2)+1;
                     }
-                    int endHalf = Character.getNumericValue(end.charAt(3));
+                    int endHalf = end.getMinute() / 10;
                     if(endHalf>3){
                     	range++;  
                     }
@@ -63,25 +64,25 @@ public class JadwalDisplay {
         }
 	}
 	
-	private int dayTranslate(String hari){
+	private int dayTranslate(DayOfWeek hari){
         int day = -1;
         switch(hari){
-            case "Senin": 
+            case MONDAY: 
                 day = 0;
                 break;
-            case "Selasa": 
+            case TUESDAY: 
                 day = 1;
                 break;
-            case "Rabu": 
+            case WEDNESDAY: 
                 day = 2;
                 break;
-            case "Kamis": 
+            case THURSDAY: 
                 day = 3;
                 break;
-            case "Jumat": 
+            case FRIDAY: 
                 day = 4;
                 break;
-            case "Sabtu": 
+            case SATURDAY: 
                 day = 5;
                 break;
             default:

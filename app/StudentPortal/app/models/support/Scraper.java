@@ -1,16 +1,18 @@
 package models.support;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import models.id.ac.unpar.siamodels.Mahasiswa;
-import models.id.ac.unpar.siamodels.Mahasiswa.Nilai;
-import models.id.ac.unpar.siamodels.MataKuliah;
-import models.id.ac.unpar.siamodels.MataKuliahFactory;
-import models.id.ac.unpar.siamodels.Semester;
-import models.id.ac.unpar.siamodels.TahunSemester;
+import id.ac.unpar.siamodels.JadwalKuliah;
+import id.ac.unpar.siamodels.Mahasiswa;
+import id.ac.unpar.siamodels.Mahasiswa.Nilai;
+import id.ac.unpar.siamodels.MataKuliah;
+import id.ac.unpar.siamodels.MataKuliahFactory;
+import id.ac.unpar.siamodels.Semester;
+import id.ac.unpar.siamodels.TahunSemester;
 
 import org.jsoup.Connection;
 import org.jsoup.Connection.Response;
@@ -46,9 +48,9 @@ public class Scraper {
         baseConn.execute(); 
     }
     
-    public CustomMahasiswa login(String npm, String pass) throws IOException{
+    public Mahasiswa login(String npm, String pass) throws IOException{
         init();
-    	CustomMahasiswa logged_mhs = new CustomMahasiswa(npm);	
+    	Mahasiswa logged_mhs = new Mahasiswa(npm);	
         String user = logged_mhs.getEmailAddress();
         Connection conn = Jsoup.connect(LOGIN_URL);
         conn.data("Submit", "Login");
@@ -80,11 +82,11 @@ public class Scraper {
             String[] sem_set = this.parseSemester(curr_sem);
             Element photo = doc.select(".student-photo img").first();
             String photoPath = photo.absUrl("src"); 
-            logged_mhs.setPhotoPath(photoPath);
+            logged_mhs.setPhotoURL(new URL(photoPath));
             currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
             this.requestKuliah(login_cookies);
             List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
-            logged_mhs.setJadwalList(jadwalList);
+            logged_mhs.setJadwalKuliahList(jadwalList);
             this.setNilai(login_cookies, logged_mhs);
             logout();
             return logged_mhs;
@@ -112,7 +114,7 @@ public class Scraper {
                 String nama = row.get(2).text();
                 String sks = row.get(3).text();
                 if(!kode.equals(prev)){
-                    MataKuliah curr = MataKuliahFactory.createMataKuliah(kode, Integer.parseInt(sks), nama);
+                    MataKuliah curr = MataKuliahFactory.getInstance().createMataKuliah(kode, Integer.parseInt(sks), nama);
                     mkList.add(curr);
                 }
                 prev = kode;
@@ -142,7 +144,7 @@ public class Scraper {
                         kode = elem.child(1).text();
                         nama = elem.child(2).text();  
                     }  
-                    MataKuliah currMk = MataKuliahFactory.createMataKuliah(kode, Integer.parseInt(elem.child(3).text()), nama);
+                    MataKuliah currMk = MataKuliahFactory.getInstance().createMataKuliah(kode, Integer.parseInt(elem.child(3).text()), nama);
                     jadwalList.add(new JadwalKuliah(currMk,elem.child(4).text().charAt(0),elem.child(5).text(),elem.child(7).text(),elem.child(8).text(),elem.child(9).text()));
                }
             }
@@ -173,7 +175,7 @@ public class Scraper {
                   String kode = td.child(1).text();
                   int sks = Integer.parseInt(td.child(3).text());
                   String nama_mk = td.child(2).text();
-                  MataKuliah curr_mk = MataKuliahFactory.createMataKuliah(kode, sks, nama_mk);
+                  MataKuliah curr_mk = MataKuliahFactory.getInstance().createMataKuliah(kode, sks, nama_mk);
                   char kelas = td.child(4).text().charAt(0);
                   double ART = 0;
                   double UTS = 0;

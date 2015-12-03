@@ -1,15 +1,20 @@
-name := """Student Portal"""
+name := "IFStudentPortal"
 
-version := "1.0-SNAPSHOT"
+version := "1.0"
 
-lazy val root = (project in file(".")).enablePlugins(PlayJava)
+lazy val IFStudentPortal = (project in file("."))
+	.enablePlugins(PlayJava)
+	.aggregate(SIAModels)
+	.dependsOn(SIAModels)
+
+lazy val SIAModels = project
 
 scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
-  javaJdbc,
-  cache,
-  javaWs
+	cache,
+	javaWs,
+	"org.jsoup" % "jsoup" % "1.8.2"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the

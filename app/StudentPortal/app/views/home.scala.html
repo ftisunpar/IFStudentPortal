@@ -1,4 +1,4 @@
-@(mhs: models.support.CustomMahasiswa)
+@(mhs: id.ac.unpar.siamodels.Mahasiswa)
 
 <!DOCTYPE html>
 
@@ -64,7 +64,7 @@
 						<div class="table-responsive profile-table">
 							<table class="table table-bordered">
 								<tr>
-									<td width="50" rowspan="3"><center><img src="@mhs.getPhotoPath()"/></center></td>
+									<td width="50" rowspan="3"><center><img src="@mhs.getPhotoURL().toString()"/></center></td>
 									<td><h6>@mhs.getNama()</h6></td>
 								</tr>
 								<tr>

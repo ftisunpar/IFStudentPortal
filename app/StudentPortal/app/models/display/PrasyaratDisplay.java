@@ -1,6 +1,6 @@
 package models.display;
 
-import models.id.ac.unpar.siamodels.MataKuliah;
+import id.ac.unpar.siamodels.MataKuliah;
 
 public class PrasyaratDisplay {
 	private MataKuliah mataKuliah;

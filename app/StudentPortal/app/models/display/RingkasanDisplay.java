@@ -1,6 +1,6 @@
 package models.display;
 
-import models.id.ac.unpar.siamodels.MataKuliahFactory;
+import id.ac.unpar.siamodels.MataKuliahFactory;
 
 
 public class RingkasanDisplay {
@@ -27,7 +27,7 @@ public class RingkasanDisplay {
 	}
 	
 	public String getNamaPilWajib(String kode){
-		return MataKuliahFactory.createMataKuliah(kode, MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA).nama()+"";
+		return MataKuliahFactory.getInstance().createMataKuliah(kode, MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA).nama()+"";
 	}
 	
 	public String[] getPilWajibLulus() {

@@ -13,14 +13,12 @@ import org.jsoup.nodes.Document;
 import models.display.JadwalDisplay;
 import models.display.PrasyaratDisplay;
 import models.display.RingkasanDisplay;
-import models.id.ac.unpar.siamodels.Mahasiswa;
-import models.id.ac.unpar.siamodels.MataKuliah;
-import models.id.ac.unpar.siamodels.Mahasiswa.Nilai;
-import models.id.ac.unpar.siamodels.MataKuliahFactory;
-import models.id.ac.unpar.siamodels.Semester;
-import models.id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
-import models.support.CustomMahasiswa;
-import models.support.JadwalKuliah;
+import id.ac.unpar.siamodels.Mahasiswa;
+import id.ac.unpar.siamodels.MataKuliah;
+import id.ac.unpar.siamodels.Mahasiswa.Nilai;
+import id.ac.unpar.siamodels.MataKuliahFactory;
+import id.ac.unpar.siamodels.Semester;
+import id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
 import models.support.Scraper;
 import play.*;
 import play.data.DynamicForm;
@@ -30,7 +28,7 @@ import views.html.*;
 
 public class Application extends Controller {
 	Scraper scrap = new Scraper();
-	Map<String,CustomMahasiswa> mahasiswaList = new HashMap<String,CustomMahasiswa>();
+	Map<String,Mahasiswa> mahasiswaList = new HashMap<String,Mahasiswa>();
 	
     public Result index() {
     	if(session("npm")==null){
@@ -65,7 +63,7 @@ public class Application extends Controller {
     		return ok(views.html.login.render(errorHtml+"Maaf, Anda bukan mahasiswa teknik informatika"+ "</div>"));
     	}
     	String npm = "20" + email.substring(2,4) + email.substring(0,2)+ "0" + email.substring(4,7);
-    	CustomMahasiswa login_mhs = this.scrap.login(npm, pass);
+    	Mahasiswa login_mhs = this.scrap.login(npm, pass);
     	if(login_mhs!=null){
     		session("npm", npm);
     		mahasiswaList.put(session("npm"), login_mhs);
@@ -106,7 +104,7 @@ public class Application extends Controller {
     		return index();
     	}
     	else{
-			JadwalDisplay table = new JadwalDisplay(mahasiswaList.get(session("npm")).getJadwalList());
+			JadwalDisplay table = new JadwalDisplay(mahasiswaList.get(session("npm")).getJadwalKuliahList());
 			String semester = scrap.getSemester();
 	    	return ok(views.html.jadwalKuliah.render(table,semester));
     	}
@@ -180,7 +178,7 @@ public class Application extends Controller {
     private List<PrasyaratDisplay> checkPrasyarat() throws IOException{
     	List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
     	List<MataKuliah> mkList = scrap.getMkList();
-        String MATAKULIAH_REPOSITORY_PACKAGE = "models.id.ac.unpar.siamodels.matakuliah"; 
+        String MATAKULIAH_REPOSITORY_PACKAGE = "id.ac.unpar.siamodels.matakuliah"; 
     	List<Object> mkKnown = new ArrayList<Object>(); 
     	List<MataKuliah> mkUnknown = new ArrayList<MataKuliah>(); 
         for(MataKuliah mk : mkList){
@@ -206,23 +204,23 @@ public class Application extends Controller {
             		for (String reason: reasons) {
             			status+=reason + ";";
                     }
-                    table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),status.split(";")));
+                    table.add(new PrasyaratDisplay(MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),status.split(";")));
                 }
                 else{
                     if(mahasiswaList.get(session("npm")).hasLulusKuliah(mk.getClass().getSimpleName())){
-                    	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"sudah lulus"}));
+                    	table.add(new PrasyaratDisplay(MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"sudah lulus"}));
                     }
                     else{ 
-                    	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"memenuhi syarat"}));
+                    	table.add(new PrasyaratDisplay(MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"memenuhi syarat"}));
                     }
                 }
             }
             else{ 
             	if(mahasiswaList.get(session("npm")).hasLulusKuliah(mk.getClass().getSimpleName())){
-                	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"sudah lulus"}));
+                	table.add(new PrasyaratDisplay(MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"sudah lulus"}));
                 }
                 else{ 
-                	table.add(new PrasyaratDisplay(MataKuliahFactory.createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"tidak memiliki prasyarat"}));
+                	table.add(new PrasyaratDisplay(MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"tidak memiliki prasyarat"}));
                 }
             }
         }

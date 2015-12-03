@@ -1,0 +1,4 @@
+[submodule "app/StudentPortal/SIAModels"]
+	path = app/StudentPortal/SIAModels
+	url = https://github.com/pascalalfadian/SIAModels
+	branch = herfan
