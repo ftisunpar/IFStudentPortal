@@ -145,7 +145,12 @@ public class Scraper {
                         nama = elem.child(2).text();  
                     }  
                     MataKuliah currMk = MataKuliahFactory.getInstance().createMataKuliah(kode, Integer.parseInt(elem.child(3).text()), nama);
-                    jadwalList.add(new JadwalKuliah(currMk,elem.child(4).text().charAt(0),elem.child(5).text(),elem.child(7).text(),elem.child(8).text(),elem.child(9).text()));
+                    String kelasString = elem.child(4).text();
+                    String hariString = elem.child(7).text(); 
+                    String waktuString = elem.child(8).text();
+                    if (hariString != null & hariString.length() != 0 && waktuString != null & waktuString.length() != 0) {
+                        jadwalList.add(new JadwalKuliah(currMk,kelasString.length() == 0 ? null : kelasString.charAt(0),elem.child(5).text(), hariString, waktuString,elem.child(9).text()));                    	
+                    }
                }
             }
         }      
