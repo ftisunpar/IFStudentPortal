@@ -169,6 +169,15 @@ public class Application extends Controller {
     	}
     }
     
+    public Result tentang() {
+    	if(session("npm")==null){
+    		return index();
+    	}
+    	else{
+    		return ok(views.html.tentang.render());	
+    	}
+    }
+    
     public Result logout() throws IOException {
     	session().clear();
     	mahasiswaList.remove(session("npm"));

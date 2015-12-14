@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+    	@templates.head("Lapor Bug / Tentang Portal")
+    </head>
+    <body>
+		@templates.sidebar()
+		<div class="main">
+		<!-- Konten Halaman -->
+			<div class="container-fluid">
+				<div class="row">
+					<h2>Lapor <em>Bug</em></h2>
+					<p>Ada masalah dengan Informatika Student Portal, atau saran terhadap pengembangan ke depan?
+					Gunakan <a href="https://github.com/ftisunpar/IFStudentPortal/issues" target="_blank"><em>issue tracker</em> di Github</a>!
+					<h2>Tentang Informatika Student Portal</h2>
+					<p>&copy; 2015 versi orisinal oleh Herfan Heryandi dan Pascal Alfadian.</p>
+					<p>Daftar kontributor lengkap dapat dilihat di <a href="https://github.com/ftisunpar/IFStudentPortal/graphs/contributors" target="_blank">sini</a>.</p>
+					<p>Kode sumber dapat dilihat di <a href="https://github.com/ftisunpar/IFStudentPortal" target="_blank">sini</a>.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Javascript -->
+		<script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")"></script>
+		<script src="@routes.Assets.versioned("javascripts/script.js")"></script>
+		<script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+		
+    </body>
+</html>
