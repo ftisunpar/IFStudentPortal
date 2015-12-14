@@ -4,60 +4,10 @@
 
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/x-icon" href="@routes.Assets.versioned("images/logo-IT.png")" />
-		<title>Informatika Student Portal</title>
-
-		<!-- CSS -->
-        <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
-        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")"> 
+    	@templates.head("Prasyarat Mata Kuliah")
     </head>
     <body>
-		<nav class="navbar navbar-inverse sidebar" role="navigation">
-			<div class="container-fluid">
-				<!-- Logo dan Toggle -->
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sidebar-navbar-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<div class="logo-set">
-						<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
-						<img src="@routes.Assets.versioned("images/logo-IT.png")" width="25%" height="25%"/>
-					</div>
-					<p class="navbar-brand">INFORMATIKA STUDENT PORTAL</p>
-				</div>
-				<!-- Menu Navigasi -->
-				<div class="collapse navbar-collapse" id="sidebar-navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li><a href="@routes.Application.home()">
-							Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span>
-						</a></li>
-						<li class="active"><a href="@routes.Application.prasyarat()">
-							Prasyarat Mata Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tasks"></span>
-						</a></li>
-						<li><a href="@routes.Application.jadwalKuliah()">
-							 Jadwal Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span>
-						</a></li>
-						<li ><a href="@routes.Application.ringkasan()">
-							Data Akademik<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-book"></span>
-						</a></li>
-						<li ><a href="@routes.Application.logout()">
-							Logout<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span>
-						</a></li>
-						<li><a href="https://github.com/ftisunpar/IFStudentPortal" target="_blank">
-							&gt; Kode Program
-						</a></li>
-						<li><a href="https://github.com/ftisunpar/IFStudentPortal/issues" target="_blank">
-							&gt; Laporkan <em>bug</em>!
-						</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+		@templates.sidebar()
 		<div class="main">
 		<!-- Konten Halaman -->
 			<div class="container-fluid">
