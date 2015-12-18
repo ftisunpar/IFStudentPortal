@@ -1,16 +1,24 @@
-INFORMATIKA STUDENT PORTAL
-=============================
+# INFORMATIKA STUDENT PORTAL
 
-####Topik Skripsi PAS3904
+## Development
 
-#####INFORMATIKA STUDENT PORTAL: PEMANFAATAN WEB SCRAPING UNTUK KUSTOMISASI PORTAL AKADEMIK MAHASISWA
+### Setup
 
-#####PROGRAM STUDI TEKNIK INFORMATIKA
+Kebutuhan:
 
-#####UNIVERSITAS KATOLIK PARAHYANGAN
+* JDK 1.8
 
-#####BANDUNG 
+Langkah-langkah:
 
-#####2015
+1. Clone repository `git clone https://github.com/ftisunpar/IFStudentPortal`
+2. Pindah ke direktori project `cd IFStudentPortal`
+3. Submodule update `git submodule update --init -- app/StudentPortal/SIAModels`
+4. Create Eclipse project `activator eclipse`
+5. Import project in Eclipse (File > Import > Existing Projects into Workspace)
 
-######by: Herfan Heryandi - 2012730012
+### Running
+
+Langkah-langkah:
+
+1. Activator Run `activator run`
+2. Buka [http://localhost:9000](http://localhost:9000) di browser
