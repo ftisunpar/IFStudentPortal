@@ -6,9 +6,9 @@
 
 Portal Akademik Mahasiswa atau dikenal sebagai Student Portal UNPAR\cite{studentportalunpar} merupakan sistem informasi berbasis web yang digunakan oleh mahasiswa Universitas Katolik Parahyangan. Beberapa fitur yang dimiliki Portal Akademik Mahasiswa antara lain rencana studi, jadwal, nilai dan indeks prestasi, dan pembayaran uang kuliah. Namun, fitur-fitur tersebut masih belum cukup untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika. 
 
-Salah satu fitur yang diperlukan oleh mahasiswa Teknik Informatika UNPAR adalah prasyarat mata kuliah. Dalam Teknik Informatika UNPAR, terdapat beberapa mata kuliah yang membutuhkan prasyarat baik prasyarat tempuh maupun prasyarat lulus. Portal Akademik Mahasiswa sudah menyediakan fitur prasyarat mata kuliah namun kurang mendukung karena data yang ditampilkan kurang akurat. Misalnya, pengambilan mata kuliah ``AIF453 Kecerdasan Bisnis'' membutuhkan prasyarat lulus mata kuliah ``AIF204 Manajemen Informasi dan Basis Data'' atau lulus mata kuliah ``AIF102 Algoritma dan Struktur Data'' dengan IPK di atas 2.75 (Gambar \ref{fig:1_prasyarat_tinyurl}). Namun dalam Portal Akademik Mahasiswa, prasyarat yang dicantumkan hanya lulus mata kuliah ``AIF204 Manajemen Informasi dan Basis Data'' (Gambar \ref{fig:1_prasyarat_student_portal}). Selain itu, pemeriksaan prasyarat mata kuliah tidak dilakukan secara otomatis sehingga setiap pengambilan mata kuliah tetap dianggap valid meskipun belum memenuhi prasyarat.
+Salah satu fitur yang diperlukan oleh mahasiswa Teknik Informatika UNPAR adalah prasyarat mata kuliah. Dalam kurikulum Teknik Informatika UNPAR, terdapat beberapa mata kuliah yang membutuhkan prasyarat baik prasyarat tempuh maupun prasyarat lulus. Portal Akademik Mahasiswa sudah menyediakan fitur prasyarat mata kuliah namun kurang mendukung karena data yang ditampilkan kurang akurat. Misalnya, pengambilan mata kuliah ``AIF453 Kecerdasan Bisnis'' membutuhkan prasyarat lulus mata kuliah ``AIF204 Manajemen Informasi dan Basis Data'' atau lulus mata kuliah ``AIF102 Algoritma dan Struktur Data'' dengan IPK di atas 2.75 (Gambar \ref{fig:1_prasyarat_tinyurl}). Namun dalam Portal Akademik Mahasiswa, prasyarat yang dicantumkan hanya lulus mata kuliah ``AIF204 Manajemen Informasi dan Basis Data'' (Gambar \ref{fig:1_prasyarat_student_portal}). Selain itu, pemeriksaan prasyarat mata kuliah tidak dilakukan secara otomatis sehingga setiap pengambilan mata kuliah tetap dianggap valid meskipun belum memenuhi prasyarat.
 
-jsoup\cite{jsoup} merupakan \textit{library} Java yang digunakan untuk menelusuri suatu situs web untuk mendapatkan suatu informasi. Informasi yang didapat berupa HTML yang kemudian diekstrak dan disajikan dalam bentuk \textit{Document Object Model}. Play Framework\cite{Leroux:2014} merupakan sebuah \textit{web framework} berbasis Java dan Scala. Play juga menggunakan \textit{design pattern} \textit{Model-View-Controller} (MVC) di mana \textit{model} dan \textit{controller} menggunakan bahasa Java sedangkan \textit{view} menggunakan bahasa Scala dan HTML. SIA Models\cite{siamodels} merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem Informasi Akademik UNPAR. Aplikasi akan dibuat dengan menggunakan Play Framework dan jsoup karena aplikasi didukung oleh SIA Models yang tersedia dalam bahasa Java. 
+\textit{Library} jsoup\cite{jsoup} merupakan \textit{library} Java yang digunakan untuk menelusuri suatu situs web untuk mendapatkan suatu informasi. Informasi yang didapat berupa HTML yang kemudian diekstrak dan disajikan dalam bentuk \textit{Document Object Model}. Play Framework\cite{Leroux:2014} merupakan sebuah \textit{web framework} berbasis Java dan Scala. Play juga menggunakan arsitektur \textit{Model-View-Controller} (MVC) di mana \textit{model} dan \textit{controller} menggunakan bahasa Java sedangkan \textit{view} menggunakan bahasa Scala dan HTML. SIA Models\cite{siamodels} merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem Informasi Akademik Teknik Informatika UNPAR. Aplikasi akan dibuat dengan menggunakan Play Framework dan jsoup karena aplikasi didukung oleh SIA Models yang tersedia dalam bahasa Java. 
 
 \begin{figure}[H]
 	\centering
@@ -24,7 +24,7 @@ jsoup\cite{jsoup} merupakan \textit{library} Java yang digunakan untuk menelusur
 	\label{fig:1_prasyarat_student_portal}
 \end{figure}
 
-Untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika, fitur-fitur yang diperlukan akan dianalisis kemudian diimplementasikan ke dalam sebuah aplikasi yang akan dinamakan Informatika Student Portal. Informatika Student Portal merupakan aplikasi berbasis web yang dibuat menggunakan Play Framework. Selain itu, data-data yang akan diolah diambil langsung dari Portal Akademik Mahasiswa dengan \textit{web scraping} menggunakan \textit{library} jsoup. Untuk melakukan pengambilan data, jsoup harus mengetahui komunikasi dari Portal Akademik Mahasiswa. Analisis komunikasi Portal Akademik Mahasiswa akan dilakukan dengan menggunakan Chrome DevTools. 
+Untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika, fitur-fitur yang diperlukan akan dianalisis kemudian diimplementasikan ke dalam sebuah aplikasi yang akan dinamakan Informatika Student Portal. Informatika Student Portal merupakan aplikasi berbasis web yang dibuat menggunakan Play Framework. Selain itu, data-data yang akan diolah diambil langsung dari Portal Akademik Mahasiswa dengan ekstraksi data situs web menggunakan \textit{library} jsoup. Untuk melakukan pengambilan data, jsoup harus mengetahui komunikasi dari Portal Akademik Mahasiswa. Analisis komunikasi Portal Akademik Mahasiswa akan dilakukan dengan menggunakan Chrome DevTools. 
 
 \section{Rumusan Masalah}
 \label{sec:rumusan_masalah}
@@ -32,8 +32,8 @@ Untuk mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika, f
 Rumusan dari masalah yang akan dibahas pada skripsi ini adalah sebagai
 berikut:
 \begin{enumerate}
-	\item Fitur-fitur apa saja yang akan dibuat untuk Informatika Student Portal?
-	\item Bagaimana mengimplementasikan \textit{web scraping} menggunakan \textit{library} jsoup?
+	\item Fitur-fitur apa saja yang dibuat untuk Informatika Student Portal?
+	\item Bagaimana mengimplementasikan ekstraksi data situs web menggunakan \textit{library} jsoup?
 	\item Bagaimana membangun aplikasi Informatika Student Portal?
 \end{enumerate}
 
@@ -42,8 +42,8 @@ berikut:
 
 Tujuan-tujuan yang hendak dicapai pada skripsi ini adalah sebagai berikut:
 \begin{enumerate}
-	\item	Mengetahui fitur-fitur yang akan dibuat dalam Informatika Student Portal.
-	\item	Mengimplementasikan \textit{web scraping} menggunakan \textit{library} jsoup.
+	\item	Mendefinisikan fitur-fitur yang akan dibuat dalam Informatika Student Portal.
+	\item	Mengimplementasikan ekstraksi data situs web menggunakan \textit{library} jsoup.
 	\item Membangun aplikasi Informatika Student Portal.
 \end{enumerate}
 
@@ -54,20 +54,22 @@ Beberapa batasan yang dibuat terkait dengan pengerjaan skripsi ini adalah sebaga
 \begin{enumerate}
 	\item Aplikasi akan diuji pada server FTIS sehingga tidak bisa diakses dari luar jaringan FTIS.
 	\item Prasyarat mata kuliah yang tersedia hanya mata kuliah yang didukung SIA Models.
+	\item Aplikasi tidak dapat menangani mahasiswa yang pernah melakukan transfer studi.
 \end{enumerate}
 
-\section{Metode Penelitian}
+\section{Metodologi Penelitian}
 \label{sec:metode_penelitian}
 
-Metode-metode yang dilakukan pada skripsi ini adalah sebagai berikut:
+Metodologi yang dilakukan pada skripsi ini adalah sebagai berikut:
 
 \begin{enumerate}
 	\item Melakukan studi mengenai \textit{library} jsoup untuk mengambil data dari Portal Akademik Mahasiswa, CSS Selector yang akan digunakan jsoup untuk menyeleksi data yang akan diambil, Chrome DevTools untuk menganalisis komunikasi Portal Akademik Mahasiswa, dan Play Framework untuk membangun Informatika Student Portal.
 	\item Melakukan wawancara.
 	\item Menganalisis Portal Akademik Mahasiswa.
 	\item Merancang Informatika Student Portal.
-	\item Mengimplementasikan \textit{web scraping} menggunakan \textit{library} jsoup.
+	\item Mengimplementasikan ekstraksi data situs web menggunakan \textit{library} jsoup.
 	\item Melakukan eksperimen dan pengujian.
+	\item Membuat dokumentasi.
 \end{enumerate}
 
 \section{Sistematika Penulisan}

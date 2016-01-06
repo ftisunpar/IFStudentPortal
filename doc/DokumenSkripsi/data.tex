@@ -63,8 +63,8 @@
 % \mode{kosong}
 % \mode{cover}
 % \mode{sidang}
- \mode{sidang_akhir}
-% \mode{final} 
+% \mode{sidang_akhir}
+\mode{final} 
 %=============================================================================
 
 %_____________________________________________________________________________
@@ -149,10 +149,10 @@
 %
 %=============================================================================
 \namanpm{Herfan Heryandi}{2012730012}	%hilangkan tanda << & >>
-\tanggal{<<tanggal>>}{Desember}{2015}			%hilangkan tanda << & >>
-\pembimbing{\PAS}{}     
+\tanggal{18}{12}{2015}			%hilangkan tanda << & >>
+\pembimbing{\TAB}{}     
 %Lihat singkatan pembimbing anda di file dosen.tex, hilangkan tanda << & >>
-\penguji{<<penguji 1>>}{<<penguji 2>>} 		
+\penguji{\GDK}{\LCA} 		
 %Lihat singkatan penguji anda di file dosen.tex, hilangkan tanda << & >>
 %=============================================================================
 
@@ -170,9 +170,9 @@
 %			 - Gunakan perintah \texorpdfstring{\\}{} untuk baris baru
 %=============================================================================
 
-\judulINA{Informatika Student Portal: Kustomisasi Portal Akademik Mahasiswa untuk Mahasiswa Teknik Informatika UNPAR}
+\judulINA{Informatika Student Portal: Pengembangan Portal Akademik Mahasiswa untuk Mahasiswa Teknik Informatika UNPAR}
 
-\judulENG{Informatika Student Portal: \textit{Portal Akademik Mahasiswa} Customization for UNPAR's Informatics Engineering Students}
+\judulENG{Informatika Student Portal: \textit{Portal Akademik Mahasiswa} Development for UNPAR's Informatics Engineering Students}
 
 %_____________________________________________________________________________
 %=============================================================================
@@ -186,17 +186,20 @@
 %=============================================================================
 
 \abstrakINA{
-	Portal Akademik Mahasiswa merupakan sebuah situs jaringan yang diperuntukan bagi mahasiswa dalam rangka mendapatkan informasi kegiatan akademik. Namun, fitur-fitur yang dimilikinya masih belum mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika UNPAR. Oleh karena itu, dibuatlah aplikasi Informatika Student Portal.
+	Portal Akademik Mahasiswa merupakan sebuah situs web yang diperuntukkan bagi mahasiswa dalam rangka mendapatkan informasi kegiatan akademik. Namun, fitur-fitur yang dimilikinya masih belum mendukung kebutuhan akademik mahasiswa Program Studi Teknik Informatika UNPAR. Oleh karena itu, dibuatlah aplikasi Informatika Student Portal.
 	
-	Informatika Student Portal merupakan aplikasi berbasis web yang dibuat menggunakan Play Framework. Data yang diolah Informatika Student Portal diambil langsung dari Portal Akademik Mahasiswa dengan memanfaatkan \textit{web scraping} yang diimplementasikan menggunakan jsoup. Untuk mendapatkan data tersebut, perlu dilakukan analisis komunikasi dari Portal Akademik Mahasiswa. Analisis tersebut dilakukan menggunakan Chrome DevTools. Data yang telah diambil menggunakan jsoup dapat diseleksi dengan memanfaatkan CSS \textit{Selector} kemudian data tersebut akan diolah menggunakan SIA Models. 
+	Informatika Student Portal merupakan aplikasi berbasis web yang dibuat menggunakan Play Framework. Data yang diolah Informatika Student Portal diambil langsung dari Portal Akademik Mahasiswa dengan memanfaatkan ekstraksi data situs web yang diimplementasikan menggunakan jsoup. Untuk mendapatkan data tersebut, perlu dilakukan analisis komunikasi dari Portal Akademik Mahasiswa. Analisis tersebut dilakukan menggunakan Chrome DevTools. Data yang telah diambil menggunakan jsoup dapat diseleksi menggunakan CSS \textit{Selector} kemudian data tersebut akan diolah ke dalam SIA Models. 
 	
-	Pengujian dari aplikasi Informatika Student Portal dilakukan oleh beberapa mahasiswa dengan kriteria yang beragam. Aplikasi dapat berjalan dengan baik dan memberikan hasil yang tepat pada seluruh mahasiswa kecuali mahasiswa yang pernah melakukan transfer studi. Hasil pengujian aplikasi Informatika Student Portal membuktikan bahwa \textit{web scraping} dapat dimanfaatkan memenuhi kebutuhan akademik mahasiswa Program Studi Teknik Informatika UNPAR jika digabungkan dengan SIA Models.
+	Pengujian dari aplikasi Informatika Student Portal dilakukan oleh beberapa mahasiswa dengan kriteria yang beragam. Berdasarkan hasil pengujian, aplikasi dapat berjalan dengan baik dan memberikan hasil yang tepat pada seluruh mahasiswa kecuali mahasiswa yang pernah melakukan transfer studi. Hasil pengujian aplikasi Informatika Student Portal membuktikan bahwa ekstraksi data situs web dapat dimanfaatkan memenuhi kebutuhan akademik mahasiswa Program Studi Teknik Informatika UNPAR jika digabungkan dengan SIA Models. 
  	
 }
 
 \abstrakENG{
-	Portal Akademik Mahasiswa is a website that is intended for students in order to obtain information about academic activities. However, its features has still not support the academic needs of Informatics Engineering UNPAR's students. Therefore, the application made Informatika Student Portal.
-	Informatika Student Portal is a web-based application which made with Play Framework. The data which processed by Informatika Student Portal is taken directly from Portal Akademik Mahasiswa by exploiting web scraping which is implemented by jsoup.
+	Portal Akademik Mahasiswa is a website that is intended for students in order to obtain information about academic activities. However, its features has still not supported the academic needs of UNPAR's Informatics Engineering students. Therefore, it is made Informatika Student Portal application.
+	
+	Informatika Student Portal is a web-based application which made with Play Framework. The data which processed by Informatika Student Portal is taken directly from Portal Akademik Mahasiswa by exploiting website data extraction which is implemented by jsoup. To obtain the data, it is necessary to analyze the communication of Portal Akademik Mahasiswa. The analysis is performed using Chrome DevTools. The data that was obtained by jsoup can be selected using CSS Selector then the data will be processed into SIA Models.
+	
+	The testing of Informatika Student Portal was performed by some students with various criteria. The application can run well and give precise results in all students except students who have done studies transfer. The results of Informatika Student Portal testing prove that website data extraction can be used to meet the academic needs of UNPAR's Informatics Engineering students if it is combined with SIA Models.
 } 
 
 %=============================================================================
@@ -209,9 +212,9 @@
 % - kunciINA: kata-kata kunci dalam bahasa indonesia
 % - kunciENG: keywords in english
 %=============================================================================
-\kunciINA{Informatika Student Portal, Portal Akademik Mahasiswa, Teknik Informatika UNPAR, \textit{Web Scraping}, jsoup, Play Framework, SIA Models, Chrome DevTools, CSS \textit{Selector}}
+\kunciINA{Informatika Student Portal, Portal Akademik Mahasiswa, Teknik Informatika UNPAR, jsoup, Play Framework, SIA Models, Chrome DevTools, CSS \textit{Selector}}
 
-\kunciENG{Informatika Student Portal, Portal Akademik Mahasiswa, Informatics Engineering UNPAR, Web Scraping, jsoup, Play Framework, SIA Models, Chrome DevTools, CSS Selector}
+\kunciENG{Informatika Student Portal, Portal Akademik Mahasiswa, Informatics Engineering UNPAR, jsoup, Play Framework, SIA Models, Chrome DevTools, CSS Selector}
 %=============================================================================
 
 %_____________________________________________________________________________

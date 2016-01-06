@@ -1,6 +1,8 @@
 \chapter{Analisis}
 \label{chap:analisis}
 
+Pada bab ini akan dijelaskan mengenai analisis Portal Akademik Mahasiswa, analisis kebutuhan Informatika Student Portal, analisis komunikasi Portal Akademik Mahasiswa meliputi kasus \textit{login}, nilai, jadwal, dan \textit{logout}, analisis arsitektur Informatika Student Portal, analisis \textit{use case} beserta skenario dari masing-masing \textit{use case}, dan analisis kelas.
+
 \section{Analisis Portal Akademik Mahasiswa}
 Portal Akademik Mahasiswa merupakan sebuah situs jaringan yang diperuntukan bagi mahasiswa dalam rangka mendapatkan informasi kegiatan akademik\cite{BTI:2012}. Mahasiswa dapat mengakses Portal Akademik Mahasiswa melalui URL \url{https://studentportal.unpar.ac.id/}. Untuk mengakses Portal Akademik Mahasiswa, mahasiswa harus \textit{login} menggunakan akun email \textit{student}. Halaman \textit{login} Student Portal UNPAR terintegrasi dengan CAS (\textit{Central Authentication Service}) UNPAR\footnote{\url{https://cas.unpar.ac.id}}.
 
@@ -232,13 +234,7 @@ pilihan ``Seluruh Tahun Akademik'' untuk melihat seluruh nilai berdasarkan semes
 
 \section{Analisis Kebutuhan Informatika Student Portal}
 \label{sec:kebutuhan}
-Dalam menganalisis kebutuhan Informatika Student Portal, peneliti melakukan wawancara dengan mahasiswa Program Studi Teknik Informatika UNPAR. Sampel yang diambil adalah lima orang mahasiswa dari setiap angkatan dalam empat tahun terakhir yaitu angkatan 2012 sampai 2015 dengan rincian sebagai berikut:
-\begin{itemize}
-	\item Angkatan 2012: tiga orang laki-laki dan dua orang perempuan
-	\item Angkatan 2013: dua orang laki-laki dan tiga orang perempuan
-	\item Angkatan 2014: lima orang laki-laki 
-	\item Angkatan 2015: tiga orang laki-laki dan satu orang perempuan
-\end{itemize}
+Dalam menganalisis kebutuhan Informatika Student Portal, peneliti melakukan wawancara dengan mahasiswa Program Studi Teknik Informatika UNPAR. Sampel yang diambil adalah lima orang mahasiswa dari setiap angkatan dalam empat tahun terakhir yaitu angkatan 2012 sampai 2015 mengingat standar kelulusan kuliah adalah empat tahun.
  Setelah melakukan wawancara, peneliti memperoleh fitur-fitur yang diinginkan mahasiswa antara lain:
 \begin{enumerate}
 	\item Prasyarat mata kuliah\\
@@ -269,7 +265,7 @@ Dalam menganalisis kebutuhan Informatika Student Portal, peneliti melakukan wawa
 	Tagihan pada Portal Akademik Mahasiswa tidak mencantumkan batas akhir pembayaran dan rincian nominal tagihan. Mahasiswa menginginkan rincian pembayaran agar tidak terlambat membayar uang kuliah dan dapat mengetahui rincian nominal tagihan.
 	\item Rincian mata kuliah\\
 	Setiap mata kuliah yang dibuka memiliki rincian seperti deskripsi mata kuliah dan jenis mata kuliah yaitu apakah mata kuliah tersebut wajib, pilihan, atau pilihan wajib. Mahasiswa menginginkan fitur ini agar dapat mengetahui mata kuliah apa yang akan dipelajari.
-	\item Tampilan situs web sama di sistem operasi manapun\\
+	\item Tampilan situs web sama di sistem operasi Mac, Linux, dan Android\\
 	Jika tidak menggunakan sistem operasi Windows seperti Linux dan Mac, saat mengakses Portal Akademik Mahasiswa melalui \url{https://studentportal.unpar.ac.id/}, maka mahasiswa akan diarahkan ke \url{https://m.studentportal.unpar.ac.id/} yaitu Portal Akademik Mahasiswa dengan tampilan \textit{mobile} (Gambar \ref{fig:3_pam_mobile}). Tampilan ini tidak memiliki fitur selengkap Portal Akademik Mahasiswa, hanya memiliki fitur pengumunan kuliah, jadwal kuliah, UTS, dan UAS, nilai, IP, dan tagihan. Selain itu, tampilan \textit{mobile} pada telepon seluler akan terlihat sangat kecil sehingga tidak sulit untuk memilih menu. Mahasiswa menginginkan fitur ini agar Informatika Student Portal dapat diakses di sistem operasi manapun tanpa perubahan tampilan.
 	\begin{figure}[H]
 			\centering
@@ -297,7 +293,7 @@ Peneliti menetapkan fitur-fitur yang akan dipilih untuk diimplementasikan harus 
 	Portal Akademik Mahasiswa berfungsi sebagai sumber informasi akademik karena itu Informatika Student Portal juga harus mememiliki fitur yang dapat mendukung fungsi tersebut.
 \end{itemize}
 
-Hasil analisis fitur-fitur yang diinginkan berdasarkan kriteria di atas dan batas waktu pembangunan aplikasi dapat dilihat pada tabel \ref{tab:3_hasil_fitur}.
+Hasil analisis fitur-fitur yang diinginkan berdasarkan kriteria di atas dan batas waktu pembangunan aplikasi dapat dilihat pada Tabel \ref{tab:3_hasil_fitur}.
 \begin{table}[H]
 	\centering
 		\caption{Tabel Hasil Analisis Kebutuhan Informatika Student Portal}
@@ -319,7 +315,7 @@ Hasil analisis fitur-fitur yang diinginkan berdasarkan kriteria di atas dan bata
 		\hline
     Rincian mata kuliah                               & Tidak dibuat & Data tidak bisa diperoleh dari Portal Akademik Mahasiwa                                               \\
 		\hline
-    Tampilan situs web sama di sistem operasi manapun & Dibuat       & Aplikasi yang akan dibuat merupakan situs web yang responsif                                          \\
+    Tampilan situs web sama di sistem operasi Mac, Linux, dan Android & Dibuat       & Aplikasi yang dibuat dapat menyesuaikan ukuran layar                                           \\
 		\hline
     Kontak dosen                                      & Tidak dibuat & Data tidak bisa diperoleh dari Portal Akademik Mahasiwa                                               \\
 		\hline
@@ -635,7 +631,7 @@ Kelas-kelas dari \textit{package} SIA Models telah dibahas pada subbab \ref{sec:
 	\item Application\\
 	Kelas ini merupakan \textit{controller} pada Informatika Student Portal yang berfungsi untuk menghubungkan \textit{model} dengan \textit{view}. 
 	\item Scraper\\
-	Kelas ini merupakan kelas yang mengimplementasikan \textit{web scraping} menggunakan \textit{library} jsoup. Kelas ini digunakan untuk memperoleh data dari Portal Akademik Mahasiswa kemudian menghubungkannya ke dalam SIA Models. Data-data yang sudah dihubungkan dengan SIA Models akan ditampilkan ke \textit{view} melalui kelas \texttt{Application}.
+	Kelas ini merupakan kelas yang mengimplementasikan ekstraksi data situs web menggunakan \textit{library} jsoup. Kelas ini digunakan untuk memperoleh data dari Portal Akademik Mahasiswa kemudian menghubungkannya ke dalam SIA Models. Data-data yang sudah dihubungkan dengan SIA Models akan ditampilkan ke \textit{view} melalui kelas \texttt{Application}.
 	\item CustomMahasiswa\\
 	Kelas ini turunan dari kelas Mahasiswa pada SIA Models. Kelas ini merepresentasikan mahasiswa yang memiliki jadwal kuliah dan URL foto profil pada Portal Akademik Mahasiswa.
 	\item Jadwal\\
