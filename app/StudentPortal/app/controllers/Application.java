@@ -75,7 +75,8 @@ public class Application extends Controller {
     }
     
     public Result home() {
-    	if(session("npm")==null){
+    	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
+    		session().clear();
     		return index();
     	}
     	else{
@@ -84,7 +85,8 @@ public class Application extends Controller {
     }
     
     public Result prasyarat() throws IOException{
-    	if(session("npm")==null){
+    	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
+    		session().clear();
     		return index();
     	}
     	else if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
@@ -100,7 +102,8 @@ public class Application extends Controller {
     }
     
     public Result jadwalKuliah() throws IOException{
-    	if(session("npm")==null){
+    	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
+    		session().clear();
     		return index();
     	}
     	else{
@@ -111,7 +114,8 @@ public class Application extends Controller {
     }
 
     public Result ringkasan() throws IOException{
-    	if(session("npm")==null){
+    	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
+    		session().clear();
     		return index();
     	}
     	else if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
@@ -170,7 +174,8 @@ public class Application extends Controller {
     }
     
     public Result tentang() {
-    	if(session("npm")==null){
+    	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
+    		session().clear();
     		return index();
     	}
     	else{

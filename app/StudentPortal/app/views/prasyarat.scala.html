@@ -7,7 +7,7 @@
     	@templates.head("Prasyarat Mata Kuliah")
     </head>
     <body>
-		@templates.sidebar()
+		@templates.sidebar("prasyarat")
 		<div class="main">
 		<!-- Konten Halaman -->
 			<div class="container-fluid">
@@ -34,11 +34,11 @@
 						<tbody>
 						@for(ls<-list){
 							<tr>
-								@if(ls.getStatus()(0).contains("data prasyarat tidak tersedia")){
-									<td class="text-center" rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().kode()</td>
-								}else{
-									<td class="text-center" rowspan="@(ls.getStatus().length)"><a target="_blank" href= @{val ref = "https://github.com/pascalalfadian/SIAModels/blob/master/src/main/java/id/ac/unpar/siamodels/matakuliah/"+ls.getMataKuliah().kode()+".java"; ref}>@ls.getMataKuliah().kode()</a></td>
+								<td class="text-center" rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().kode()
+								@if(!ls.getStatus()(0).contains("data prasyarat tidak tersedia")){
+									<a target="_blank" href= @{val ref = "https://github.com/pascalalfadian/SIAModels/blob/master/src/main/java/id/ac/unpar/siamodels/matakuliah/"+ls.getMataKuliah().kode()+".java"; ref}><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
 								}
+								</td>
 
 								<td rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().nama()</td>
 								
