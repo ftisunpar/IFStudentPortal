@@ -1,0 +1,218 @@
+
+/*Login Page*/
+#login-body{
+	background-image: url("../images/home-bg.jpg");
+	background-size: cover;
+}
+#login-container{
+	margin-top: 5%;
+}
+.panel-body{
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.panel{
+	border: 1px	solid #222;
+	background-color: #222;
+}
+.panel-body label{
+	color: white;
+}
+.page-header .logo-set{
+	margin: 0 auto 10px;
+	display: block;
+}
+.page-header .text-center{
+	color: white;
+	font-weight: bold;
+}
+.input-group-addon{
+	background-color: #222;
+	color: white;
+}
+.alert{
+	padding: 5px 10px;
+}
+button[name=submit]{
+	margin-bottom: 25px;
+	background-color: #222;
+	color: white;
+}
+th{
+	background-color: #222;
+	color: white;
+}
+.profile-table .table{
+	background-color: #222;
+	color: white;
+}
+.ringkasan-panel .page-header{
+	background-color: #222;
+	color: white;
+	margin: 0px;
+	padding-top: 5px;
+}
+.ringkasan-body{
+	background-color: white;
+	color: black;
+	border: 2px solid #222;
+	padding: 20px 20px 20px 20px;
+}
+.jadwal-cell{
+	background-color: #9d9d9d;
+	color: white;
+}
+/*Responsive sidebar*/
+.main .row{
+	padding: 0px;
+	margin: 0px;
+}
+nav.sidebar.navbar {
+	border-radius: 0px;
+}
+nav.sidebar, .main{
+	-webkit-transition: margin 200ms ease-out;
+	-moz-transition: margin 200ms ease-out;
+	-o-transition: margin 200ms ease-out;
+	transition: margin 200ms ease-out;
+}
+.main{
+	padding: 10px 10px 0 10px;
+}
+/*small & medium display*/
+@media (min-width: 768px) {
+
+	/*Allow main to be next to Nav*/
+	.main{
+		position: absolute;
+		width: calc(100% - 40px); /*keeps 100% minus nav size*/
+		margin-left: 40px;
+		float: right;
+	}
+
+	/*lets nav bar to be showed on mouseover*/
+	nav.sidebar:hover + .main{
+		margin-left: 200px;
+	}
+
+	/*Center Brand*/
+	nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+		margin-left: 0px;
+	}
+	/*Center Brand*/
+	nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
+		text-align: center;
+		width: 100%;
+		margin-left: 0px;
+	}
+
+	/*Center Icons*/
+	nav.sidebar a{
+		padding-right: 13px;
+	}
+
+	/*adds border top to first nav box */
+	nav.sidebar .navbar-nav > li:first-child{
+		border-top: 1px #e5e5e5 solid;
+	}
+
+	/*adds border to bottom nav boxes*/
+	nav.sidebar .navbar-nav > li{
+		border-bottom: 1px #e5e5e5 solid;
+	}
+
+	/* Colors/style dropdown box*/
+	nav.sidebar .navbar-nav .open .dropdown-menu {
+		position: static;
+		float: none;
+		width: auto;
+		margin-top: 0;
+		background-color: transparent;
+		border: 0;
+		-webkit-box-shadow: none;
+		box-shadow: none;
+	}
+
+	/*allows nav box to use 100% width*/
+	nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
+		padding: 0 0px 0 0px;
+	}
+
+	/*colors dropdown box text */
+	.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+		color: #777;
+	}
+
+	/*gives sidebar width/height*/
+	nav.sidebar{
+		width: 200px;
+		height: 100%;
+		margin-left: -160px;
+		float: left;
+		z-index: 8000;
+		margin-bottom: 0px;
+	}
+
+	/*give sidebar 100% width;*/
+	nav.sidebar li {
+		width: 100%;
+	}
+
+	/* Move nav to full on mouse over*/
+	nav.sidebar:hover{
+		margin-left: 0px;
+	}
+	/*for hiden things when navbar hidden*/
+	.forAnimate{
+		opacity: 0;
+	}
+}
+
+/*Full Display*/
+@media (min-width: 1330px) {
+	/*Allow main to be next to Nav*/
+	.main{
+		width: calc(100% - 200px); /*keeps 100% minus nav size*/
+		margin-left: 200px;
+	}
+
+	/*Show all nav*/
+	nav.sidebar{
+		margin-left: 0px;
+		float: left;
+	}
+	/*Show hidden items on nav*/
+	nav.sidebar .forAnimate{
+		opacity: 1;
+	}
+}
+
+nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
+	color: #CCC;
+	background-color: transparent;
+}
+
+nav:hover .forAnimate{
+	opacity: 1;
+}
+
+section{
+	padding-left: 15px;
+}
+
+p.navbar-brand{
+	color: #9d9d9d !important;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.navbar-header{
+	padding-bottom: 10px;
+}
+
+.navbar-brand:hover{
+	cursor: default;
+}
+.jadwal-cell{
+	cursor: pointer;
+}
