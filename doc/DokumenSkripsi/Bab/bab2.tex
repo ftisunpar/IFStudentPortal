@@ -1,10 +1,12 @@
 \chapter{Dasar Teori}
 \label{chap:Dasar Teori}
 
-\section{jsoup}
+Pada bab ini akan dijelaskan dasar-dasar teori mengenai \textit{library} jsoup meliputi kelas Jsoup, Connection, Response, Document, Elements, dan Element. Selain itu akan dibahas pula mengenai CSS \textit{selector}, Chrome DevTools meliputi panel Elements dan Network, Play Framework, dan SIA Models.
+
+\section{\textit{Library} jsoup}
 \label{sec:jsoup}
 
-\textit{Web scraping} adalah teknik mendapatkan informasi dari sebuah situs web secara otomatis\cite{Vargiu:2013}. Dalam bahasa Java, \textit{web scraping} dapat diimplementasikan menggunakan \textit{library} jsoup\cite{jsoup}. jsoup dapat mengambil data berupa HTML dari sebuah situs web. Dalam mengambil HTML, jsoup dapat menggunakan CSS \textit{selector} untuk memilih elemen mana saja yang ingin diambil. 
+\textit{Library} jsoup merupakan library Java yang digunakan untuk \cite{jsoup}. jsoup dapat mengambil data berupa HTML dari sebuah situs web. Dalam mengambil HTML, jsoup dapat memanfaatkan \textit{syntax} CSS \textit{Selector} untuk memilih elemen mana saja yang ingin diambil. 
 
 Subbab-subbab berikut menjelaskan beberapa kelas dari jsoup.
 
@@ -151,7 +153,7 @@ Kelas ini merepresentasikan sebuah elemen HTML yang berisikan \textit{tag}, atri
 \section{CSS \textit{Selector}}
 \label{sec:selector}
 
-CSS(\textit{Cascading Style Sheets}) memungkinkan adanya perubahan elemen HTML yang sudah didefinisikan\cite{Meyer:2012}. Seperti yang ditampilkan pada Gambar \ref{fig:2_selector_ex}, definisi CSS memiliki dua komponen yaitu selector dan properti. CSS \textit{selector} digunakan untuk mendefinisikan elemen HTML sedangkan properti mendefinisikan atribut beserta nilai. 
+CSS(\textit{Cascading Style Sheets}) memungkinkan adanya perubahan properti elemen HTML yang sudah didefinisikan\cite{Meyer:2012}. Seperti yang ditampilkan pada Gambar \ref{fig:2_selector_ex}, definisi CSS memiliki dua komponen yaitu selector dan properti. CSS \textit{selector} digunakan untuk mendefinisikan elemen HTML sedangkan properti mendefinisikan atribut beserta nilai. 
 		\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.8]{Gambar/selector-ex}
@@ -202,7 +204,7 @@ Panel-panel yang dimiliki DevTools (Gambar \ref{fig:2_chrome_devtools}) antara l
 	\item \textbf{Console}, mendapatkan informasi pengembangan dan berinteraksi dengan dokumen.
 	\item \textbf{Sources}, melakukan \textit{debugging} pada JavaScript dengan menentukan \textit{breakpoint}.
 	\item \textbf{Network}, memantau aktivitas jaringan pada situs web secara \textit{real-time}.
-	\item \textbf{Audits}, menganalisa halaman yang dimuat.
+	\item \textbf{Audits}, menganalisis halaman yang dimuat.
 	\item \textbf{Timeline}, menampilkan alur waktu saat memuat halaman.
 	\item \textbf{Profiles}, menggambarkan waktu eksekusi dan penggunaan memori saat memuat halaman.
 	\item \textbf{Resources}, memeriksa sumber daya halaman yang dapat berupa basis data, \textit{cookies}, dan \textit{cache}.
@@ -218,7 +220,7 @@ Panel-panel yang dimiliki DevTools (Gambar \ref{fig:2_chrome_devtools}) antara l
 Pada subbab-subbab berikut akan dijelaskan mengenai dua panel dari DevTools.
 
 \subsection{Elements}
-Panel Elements memungkinkan untuk memperlihatkan informasi yang terstruktur tentang halaman yang sedang dibuka. HTML akan ditampilkan dalam bentuk pohon \textit{Document Object Model} (DOM). DOM adalah sebuah struktur seperti pohon yang dibuat oleh browser untuk menemukan elemen HTML \footnote{\url{http://try.jquery.com/}, diakses 24 September 2015}. Tampilan pohon DOM memperlihatkan struktur DOM dari halaman yang sedang dibuka. Pohon DOM adalah pohon dari node-node yang mewakili setiap elemen HTML seperti \texttt{<body>} dan \texttt{<p>}. 
+Panel Elements memungkinkan untuk memperlihatkan informasi yang terstruktur tentang halaman yang sedang dibuka. HTML akan ditampilkan dalam bentuk pohon \textit{Document Object Model} (DOM). DOM adalah sebuah struktur seperti pohon yang dibuat oleh browser untuk menemukan elemen HTML\footnote{\url{http://try.jquery.com/}, diakses 24 September 2015}. Tampilan pohon DOM memperlihatkan struktur DOM dari halaman yang sedang dibuka. Pohon DOM adalah pohon dari node-node yang mewakili setiap elemen HTML seperti \texttt{<body>} dan \texttt{<p>}. 
 
 Pemeriksaan elemen akan memperlihatkan node DOM dan CSS dari elemen yang dipilih pada \textit{browser}. Pemeriksaan elemen dapat dilakukan dengan cara klik kanan pada elemen yang ingin diperiksa kemudian pilih ``Inspect element''. Dengan melakukan pemeriksaan elemen, jendela panel Elements akan muncul. Sebagai contoh pada Gambar \ref{fig:2_elements_panel}, saat melakukan ``Inspect element'' pada nama mahasiswa, panel Elements akan muncul dan menunjukkan pohon DOM dari halaman tersebut. Selain itu panel Elements juga menunjukkan CSS selector dari elemen tersebut yaitu \texttt{p.student-name}.
 
@@ -287,7 +289,7 @@ Ketika nama sumber daya dalam tabel Network diklik, maka akan muncul tautan baru
 \end{figure}
 
 	\item \textbf{Response}\\
-	Tautan Response berisi konten symber daya yang tidak terformat. Sebagai contoh pada Gambar \ref{fig:2_network_response} menampilkan Tautan Response dari sumber daya \texttt{main.php}.
+	Tautan Response berisi konten sumber daya yang tidak terformat. Sebagai contoh pada Gambar \ref{fig:2_network_response} menampilkan tautan Response dari sumber daya \texttt{main.php}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/network-response}
@@ -320,7 +322,7 @@ Ketika nama sumber daya dalam tabel Network diklik, maka akan muncul tautan baru
 \section{Play Framework}
 \label{sec:play}
 
-Play Framework\cite{Leroux:2014} merupakan sebuah web \textit{framework} berbasis bahasa Java dan Scala. Play Framework juga menggunakan \textit{design pattern} Model-View-Controller (MVC) di mana \textit{model} dan \textit{controller} menggunakan bahasa Java sedangkan \textit{view} menggunakan bahasa Scala dan HTML. Struktur aplikasi Play Framework dapat dilihat pada Gambar \ref{fig:2_play_dir}.
+Play Framework\cite{Leroux:2014} merupakan sebuah web \textit{framework} berbasis bahasa Java dan Scala. Play Framework juga menggunakan arsitektur \textit{Model-View-Controller} (MVC) di mana \textit{model} dan \textit{controller} menggunakan bahasa Java sedangkan \textit{view} menggunakan bahasa Scala dan HTML. Agar dapat berjalan, Play Framework membutuhkan sistem operasi dan Java Development Kit (JDK). Struktur aplikasi Play Framework dapat dilihat pada Gambar \ref{fig:2_play_dir}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{Gambar/play-dir}
@@ -337,7 +339,7 @@ Dalam direktori \texttt{conf}, terdapat file \texttt{routes}. Melalui \texttt{ro
 	\label{fig:2_routes_example}
 \end{figure}
 
-Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \texttt{app} berisi file-file seperti pada Gambar \ref{fig:2_app_dir}. Dalam folder \texttt{controllers}, terdapat file \texttt{Application.java} yang berisi kode Java untuk menghasilkan halaman web. Kelas yang menangani permintaan HTTP dan mengembalikan hasil HTTP disebut kelas \textit{controller}. Kelas \textit{controller} merupakan kelas yang memiliki \textit{action method}. Setiap \textit{action method} memiliki tipe kembalian \textit{Result} yang merepresentasikan \textit{view}. Pada buku referensi\cite{Leroux:2014}, tertulis bahwa kembalian dari \textit{Action method} harus \texttt{static} tetapi pada versi Play Framework 2.4, \texttt{static} dihilangkan. \textit{Action method} kan berhubungan dengan \textit{view} setelah didefinisikan di \texttt{routes}. \textit{Controller} dapat mengirimkan parameter pada \textit{view} melalui kembalian dari \textit{action method}. Berikut ini adalah contoh \textit{method} pada kelas \textit{Controller}:
+Direktori \texttt{app} merupakan sumber dari kode program seperti file Java dan \textit{view}. Saat pertama kali proyek Play Framework dibuat, direktori \texttt{app} berisi file-file seperti pada Gambar \ref{fig:2_app_dir}. Dalam folder \texttt{controllers}, terdapat file \texttt{Application.java} yang berisi kode Java untuk menghasilkan halaman web. Kelas yang menangani permintaan HTTP dan mengembalikan hasil HTTP disebut kelas \textit{controller}. Kelas \textit{controller} merupakan kelas yang memiliki \textit{action method}. Setiap \textit{action method} memiliki tipe kembalian \textit{Result} yang merepresentasikan \textit{view}. Pada buku referensi\cite{Leroux:2014}, tertulis bahwa kembalian dari \textit{action method} harus \texttt{static} tetapi pada versi Play Framework 2.4, \texttt{static} dihilangkan. \textit{Action method} akan berhubungan dengan \textit{view} setelah didefinisikan di \texttt{routes}. \textit{Controller} dapat mengirimkan parameter pada \textit{view} melalui kembalian dari \textit{action method}. Berikut ini adalah contoh \textit{method} pada kelas \textit{Controller}:
 \begin{lstlisting}
 public Result home(){
 	String nama = mahasiswa.getNama();
@@ -368,7 +370,7 @@ Dalam folder \texttt{views} terdapat dua file yaitu \texttt{index.scala.html} da
 	</body>
 <html>
 \end{lstlisting}
-Pada baris pertama ``message'' mendefinisikan nama parameter yang diterima dengan tipe \textit{String}. Tipe yang diterima \textit{view} harus sama dengan tipe yang dikirim \textit{controller} begitu pula banyak parameternya. Baris ke-10 menampilkan ``message'' pada halaman HTML. Tanda ``@'' menandakan penggunaan bahasa Scala pada \textit{view}. 
+Pada baris pertama ``message'' mendefinisikan nama parameter yang diterima dengan tipe \textit{String}. Tipe yang diterima \textit{view} harus sama dengan tipe yang dikirim \textit{controller} begitu pula banyak parameternya. Baris ke-10 menampilkan ``message'' pada halaman HTML. Tanda ``@'' menandakan penggunaan bahasa Scala pada \textit{view}. Bahasa Scala pada Play Framework merupakan \textit{scala template} yaitu \textit{template} dengan \textit{syntax} berbasis bahasa Scala sehingga penulisan bahasa Scala pada Play Framework berbeda dengan penulisan bahasa Scala pada umumnya.
 
 Direktori \texttt{public} berisi sumber yang dapat diakses secara langsung sebagai aset publik. Biasanya aset publik mendukung file selain aplikasi yang dibuat seperti gambar, \textit{stylesheet}, Javascript, dan halaman HTML statis. Aset publik tidak dihasilkan oleh aplikasi melainkan diatur secara langsung oleh pembuat program.
 
@@ -394,7 +396,7 @@ Dalam Play Framework, objek yang disimpan pada \textit{session} memiliki masa hi
 
 \section{SIA Models}
 \label{sec:siamodels}
-SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem Informasi Akademik UNPAR\cite{siamodels}. Berdasarkan diagram kelas SIA Models (Gambar \ref{fig:2_siamodels_class}), kelas-kelas yang dimiliki SIA Models terbagi ke dalam tiga \textit{package} antara lain:
+SIA Models merupakan kelas-kelas dalam bahasa Java yang merepresentasikan Sistem Informasi Akademik Teknik Informatika UNPAR\cite{siamodels}. Berdasarkan diagram kelas SIA Models (Gambar \ref{fig:2_siamodels_class}), kelas-kelas yang dimiliki SIA Models terbagi ke dalam tiga \textit{package} antara lain:
 
 \begin{figure}[H]
 	\centering

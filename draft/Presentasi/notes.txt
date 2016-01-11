@@ -1,9 +1,0 @@
-play isn't Java EE
-
-tambahkan cerita lagi di dasar teori
-arsitektur aplikasi
-wawancara dengan sampling
-session (disimpan di browser)
-komunikasi kesimpulan
-jelaskan lagi play berjalan pada server yg selevel dgn j2ee
-SIA models deskripsikan lagi

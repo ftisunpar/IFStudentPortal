@@ -1,0 +1,603 @@
+\chapter{Kode Program \textit{View}}
+
+\singlespacing 
+\begin{lstlisting}[language=html,basicstyle=\tiny,caption=login.scala.html]
+ @(message: String)
+
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="@routes.Assets.versioned("images/logo-IT.png")" />
+		<title>Informatika Student Portal</title>
+
+		<!-- CSS -->
+        <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")">
+        
+	</head>
+	
+	<body id="login-body">
+	    <div class="container" id="login-container">
+			<div class="row">
+				<div class="col-md-4 col-sm-2"></div>
+				<div class="col-md-4 col-sm-8">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="page-header">
+								<center>
+								<div class="logo-set">	
+									<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="120px" height="120px"/>
+									<img src="@routes.Assets.versioned("images/logo-IT.png")" width="120px" height="120px"/>
+								</div>
+								</center>
+								<br>
+								<h4 class="text-center">INFORMATIKA STUDENT PORTAL</h4> 
+								<h5 class="text-center">Portal Akademik Mahasiswa</h5>
+								<h5 class="text-center">Teknik Informatika UNPAR</h5>
+							</div>
+							<form action="@routes.Application.submitLogin()" method="POST" name ="loginForm">
+								<div class="form-group">
+									<label for="email-input">Email</label> 
+									<div class="input-group">
+										<input name="email" type="email" class="form-control" id="email-input" placeholder="co: 7312012&#64;student.unpar.ac.id"/>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="pw-input">Password</label> 
+									<div class="input-group">
+										<input name="pass" type="password" class="form-control" id="pw-input" placeholder="********"/>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span>
+									</div>
+								</div>
+								 @Html(message)
+								<button name="submit" type="submit" class="form-control">Login <span class="glyphicon glyphicon-log-in"></span></button>
+							</form>
+						</div>	
+					</div>										
+				</div>
+				<div class="col-md-4 col-sm-2"></div>
+			</div>
+		</div>
+		<!-- Javascript -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")></script>
+
+	</body>
+</html>
+\end{lstlisting}
+
+\singlespacing 
+\begin{lstlisting}[language=html,basicstyle=\tiny,caption=home.scala.html]
+@(mhs: models.support.CustomMahasiswa)
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="@routes.Assets.versioned("images/logo-IT.png")" />
+		<title>Informatika Student Portal</title>
+
+		<!-- CSS -->
+        <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")"> 
+    </head>
+    <body>
+		<nav class="navbar navbar-inverse sidebar" role="navigation">
+			<div class="container-fluid">
+				<!-- Logo dan Toggle -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sidebar-navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<div class="logo-set">
+						<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
+						<img src="@routes.Assets.versioned("images/logo-IT.png")" width="25%" height="25%"/>
+					</div>
+					<p class="navbar-brand">INFORMATIKA STUDENT PORTAL</p>
+				</div>
+				<!-- Menu Navigasi -->
+				<div class="collapse navbar-collapse" id="sidebar-navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li class="active" ><a href="@routes.Application.home()">
+							Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span>
+						</a></li>
+						<li><a href="@routes.Application.prasyarat()">
+							Prasyarat Mata Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tasks"></span>
+						</a></li>
+						<li><a href="@routes.Application.jadwalKuliah()">
+							 Jadwal Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span>
+						</a></li>
+						<li><a href="@routes.Application.ringkasan()">
+							Data Akademik<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-book"></span>
+						</a></li>
+						<li ><a href="@routes.Application.logout()">
+							Logout<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="main">
+		<!-- Konten Halaman -->
+			<div class="container-fluid">
+				<div class="row">
+					<h2>Selamat datang di Informatika Student Portal!</h2>
+				</div>
+				<p><br></p>
+				<div class="row">
+                    <div class="col-lg-6">
+						<div class="table-responsive profile-table">
+							<table class="table table-bordered">
+								<tr>
+									<td width="50" rowspan="3"><center><img src="@mhs.getPhotoPath()"/></center></td>
+									<td><h6>@mhs.getNama()</h6></td>
+								</tr>
+								<tr>
+									<td><h6>@mhs.getNpm()</h6></td>
+								</tr>
+								<tr>
+									<td><h6>@mhs.getEmailAddress()</h6></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<p><br></p>
+				<div class="row">
+					<div class="col-lg-6">
+						<a href="https://github.com/herfanheryandi/Skripsi/tree/master/app/StudentPortal" target="_blank">Source code Informatika Student Portal</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Javascript -->
+		<script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")"></script>
+		<script src="@routes.Assets.versioned("javascripts/script.js")"></script>
+		<script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+		
+    </body>
+</html>
+\end{lstlisting}
+
+
+
+\singlespacing 
+\begin{lstlisting}[language=html,basicstyle=\tiny,caption=prasyarat.scala.html]
+@(list: List[models.display.PrasyaratDisplay], semester: String)
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="@routes.Assets.versioned("images/logo-IT.png")" />
+		<title>Informatika Student Portal</title>
+
+		<!-- CSS -->
+        <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")"> 
+    </head>
+    <body>
+		<nav class="navbar navbar-inverse sidebar" role="navigation">
+			<div class="container-fluid">
+				<!-- Logo dan Toggle -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sidebar-navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<div class="logo-set">
+						<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
+						<img src="@routes.Assets.versioned("images/logo-IT.png")" width="25%" height="25%"/>
+					</div>
+					<p class="navbar-brand">INFORMATIKA STUDENT PORTAL</p>
+				</div>
+				<!-- Menu Navigasi -->
+				<div class="collapse navbar-collapse" id="sidebar-navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="@routes.Application.home()">
+							Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span>
+						</a></li>
+						<li class="active"><a href="@routes.Application.prasyarat()">
+							Prasyarat Mata Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tasks"></span>
+						</a></li>
+						<li><a href="@routes.Application.jadwalKuliah()">
+							 Jadwal Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span>
+						</a></li>
+						<li ><a href="@routes.Application.ringkasan()">
+							Data Akademik<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-book"></span>
+						</a></li>
+						<li ><a href="@routes.Application.logout()">
+							Logout<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="main">
+		<!-- Konten Halaman -->
+			<div class="container-fluid">
+				<div class="row">
+					<h2 class="text-center">PEMERIKSAAN PRASYARAT MATA KULIAH</h2> 
+					<h4 class="text-center">SEMESTER @semester</h4> 
+				</div>
+				@if(list==null){
+					<div class="row">
+						<h5 style="color: gray;">PRASYARAT BELUM TERSEDIA <span class="glyphicon glyphicon-exclamation-sign"></span></h5>
+					</div>	
+				}else{
+				<div class="row">
+                    <div class="col-lg-12">
+						<div class="table-responsive">
+						<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th class="text-center" >Kode Mata Kuliah</th>
+								<th class="text-center" >Nama Mata Kuliah</th>
+								<th class="text-center" >Keterangan</th>
+							</tr>
+						</thead>
+						<tbody>
+						@for(ls<-list){
+							<tr>
+								@if(ls.getStatus()(0).contains("data prasyarat tidak tersedia")){
+									<td class="text-center" rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().kode()</td>
+								}else{
+									<td class="text-center" rowspan="@(ls.getStatus().length)"><a target="_blank" href= @{val ref = "https://github.com/herfanheryandi/Skripsi/blob/master/app/StudentPortal/app/models/id/ac/unpar/siamodels/matakuliah/"+ls.getMataKuliah().kode()+".java"; ref}>@ls.getMataKuliah().kode()</a></td>
+								}
+
+								<td rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().nama()</td>
+								
+								@for(stat<-ls.getStatus()){
+									@if(!stat.isEmpty){
+										@{
+											if(stat.equals(ls.getStatus()(0))){
+												if(stat.contains("sudah lulus")){
+													<td style="color: #0066FF;">{stat} <span class="glyphicon glyphicon-flag"></span></td>
+												}else if(stat.contains("memenuhi syarat")){
+													<td style="color: green;">{stat} <span class="glyphicon glyphicon-ok"></span></td>
+												}else if(stat.contains("tidak memiliki prasyarat")){
+													<td style="color: green;">{stat} <span class="glyphicon glyphicon-ok"></span></td>
+												}else if(stat.contains("CATATAN:")){
+													<td style="color: #FF9900;">{stat} <span class="glyphicon glyphicon-warning-sign"></span></td>
+												}else if(stat.contains("data prasyarat tidak tersedia")){
+													<td style="color: gray;">{stat} <span class="glyphicon glyphicon-exclamation-sign"></span></td>
+												}else{
+													<td style="color: red;">{stat} <span class="glyphicon glyphicon-remove"></span></td>
+												}	
+											}
+											else{
+												if(stat.contains("CATATAN:")){
+													<tr><td style="color: #FF9900;">{stat} <span class="glyphicon glyphicon-warning-sign"></span></td></tr>
+												}else{
+													<tr><td style="color: red;">{stat} <span class="glyphicon glyphicon-remove"></span></td></tr>
+												}
+											}
+										}
+									}
+								}
+							</tr>
+						}
+						</tbody>
+						</table>
+						</div>
+					</div>
+                </div>
+                }
+			</div>
+		</div>
+		
+		<!-- Javascript -->
+		<script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")"></script>
+		<script src="@routes.Assets.versioned("javascripts/script.js")"></script>
+		<script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+    </body>
+</html>
+\end{lstlisting}
+
+
+
+\singlespacing 
+\begin{lstlisting}[language=html,basicstyle=\tiny,caption=jadwalKuliah.scala.html]
+@(jadwalKuliah: models.display.JadwalDisplay, semester: String)
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="@routes.Assets.versioned("images/logo-IT.png")" />
+		<title>Informatika Student Portal</title>
+
+		<!-- CSS -->
+        <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")"> 
+    </head>
+    <body>
+		<nav class="navbar navbar-inverse sidebar" role="navigation">
+			<div class="container-fluid">
+				<!-- Logo dan Toggle -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sidebar-navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<div class="logo-set">
+						<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
+						<img src="@routes.Assets.versioned("images/logo-IT.png")" width="25%" height="25%"/>
+					</div>
+					<p class="navbar-brand">INFORMATIKA STUDENT PORTAL</p>
+				</div>
+				<!-- Menu Navigasi -->
+				<div class="collapse navbar-collapse" id="sidebar-navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li ><a href="@routes.Application.home()">
+							Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span>
+						</a></li>
+						<li><a href="@routes.Application.prasyarat()">
+							Prasyarat Mata Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tasks"></span>
+						</a></li>
+						<li class="active"><a href="@routes.Application.jadwalKuliah()">
+							 Jadwal Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span>
+						</a></li>
+						<li ><a href="@routes.Application.ringkasan()">
+							Data Akademik<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-book"></span>
+						</a></li>
+						<li ><a href="@routes.Application.logout()">
+							Logout<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="main">
+		<!-- Konten Halaman -->
+			<div class="container-fluid">
+				<div class="row">
+					<h2 class="text-center">JADWAL KULIAH</h2> 
+					<h4 class="text-center">SEMESTER @semester</h4>
+				</div>
+				@if(jadwalKuliah.isKuliahEmpty()){
+					<div class="row">
+						<h5 style="color: gray;">JADWAL KULIAH BELUM TERSEDIA <span class="glyphicon glyphicon-exclamation-sign"></span></h5>
+					</div>	
+				}else{
+				<div class="row">
+					<div class="col-md-1">
+						<table id="timeline" class="table hidden-xs hidden-sm">
+							<thead>
+								<tr>
+									<th>Pukul</th>
+								</tr>
+							</thead>
+							<tbody>	
+								@for(i <- 7 until 18) {
+									 <tr><td height="75" colspan="2">@(i).00 </td></tr>
+								}	
+							</tbody>
+						</table>
+					</div>	
+					<div class="col-md-10">
+						<div class="row">
+						@for(day <- 0 until 6) {
+							<div class="col-md-2">
+								<table id=@jadwalKuliah.getHariByIndex(day) class="table">
+									<thead>
+										<tr>
+											<th class="text-center" colspan="2">@jadwalKuliah.getHariByIndex(day)</th>
+										</tr>
+									</thead>
+									<tbody>	
+										@for(i <- 7 until 18) {
+											 <tr>
+												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>
+												@if(jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah()!=null){	
+													<td class="jadwal-cell text-center" rowspan="1" height="25" data-toggle="modal" data-target="#modalDialog" onclick="setModal('@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah().kode()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah().nama()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getKelas()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getDosen()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getWaktu()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getRuang()')">@(jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah().kode())</td>
+												}else{
+													<td class="text-center" height="25"> - </td>
+												}
+											 </tr>
+											 @if(jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah()!=null){	
+												<tr><td class="jadwal-cell text-center" height="25" data-toggle="modal" data-target="#modalDialog" onclick="setModal('@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah().kode()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah().nama()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getKelas()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getDosen()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getWaktu()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getRuang()')">@(jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah().kode())</td></tr>
+											 }else{
+												<tr><td class="text-center" height="25"> - </td></tr>
+											 }
+										}	
+									</tbody>
+								</table>	
+							</div>
+							}	
+						</div>
+					</div>
+				</div>
+				}
+				
+				<div class="modal fade" id="modalDialog" role="dialog">
+					<div class="modal-dialog modal-lg">
+					  <div class="modal-content">
+						<div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal">&times;</button>
+						  <h2 class="modal-title text-center">Modal Header</h2>
+						</div>
+						<div class="modal-body"> 
+						  <h4 class="text-center" id="kelas"></h4>
+						  <h4 class="text-center" id="dosen"></h4>
+						  <h4 class="text-center" id="waktu"></h4>
+						  <h4 class="text-center" id="ruang"></h4>
+						</div>
+						<div class="modal-footer">
+						  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					  </div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		<!-- Javascript -->
+		<script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")"></script>
+		<script src="@routes.Assets.versioned("javascripts/script.js")"></script>
+		<script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+		<script>
+			function setModal(kodeMk, namaMk, kelas, dosen, waktu, ruang) {
+				$(".modal-title").html(kodeMk + " " + namaMk);
+				$("#waktu").html("Pukul " + waktu);
+				$("#kelas").html("Kelas " + kelas);
+				$("#dosen").html(dosen);
+				$("#ruang").html("Ruang " + ruang);
+				//$(".modal-body").html("<table> <tr> <td>"+waktu+"</td></tr><tr><td>Kelas "+kelas+"</td></tr><tr><td>"+dosen+"</td></tr><tr><td>"+ruang+"</td></tr></table>");
+			}
+		</script>
+    </body>
+</html>
+\end{lstlisting}
+
+\singlespacing 
+\begin{lstlisting}[language=html,basicstyle=\tiny,caption=ringkasan.scala.html]
+@(ringkasan: models.display.RingkasanDisplay)
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="@routes.Assets.versioned("images/logo-IT.png")" />
+		<title>Informatika Student Portal</title>
+
+		<!-- CSS -->
+        <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")"> 
+    </head>
+    <body>
+		<nav class="navbar navbar-inverse sidebar" role="navigation">
+			<div class="container-fluid">
+				<!-- Logo dan Toggle -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sidebar-navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<div class="logo-set">
+						<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
+						<img src="@routes.Assets.versioned("images/logo-IT.png")" width="25%" height="25%"/>
+					</div>
+					<p class="navbar-brand">INFORMATIKA STUDENT PORTAL</p>
+				</div>
+				<!-- Menu Navigasi -->
+				<div class="collapse navbar-collapse" id="sidebar-navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="@routes.Application.home()">
+							Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span>
+						</a></li>
+						<li><a href="@routes.Application.prasyarat()">
+							Prasyarat Mata Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tasks"></span>
+						</a></li>
+						<li><a href="@routes.Application.jadwalKuliah()">
+							 Jadwal Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span>
+						</a></li>
+						<li class="active" ><a href="@routes.Application.ringkasan()">
+							Data Akademik<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-book"></span>
+						</a></li>
+						<li ><a href="@routes.Application.logout()">
+							Logout<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="main">
+		<!-- Konten Halaman -->
+			<div class="container-fluid">
+				<div class="row">
+					<h2 class="text-center">RINGKASAN DATA AKADEMIK</h2> 
+				</div>
+				<p></br></p>
+				@if(ringkasan==null){
+					<div class="row">
+						<h5 style="color: gray;">DATA AKADEMIK BELUM TERSEDIA <span class="glyphicon glyphicon-exclamation-sign"></span></h5>
+					</div>	
+				}else{
+				<div class="row">
+					<div class="col-lg-2 ringkasan-panel"></div>
+                    <div class="col-lg-8 ringkasan-panel">
+						<div class="page-header">
+							<h5 class="text-center">INDEKS PRESTASI</h5>
+						</div>
+						<div class="ringkasan-body">
+							IPS @ringkasan.getSemesterTerakhir: @ringkasan.getIPS() dari @ringkasan.getSKSLulusSemTerakhir SKS<br>
+							IPK: @ringkasan.getIPK()<br>
+							SKS lulus: @ringkasan.getSKSLulusTotal()<br>
+							Sisa SKS untuk kelulusan: @ringkasan.getMinSisaSKS()<br>
+						</div>
+					</div>
+                </div>
+				<p></br></p>
+				<div class="row">
+					<div class="col-lg-2 ringkasan-panel"></div>
+                    <div class="col-lg-8 ringkasan-panel">
+						<div class="page-header">
+							<h5 class="text-center">PILIHAN WAJIB</h5>
+						</div>
+						<div class="ringkasan-body">
+							Lulus: <br>
+							<ul>
+								@if(ringkasan.getPilWajibLulus().length==0){
+									<li>	-	</li>
+								}else{
+									@for(list<-ringkasan.getPilWajibLulus()){
+										<li>@list @ringkasan.getNamaPilWajib(list)</li>
+									}
+								}
+							</ul>
+							Belum lulus: <br>
+							<ul>
+								@if(ringkasan.getPilWajibBelumLulus().length==0){
+									<li>	-	</li>
+								}else{
+									@for(list<-ringkasan.getPilWajibBelumLulus()){
+										<li>@list @ringkasan.getNamaPilWajib(list)</li>
+									}
+								}
+							</ul>
+							<h5>LULUS @ringkasan.getPilWajibLulus().length DARI @ringkasan.getPilWajib().length MATA KULIAH PILIHAN WAJIB</h5>
+							@if(ringkasan.getPilWajib().length-ringkasan.getPilWajibBelumLulus().length>=ringkasan.getMinLulusPilWajib()){
+								<P style="color: #0066FF;">SUDAH MEMENUHI SYARAT KELULUSAN MATA KULIAH PILIHAN WAJIB <span class="glyphicon glyphicon-flag"></span></P>
+							}else{
+								<p style="color: red;">BELUM MEMENUHI SYARAT KELULUSAN MATA KULIAH PILIHAN WAJIB <span class="glyphicon glyphicon-remove"></span></p>
+								<p style="color: #FF9900;">MINIMAL LULUS @(ringkasan.getMinLulusPilWajib()-ringkasan.getPilWajibLulus().length) MATA KULIAH PILIHAN WAJIB LAGI <span class="glyphicon glyphicon-warning-sign"></span></p>
+							}
+							</div>
+					</div>
+                </div>
+                }
+			</div>
+		</div>
+		<div>
+		</div>
+		<!-- Javascript -->
+		<script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")"></script>
+		<script src="@routes.Assets.versioned("javascripts/script.js")"></script>
+		<script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+		
+    </body>
+</html>
+\end{lstlisting}
