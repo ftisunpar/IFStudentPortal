@@ -146,11 +146,15 @@ public class Scraper {
                         nama = elem.child(2).text();  
                     }  
                     MataKuliah currMk = MataKuliahFactory.getInstance().createMataKuliah(kode, Integer.parseInt(elem.child(3).text()), nama);
-                    String kelasString = elem.child(4).text();
-                    String hariString = elem.child(7).text(); 
-                    String waktuString = elem.child(8).text();
-                    if (hariString != null & hariString.length() != 0 && waktuString != null & waktuString.length() != 0) {
-                        jadwalList.add(new JadwalKuliah(currMk,kelasString.length() == 0 ? null : kelasString.charAt(0),new Dosen(null, elem.child(5).text()), hariString, waktuString,elem.child(9).text()));                    	
+                    try {
+	                    String kelasString = elem.child(4).text();
+	                    String hariString = elem.child(7).text(); 
+	                    String waktuString = elem.child(8).text();
+	                    if (hariString != null & hariString.length() != 0 && waktuString != null & waktuString.length() != 0) {
+	                        jadwalList.add(new JadwalKuliah(currMk,kelasString.length() == 0 ? null : kelasString.charAt(0),new Dosen(null, elem.child(5).text()), hariString, waktuString,elem.child(9).text()));                    	
+	                    }
+                    } catch (IndexOutOfBoundsException e) {
+                    	// void. do not add jadwal.
                     }
                }
             }
