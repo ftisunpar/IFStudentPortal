@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import id.ac.unpar.siamodels.Dosen;
 import id.ac.unpar.siamodels.JadwalKuliah;
 import id.ac.unpar.siamodels.Mahasiswa;
 import id.ac.unpar.siamodels.Mahasiswa.Nilai;
@@ -149,7 +150,7 @@ public class Scraper {
                     String hariString = elem.child(7).text(); 
                     String waktuString = elem.child(8).text();
                     if (hariString != null & hariString.length() != 0 && waktuString != null & waktuString.length() != 0) {
-                        jadwalList.add(new JadwalKuliah(currMk,kelasString.length() == 0 ? null : kelasString.charAt(0),elem.child(5).text(), hariString, waktuString,elem.child(9).text()));                    	
+                        jadwalList.add(new JadwalKuliah(currMk,kelasString.length() == 0 ? null : kelasString.charAt(0),new Dosen(null, elem.child(5).text()), hariString, waktuString,elem.child(9).text()));                    	
                     }
                }
             }

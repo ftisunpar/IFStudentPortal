@@ -49,13 +49,13 @@
 											 <tr>
 												<td height="75" rowspan="2" class="hidden-md hidden-lg">@(i).00 </td>
 												@if(jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah()!=null){	
-													<td class="jadwal-cell text-center" rowspan="1" height="25" data-toggle="modal" data-target="#modalDialog" onclick="setModal('@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah().kode()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah().nama()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getKelas()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getNamaPengajar()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getWaktuString()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getLokasi()')">@(jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah().kode())</td>
+													<td class="jadwal-cell text-center" rowspan="1" height="25" data-toggle="modal" data-target="#modalDialog" onclick="setModal('@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah().kode()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah().nama()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getKelas()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getPengajar().getNama()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getWaktuString()','@jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getLokasi()')">@(jadwalKuliah.getJadwalKuliah(day,(i-7)*2).getMataKuliah().kode())</td>
 												}else{
 													<td class="text-center" height="25"> - </td>
 												}
 											 </tr>
 											 @if(jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah()!=null){	
-												<tr><td class="jadwal-cell text-center" height="25" data-toggle="modal" data-target="#modalDialog" onclick="setModal('@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah().kode()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah().nama()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getKelas()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getNamaPengajar()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getWaktuString()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getLokasi()')">@(jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah().kode())</td></tr>
+												<tr><td class="jadwal-cell text-center" height="25" data-toggle="modal" data-target="#modalDialog" onclick="setModal('@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah().kode()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah().nama()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getKelas()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getPengajar().getNama()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getWaktuString()','@jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getLokasi()')">@(jadwalKuliah.getJadwalKuliah(day,((i-7)*2)+1).getMataKuliah().kode())</td></tr>
 											 }else{
 												<tr><td class="text-center" height="25"> - </td></tr>
 											 }
