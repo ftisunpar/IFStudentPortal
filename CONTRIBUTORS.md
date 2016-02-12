@@ -15,6 +15,7 @@ IFStudentPortal dikembangkan juga pada mata kuliah AIF306 tahun 2016. Berikut ad
 | johanesadriano           | 2011730103 | Johanes Mario Adriano             | @pascalalfadian          |
 | @AntoniusAnt             | 2013730006 | Antonius                          | @pascalalfadian          |
 | @AxelRj13                | 2013730013 | Axel Raharja                      | @pascalalfadian          |
+| @DeviHandevi             | 2013730015 | Devi Handevi                      | @AntoniusAnt             |
 | @ilhambu                 | 2010730107 | Ilham Bani Utama                  | @pascalalfadian          |
 | @kevintjoe               | 2012730081 | Kevin Tjoe                        | @pascalalfadian          |
 | @CJSparrow               | 2013730065 | Jonathan Surya                    | @pascalalfadian          |
