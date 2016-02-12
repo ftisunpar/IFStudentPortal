@@ -19,4 +19,3 @@ IFStudentPortal dikembangkan juga pada mata kuliah AIF306 tahun 2016. Berikut ad
 | @CJSparrow               | 2013730065 | Jonathan Surya                    | @pascalalfadian          |
 | @tobiasrandy             | 2012730054 | Randy Varianto                    | @CJSparrow               |
 | @dhemilyy                | 2013730043 | DEvina Emily Hariono              | @CJSparrow               |
-| @ClaraKwa		   | 2013730004 | Clara				    | @CJSparrow	       |
