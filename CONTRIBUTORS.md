@@ -21,4 +21,3 @@ IFStudentPortal dikembangkan juga pada mata kuliah AIF306 tahun 2016. Berikut ad
 | @2012730093              | 2012730093 | Yohan Sture E                     | @kevintjoe               |
 | @FerdiyanHamdani         | 2012730057 | Ferdiyan Hamdani                  | @kevintjoe               |
 | @CJSparrow               | 2013730065 | Jonathan Surya                    | @pascalalfadian          |
-
