@@ -8,5 +8,5 @@ IFStudentPortal dikembangkan juga pada mata kuliah AIF306 tahun 2016. Berikut ad
 
 | Github ID                | NPM/NIK    | Nama                              | Melapor ke (github id)   |
 | ------------------------ | ---------- | --------------------------------- | ------------------------ |
-| @pascalalfadian	| 20120010	| Pascal Alfadian Nugroho	|	@pascalalfadian
-| @CJSparrow          | 2013730065   | Jonathan Surya           | @pascalalfadian          |
+| @pascalalfadian	   | 20120010	| Pascal Alfadian Nugroho	    | @pascalalfadian	       |
+| @CJSparrow          	   | 2013730065 | Jonathan Surya           	    | @pascalalfadian          |
