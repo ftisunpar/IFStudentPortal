@@ -1,4 +1,4 @@
- Versi Awal
+# Versi Awal
 
 IFStudentPortal dibuat pertama kali oleh Herfan Heryandi dan Pascal Alfadian Nugroho.
 
@@ -9,14 +9,14 @@ IFStudentPortal dikembangkan juga pada mata kuliah AIF306 tahun 2016. Berikut ad
 | Github ID                | NPM/NIK    | Nama                              | Melapor ke (github id)   |
 | ------------------------ | ---------- | --------------------------------- | ------------------------ |
 | @pascalalfadian          | 20120010   | Pascal Alfadian Nugroho           | @pascalalfadian          |
-| @johanesadriano          | 2011730103 | Johanes Mario Adriano             | @pascalalfadian          |
-| @aryarw                  | 2012730014 | Arya Rachim Wibawa                | @johanesadriano          |	
-| @MuhammadTaufikA         | 2012730089 | Muhammad Taufik Adianto           | @johanesadriano          |
-| @abrahamwahono           | 2012730072 | Abraham Sri Paskah                | @johanesadriano          |	
-| @rachaelawuy             | 2013730037 | Rachael Awuy                      | @johanesadriano          |
 | @GGSunshiners            | 2013730060 | Harseto Pandityo                  | @pascalalfadian          |
 | @nadiaandini             | 2012730050 | Nadia Andini                      | @pascalalfadian          |
 | @rickyod                 | 2013730041 | Riky Setiawan                     | @pascalalfadian          |
+| @johanesadriano          | 2011730103 | Johanes Mario Adriano             | @pascalalfadian          |
+| @aryarw                  | 2012730014 | Arya Rachim Wibawa                | @johanesadriano          |
+| @MuhammadTaufikA         | 2012730089 | Muhammad Taufik Adianto           | @johanesadriano          |
+| @abrahamwahono           | 2012730072 | Abraham Sri Paskah                | @johanesadriano          |
+| @rachaelawuy             | 2013730037 | Rachael Awuy                      | @johanesadriano          |
 | @AntoniusAnt             | 2013730006 | Antonius                          | @pascalalfadian          |
 | @ilhambu                 | 2010730107 | Ilham Bani Utama                  | @pascalalfadian          |
 | @kevintjoe               | 2012730081 | Kevin Tjoe                        | @pascalalfadian          |
