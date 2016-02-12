@@ -12,7 +12,7 @@ IFStudentPortal dikembangkan juga pada mata kuliah AIF306 tahun 2016. Berikut ad
 | @GGSunshiners            | 2013730060 | Harseto Pandityo                  | @pascalalfadian          |
 | @nadiaandini             | 2012730050 | Nadia Andini                      | @pascalalfadian          |
 | @rickyod                 | 2013730041 | Riky Setiawan                     | @pascalalfadian          |
-| @arieljayapermana        | 2013730050 | Ariel Jayapermana                 | @pascalalfadian          |
+| @arieljayapermana        | 2013730050 | Ariel Jayapermana                 | @rickyod                 |
 | @ricputra                | 2013730011 | Ricky Slamat Putra                | @pascalalfadian          |
 | johanesadriano           | 2011730103 | Johanes Mario Adriano             | @pascalalfadian          |
 | @AntoniusAnt             | 2013730006 | Antonius                          | @pascalalfadian          |
