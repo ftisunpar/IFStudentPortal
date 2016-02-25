@@ -1,10 +1,12 @@
 package controllers;
 
 import java.io.IOException;
+
 import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import play.Logger;
 import java.util.Map;
 
 import org.jsoup.Connection;
@@ -49,6 +51,8 @@ public class Application extends Controller {
     }
     
     public Result submitLogin() throws IOException{
+    	Logger.debug("adfkjaslsja");
+    	
     	String errorHtml = 
     	"<div class='alert alert-danger' role='alert'>" +
     	  "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+
@@ -57,6 +61,7 @@ public class Application extends Controller {
     	String email = dynamicForm.get("email");
     	String pass = dynamicForm.get("pass");
     	if(!email.matches("[0-9]{7}+@student.unpar.ac.id")){
+    		Logger.info("test");
     		return ok(views.html.login.render(errorHtml+ "Email tidak valid" + "</div>"));
     	}
     	if(!(email.charAt(0)=='7'&&email.charAt(1)=='3')){
