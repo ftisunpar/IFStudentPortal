@@ -11,7 +11,15 @@ import static play.test.Helpers.running;
 import static play.test.Helpers.testServer;
 import static org.fluentlenium.core.filter.FilterConstructor.*;
 
+/**
+ * 
+ * Kelas untuk mengetes saat penggung menjalankan aplikasi.
+ * 
+ * @author FTIS\i13015
+ *
+ */
 public class TestInitialRun extends WithBrowser {
+  //basic info
   private WebDriver driver;
   private static int PORT = 9000;
   private String baseURL = String.format("http://localhost:%d", PORT);
