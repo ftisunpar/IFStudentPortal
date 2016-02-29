@@ -24,6 +24,8 @@ public class TestLogin extends WithBrowser {
   private static int PORT = 9000;
   private String baseURL = String.format("http://localhost:%d", PORT);
 
+  
+  
   @Before
   public void setUp() {	
 	driver = new FirefoxDriver();
@@ -125,10 +127,9 @@ public class TestLogin extends WithBrowser {
           public void invoke(TestBrowser browser) {
         	  browser.goTo("/");
 			  browser.find(".form-control", withId("email-input")).get(0).text("7313006@student.unpar.ac.id");
-			  browser.find(".form-control", withId("pw-input")).get(0).text("sdkjaeskfaeiu");
+			  browser.find(".form-control", withId("pw-input")).get(0).text("pass valid");
 			  browser.find(".form-control", withName("submit")).get(0).click();
 			  assertEquals("Selamat datang di Informatika Student Portal!", 
-					  //browser.find(".row").get(0).getText());
 					  browser.find(".row").get(0).find("h2").get(0).getText());
           }
       });

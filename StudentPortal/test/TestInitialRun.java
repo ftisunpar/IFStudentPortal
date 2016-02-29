@@ -13,7 +13,7 @@ import static org.fluentlenium.core.filter.FilterConstructor.*;
 
 /**
  * 
- * Kelas untuk mengetes saat penggung menjalankan aplikasi.
+ * Kelas untuk mengetes saat pengguna menjalankan aplikasi.
  * 
  * @author FTIS\i13015
  *
