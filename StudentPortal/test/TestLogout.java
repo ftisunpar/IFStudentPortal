@@ -37,13 +37,6 @@ public class TestLogout extends WithBrowser {
 	  browser.quit();
   }
   
-  
-  
-  
-  
-  
-  
-  
   /**
    * Pengguna logout, pengguna akan diarahkan kembali ke halaman login
    */
