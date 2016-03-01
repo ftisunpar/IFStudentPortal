@@ -50,7 +50,7 @@ public class TestPrasyaratMataKuliah extends WithBrowser {
           public void invoke(TestBrowser browser) {
         	  browser.goTo("/");
 			  browser.find(".form-control", withId("email-input")).get(0).text("7313006@student.unpar.ac.id");
-			  browser.find(".form-control", withId("pw-input")).get(0).text("holyjustice");
+			  browser.find(".form-control", withId("pw-input")).get(0).text("changeMe");
 			  browser.find(".form-control", withName("submit")).get(0).click();
 			  browser.goTo("/prasyarat");
 			  assertEquals("PEMERIKSAAN PRASYARAT MATA KULIAH", 
