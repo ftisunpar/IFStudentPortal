@@ -22,7 +22,7 @@ import static org.fluentlenium.core.filter.FilterConstructor.*;
 public class TestDataAkademik extends WithBrowser {
   //basic info
   private WebDriver driver;
-  private int n;
+  private int na;
  
   private static int PORT = 9000;
   private String baseURL = String.format("http://localhost:%d", PORT);
