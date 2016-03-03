@@ -47,8 +47,8 @@ public class TestJadwalKuliah extends WithBrowser {
       running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
           public void invoke(TestBrowser browser) {
         	  browser.goTo("/");
-			  browser.find(".form-control", withId("email-input")).get(0).text("7313006@student.unpar.ac.id");
-			  browser.find(".form-control", withId("pw-input")).get(0).text("changeMe");
+			  browser.find(".form-control", withId("email-input")).get(0).text("7313013@student.unpar.ac.id");
+			  browser.find(".form-control", withId("pw-input")).get(0).text("");
 			  browser.find(".form-control", withName("submit")).get(0).click();
 			  browser.goTo("/jadwalkuliah");
 			  assertEquals("JADWAL KULIAH", 

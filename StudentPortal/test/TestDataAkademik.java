@@ -13,21 +13,18 @@ import static org.fluentlenium.core.filter.FilterConstructor.*;
 
 /**
  * 
- * Kelas untuk mengetes permasalahan prasyarat matakuliah, jika 
- * pengguna sudah memiliki riwayat nilai akan ditampilkan tabel prasyarat mata
- * kuliah beserta status pengambilannya
+ * Kelas untuk mengetes permasalahan jadwal kuliah, jika jadwal kuliah pengguna sudah tersedia
+ * akan ditampilkan jadwal kuliah dalam bentuk kalendar yang sudah diurutkan berdasarkan hari
  * 
- * @author FTIS\i13006
+ * @author FTIS\i13013
  *
  */
-public class TestPrasyaratMataKuliah extends WithBrowser {
+public class TestDataAkademik extends WithBrowser {
   //basic info
   private WebDriver driver;
   private static int PORT = 9000;
   private String baseURL = String.format("http://localhost:%d", PORT);
 
-  
-  
   @Before
   public void setUp() {	
 	driver = new FirefoxDriver();
@@ -38,11 +35,10 @@ public class TestPrasyaratMataKuliah extends WithBrowser {
   public void tearDown() {
 	  browser.quit();
   }
-
+  
   /**
-   * Jika pengguna menuju navigasi drawer dan melalukan click terhadap prasyarat matakuliah
-   * akan ditampilkan halaman prasyarat matakuliah beserta tabel prasyarat mata
-   * kuliah beserta status pengambilannya
+   * Jika pengguna sudah memiliki riwayat nilai, akan ditampilkan ringkasan data akademik mahasiswa 
+   * berupa IPS semester terakhir, IPK, SKS lulus, sisa SKS kelulusan, dan ringkasan
    */
   @Test
   public void testUserAndPassValid() {
@@ -52,13 +48,20 @@ public class TestPrasyaratMataKuliah extends WithBrowser {
 			  browser.find(".form-control", withId("email-input")).get(0).text("7313013@student.unpar.ac.id");
 			  browser.find(".form-control", withId("pw-input")).get(0).text("");
 			  browser.find(".form-control", withName("submit")).get(0).click();
-			  browser.goTo("/prasyarat");
-			  assertEquals("PEMERIKSAAN PRASYARAT MATA KULIAH", 
+			  browser.goTo("/ringkasan");
+			  assertEquals("RINGKASAN DATA AKADEMIK",
 					  browser.find(".row").get(0).find("h2").get(0).getText());
-			  assertEquals("Keterangan", 
-					  browser.find(".table-bordered").get(0).find("th").get(2).getText());
+			  
+			  String [] temp = new String[4];
+			  temp = browser.find(".row").get(1).find(".col-lg-8 ringkasan-panel").get(0).find(".ringkasan-body").get(0).getText().split("</br>");
+			  assertEquals("IPS",temp[0]);
+			  assertEquals("IPK(lulus)",temp[1]);
+			  assertEquals("SKS lulus",temp[2]);
+			  assertEquals("Sisa SKS untuk kelulusan",temp[3]);
+			  
+			  assertEquals("PILIHAN WAJIB",
+					  browser.find(".row").get(2).find("col-lg-8 ringkasan-panel").get(1).find("page-header").get(0).find("text-center").get(0).getText());
           }
       });
   }
-  
 }
