@@ -11,6 +11,11 @@ import static play.test.Helpers.running;
 import static play.test.Helpers.testServer;
 import static org.fluentlenium.core.filter.FilterConstructor.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 /**
  * 
  * Kelas untuk mengetes permasalahan prasyarat matakuliah, jika 
@@ -25,8 +30,7 @@ public class TestPrasyaratMataKuliah extends WithBrowser {
   private WebDriver driver;
   private static int PORT = 9000;
   private String baseURL = String.format("http://localhost:%d", PORT);
-
-  
+  private FileConfReader objFileConfReader = FileConfReader.getObjFileConfReader();
   
   @Before
   public void setUp() {	
@@ -49,8 +53,8 @@ public class TestPrasyaratMataKuliah extends WithBrowser {
       running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
           public void invoke(TestBrowser browser) {
         	  browser.goTo("/");
-			  browser.find(".form-control", withId("email-input")).get(0).text("7313006@student.unpar.ac.id");
-			  browser.find(".form-control", withId("pw-input")).get(0).text("changeMe");
+			  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
+			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
 			  browser.find(".form-control", withName("submit")).get(0).click();
 			  browser.goTo("/prasyarat");
 			  assertEquals("PEMERIKSAAN PRASYARAT MATA KULIAH", 
