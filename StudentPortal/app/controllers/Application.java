@@ -71,7 +71,7 @@ public class Application extends Controller {
     	}
     	if(!(email.charAt(0)=='7'&&email.charAt(1)=='3')){
     		Logger.info("User: " + email+" gagal login dari IP " + remote +  " karena bukan mahasiswa teknik informatika");
-    		return ok(views.html.login.render(errorHtml+"Maaf, Anda bukan mahasiswa teknik informatika"+ "</div>"));
+    		return ok(views.html.login.render(errorHtml+" bukan mahasiswa teknik informatika"+ "</div>"));
     	}
     	String npm = "20" + email.substring(2,4) + email.substring(0,2)+ "0" + email.substring(4,7);
     	Mahasiswa login_mhs = this.scrap.login(npm, pass);
