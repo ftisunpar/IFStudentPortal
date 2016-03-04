@@ -77,8 +77,8 @@ public class Application extends Controller {
     		return home();
     	}
 	    else{
-	    	Logger.info("User: " + email+" gagal login dari IP " + remote + " karena input password salah atau anda bukan mahasiswa aktif");
-	    	return ok(views.html.login.render(errorHtml+"Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif"+ "</div>"));
+	    	Logger.info("User: " + email+" gagal login dari IP " + remote + " karena input password salah atau bukan mahasiswa aktif");
+	    	return ok(views.html.login.render(errorHtml+"Password yang "+email+" masukkan salah atau bukan mahasiswa aktif"+ "</div>"));
 	    }
     }
     
