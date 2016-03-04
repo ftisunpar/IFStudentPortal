@@ -127,13 +127,8 @@ public class TestLogin extends WithBrowser {
       running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
           public void invoke(TestBrowser browser) {
         	  browser.goTo("/");
-<<<<<<< HEAD
-			  browser.find(".form-control", withId("email-input")).get(0).text("7313013@student.unpar.ac.id");
-			  browser.find(".form-control", withId("pw-input")).get(0).text("");
-=======
         	  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
 			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
->>>>>>> 87b7e5bceea8410d095eeee3b017818031bfaf5e
 			  browser.find(".form-control", withName("submit")).get(0).click();
 			  assertEquals("Selamat datang di Informatika Student Portal!", 
 					  browser.find(".row").get(0).find("h2").get(0).getText());

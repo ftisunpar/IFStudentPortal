@@ -26,7 +26,7 @@ public class TestDataAkademik extends WithBrowser {
   private String baseURL = String.format("http://localhost:%d", PORT);
 
   @Before
-  public void setUp() {	
+  public void setUp() {
 	driver = new FirefoxDriver();
 	browser = new TestBrowser(driver, baseURL);
   }
