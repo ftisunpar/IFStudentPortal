@@ -122,18 +122,18 @@ public class TestLogin extends WithBrowser {
   /**
    * Jika email dan password sesuai, pengguna akan diarahkan ke halaman utama.
    */
-  @Test
-  public void testUserAndPassValid() {
-      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-          public void invoke(TestBrowser browser) {
-        	  browser.goTo("/");
-        	  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
-			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
-			  browser.find(".form-control", withName("submit")).get(0).click();
-			  assertEquals("Selamat datang di Informatika Student Portal!", 
-					  browser.find(".row").get(0).find("h2").get(0).getText());
-          }
-      });
-  }
+//  @Test
+//  public void testUserAndPassValid() {
+//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
+//          public void invoke(TestBrowser browser) {
+//        	  browser.goTo("/");
+//        	  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
+//			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
+//			  browser.find(".form-control", withName("submit")).get(0).click();
+//			  assertEquals("Selamat datang di Informatika Student Portal!", 
+//					  browser.find(".row").get(0).find("h2").get(0).getText());
+//          }
+//      });
+//  }
   
 }
