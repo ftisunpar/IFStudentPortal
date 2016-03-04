@@ -80,8 +80,8 @@ public class RingkasanDisplay {
 		return this.nilaiTOEFL;
 	}
 	
-	public void setNilaiTOEFL(int apa){
-		this.nilaiTOEFL = apa;
+	public void setNilaiTOEFL(int nilai){
+		this.nilaiTOEFL = nilai;
 	}
 	
 	public int getMinSisaSKS(){

@@ -173,11 +173,11 @@ public class Application extends Controller {
     			display.setPilWajibBelumLulus(new String[]{});
     		}
     		
-    		int x =0;
+    		int temp =0;
     		for(Entry<LocalDate, Integer> entry : currMahasiswa.getNilaiTOEFL().entrySet()){
-    			x = entry.getValue();
+    			temp = entry.getValue();
     		}
-    		display.setNilaiTOEFL(x);
+    		display.setNilaiTOEFL(temp);
     		
     		
     		return ok(views.html.ringkasan.render(display));
