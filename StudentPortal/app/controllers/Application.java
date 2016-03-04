@@ -19,6 +19,7 @@ import id.ac.unpar.siamodels.Mahasiswa.Nilai;
 import id.ac.unpar.siamodels.MataKuliahFactory;
 import id.ac.unpar.siamodels.Semester;
 import id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
+import id.ac.siamodels.prodi.teknikinformatika.*;
 import models.support.Scraper;
 import play.*;
 import play.data.DynamicForm;
@@ -120,7 +121,8 @@ public class Application extends Controller {
     	}
     	else if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
     		RingkasanDisplay display  = null;;
-	    	return ok(views.html.ringkasan.render(display));
+	    	Kelulusan str=new Kelulusan();
+    		return ok(views.html.ringkasan.render(display,str));
     	}
     	else{
     		Mahasiswa currMahasiswa = mahasiswaList.get(session("npm"));
@@ -129,6 +131,8 @@ public class Application extends Controller {
 				String.format("%.2f", currMahasiswa.calculateIPKLulus()), 
 				currMahasiswa.calculateSKSLulus()
 			);
+    		Kelulusan str=new Kelulusan();
+    		str. checkPrasyarat(currMahasiswa, new ArrayList<String>());
 	    	List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();	
 	    	int lastIndex = riwayatNilai.size() - 1;
 			Semester semester = riwayatNilai.get(lastIndex).getSemester();
@@ -169,7 +173,7 @@ public class Application extends Controller {
     		else{
     			display.setPilWajibBelumLulus(new String[]{});
     		}
-    		return ok(views.html.ringkasan.render(display));
+    		return ok(views.html.ringkasan.render(display,str));
     	}
     }
     
