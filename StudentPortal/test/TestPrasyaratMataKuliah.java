@@ -49,7 +49,7 @@ public class TestPrasyaratMataKuliah extends WithBrowser {
    * kuliah beserta status pengambilannya
    */
   @Test
-  public void testUserAndPassValid() {
+  public void testPrasyaratMataKuliah() {
       running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
           public void invoke(TestBrowser browser) {
         	  browser.goTo("/");
