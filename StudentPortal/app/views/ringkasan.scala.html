@@ -31,6 +31,11 @@
 							IPK (Lulus) <a target="_blank" href="https://github.com/pascalalfadian/SIAModels/blob/master/src/main/java/id/ac/unpar/siamodels/Mahasiswa.java#L88"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>: @ringkasan.getIPK()<br>
 							SKS lulus: @ringkasan.getSKSLulusTotal()<br>
 							Sisa SKS untuk kelulusan: @ringkasan.getMinSisaSKS()<br>
+							@if(ringkasan.getNilaiTOEFL() !=0){
+								Nilai TOEFL Terakhir: @ringkasan.getNilaiTOEFL()<br>
+							}else{
+								Nilai TOEFL Terakhir: Tidak ada<br>
+							}
 						</div>
 					</div>
                 </div>

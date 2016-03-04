@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.time.LocalDate;
+
 
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
@@ -169,6 +172,14 @@ public class Application extends Controller {
     		else{
     			display.setPilWajibBelumLulus(new String[]{});
     		}
+    		
+    		int tempNilaiTOEFL = 0;
+    		for(Entry<LocalDate, Integer> entry : currMahasiswa.getNilaiTOEFL().entrySet()){
+    			tempNilaiTOEFL = entry.getValue();
+    		}
+    		display.setNilaiTOEFL(tempNilaiTOEFL);
+    		
+    		
     		return ok(views.html.ringkasan.render(display));
     	}
     }
