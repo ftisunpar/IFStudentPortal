@@ -52,7 +52,6 @@ public class Application extends Controller {
     
     public Result submitLogin() throws IOException{
     	String remote = request().remoteAddress();
-    	Logger.info("IP Address : " + remote + " mencoba login boi");
     	
     	String errorHtml = 
     	"<div class='alert alert-danger' role='alert'>" +
@@ -62,23 +61,23 @@ public class Application extends Controller {
     	String email = dynamicForm.get("email");
     	String pass = dynamicForm.get("pass");
     	if(!email.matches("[0-9]{7}+@student.unpar.ac.id")){
-    		Logger.info("IP Address : " + remote + " gagal login karena salah email");
+    		Logger.info("User: " + email+" gagal login dari IP " + remote + " karena salah input E-Mail");
     		return ok(views.html.login.render(errorHtml+ "Email tidak valid" + "</div>"));
     	}
     	if(!(email.charAt(0)=='7'&&email.charAt(1)=='3')){
-    		Logger.info("IP Address : " + remote + " gagal login karena bukan mahasiswa teknik informatika");
+    		Logger.info("User: " + email+" gagal login dari IP " + remote +  " karena bukan mahasiswa teknik informatika");
     		return ok(views.html.login.render(errorHtml+"Maaf, Anda bukan mahasiswa teknik informatika"+ "</div>"));
     	}
     	String npm = "20" + email.substring(2,4) + email.substring(0,2)+ "0" + email.substring(4,7);
     	Mahasiswa login_mhs = this.scrap.login(npm, pass);
     	if(login_mhs!=null){
-    		Logger.info("User dengan IP Address " + remote + " Berhasil Login Boi!");
+    		Logger.info("User "+ email+ " berhasil login dari IP: "+ remote );
     		session("npm", npm);
     		mahasiswaList.put(session("npm"), login_mhs);
     		return home();
     	}
 	    else{
-	    	Logger.info("User dengan IP Address " + remote + " gagal login karena password salah atau bukan mahasiswa aktif");
+	    	Logger.info("User: " + email+" gagal login dari IP " + remote + " karena input password salah atau anda bukan mahasiswa aktif");
 	    	return ok(views.html.login.render(errorHtml+"Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif"+ "</div>"));
 	    }
     }
