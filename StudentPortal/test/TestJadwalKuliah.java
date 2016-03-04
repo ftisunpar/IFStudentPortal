@@ -42,21 +42,21 @@ public class TestJadwalKuliah extends WithBrowser {
    * Jika pengguna menuju navigasi drawer dan melalukan click terhadap jadwal kuliah
    * akan ditampilkan halaman jadwal kuliah dalam bentuk kalendar yang sudah diurutkan berdasarkan hari
    */
-  @Test
-  public void testUserAndPassValid() {
-      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-          public void invoke(TestBrowser browser) {  
-        	  browser.goTo("/");
-        	  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
-			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
-			  browser.find(".form-control", withName("submit")).get(0).click();
-			  browser.goTo("/jadwalkuliah");
-			  assertEquals("JADWAL KULIAH", 
-					  browser.find(".row").get(0).find("h2").get(0).getText());
-			  //assertEquals("Senin", 
-					  //browser.find("Senin").find("thead").get(0).find("tr").get(0).find("th").get(0).getText());
-          }
-      });
-  }
+//  @Test
+//  public void testUserAndPassValid() {
+//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
+//          public void invoke(TestBrowser browser) {  
+//        	  browser.goTo("/");
+//        	  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
+//			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
+//			  browser.find(".form-control", withName("submit")).get(0).click();
+//			  browser.goTo("/jadwalkuliah");
+//			  assertEquals("JADWAL KULIAH", 
+//					  browser.find(".row").get(0).find("h2").get(0).getText());
+//			  //assertEquals("Senin", 
+//					  //browser.find("Senin").find("thead").get(0).find("tr").get(0).find("th").get(0).getText());
+//          }
+//      });
+//  }
   
 }
