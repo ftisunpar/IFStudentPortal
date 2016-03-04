@@ -53,8 +53,8 @@ public class TestJadwalKuliah extends WithBrowser {
 			  browser.goTo("/jadwalkuliah");
 			  assertEquals("JADWAL KULIAH", 
 					  browser.find(".row").get(0).find("h2").get(0).getText());
-			  //assertEquals("Keterangan", 
-					  //browser.find("Senin").get(0).find("thead").get(0).find("tr").get(0).find("th").get(0).getText());
+			  //assertEquals("Senin", 
+					  //browser.find("Senin").find("thead").get(0).find("tr").get(0).find("th").get(0).getText());
           }
       });
   }

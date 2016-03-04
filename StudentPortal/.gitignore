@@ -7,6 +7,6 @@ target
 /.settings
 /RUNNING_PID
 /bin/
-/StudentPortal/conf/functionaltest.conf
+/conf/functionaltest.conf
 *~
 
