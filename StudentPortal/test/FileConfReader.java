@@ -8,11 +8,14 @@ public class FileConfReader {
 	  private InputStream input = null;
 	  private String email_invalid;
 	  private String email_notStudentUnpar;
+	  private String pass_notStudentUnpar;
 	  private String pass_invalid;
 	  private String email_valid;
 	  private String pass_wrong;
 	  private String pass_valid;
 	  
+	  private String email_smt1;
+	  private String pass_smt1;
 	  private static FileConfReader objFileConfReader;
 	  
 	  FileConfReader(){
@@ -21,10 +24,14 @@ public class FileConfReader {
   			prop.load(input);
   			email_invalid=prop.getProperty("email.invalid");
   			email_notStudentUnpar=prop.getProperty("email.notStudentUnpar");
+  			pass_notStudentUnpar=prop.getProperty("pass.notStudentUnpar");
   			pass_invalid=prop.getProperty("password.invalid");
   			email_valid=prop.getProperty("email.valid");
   			pass_wrong=prop.getProperty("password.wrong");
   			pass_valid=prop.getProperty("password.valid");
+  			
+  			email_smt1=prop.getProperty("email.smt1");
+  			pass_smt1=prop.getProperty("password.smt1");
   		} catch (IOException ex) {
   			ex.printStackTrace();
   		} finally {
@@ -45,6 +52,10 @@ public class FileConfReader {
 	  public String getEmailNotStudentUnpar(){
 		  return this.email_notStudentUnpar;
 	  }
+	  public String getPassNotStudentUnpar(){
+		  return this.pass_notStudentUnpar;
+	  }
+	  
 	  
 	  public String getPassInvalid(){
 		  return this.pass_invalid;
@@ -60,6 +71,12 @@ public class FileConfReader {
 	  
 	  public String getPassValid(){
 		  return this.pass_valid;
+	  }
+	  public String getEmailSmt1(){
+		  return this.email_smt1;
+	  }
+	  public String getPassSmt1(){
+		  return this.pass_smt1;
 	  }
 	  
 	  public static FileConfReader getObjFileConfReader(){
