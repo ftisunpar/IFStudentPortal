@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+
 import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,9 +26,13 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.*;
 import views.html.*;
+import play.Logger;
 
 public class Application extends Controller {
 	Scraper scrap = new Scraper();
+	public String email;
+	public String remote;
+	
 	Map<String,Mahasiswa> mahasiswaList = new HashMap<String,Mahasiswa>();
 	
     public Result index() {
@@ -49,37 +54,47 @@ public class Application extends Controller {
     }
     
     public Result submitLogin() throws IOException{
+    	this.remote = request().remoteAddress();
+    	
     	String errorHtml = 
     	"<div class='alert alert-danger' role='alert'>" +
     	  "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+
     	  "<span class='sr-only'>Error:</span>";
     	DynamicForm dynamicForm = Form.form().bindFromRequest();
-    	String email = dynamicForm.get("email");
+    	
+    	this.email = dynamicForm.get("email");
     	String pass = dynamicForm.get("pass");
+    	
     	if(!email.matches("[0-9]{7}+@student.unpar.ac.id")){
+    		Logger.info("User: " + email+" gagal login dari IP " + remote + " karena salah input E-Mail");
     		return ok(views.html.login.render(errorHtml+ "Email tidak valid" + "</div>"));
     	}
     	if(!(email.charAt(0)=='7'&&email.charAt(1)=='3')){
-    		return ok(views.html.login.render(errorHtml+"Maaf, Anda bukan mahasiswa teknik informatika"+ "</div>"));
+    		Logger.info("User: " + email+" gagal login dari IP " + remote +  " karena bukan mahasiswa teknik informatika");
+    		return ok(views.html.login.render(errorHtml+" bukan mahasiswa teknik informatika"+ "</div>"));
     	}
     	String npm = "20" + email.substring(2,4) + email.substring(0,2)+ "0" + email.substring(4,7);
     	Mahasiswa login_mhs = this.scrap.login(npm, pass);
     	if(login_mhs!=null){
+    		Logger.info("User "+ email+ " berhasil login dari IP: "+ remote );
     		session("npm", npm);
     		mahasiswaList.put(session("npm"), login_mhs);
     		return home();
     	}
 	    else{
-	    	return ok(views.html.login.render(errorHtml+"Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif"+ "</div>"));
+	    	Logger.info("User: " + email+" gagal login dari IP " + remote + " karena input password salah atau bukan mahasiswa aktif");
+	    	return ok(views.html.login.render(errorHtml+"Password yang "+email+" masukkan salah atau bukan mahasiswa aktif"+ "</div>"));
 	    }
     }
     
     public Result home() {
+    	
     	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
     		session().clear();
     		return index();
     	}
     	else{
+    		Logger.info("User " + email +" mengakses halaman home dari IP "+ remote);
     		return ok(views.html.home.render(mahasiswaList.get(session("npm"))));	
     	}
     }
@@ -92,12 +107,14 @@ public class Application extends Controller {
     	else if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
     		List<PrasyaratDisplay> table = null;
 	    	String semester = scrap.getSemester();
-	    	return ok(views.html.prasyarat.render(table,semester));
+	    	Logger.info("User " + email +" mengakses halaman prasyarat dari IP "+ remote);
+         	return ok(views.html.prasyarat.render(table,semester));
     	}
     	else{
 	    	List<PrasyaratDisplay> table = checkPrasyarat();
 	    	String semester = scrap.getSemester();
-	    	return ok(views.html.prasyarat.render(table,semester));
+	    	Logger.info("User " + email +" mengakses halaman prasyarat dari IP "+ remote);
+   	    	return ok(views.html.prasyarat.render(table,semester));
     	}
     }
     
@@ -109,7 +126,8 @@ public class Application extends Controller {
     	else{
 			JadwalDisplay table = new JadwalDisplay(mahasiswaList.get(session("npm")).getJadwalKuliahList());
 			String semester = scrap.getSemester();
-	    	return ok(views.html.jadwalKuliah.render(table,semester));
+			Logger.info("User " + email +" mengakses halaman jadwal kuliah dari IP "+ remote);
+   	    	return ok(views.html.jadwalKuliah.render(table,semester));
     	}
     }
 
@@ -120,7 +138,8 @@ public class Application extends Controller {
     	}
     	else if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
     		RingkasanDisplay display  = null;;
-	    	return ok(views.html.ringkasan.render(display));
+    		Logger.info("User " + email +" mengakses halaman Data akademik dari IP "+ remote);
+  	    	return ok(views.html.ringkasan.render(display));
     	}
     	else{
     		Mahasiswa currMahasiswa = mahasiswaList.get(session("npm"));
@@ -169,6 +188,7 @@ public class Application extends Controller {
     		else{
     			display.setPilWajibBelumLulus(new String[]{});
     		}
+    		Logger.info("User " + email +" mengakses halaman Data akademik dari IP "+ remote);
     		return ok(views.html.ringkasan.render(display));
     	}
     }
@@ -179,6 +199,7 @@ public class Application extends Controller {
     		return index();
     	}
     	else{
+    		Logger.info("User " + email +" mengakses halaman info dari IP "+ remote);
     		return ok(views.html.tentang.render());	
     	}
     }
@@ -186,6 +207,7 @@ public class Application extends Controller {
     public Result logout() throws IOException {
     	session().clear();
     	mahasiswaList.remove(session("npm"));
+    	Logger.info("User " + email +" telah logout dari IP "+ remote);
     	return index();
     }
     
