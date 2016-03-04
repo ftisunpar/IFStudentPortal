@@ -244,29 +244,31 @@ public class Scraper {
     	toeflConn.method(Connection.Method.POST);
         Response resp = toeflConn.execute();
         Document doc = resp.parse();
-        Elements nilaiTOEFL = doc.select("table");
+        Elements nilaiTOEFL = doc.select("table").select("tbody").select("tr");
         if(!nilaiTOEFL.isEmpty()){
-        Element nilai = nilaiTOEFL.select("tbody").select("tr").first().select("td").get(1);
-        Element tgl_toefl = nilaiTOEFL.select("tbody").select("tr").first().select("td").get(2);
-        String[] tanggal = tgl_toefl.text().split(" ");
-        switch(tanggal[1].toLowerCase()){
-        	case "januari" : tanggal[1] = "1"; break;
-        	case "februari" : tanggal[1] = "2"; break;
-        	case "maret" : tanggal[1] = "3"; break;
-        	case "april" : tanggal[1] = "4"; break;
-        	case "mei" : tanggal[1] = "5"; break;
-        	case "juni" : tanggal[1] = "6"; break;
-        	case "juli" : tanggal[1] = "7"; break;
-        	case "agustus" : tanggal[1] = "8"; break;
-        	case "september" : tanggal[1] = "9"; break;
-        	case "oktober" : tanggal[1] = "10"; break;
-        	case "november" : tanggal[1] = "11"; break;
-        	case "desember" : tanggal[1] = "12"; break;
-        }
-        
-        LocalDate localDate = LocalDate.of(Integer.parseInt(tanggal[2]), Integer.parseInt(tanggal[1]), Integer.parseInt(tanggal[0]));
-        
-        nilaiTerakhirTOEFL.put(localDate, Integer.parseInt(nilai.text()));
+        	for	(int i = 0;i < nilaiTOEFL.size();i++){
+		        Element nilai = nilaiTOEFL.get(i).select("td").get(1);
+		        Element tgl_toefl = nilaiTOEFL.get(i).select("td").get(2);
+		        String[] tanggal = tgl_toefl.text().split(" ");
+		        switch(tanggal[1].toLowerCase()){
+		        	case "januari" : tanggal[1] = "1"; break;
+		        	case "februari" : tanggal[1] = "2"; break;
+		        	case "maret" : tanggal[1] = "3"; break;
+		        	case "april" : tanggal[1] = "4"; break;
+		        	case "mei" : tanggal[1] = "5"; break;
+		        	case "juni" : tanggal[1] = "6"; break;
+		        	case "juli" : tanggal[1] = "7"; break;
+		        	case "agustus" : tanggal[1] = "8"; break;
+		        	case "september" : tanggal[1] = "9"; break;
+		        	case "oktober" : tanggal[1] = "10"; break;
+		        	case "november" : tanggal[1] = "11"; break;
+		        	case "desember" : tanggal[1] = "12"; break;
+		        }
+		        
+		        LocalDate localDate = LocalDate.of(Integer.parseInt(tanggal[2]), Integer.parseInt(tanggal[1]), Integer.parseInt(tanggal[0]));
+		        
+		        nilaiTerakhirTOEFL.put(localDate, Integer.parseInt(nilai.text()));
+	        }
         }
         
         logged_mhs.setNilaiTOEFL(nilaiTerakhirTOEFL);
