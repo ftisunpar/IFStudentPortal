@@ -4,9 +4,9 @@ export PW=`cat password`
 
 # Create a self signed key pair root CA certificate.
 keytool -genkeypair -v \
-  -alias studentportal-ifca \
-  -dname "CN=studentportal-ifCA, OU=studentportal-if Org, O=studentportal-if Company, L=Bandung, ST=Indonesia, C=ID" \
-  -keystore studentportal-ifca.jks \
+  -alias localhostca \
+  -dname "CN=localhost:9000CA, OU=localhost:9000 Org, O=localhost:9000 Company, L=Bandung, ST=Indonesia, C=ID" \
+  -keystore localhostca.jks \
   -keypass:env PW \
   -storepass:env PW \
   -keyalg EC \
@@ -17,9 +17,9 @@ keytool -genkeypair -v \
 
 # Export the exampleCA public certificate so that it can be used in trust stores..
 keytool -export -v \
-  -alias studentportal-ifca \
-  -file studentportal-if.crt \
+  -alias localhostca \
+  -file localhostca.crt \
   -keypass:env PW \
   -storepass:env PW \
-  -keystore studentportal-ifca.jks \
+  -keystore localhostca.jks \
   -rfc

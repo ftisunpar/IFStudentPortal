@@ -15,7 +15,7 @@ class CustomSSLEngineProvider(appProvider: ApplicationProvider) extends SSLEngin
   }
 
   def readKeyInputStream(): java.io.InputStream = {
-    val keyPath = FileSystems.getDefault.getPath("certs", "studentportal-if.ftis.unpar.jks")
+    val keyPath = FileSystems.getDefault.getPath("certs", "localhost:9000.jks")
     Files.newInputStream(keyPath)
   }
 
