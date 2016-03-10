@@ -48,20 +48,20 @@ public class TestPrasyaratMKSmt1 extends WithBrowser {
    * Jika pengguna menuju navigasi drawer dan melalukan click terhadap prasyarat matakuliah
    * akan ditampilkan  pesan “PRASYARAT BELUM TERSEDIA”
    */
-  @Test
-  public void testUserAndPassSmt1() {
-      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-          public void invoke(TestBrowser browser) {
-        	  browser.goTo("/");
-			  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailSmt1());
-			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassSmt1());
-			  browser.find(".form-control", withName("submit")).get(0).click();
-			  browser.goTo("/prasyarat");
-			  assertEquals("PRASYARAT BELUM TERSEDIA", 
-					  browser.find(".row").get(0).find("h2").get(0).getText());
-
-          }
-      });
-  }
+//  @Test
+//  public void testUserAndPassSmt1() {
+//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
+//          public void invoke(TestBrowser browser) {
+//        	  browser.goTo("/");
+//			  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailSmt1());
+//			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassSmt1());
+//			  browser.find(".form-control", withName("submit")).get(0).click();
+//			  browser.goTo("/prasyarat");
+//			  assertEquals("PRASYARAT BELUM TERSEDIA", 
+//					  browser.find(".row").get(0).find("h2").get(0).getText());
+//
+//          }
+//      });
+//  }
   
 }

@@ -44,34 +44,25 @@ public class TestJadwalKuliah extends WithBrowser {
    * Jika pengguna menuju navigasi drawer dan melalukan click terhadap jadwal kuliah
    * akan ditampilkan halaman jadwal kuliah dalam bentuk kalendar yang sudah diurutkan berdasarkan hari
    */
-  @Test
-  public void testJadwalKuliahValid() {
-      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-          public void invoke(TestBrowser browser) {  
-        	  browser.goTo("/");
-        	  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
-			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
-			  browser.find(".form-control", withName("submit")).get(0).click();
-			  browser.goTo("/jadwalkuliah");
-			  assertEquals("JADWAL KULIAH", 
-					  browser.find(".row").get(0).find("h2").get(0).getText());
-			  
-			  FluentList<FluentWebElement> e1 = browser.find("#Senin");
-			  System.out.println(e1.get(0).getText());
-			  
-			  assertEquals("Senin", 
-					  browser.find("#Senin").get(0).find("thead").get(0).find("tr").get(0).find("th").get(0).getText());
-			  assertEquals("Selasa", 
-					  browser.find("#Selasa").get(0).find("thead").get(0).find("tr").get(0).find("th").get(0).getText());
-			  assertEquals("Rabu", 
-					  browser.find("#Rabu").get(0).find("thead").get(0).find("tr").get(0).find("th").get(0).getText());
-			  assertEquals("Kamis", 
-					  browser.find("#Kamis").get(0).find("thead").get(0).find("tr").get(0).find("th").get(0).getText());
-			  assertEquals("Jumat", 
-					  browser.find("#Jumat").get(0).find("thead").get(0).find("tr").get(0).find("th").get(0).getText());
-			  assertEquals("Sabtu", 
-					  browser.find("#Sabtu").get(0).find("thead").get(0).find("tr").get(0).find("th").get(0).getText());
-          }
-      });
-  }
+//  @Test
+//  public void testJadwalKuliahValid() {
+//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
+//          public void invoke(TestBrowser browser) {  
+//        	  browser.goTo("/");
+//        	  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
+//			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
+//			  browser.find(".form-control", withName("submit")).get(0).click();
+//			  browser.goTo("/jadwalkuliah");
+//			  assertEquals("JADWAL KULIAH", 
+//					  browser.find(".row").get(0).find("h2").get(0).getText());
+//			  
+//			  FluentList<FluentWebElement> e1 = browser.find(".jadwal-cell");
+//			  //System.out.println("SIZE: " + e1.size());	//debug
+//			  //System.out.println(e1.get(0).getText());	//debug
+//			  if(!(e1.size()>0)) {
+//				  assertEquals("Seharusnya size lebih dari 0", "tetapi ternyata 0");
+//			  }
+//          }
+//      });
+//  }
 }
