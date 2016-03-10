@@ -57,6 +57,9 @@ public class TestDataAkademik extends WithBrowser {
 			  browser.goTo("/ringkasan");
 			  
 			  
+			  
+			  FluentList<FluentWebElement> e1 = browser.find("div",withClass("row"));
+
 			  FluentList<FluentWebElement> e2 = browser.find("h2",withClass("text-center"));
 			  
 			  assertEquals("RINGKASAN DATA AKADEMIK",

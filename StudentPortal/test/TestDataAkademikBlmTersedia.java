@@ -61,9 +61,11 @@ public class TestDataAkademikBlmTersedia extends WithBrowser {
 
 			  FluentList<FluentWebElement> e2 = browser.find("h2",withClass("text-center"));
 			  
+			  System.out.println("hasil : " + e2.getText());
 			  assertEquals("RINGKASAN DATA AKADEMIK",
 					e2.getText());
 			  
+			  System.out.println("hasil : " + e1.get(1).find("h5").get(0).getText());
 			  assertEquals("DATA AKADEMIK BELUM TERSEDIA",
 					  e1.get(1).find("h5").get(0).getText());
           }
