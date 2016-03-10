@@ -79,7 +79,8 @@ nav.sidebar, .main{
 .main{
 	padding: 10px 10px 0 10px;
 }
-/*small & medium display*/
+
+/*small display*/
 @media (min-width: 768px) {
 
 	/*Allow main to be next to Nav*/
@@ -165,6 +166,25 @@ nav.sidebar, .main{
 	/*for hiden things when navbar hidden*/
 	.forAnimate{
 		opacity: 0;
+	}
+}
+
+/*medium display*/
+@media (min-width: 768px){
+	/*Allow main to be next to Nav*/
+	.main{
+		width: calc(100% - 200px); /*keeps 100% minus nav size*/
+		margin-left: 200px;
+	}
+
+	/*Show all nav*/
+	nav.sidebar{
+		margin-left: 0px;
+		float: left;
+	}
+	/*Show hidden items on nav*/
+	nav.sidebar .forAnimate{
+		opacity: 1;
 	}
 }
 
