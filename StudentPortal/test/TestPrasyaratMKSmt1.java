@@ -59,8 +59,7 @@ public class TestPrasyaratMKSmt1 extends WithBrowser {
 			  browser.goTo("/prasyarat");
 			  assertEquals("PRASYARAT BELUM TERSEDIA", 
 					  browser.find(".row").get(0).find("h2").get(0).getText());
-			  assertEquals("Keterangan", 
-					  browser.find(".table-bordered").get(0).find("th").get(2).getText());
+
           }
       });
   }
