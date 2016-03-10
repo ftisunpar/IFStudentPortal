@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.time.LocalDate;
-
 
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
@@ -22,6 +19,7 @@ import id.ac.unpar.siamodels.Mahasiswa.Nilai;
 import id.ac.unpar.siamodels.MataKuliahFactory;
 import id.ac.unpar.siamodels.Semester;
 import id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
+import id.ac.siamodels.prodi.teknikinformatika.*;
 import models.support.Scraper;
 import play.*;
 import play.data.DynamicForm;
@@ -123,7 +121,8 @@ public class Application extends Controller {
     	}
     	else if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
     		RingkasanDisplay display  = null;;
-	    	return ok(views.html.ringkasan.render(display));
+	    	Kelulusan str=new Kelulusan();
+    		return ok(views.html.ringkasan.render(display));
     	}
     	else{
     		Mahasiswa currMahasiswa = mahasiswaList.get(session("npm"));
@@ -132,6 +131,12 @@ public class Application extends Controller {
 				String.format("%.2f", currMahasiswa.calculateIPKLulus()), 
 				currMahasiswa.calculateSKSLulus()
 			);
+    		//=========================================== yang kita tambah/edit
+    		Kelulusan str=new Kelulusan();
+    		ArrayList<String> arrString=new ArrayList();
+    		str.checkKelulusan(currMahasiswa, arrString);
+    		display.setData(arrString);
+    		//===========================================
 	    	List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();	
 	    	int lastIndex = riwayatNilai.size() - 1;
 			Semester semester = riwayatNilai.get(lastIndex).getSemester();
@@ -172,14 +177,6 @@ public class Application extends Controller {
     		else{
     			display.setPilWajibBelumLulus(new String[]{});
     		}
-    		
-    		int tempNilaiTOEFL = 0;
-    		for(Entry<LocalDate, Integer> entry : currMahasiswa.getNilaiTOEFL().entrySet()){
-    			tempNilaiTOEFL = entry.getValue();
-    		}
-    		display.setNilaiTOEFL(tempNilaiTOEFL);
-    		
-    		
     		return ok(views.html.ringkasan.render(display));
     	}
     }
