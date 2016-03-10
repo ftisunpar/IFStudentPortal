@@ -1,4 +1,6 @@
 
+import org.fluentlenium.core.domain.FluentList;
+import org.fluentlenium.core.domain.FluentWebElement;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.openqa.selenium.*;
@@ -57,8 +59,15 @@ public class TestPrasyaratMKSmt1 extends WithBrowser {
 //			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassSmt1());
 //			  browser.find(".form-control", withName("submit")).get(0).click();
 //			  browser.goTo("/prasyarat");
-//			  assertEquals("PRASYARAT BELUM TERSEDIA", 
-//					  browser.find(".row").get(0).find("h2").get(0).getText());
+//			  FluentList<FluentWebElement> e1 = browser.find(".row").get(1).find("h5");
+//			  if(e1.size()>0){
+//				  assertEquals("PRASYARAT BELUM TERSEDIA", 
+//						  browser.find(".row").get(1).find("h5").get(0).getText());
+//			  }
+//			  else{
+//				  assertEquals("PRASYARAT BELUM TERSEDIA", "Test Gagal" );
+//			  }
+//			  
 //
 //          }
 //      });
