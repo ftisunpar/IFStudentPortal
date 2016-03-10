@@ -18,13 +18,13 @@ import static org.fluentlenium.core.filter.FilterConstructor.*;
 
 /**
  * 
- * Kelas untuk mengetes data akademik mahasiswa, akan menampilkan IPS semester terakhir,
- * IPK, SKS lulus, sisa SKS kelulusan, dan ringkasan data mengenai mata kuliah pilihan wajib
+ * Kelas untuk mengetes jika pengguna masih menempuh semester 1
+ * akan ditampilkan pesan "DATA AKADEMIK BELUM TERSEDIA"
  * 
  * @author FTIS\i13013
  *
  */
-public class TestDataAkademik extends WithBrowser {
+public class TestDataAkademikBlmTersedia extends WithBrowser {
   //basic info
   private WebDriver driver;
   private static int PORT = 9000;
@@ -43,11 +43,11 @@ public class TestDataAkademik extends WithBrowser {
   }
   
   /**
-   * Jika pengguna sudah memiliki riwayat nilai, akan ditampilkan ringkasan data akademik mahasiswa 
-   * berupa IPS semester terakhir, IPK, SKS lulus, sisa SKS kelulusan, dan ringkasan
+   * Jika pengguna belum memiliki riwayat nilai misalnya jika baru menempuh semester 1
+   * akan ditampilkan "DATA AKADEMIK BELUM TERSEDIA"
    */
   @Test
-  public void testDataAkademik() {
+  public void testDataAkademkNotAvailable() {
       running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
           public void invoke(TestBrowser browser) {
         	  browser.goTo("/");
@@ -57,20 +57,15 @@ public class TestDataAkademik extends WithBrowser {
 			  browser.goTo("/ringkasan");
 			  
 			  
+			  FluentList<FluentWebElement> e1 = browser.find("div",withClass("row"));
+
 			  FluentList<FluentWebElement> e2 = browser.find("h2",withClass("text-center"));
 			  
 			  assertEquals("RINGKASAN DATA AKADEMIK",
 					e2.getText());
 			  
-			  String [] temp = new String[4];
-			  temp = browser.find(".ringkasan-body").get(0).getText().split("\n");
-			  assertEquals("IPS",temp[0].substring(0, 3));
-			  assertEquals("IPK (Lulus)",temp[1].substring(0, 11));
-			  assertEquals("SKS lulus",temp[2].substring(0, 9));
-			  assertEquals("Sisa SKS untuk kelulusan",temp[3].substring(0,24));
-			  
-			  assertEquals("PILIHAN WAJIB",
-					  browser.find("h5", withClass("text-center")).get(1).getText());
+			  assertEquals("DATA AKADEMIK BELUM TERSEDIA",
+					  e1.get(1).find("h5").get(0).getText());
           }
       });
   }
