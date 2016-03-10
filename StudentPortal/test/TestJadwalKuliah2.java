@@ -55,9 +55,18 @@ public class TestJadwalKuliah2 extends WithBrowser {
 			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
 			  browser.find(".form-control", withName("submit")).get(0).click();
 			  browser.goTo("/jadwalkuliah");
+			  FluentList<FluentWebElement> e1 = browser.find(".row").get(1).find("h5");
+			  if(e1.size()>0){
 				  assertEquals("JADWAL KULIAH BELUM TERSEDIA", 
-						  browser.find(".row").get(0).find("h2").get(0).getText());
+						  browser.find(".row").get(1).find("h5").get(0).getText());
+			  }
+			  else{
+				  assertEquals("JADWAL KULIAH BELUM TERSEDIA", "testGagal");
+			  }
 			  
+				  
+			  
+				  
           }
       });
   }
