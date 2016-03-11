@@ -7,3 +7,6 @@ target
 /.settings
 /RUNNING_PID
 /bin/
+/conf/functionaltest.conf
+*~
+
