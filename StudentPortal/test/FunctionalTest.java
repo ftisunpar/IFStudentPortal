@@ -8,6 +8,11 @@ import play.test.WithBrowser;
 
 import static play.test.Helpers.testServer;
 
+/**
+ * Super class untuk kelas testing
+ * Terdapat attribute WebDriver (untuk pengujian ini digunakan FireFox), TestBrowser, Port, serta Url yang digunakan untuk pengujian
+ * @author FTIS\i13015
+ */
 public class FunctionalTest extends WithBrowser {
   //basic info
   protected TestServer server;
@@ -18,7 +23,10 @@ public class FunctionalTest extends WithBrowser {
   protected String baseURL = String.format("http://localhost:%d", PORT);
   
   protected FileConfReader objFileConfReader = FileConfReader.getObjFileConfReader();
-
+  
+  /**
+   * Setup sebelum browser dijalankan
+   */
   @Before
   public void setUp() {	
 	server = testServer(PORT);
@@ -26,6 +34,9 @@ public class FunctionalTest extends WithBrowser {
 	browser = new TestBrowser(driver,baseURL);
   }
   
+  /**
+   * Setup setelah browser dijalankan
+   */
   @After
   public void tearDown() {
 	  browser.quit();

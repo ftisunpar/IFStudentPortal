@@ -3,6 +3,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Kelas untuk membaca conf\functionaltest.conf
+ * File tersebut berisi id dan password yang digunakan untuk test-test yang akan dilakukan
+ * Kelas ini bersifat singleton
+ * @author FTIS\i13006
+ *
+ */
 public class FileConfReader {
 	  private Properties prop = new Properties();
 	  private InputStream input = null;
@@ -90,6 +97,10 @@ public class FileConfReader {
 		  return this.pass_notactive;
 	  }
 	  
+	  /**
+	   * Method untuk mendapatkan objek FileConfReader
+	   * @return obj FileConfReader
+	   */
 	  public static FileConfReader getObjFileConfReader(){
 		  if(objFileConfReader==null){
 			  objFileConfReader= new FileConfReader();

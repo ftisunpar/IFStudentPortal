@@ -19,23 +19,23 @@ public class TestPrasyaratMataKuliahLainnya extends FunctionalTest {
    * akan ditampilkan halaman prasyarat matakuliah beserta tabel prasyarat mata
    * kuliah beserta status pengambilannya
    */
-//  @Test
-//  public void testPrasyaratMataKuliah() {
-//      running(server, new Runnable() {
-//    	  @Override
-//          public void run() {  
-//        	  browser.goTo("/");
-//			  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
-//			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
-//			  browser.find(".form-control", withName("submit")).get(0).click();
-//			  browser.goTo("/prasyarat");
-//			  
-//			  assertEquals("PEMERIKSAAN PRASYARAT MATA KULIAH", 
-//					  browser.find(".row").get(0).find("h2").get(0).getText());
-//			  assertEquals("Keterangan", 
-//					  browser.find(".table-bordered").get(0).find("th").get(2).getText());
-//          }
-//      });
-//  }
+  @Test
+  public void testPrasyaratMataKuliah() {
+      running(server, new Runnable() {
+    	  @Override
+          public void run() {  
+        	  browser.goTo("/");
+			  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
+			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
+			  browser.find(".form-control", withName("submit")).get(0).click();
+			  browser.goTo("/prasyarat");
+			  
+			  assertEquals("PEMERIKSAAN PRASYARAT MATA KULIAH", 
+					  browser.find(".row").get(0).find("h2").get(0).getText());
+			  assertEquals("Keterangan", 
+					  browser.find(".table-bordered").get(0).find("th").get(2).getText());
+          }
+      });
+  }
   
 }

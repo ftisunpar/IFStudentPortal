@@ -16,14 +16,14 @@ public class TestInitialRun extends FunctionalTest {
   /**
    * Pengguna menjalankan aplikasi kemudian halaman login akan ditampilkan.
    */
-//  @Test
-//  public void testBlankUserPass() {	  
-//      running(server, new Runnable() {
-//    	  @Override
-//    	  public void run() {
-//    		  browser.goTo("/");
-//			  assertEquals("Login", browser.find(".form-control", withName("submit")).get(0).getText());
-//    	  }
-//      });
-//  }
+  @Test
+  public void testBlankUserPass() {	  
+      running(server, new Runnable() {
+    	  @Override
+    	  public void run() {
+    		  browser.goTo("/");
+			  assertEquals("Login", browser.find(".form-control", withName("submit")).get(0).getText());
+    	  }
+      });
+  }
 }
