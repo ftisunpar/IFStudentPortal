@@ -6,7 +6,7 @@ ACTIVATOR=./activator
 export KEY_PASSWORD=`cat certs/password`
 
 # Turn on HTTPS, turn off HTTP.
-# This should be https://example.com:9443
+# This should be https://localhost:9000
 JVM_OPTIONS="$JVM_OPTIONS -Dhttp.port=disabled"
 JVM_OPTIONS="$JVM_OPTIONS -Dhttps.port=9000"
 
