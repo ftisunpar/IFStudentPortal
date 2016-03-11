@@ -10,16 +10,8 @@ export KEY_PASSWORD=`cat certs/password`
 JVM_OPTIONS="$JVM_OPTIONS -Dhttp.port=disabled"
 JVM_OPTIONS="$JVM_OPTIONS -Dhttps.port=9000"
 
-# Note that using the HTTPS port by itself doesn't set rh.secure=true.
-# rh.secure will only return true if the "X-Forwarded-Proto" header is set, and
-# if the value in that header is "https", if either the local address is 127.0.0.1, or if
-# trustxforwarded is configured to be true in the application configuration file.
-
 # Define the SSLEngineProvider in our own class.
 JVM_OPTIONS="$JVM_OPTIONS -Dplay.http.sslengineprovider=https.CustomSSLEngineProvider"
-
-# Enable this if you want to turn on client authentication
-# JVM_OPTIONS="$JVM_OPTIONS -Dplay.ssl.needClientAuth=true"
 
 # Enable the handshake parameter to be extended for better protection.
 # http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html#customizing_dh_keys
@@ -45,18 +37,4 @@ JVM_OPTIONS="$JVM_OPTIONS -Dcom.sun.net.ssl.rsaPreMasterSecretFix=true"
 JVM_OPTIONS="$JVM_OPTIONS -Dsun.security.ssl.allowUnsafeRenegotiation=false"
 JVM_OPTIONS="$JVM_OPTIONS -Dsun.security.ssl.allowLegacyHelloMessages=false"
 
-# Enable this if you need to use OCSP or CRL
-# http://docs.oracle.com/javase/8/docs/technotes/guides/security/certpath/CertPathProgGuide.html#AppC
-#JVM_OPTIONS="$JVM_OPTIONS -Dcom.sun.security.enableCRLDP=true"
-#JVM_OPTIONS="$JVM_OPTIONS -Dcom.sun.net.ssl.checkRevocation=true"
-
-# Enable this if you need TLS debugging
-# http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html#Debug
-JVM_OPTIONS="$JVM_OPTIONS -Djavax.net.debug=ssl:handshake"
-
-# Change this if you need X.509 certificate debugging
-# http://docs.oracle.com/javase/8/docs/technotes/guides/security/troubleshooting-security.html
-JVM_OPTIONS="$JVM_OPTIONS -Djava.security.debug=certpath:x509:ocsp"
-
-# Run Play
 $ACTIVATOR $JVM_OPTIONS $*;
