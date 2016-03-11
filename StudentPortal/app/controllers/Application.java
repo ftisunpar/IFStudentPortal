@@ -134,7 +134,7 @@ public class Application extends Controller {
     		//=========================================== yang kita tambah/edit
     		Kelulusan str=new Kelulusan();
     		ArrayList<String> arrString=new ArrayList();
-    		str.checkKelulusan(currMahasiswa, arrString);
+    		str.checkPrasyarat(currMahasiswa, arrString);
     		display.setData(arrString);
     		//===========================================
 	    	List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();	
