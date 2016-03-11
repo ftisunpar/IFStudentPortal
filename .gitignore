@@ -1,1 +1,7 @@
 /StudentPortal/.sbtserver
+/StudentPortal/hs_err_pid11390.log
+/StudentPortal/hs_err_pid7534.log
+/StudentPortal/hs_err_pid7581.log
+/StudentPortal/:packageBin
+/StudentPortal/Vagrantfile
+/StudentPortal/.vagrant
