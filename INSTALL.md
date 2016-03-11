@@ -6,27 +6,27 @@
 
 Langkah-langkah:
 
-1. Siapkan project **IFStudentPortal** dengan cara fork dari https://github.com/ftisunpar/IFStudentPortal di directory home user yang anda gunakan. contoh : /home/projectUser/IFStudentPortal/StudentPortal
+1. Siapkan project **IFStudentPortal** dengan cara fork dari https://github.com/ftisunpar/IFStudentPortal di directory home user yang anda gunakan. contoh : **/home/projectUser/IFStudentPortal/StudentPortal**.
 
 2. Ubah beberapa file konfigurasi aplikasi anda yakni
   * **/home/projectUser/IFStudentPortal/StudentPortal/build.sbt** tambahkan:
      <pre><code>enablePlugins(JavaServerAppPackaging)
-		enablePlugins(UniversalPlugin)
-		import com.typesafe.sbt.packager.archetypes.ServerLoader.{SystemV, Upstart}
-		serverLoading in Debian := SystemV</code></pre>
+                enablePlugins(UniversalPlugin)
+                import com.typesafe.sbt.packager.archetypes.ServerLoader.{SystemV, Upstart}
+                serverLoading in Debian := SystemV</code></pre>
   * **/home/projectUser/IFStudentPortal/StudentPortal/project/plugins.sbt** tambahkan :
 		<pre><code>addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.1.0-RC1")</code></pre>
 3. Execute activator project anda <pre><code>/home/projectUser/IFStudentPortal/StudentPortal/activator</code></pre>
 
 4. Dengan menjalankan command <pre><code>dist</code></pre>project anda akan di-package sehingga menghasilkan file zip project anda pada contoh: <pre><code>/home/projectUser/IFStudentPortal/StudentPortal/target/universal/ifstudentportal-1.0.zip</code></pre>
 
-5. Unzip file **ifstudentportal-1.0.zip** tersebut ke directory yang diinginkan contoh: <pre><code>/home/i13065/ifstudentportal-1.0.zip</code></pre>dan akan menghasilkan folder project dengan nama **ifstudentportal-1.0**
+5. Unzip file **ifstudentportal-1.0.zip** tersebut ke directory yang diinginkan contoh: <pre><code>/home/i13065/ifstudentportal-1.0.zip</code></pre>dan akan menghasilkan folder project dengan nama **ifstudentportal-1.0**.
 
-6. Di dalam folder <pre><code>/home/i13065/ifstudentportal-1.0</code></pre> ada beberapa file dan folder. Fokus pada folder bin, di dalamnya ada script untuk menjalankan project **IFStudentPortal** ini dengan nama **ifstudentportal**
+6. Di dalam folder <pre><code>/home/i13065/ifstudentportal-1.0</code></pre> ada beberapa file dan folder. Fokus pada folder bin, di dalamnya ada script untuk menjalankan project **IFStudentPortal** ini dengan nama **ifstudentportal**.
 
 7. Script tersebut dapat dijalankan hanya jika berada di dalam project tersebut, karena berbagai variable di dalam script tersebut memang sudah diatur oleh native packager (SBT) untuk mengacu pada file-file yang berada di parent directory-nya. Maka, kelompok kami menyarankan untuk menjalankan sebuah script yang memanggil script ifstudentportal tersebut.
 
-8. Buatlah sebuah file dengan nama **ifstudentportal** pada folder **/etc/init.d/**
+8. Buatlah sebuah file dengan nama **ifstudentportal** pada folder **/etc/init.d/**.
 
 9. File tersebut adalah sebuah script berisi :
 	<pre><code>#!/bin/bash
