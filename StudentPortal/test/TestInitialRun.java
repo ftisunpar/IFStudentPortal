@@ -1,8 +1,10 @@
 import org.junit.*;
 import static org.junit.Assert.*;
-import static play.test.Helpers.running; 
-import static org.fluentlenium.core.filter.FilterConstructor.*;
+import static play.test.Helpers.running;
 
+import java.io.IOException;
+
+import static org.fluentlenium.core.filter.FilterConstructor.*;
 
 /**
  * 
@@ -12,18 +14,22 @@ import static org.fluentlenium.core.filter.FilterConstructor.*;
  *
  */
 public class TestInitialRun extends FunctionalTest {
-	
-  /**
-   * Pengguna menjalankan aplikasi kemudian halaman login akan ditampilkan.
-   */
-  @Test
-  public void testBlankUserPass() {	  
-      running(server, new Runnable() {
-    	  @Override
-    	  public void run() {
-    		  browser.goTo("/");
-			  assertEquals("Login", browser.find(".form-control", withName("submit")).get(0).getText());
-    	  }
-      });
-  }
+
+	public TestInitialRun() throws IOException {
+		super();
+	}
+
+	/**
+	 * Pengguna menjalankan aplikasi kemudian halaman login akan ditampilkan.
+	 */
+	@Test
+	public void testBlankUserPass() {
+		running(server, new Runnable() {
+			@Override
+			public void run() {
+				browser.goTo("/");
+				assertEquals("Login", browser.find(".form-control", withName("submit")).get(0).getText());
+			}
+		});
+	}
 }
