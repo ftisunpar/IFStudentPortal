@@ -46,29 +46,29 @@ public class TestDataAkademikBlmTersedia extends WithBrowser {
    * Jika pengguna belum memiliki riwayat nilai misalnya jika baru menempuh semester 1
    * akan ditampilkan "DATA AKADEMIK BELUM TERSEDIA"
    */
-  @Test
-  public void testDataAkademkNotAvailable() {
-      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-          public void invoke(TestBrowser browser) {
-        	  browser.goTo("/");
-			  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
-			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
-			  browser.find(".form-control", withName("submit")).get(0).click();
-			  browser.goTo("/ringkasan");
-			  
-			  
-			  FluentList<FluentWebElement> e1 = browser.find("div",withClass("row"));
-
-			  FluentList<FluentWebElement> e2 = browser.find("h2",withClass("text-center"));
-			  
-			  System.out.println("hasil : " + e2.getText());
-			  assertEquals("RINGKASAN DATA AKADEMIK",
-					e2.getText());
-			  
-			  System.out.println("hasil : " + e1.get(1).find("h5").get(0).getText());
-			  assertEquals("DATA AKADEMIK BELUM TERSEDIA",
-					  e1.get(1).find("h5").get(0).getText());
-          }
-      });
-  }
+//  @Test
+//  public void testDataAkademkNotAvailable() {
+//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
+//          public void invoke(TestBrowser browser) {
+//        	  browser.goTo("/");
+//			  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
+//			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
+//			  browser.find(".form-control", withName("submit")).get(0).click();
+//			  browser.goTo("/ringkasan");
+//			  
+//			  
+//			  FluentList<FluentWebElement> e1 = browser.find("div",withClass("row"));
+//
+//			  FluentList<FluentWebElement> e2 = browser.find("h2",withClass("text-center"));
+//			  
+//			  System.out.println("hasil : " + e2.getText());
+//			  assertEquals("RINGKASAN DATA AKADEMIK",
+//					e2.getText());
+//			  
+//			  System.out.println("hasil : " + e1.get(1).find("h5").get(0).getText());
+//			  assertEquals("DATA AKADEMIK BELUM TERSEDIA",
+//					  e1.get(1).find("h5").get(0).getText());
+//          }
+//      });
+//  }
 }

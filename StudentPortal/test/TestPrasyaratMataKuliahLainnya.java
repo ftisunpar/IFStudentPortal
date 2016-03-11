@@ -25,7 +25,7 @@ import java.util.Properties;
  * @author FTIS\i13006
  *
  */
-public class TestPrasyaratMataKuliah extends WithBrowser {
+public class TestPrasyaratMataKuliahLainnya extends WithBrowser {
   //basic info
   private WebDriver driver;
   private static int PORT = 9000;
