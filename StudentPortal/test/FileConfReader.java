@@ -16,6 +16,8 @@ public class FileConfReader {
 	  
 	  private String email_smt1;
 	  private String pass_smt1;
+	  private String email_notactive;
+	  private String pass_notactive;
 	  private static FileConfReader objFileConfReader;
 	  
 	  FileConfReader(){
@@ -29,9 +31,10 @@ public class FileConfReader {
   			email_valid=prop.getProperty("email.valid");
   			pass_wrong=prop.getProperty("password.wrong");
   			pass_valid=prop.getProperty("password.valid");
-  			
   			email_smt1=prop.getProperty("email.smt1");
   			pass_smt1=prop.getProperty("password.smt1");
+  			email_notactive=prop.getProperty("email.notActive");
+  			pass_notactive=prop.getProperty("password.notActive");
   		} catch (IOException ex) {
   			ex.printStackTrace();
   		} finally {
@@ -77,6 +80,14 @@ public class FileConfReader {
 	  }
 	  public String getPassSmt1(){
 		  return this.pass_smt1;
+	  }
+	  
+	  public String getEmailNotActive() {
+		  return this.email_notactive;
+	  }
+	  
+	  public String getPasswordNotActive() {
+		  return this.pass_notactive;
 	  }
 	  
 	  public static FileConfReader getObjFileConfReader(){

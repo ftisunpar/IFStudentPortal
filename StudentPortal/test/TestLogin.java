@@ -1,16 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-import play.test.TestBrowser;
-import play.test.WithBrowser;
-import play.libs.F.Callback;
-import static play.test.Helpers.HTMLUNIT; 
 import static play.test.Helpers.running; 
-import static play.test.Helpers.testServer;
-
-
 import static org.fluentlenium.core.filter.FilterConstructor.*;
 
 /**
@@ -20,34 +11,18 @@ import static org.fluentlenium.core.filter.FilterConstructor.*;
  * @author FTIS\i13015
  *
  */
-public class TestLogin extends WithBrowser {
-  //basic info
-  private WebDriver driver;
-  private static int PORT = 9000;
-  private String baseURL = String.format("http://localhost:%d", PORT);
-  private FileConfReader objFileConfReader = FileConfReader.getObjFileConfReader();
-
-  @Before
-  public void setUp() {	
-	driver = new FirefoxDriver();
-	browser = new TestBrowser(driver, baseURL);
-  }
-  
-  @After
-  public void tearDown() {
-	  browser.quit();
-  }
-  
+public class TestLogin extends FunctionalTest {
   /**
    * Method untuk mengetes saat field username dan password kosong.
    */
 //  @Test
 //  public void testUserAndPassBlank() {	  
-//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-//          public void invoke(TestBrowser browser) {
+//      running(server, new Runnable() {
+//    	  @Override
+//          public void run() {  
 //        	  browser.goTo("/");
 //			  browser.find(".form-control", withName("submit")).click();
-//			  assertEquals("Error:Email tidak valid", browser.find(".alert-danger").getText());
+//			  assertEquals("Error:\nEmail tidak valid", browser.find(".alert-danger").getText());
 //          }
 //      });
 //  }
@@ -58,12 +33,13 @@ public class TestLogin extends WithBrowser {
    */
 //  @Test
 //  public void testUserInvalid() {	  
-//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-//          public void invoke(TestBrowser browser) {
+//      running(server, new Runnable() {
+//    	  @Override
+//          public void run() {  
 //        	  browser.goTo("/");
 //			  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailInvalid());
 //			  browser.find(".form-control", withName("submit")).get(0).click();
-//			  assertEquals("Error:Email tidak valid", browser.find(".alert-danger").getText());
+//			  assertEquals("Error:\nEmail tidak valid", browser.find(".alert-danger").getText());
 //          }
 //      });
 //  }
@@ -73,48 +49,51 @@ public class TestLogin extends WithBrowser {
    * akan ditampilkan pesan “Maaf, Anda bukan mahasiswa teknik informatika”
    */
 //  @Test
-//  public void testUserInvalidUnpar() {	  
-//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-//          public void invoke(TestBrowser browser) {
+//  public void testUserInvalidITUnpar() {	  
+//      running(server, new Runnable() {
+//    	  @Override
+//          public void run() {  
 //        	  browser.goTo("/");
 //			  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailNotStudentUnpar());
 //			  browser.find(".form-control", withName("submit")).get(0).click();
-//			  assertEquals("Error:Maaf, Anda bukan mahasiswa teknik informatika", browser.find(".alert-danger").getText());
+//			  assertEquals("Error:\nMaaf, Anda bukan mahasiswa teknik informatika", browser.find(".alert-danger").getText());
 //          }
 //      });
 //  }
   
   /**
-   * Jika email dan password tidak sesuai atau mahasiswa bukan mahasiswa aktif, 
+   * Jika email dan password tidak sesuai
    * akan ditampilkan pesan “Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif”
    */
 //  @Test
 //  public void testUserValidPassInvalid() {	  
-//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-//          public void invoke(TestBrowser browser) {
+//      running(server, new Runnable() {
+//    	  @Override
+//          public void run() {  
 //        	  browser.goTo("/");
 //			  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
 //			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassInvalid());
 //			  browser.find(".form-control", withName("submit")).get(0).click();
-//			  assertEquals("Error:Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif", browser.find(".alert-danger").getText());
+//			  assertEquals("Error:\nPassword yang Anda masukkan salah atau Anda bukan mahasiswa aktif", browser.find(".alert-danger").getText());
 //          }
 //      });
 //  }
   
   /**
-   * Jika email dan password tidak sesuai atau mahasiswa bukan mahasiswa aktif, 
+   * Jika email dan password sesuai tetapi bukan mahasiswa aktif, 
    * akan ditampilkan pesan “Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif”
    */
 //  @Test
 //  public void testUserValidPassValidInactive() {	  
-//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-//          public void invoke(TestBrowser browser) {
+//      running(server, new Runnable() {
+//    	  @Override
+//          public void run() {  
 //        	  browser.goTo("/");
-//			  browser.find(".form-control", withId("email-input")).get(0).text("7313015@student.unpar.ac.id");
-//			  browser.find(".form-control", withId("pw-input")).get(0).text("pass valid");
-//			  //WARN : BELUM DICEK KARENA GA ADA ID YANG TIDAK AKTIF
+//			  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailNotActive());
+//			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPasswordNotActive());
+//			  //WARN : BELUM DICEK KARENA TIDAK ADA ID YANG TIDAK AKTIF
 //			  browser.find(".form-control", withName("submit")).get(0).click();
-//			  assertEquals("Error:Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif", browser.find(".alert-danger").getText());
+//			  assertEquals("Error:\nPassword yang Anda masukkan salah atau Anda bukan mahasiswa aktif", browser.find(".alert-danger").getText());
 //          }
 //      });
 //  }
@@ -124,8 +103,9 @@ public class TestLogin extends WithBrowser {
    */
 //  @Test
 //  public void testUserAndPassValid() {
-//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-//          public void invoke(TestBrowser browser) {
+//      running(server, new Runnable() {
+//    	  @Override
+//          public void run() {  
 //        	  browser.goTo("/");
 //        	  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
 //			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());

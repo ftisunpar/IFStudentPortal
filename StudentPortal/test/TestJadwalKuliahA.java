@@ -2,16 +2,8 @@ import org.fluentlenium.core.domain.FluentList;
 import org.fluentlenium.core.domain.FluentWebElement;
 import org.junit.*;
 import static org.junit.Assert.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-import play.test.TestBrowser;
-import play.test.WithBrowser;
-import play.libs.F.Callback;
-import static play.test.Helpers.HTMLUNIT; 
 import static play.test.Helpers.running; 
-import static play.test.Helpers.testServer;
-
 import static org.fluentlenium.core.filter.FilterConstructor.*;
 
 /**
@@ -31,21 +23,20 @@ public class TestJadwalKuliahA extends FunctionalTest {
    */
 //  @Test
 //  public void testJadwalKuliahBelumFRS() {
-//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-//          public void invoke(TestBrowser browser) {  
+//      running(server, new Runnable() {
+//    	  @Override
+//          public void run() {  
 //        	  browser.goTo("/");
 //        	  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
 //			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
 //			  browser.find(".form-control", withName("submit")).get(0).click();
 //			  browser.goTo("/jadwalkuliah");
 //			  FluentList<FluentWebElement> e1 = browser.find(".row").get(1).find("h5");
-//			  
 //			  if(e1.size()>0){
-//				  assertEquals("JADWAL KULIAH BELUM TERSEDIA", 
-//						  browser.find(".row").get(1).find("h5").get(0).getText());
+//				  assertEquals("JADWAL KULIAH BELUM TERSEDIA", e1.get(0).getText());
 //			  } else {
 //				  assertEquals("JADWAL KULIAH BELUM TERSEDIA", "testGagal");
-//			  }
+//			  } 
 //          }
 //      });
 //  }
