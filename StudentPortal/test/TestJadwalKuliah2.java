@@ -46,28 +46,28 @@ public class TestJadwalKuliah2 extends WithBrowser {
    * namun belum FRS, cuti studi, atau jadwal kuliah pengguna belum tersedia,
    * Maka ditampilkan "JADWAL KULIAH BELUM TERSEDIA".
    */
-//  @Test
-//  public void testJadwalKuliahBelumFRS() {
-//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-//          public void invoke(TestBrowser browser) {  
-//        	  browser.goTo("/");
-//        	  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
-//			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
-//			  browser.find(".form-control", withName("submit")).get(0).click();
-//			  browser.goTo("/jadwalkuliah");
-//			  FluentList<FluentWebElement> e1 = browser.find(".row").get(1).find("h5");
-//			  if(e1.size()>0){
-//				  assertEquals("JADWAL KULIAH BELUM TERSEDIA", 
-//						  browser.find(".row").get(1).find("h5").get(0).getText());
-//			  }
-//			  else{
-//				  assertEquals("JADWAL KULIAH BELUM TERSEDIA", "testGagal");
-//			  }
-//			  
-//				  
-//			  
-//				  
-//          }
-//      });
-//  }
+  @Test
+  public void testJadwalKuliahBelumFRS() {
+      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
+          public void invoke(TestBrowser browser) {  
+        	  browser.goTo("/");
+        	  browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
+			  browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
+			  browser.find(".form-control", withName("submit")).get(0).click();
+			  browser.goTo("/jadwalkuliah");
+			  FluentList<FluentWebElement> e1 = browser.find(".row").get(1).find("h5");
+			  if(e1.size()>0){
+				  assertEquals("JADWAL KULIAH BELUM TERSEDIA", 
+						  browser.find(".row").get(1).find("h5").get(0).getText());
+			  }
+			  else{
+				  assertEquals("JADWAL KULIAH BELUM TERSEDIA", "testGagal");
+			  }
+			  
+				  
+			  
+				  
+          }
+      });
+  }
 }
