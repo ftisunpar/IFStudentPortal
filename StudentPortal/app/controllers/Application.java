@@ -55,7 +55,6 @@ public class Application extends Controller {
     	DynamicForm dynamicForm = Form.form().bindFromRequest();
     	String email = dynamicForm.get("email");
     	String pass = dynamicForm.get("pass");
-    	
     	if(!email.matches("[0-9]{7}+@student.unpar.ac.id")){
     		Logger.info("User: " + email+" gagal login dari IP " + request().remoteAddress() + " karena salah input E-Mail");
     		return ok(views.html.login.render(errorHtml+ "Email tidak valid" + "</div>"));
@@ -135,7 +134,6 @@ public class Application extends Controller {
     		RingkasanDisplay display  = null;;
     		return ok(views.html.ringkasan.render(display));
     		}
-    	
 	    	else{
 	    		Mahasiswa currMahasiswa = mahasiswaList.get(session("npm"));
 	    		RingkasanDisplay display = new RingkasanDisplay(
@@ -224,7 +222,6 @@ public class Application extends Controller {
 	                e.printStackTrace();
 	        }           
         }
-        
         for (Object mk: mkKnown) {
             if (mk instanceof HasPrasyarat) {
                 List<String> reasons = new ArrayList<String>();
@@ -254,13 +251,10 @@ public class Application extends Controller {
                 }
             }
         }
-        
         for (MataKuliah mk: mkUnknown) {
         	table.add(new PrasyaratDisplay(mk,new String[]{"data prasyarat tidak tersedia"}));
         }
-        
         return table;
     }
-    
 }
 
