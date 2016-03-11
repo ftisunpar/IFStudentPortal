@@ -9,13 +9,13 @@ Langkah-langkah:
 1. Siapkan project IFStudentPortal dengan cara fork dari https://github.com/ftisunpar/IFStudentPortal di directory home user yang anda gunakan. contoh : /home/projectUser/IFStudentPortal/StudentPortal
 
 2. Ubah beberapa file konfigurasi aplikasi anda yakni:
-* /home/projectUser/IFStudentPortal/StudentPortal/build.sbt
+> /home/projectUser/IFStudentPortal/StudentPortal/build.sbt
 	tambahkan :
 		enablePlugins(JavaServerAppPackaging)
 		enablePlugins(UniversalPlugin)
 		import com.typesafe.sbt.packager.archetypes.ServerLoader.{SystemV, Upstart}
 		serverLoading in Debian := SystemV
-* /home/projectUser/IFStudentPortal/StudentPortal/project/plugins.sbt
+> /home/projectUser/IFStudentPortal/StudentPortal/project/plugins.sbt
 	tambahkan :
 		addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.1.0-RC1")
 3. Execute activator project anda /home/projectUser/IFStudentPortal/StudentPortal/activator
