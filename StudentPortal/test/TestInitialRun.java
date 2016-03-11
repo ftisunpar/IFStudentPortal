@@ -40,13 +40,13 @@ public class TestInitialRun extends WithBrowser {
   /**
    * Pengguna menjalankan aplikasi kemudian halaman login akan ditampilkan.
    */
-  @Test
-  public void testBlankUserPass() {	  
-      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
-          public void invoke(TestBrowser browser) {
-        	  browser.goTo("/");
-			  assertEquals("Login", browser.find(".form-control", withName("submit")).get(0).getText());
-          }
-      });
-  }
+//  @Test
+//  public void testBlankUserPass() {	  
+//      running(testServer(9000), HTMLUNIT, new Callback<TestBrowser>() {
+//          public void invoke(TestBrowser browser) {
+//        	  browser.goTo("/");
+//			  assertEquals("Login", browser.find(".form-control", withName("submit")).get(0).getText());
+//          }
+//      });
+//  }
 }

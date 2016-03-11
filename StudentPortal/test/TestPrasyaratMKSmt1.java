@@ -79,5 +79,4 @@ public class TestPrasyaratMKSmt1 extends WithBrowser {
           }
       });
   }
-  
 }
