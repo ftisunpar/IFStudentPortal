@@ -19,6 +19,7 @@ Langkah-langkah:
 	tambahkan :
 		..* >addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.1.0-RC1")
 3. Execute activator project anda /home/projectUser/IFStudentPortal/StudentPortal/activator
+..* test
 
 4. Dengan menjalankan command "dist" , project anda akan di-package sehingga menghasilkan file zip project anda pada /home/projectUser/IFStudentPortal/StudentPortal/target/universal/ifstudentportal-1.0.zip (misalnya)
 
