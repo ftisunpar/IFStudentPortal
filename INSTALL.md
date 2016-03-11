@@ -8,7 +8,7 @@ Langkah-langkah:
 
 1. Siapkan project IFStudentPortal dengan cara fork dari https://github.com/ftisunpar/IFStudentPortal di directory home user yang anda gunakan. contoh : /home/projectUser/IFStudentPortal/StudentPortal
 
-2. Ubah beberapa file konfigurasi aplikasi anda yakni :
+2. Ubah beberapa file konfigurasi aplikasi anda yakni:
 * /home/projectUser/IFStudentPortal/StudentPortal/build.sbt
 	tambahkan :
 		enablePlugins(JavaServerAppPackaging)
