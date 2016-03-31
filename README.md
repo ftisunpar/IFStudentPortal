@@ -23,3 +23,13 @@ Langkah-langkah (pada direktori proyek _Play_ `IFStudentPortal/StudentPortal`):
 
 1. Activator Run `./activator run`
 2. Buka [http://localhost:9000](http://localhost:9000) di browser
+
+### Testing
+
+_Saat ini hanya bisa dilakukan di Linux_
+
+Langkah-langkah (pada direktori proyek _Play_ `IFStudentPortal/StudentPortal`):
+
+1. Install [Firefox](https://www.mozilla.org/en-US/firefox/new/)
+2. Copy `functionaltest-template.conf` pada direktori `conf/` ke `functionaltest.conf` dan sesuaikan isinya dengan username/password yang benar
+3. Activator Test `./activator test`
