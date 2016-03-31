@@ -1,3 +1,5 @@
+enablePlugins(JavaServerAppPackaging)
+enablePlugins(UniversalPlugin)
 name := "IFStudentPortal"
 
 version := "1.0"
@@ -6,6 +8,9 @@ lazy val IFStudentPortal = (project in file("."))
 	.enablePlugins(PlayJava)
 	.aggregate(SIAModels)
 	.dependsOn(SIAModels)
+
+import com.typesafe.sbt.packager.archetypes.ServerLoader.{SystemV, Upstart}
+serverLoading in Debian := SystemV
 
 EclipseKeys.preTasks := Seq(compile in Compile)
 EclipseKeys.skipParents in ThisBuild := false
@@ -25,3 +30,4 @@ libraryDependencies ++= Seq(
 routesGenerator := InjectedRoutesGenerator
 
 fork in run := false
+
