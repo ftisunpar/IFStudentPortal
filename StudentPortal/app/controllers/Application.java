@@ -19,7 +19,7 @@ import id.ac.unpar.siamodels.Mahasiswa.Nilai;
 import id.ac.unpar.siamodels.MataKuliahFactory;
 import id.ac.unpar.siamodels.Semester;
 import id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
-import id.ac.siamodels.prodi.teknikinformatika.*;
+import id.ac.unpar.siamodels.prodi.teknikinformatika.*;
 import models.support.Scraper;
 import play.*;
 import play.data.DynamicForm;
