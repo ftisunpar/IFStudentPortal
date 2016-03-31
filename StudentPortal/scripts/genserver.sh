@@ -2,7 +2,7 @@
 
 export PW=`cat password`
 
-# Create a server certificate, tied to example.com
+# Create a server certificate, tied to localhost:9000
 keytool -genkeypair -v \
   -alias IFStudentPortal \
   -dname "CN=localhost:9000, OU=IFStudentPortal, O=Universitas Katolik Parahyangan, L=Bandung, ST=Jawa Barat, C=ID" \
@@ -13,7 +13,7 @@ keytool -genkeypair -v \
   -keysize 256 \
   -validity 385
 
-# Create a certificate signing request for example.com
+# Create a certificate signing request for localhost:9000
 keytool -certreq -v \
   -alias IFStudentPortal \
   -keypass:env PW \
@@ -21,7 +21,7 @@ keytool -certreq -v \
   -keystore IFStudentPortal.jks \
   -file IFStudentPortal.csr
 
-# Tell exampleCA to sign the example.com certificate. 
+# Tell IFStudentPortal-CA to sign the localhost:9000 certificate. 
 # Technically, digitalSignature for DHE or ECDHE, keyEncipherment for RSA 
 keytool -gencert -v \
   -alias IFStudentPortal-CA \
@@ -35,7 +35,7 @@ keytool -gencert -v \
   -ext SAN="DNS:localhost" \
   -rfc
 
-# Tell example.com.jks it can trust exampleca as a signer.
+# Tell IFStudentPortal.jks it can trust exampleca as a signer.
 keytool -import -v \
   -alias IFStudentPortal-CA \
   -file IFStudentPortal-CA.crt \
@@ -45,7 +45,7 @@ keytool -import -v \
 yes
 EOF
 
-# Import the signed certificate back into example.com.jks 
+# Import the signed certificate back into IFStudentPortal.jks 
 keytool -import -v \
   -alias IFStudentPortal \
   -file IFStudentPortal.crt \
@@ -53,7 +53,7 @@ keytool -import -v \
   -storetype JKS \
   -storepass:env PW
 
-# List out the contents of example.com.jks just to confirm it.  
+# List out the contents of IFStudentPortal.jks just to confirm it.  
 # If you are using Play as a TLS termination point, this is the key store you should use.
 keytool -list -v \
   -keystore IFStudentPortal.jks \
