@@ -8,11 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.time.LocalDate;
-
-
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
-
 import models.display.JadwalDisplay;
 import models.display.PrasyaratDisplay;
 import models.display.RingkasanDisplay;
@@ -22,12 +19,14 @@ import id.ac.unpar.siamodels.Mahasiswa.Nilai;
 import id.ac.unpar.siamodels.MataKuliahFactory;
 import id.ac.unpar.siamodels.Semester;
 import id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
+import id.ac.siamodels.prodi.teknikinformatika.*;
 import models.support.Scraper;
 import play.*;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.*;
 import views.html.*;
+import play.Logger;
 
 public class Application extends Controller {
 	Scraper scrap = new Scraper();
@@ -60,20 +59,25 @@ public class Application extends Controller {
     	String email = dynamicForm.get("email");
     	String pass = dynamicForm.get("pass");
     	if(!email.matches("[0-9]{7}+@student.unpar.ac.id")){
+    		Logger.info("User: " + email+" gagal login dari " + request().remoteAddress() + " karena salah input E-Mail");
     		return ok(views.html.login.render(errorHtml+ "Email tidak valid" + "</div>"));
     	}
     	if(!(email.charAt(0)=='7'&&email.charAt(1)=='3')){
-    		return ok(views.html.login.render(errorHtml+"Maaf, Anda bukan mahasiswa teknik informatika"+ "</div>"));
+    		Logger.info("User: " + email+" gagal login dari " + request().remoteAddress() +  " karena bukan mahasiswa teknik informatika");
+    		return ok(views.html.login.render(errorHtml+" bukan mahasiswa teknik informatika"+ "</div>"));
     	}
     	String npm = "20" + email.substring(2,4) + email.substring(0,2)+ "0" + email.substring(4,7);
     	Mahasiswa login_mhs = this.scrap.login(npm, pass);
     	if(login_mhs!=null){
+    		Logger.info("User "+ email+ " berhasil login dari "+ request().remoteAddress() );
     		session("npm", npm);
+    		session("email",email);
     		mahasiswaList.put(session("npm"), login_mhs);
     		return home();
     	}
 	    else{
-	    	return ok(views.html.login.render(errorHtml+"Password yang Anda masukkan salah atau Anda bukan mahasiswa aktif"+ "</div>"));
+	    	Logger.info("User: " + email+" gagal login dari " + request().remoteAddress() + " karena input password salah atau bukan mahasiswa aktif");
+	    	return ok(views.html.login.render(errorHtml+"Password yang anda masukkan salah atau bukan mahasiswa aktif"+ "</div>"));
 	    }
     }
     
@@ -83,6 +87,7 @@ public class Application extends Controller {
     		return index();
     	}
     	else{
+    		Logger.info("User " + session("email") +" mengakses halaman home dari "+ request().remoteAddress());
     		return ok(views.html.home.render(mahasiswaList.get(session("npm"))));	
     	}
     }
@@ -92,15 +97,19 @@ public class Application extends Controller {
     		session().clear();
     		return index();
     	}
-    	else if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
-    		List<PrasyaratDisplay> table = null;
-	    	String semester = scrap.getSemester();
-	    	return ok(views.html.prasyarat.render(table,semester));
-    	}
-    	else{
-	    	List<PrasyaratDisplay> table = checkPrasyarat();
-	    	String semester = scrap.getSemester();
-	    	return ok(views.html.prasyarat.render(table,semester));
+    	else
+    	{
+    		Logger.info("User " + session("email") +" mengakses halaman prasyarat dari "+ request().remoteAddress());
+    		if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
+    			List<PrasyaratDisplay> table = null;
+    			String semester = scrap.getSemester();
+    			return ok(views.html.prasyarat.render(table,semester));
+    		}
+    		else{
+	    		List<PrasyaratDisplay> table = checkPrasyarat();
+	    		String semester = scrap.getSemester();
+	    		return ok(views.html.prasyarat.render(table,semester));
+    		}
     	}
     }
     
@@ -112,7 +121,8 @@ public class Application extends Controller {
     	else{
 			JadwalDisplay table = new JadwalDisplay(mahasiswaList.get(session("npm")).getJadwalKuliahList());
 			String semester = scrap.getSemester();
-	    	return ok(views.html.jadwalKuliah.render(table,semester));
+			Logger.info("User " + session("email")+" mengakses halaman jadwal kuliah dari "+ request().remoteAddress());
+   	    	return ok(views.html.jadwalKuliah.render(table,semester));
     	}
     }
 
@@ -121,66 +131,64 @@ public class Application extends Controller {
     		session().clear();
     		return index();
     	}
-    	else if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
-    		RingkasanDisplay display  = null;;
-	    	return ok(views.html.ringkasan.render(display));
-    	}
     	else{
-    		Mahasiswa currMahasiswa = mahasiswaList.get(session("npm"));
-    		RingkasanDisplay display = new RingkasanDisplay(
-				String.format("%.2f", currMahasiswa.calculateIPS()), 
-				String.format("%.2f", currMahasiswa.calculateIPKLulus()), 
-				currMahasiswa.calculateSKSLulus()
-			);
-	    	List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();	
-	    	int lastIndex = riwayatNilai.size() - 1;
-			Semester semester = riwayatNilai.get(lastIndex).getSemester();
-			int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
-			int totalSKS = 0;
-			for (int i = lastIndex; i >= 0; i--) {
-				Nilai nilai = riwayatNilai.get(i);
-				if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
-					if (nilai.getAngkaAkhir() != null) {
-						totalSKS += nilai.getMataKuliah().sks();
+    		Logger.info("User " + session("email") +" mengakses halaman Data akademik dari "+ request().remoteAddress());
+    		if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
+    		RingkasanDisplay display  = null;;
+    		return ok(views.html.ringkasan.render(display));
+    		}
+	    	else{
+	    		Mahasiswa currMahasiswa = mahasiswaList.get(session("npm"));
+	    		RingkasanDisplay display = new RingkasanDisplay(
+					String.format("%.2f", currMahasiswa.calculateIPS()), 
+					String.format("%.2f", currMahasiswa.calculateIPKLulus()), 
+					currMahasiswa.calculateSKSLulus()
+				);
+	    		Kelulusan str=new Kelulusan();
+	    		ArrayList<String> arrString=new ArrayList();
+	    		str.checkPrasyarat(currMahasiswa, arrString);
+	    		display.setData(arrString);
+		    	List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();	
+		    	int lastIndex = riwayatNilai.size() - 1;
+				Semester semester = riwayatNilai.get(lastIndex).getSemester();
+				int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
+				int totalSKS = 0;
+				for (int i = lastIndex; i >= 0; i--) {
+					Nilai nilai = riwayatNilai.get(i);
+					if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
+						if (nilai.getAngkaAkhir() != null) {
+							totalSKS += nilai.getMataKuliah().sks();
+						}
+					} else {
+						break;
 					}
-				} else {
-					break;
 				}
-			}
-
-			String semTerakhir = semester +" "+tahunAjaran+"/"+(tahunAjaran+1);
-	    	display.setDataSemTerakhir(semTerakhir, totalSKS);
-    		String pilWajibLulus = new String();
-	    	String pilWajibBelumLulus = new String();
-    		for(int i=0; i<display.getPilWajib().length; i++){
-	    		if( mahasiswaList.get(session("npm")).hasLulusKuliah(display.getPilWajib()[i])){
-	    			pilWajibLulus += display.getPilWajib()[i]+";";
+				String semTerakhir = semester +" "+tahunAjaran+"/"+(tahunAjaran+1);
+		    	display.setDataSemTerakhir(semTerakhir, totalSKS);
+	    		String pilWajibLulus = new String();
+		    	String pilWajibBelumLulus = new String();
+	    		for(int i=0; i<display.getPilWajib().length; i++){
+		    		if( mahasiswaList.get(session("npm")).hasLulusKuliah(display.getPilWajib()[i])){
+		    			pilWajibLulus += display.getPilWajib()[i]+";";
+		    		}
+		    		else{
+		    			pilWajibBelumLulus += display.getPilWajib()[i]+";";
+		    		}
+		    	}
+	    		if(!pilWajibLulus.isEmpty()){
+		    		display.setPilWajibLulus(pilWajibLulus.split(";"));
 	    		}
 	    		else{
-	    			pilWajibBelumLulus += display.getPilWajib()[i]+";";
+	    			display.setPilWajibLulus(new String[]{});
 	    		}
+	    		if(!pilWajibBelumLulus.isEmpty()){
+		    		display.setPilWajibBelumLulus(pilWajibBelumLulus.split(";"));
+	    		}
+	    		else{
+	    			display.setPilWajibBelumLulus(new String[]{});
+	    		}
+	    		return ok(views.html.ringkasan.render(display));
 	    	}
-    		if(!pilWajibLulus.isEmpty()){
-	    		display.setPilWajibLulus(pilWajibLulus.split(";"));
-    		}
-    		else{
-    			display.setPilWajibLulus(new String[]{});
-    		}
-    		if(!pilWajibBelumLulus.isEmpty()){
-	    		display.setPilWajibBelumLulus(pilWajibBelumLulus.split(";"));
-    		}
-    		else{
-    			display.setPilWajibBelumLulus(new String[]{});
-    		}
-    		
-    		int tempNilaiTOEFL = 0;
-    		for(Entry<LocalDate, Integer> entry : currMahasiswa.getNilaiTOEFL().entrySet()){
-    			tempNilaiTOEFL = entry.getValue();
-    		}
-    		display.setNilaiTOEFL(tempNilaiTOEFL);
-    		
-    		
-    		return ok(views.html.ringkasan.render(display));
     	}
     }
     
@@ -190,11 +198,13 @@ public class Application extends Controller {
     		return index();
     	}
     	else{
+    		Logger.info("User " + session("email") +" mengakses halaman info dari "+ request().remoteAddress());
     		return ok(views.html.tentang.render());	
     	}
     }
     
     public Result logout() throws IOException {
+    	Logger.info("User " + session("email") +" telah logout dari "+ request().remoteAddress());
     	session().clear();
     	mahasiswaList.remove(session("npm"));
     	return index();
@@ -219,7 +229,6 @@ public class Application extends Controller {
 	                e.printStackTrace();
 	        }           
         }
-        
         for (Object mk: mkKnown) {
             if (mk instanceof HasPrasyarat) {
                 List<String> reasons = new ArrayList<String>();
@@ -249,13 +258,10 @@ public class Application extends Controller {
                 }
             }
         }
-        
         for (MataKuliah mk: mkUnknown) {
         	table.add(new PrasyaratDisplay(mk,new String[]{"data prasyarat tidak tersedia"}));
         }
-        
         return table;
     }
-    
 }
 
