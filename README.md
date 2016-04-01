@@ -33,3 +33,15 @@ Langkah-langkah (pada direktori proyek _Play_ `IFStudentPortal/StudentPortal`):
 1. Install [Firefox](https://www.mozilla.org/en-US/firefox/new/)
 2. Copy `functionaltest-template.conf` pada direktori `conf/` ke `functionaltest.conf` dan sesuaikan isinya dengan username/password yang benar
 3. Activator Test `./activator test`
+
+### Building
+
+Langkah-langkah (pada direktori proyek _Play_ `IFStudentPortal/StudentPortal`):
+
+1. Activator Dist `./activator dist`
+2. Hasil deployment ada di `target/universal/ifstudentportal-1.0.zip`.
+3. Copy file tersebut ke server tujuan
+
+## Deployment
+
+TODO Konversi dari INSTALL.md

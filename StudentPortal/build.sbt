@@ -25,3 +25,9 @@ libraryDependencies ++= Seq(
 routesGenerator := InjectedRoutesGenerator
 
 fork in run := false
+
+// For deployment in Ubuntu/SystemV
+enablePlugins(JavaServerAppPackaging)
+enablePlugins(UniversalPlugin)
+import com.typesafe.sbt.packager.archetypes.ServerLoader.{SystemV, Upstart}
+serverLoading in Debian := SystemV
