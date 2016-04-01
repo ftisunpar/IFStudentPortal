@@ -15,6 +15,7 @@ public class RingkasanDisplay {
 	private int sksLulusSemTerakhir;
 	private String semesterTerakhir;
 	private final int MIN_LULUS_PIL_WAJIB = 4;
+        private int nilaiTOEFL;
 	private ArrayList<String> data=new ArrayList();
 	public RingkasanDisplay(String IPS, String IPK, int sksLulusTotal){
 		this.IPS = IPS;
@@ -78,6 +79,14 @@ public class RingkasanDisplay {
 		return this.sksLulusSemTerakhir;
 	}
 	
+	public int getNilaiTOEFL(){
+		return this.nilaiTOEFL;
+	}
+	
+	public void setNilaiTOEFL(int nilai){
+		this.nilaiTOEFL = nilai;
+	}
+
 	public int getMinSisaSKS(){
 		if(sksLulusTotal>=144){
 			return 0;

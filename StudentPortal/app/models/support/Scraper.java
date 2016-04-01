@@ -2,9 +2,17 @@ package models.support;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import id.ac.unpar.siamodels.Dosen;
 import id.ac.unpar.siamodels.JadwalKuliah;
@@ -29,9 +37,11 @@ public class Scraper {
     private final String ALLJADWAL_URL = BASE_URL + "includes/jadwal.all.php";
     private final String JADWAL_URL = BASE_URL + "includes/jadwal.aktif.php";
     private final String NILAI_URL = BASE_URL + "includes/nilai.sem.php";
+    private final String TOEFL_URL = BASE_URL + "includes/nilai.toefl.php";
     private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
     private TahunSemester currTahunSemester;
     private List<MataKuliah> mkList;
+    private SortedMap<LocalDate, Integer> nilaiTerakhirTOEFL = new TreeMap<LocalDate, Integer>();
     
     public List<MataKuliah> getMkList(){
     	return this.mkList;
@@ -89,6 +99,7 @@ public class Scraper {
             List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
             logged_mhs.setJadwalKuliahList(jadwalList);
             this.setNilai(login_cookies, logged_mhs);
+            this.setNilaiTOEFL(login_cookies, logged_mhs);
             logout();
             return logged_mhs;
         }       
@@ -223,6 +234,47 @@ public class Scraper {
         }
     }
     
+    public void setNilaiTOEFL(Map<String,String> login_cookies, Mahasiswa logged_mhs) throws IOException{
+    	Connection toeflConn = Jsoup.connect(TOEFL_URL);
+    	toeflConn.cookies(login_cookies);
+    	toeflConn.data("npm",logged_mhs.getNpm());
+    	toeflConn.data("thn_akd","ALL");
+    	toeflConn.timeout(0);
+    	toeflConn.validateTLSCertificates(false); 
+    	toeflConn.method(Connection.Method.POST);
+        Response resp = toeflConn.execute();
+        Document doc = resp.parse();
+        Elements nilaiTOEFL = doc.select("table").select("tbody").select("tr");
+        if(!nilaiTOEFL.isEmpty()){
+        	for	(int i = 0;i < nilaiTOEFL.size();i++){
+		        Element nilai = nilaiTOEFL.get(i).select("td").get(1);
+		        Element tgl_toefl = nilaiTOEFL.get(i).select("td").get(2);
+		        String[] tanggal = tgl_toefl.text().split(" ");
+		        switch(tanggal[1].toLowerCase()){
+		        	case "januari" : tanggal[1] = "1"; break;
+		        	case "februari" : tanggal[1] = "2"; break;
+		        	case "maret" : tanggal[1] = "3"; break;
+		        	case "april" : tanggal[1] = "4"; break;
+		        	case "mei" : tanggal[1] = "5"; break;
+		        	case "juni" : tanggal[1] = "6"; break;
+		        	case "juli" : tanggal[1] = "7"; break;
+		        	case "agustus" : tanggal[1] = "8"; break;
+		        	case "september" : tanggal[1] = "9"; break;
+		        	case "oktober" : tanggal[1] = "10"; break;
+		        	case "november" : tanggal[1] = "11"; break;
+		        	case "desember" : tanggal[1] = "12"; break;
+		        }
+		        
+		        LocalDate localDate = LocalDate.of(Integer.parseInt(tanggal[2]), Integer.parseInt(tanggal[1]), Integer.parseInt(tanggal[0]));
+		        
+		        nilaiTerakhirTOEFL.put(localDate, Integer.parseInt(nilai.text()));
+	        }
+        }
+        
+        logged_mhs.setNilaiTOEFL(nilaiTerakhirTOEFL);
+    	
+    }
+
     public void logout() throws IOException{
         Connection logoutConn = Jsoup.connect(LOGOUT_URL);
         logoutConn.timeout(0);
