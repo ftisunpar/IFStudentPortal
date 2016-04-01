@@ -44,4 +44,13 @@ Langkah-langkah (pada direktori proyek _Play_ `IFStudentPortal/StudentPortal`):
 
 ## Deployment
 
-TODO Konversi dari INSTALL.md
+### HTTPS, Dengan Command Line
+
+Aplikasi bisa dijalankan dengan command line, berbekal project lengkap dari Git.
+
+1. Masuk ke direktori `StudentPortal/scripts`
+2. Buat file `password` dan isi dengan string acak
+3. Generate certificate `./gencerts.sh`
+4. Pindahkan seluruh file (`IFStudentPortal*`, `client*`, `password`) ke direktori `StudentPortal/certs`
+5. Copy file `IFStudentPortal-CA.crt` ke direktori `StudentPortal/public/certs` supaya bisa diunduh pengguna.
+6. Jalankan aplikasi dengan `sudo ./activator-https run`. Akses HTTP tetap pada port 9000, sedangkan HTTPS pada 443 (default)

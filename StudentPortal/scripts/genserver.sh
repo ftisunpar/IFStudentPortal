@@ -2,10 +2,10 @@
 
 export PW=`cat password`
 
-# Create a server certificate, tied to localhost:9000
+# Create a server certificate, tied to studentportal-if.ftis.unpar
 keytool -genkeypair -v \
   -alias IFStudentPortal \
-  -dname "CN=localhost:9000, OU=IFStudentPortal, O=Universitas Katolik Parahyangan, L=Bandung, ST=Jawa Barat, C=ID" \
+  -dname "CN=studentportal-if.ftis.unpar, OU=IFStudentPortal, O=Universitas Katolik Parahyangan, L=Bandung, ST=Jawa Barat, C=ID" \
   -keystore IFStudentPortal.jks \
   -keypass:env PW \
   -storepass:env PW \
@@ -13,7 +13,7 @@ keytool -genkeypair -v \
   -keysize 256 \
   -validity 385
 
-# Create a certificate signing request for localhost:9000
+# Create a certificate signing request for studentportal-if.ftis.unpar
 keytool -certreq -v \
   -alias IFStudentPortal \
   -keypass:env PW \
@@ -21,7 +21,7 @@ keytool -certreq -v \
   -keystore IFStudentPortal.jks \
   -file IFStudentPortal.csr
 
-# Tell IFStudentPortal-CA to sign the localhost:9000 certificate. 
+# Tell IFStudentPortal-CA to sign the studentportal-if.ftis.unpar certificate. 
 # Technically, digitalSignature for DHE or ECDHE, keyEncipherment for RSA 
 keytool -gencert -v \
   -alias IFStudentPortal-CA \
@@ -32,7 +32,7 @@ keytool -gencert -v \
   -outfile IFStudentPortal.crt \
   -ext KeyUsage:critical="digitalSignature,keyEncipherment" \
   -ext EKU="serverAuth" \
-  -ext SAN="DNS:localhost" \
+  -ext SAN="DNS:studentportal-if.ftis.unpar" \
   -rfc
 
 # Tell IFStudentPortal.jks it can trust exampleca as a signer.
