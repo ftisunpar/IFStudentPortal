@@ -1,6 +1,7 @@
 package models.support;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,9 @@ public class Scraper {
     private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
     private TahunSemester currTahunSemester;
     private List<MataKuliah> mkList;
+    private Map<String,String> login_cookies;
+    private Document doc;
+    private Mahasiswa logged_mhs;
     
     public List<MataKuliah> getMkList(){
     	return this.mkList;
@@ -49,9 +53,9 @@ public class Scraper {
         baseConn.execute(); 
     }
     
-    public Mahasiswa login(String npm, String pass) throws IOException{
+    public Map<String,String> login(String npm, String pass) throws IOException{
         init();
-    	Mahasiswa logged_mhs = new Mahasiswa(npm);	
+    	logged_mhs = new Mahasiswa(npm);	
         String user = logged_mhs.getEmailAddress();
         Connection conn = Jsoup.connect(LOGIN_URL);
         conn.data("Submit", "Login");
@@ -59,7 +63,7 @@ public class Scraper {
         conn.validateTLSCertificates(false);
         conn.method(Connection.Method.POST);
         Response resp = conn.execute();
-        Document doc = resp.parse();
+        doc = resp.parse();
         String lt = doc.select("input[name=lt]").val();
         String execution = doc.select("input[name=execution]").val();
         /*CAS LOGIN*/
@@ -75,27 +79,44 @@ public class Scraper {
         loginConn.method(Connection.Method.GET);
         resp = loginConn.execute();
         if(resp.body().contains("Data Akademik")){
-        	Map<String,String> login_cookies = resp.cookies();
+        	login_cookies = resp.cookies();
             doc = resp.parse();
-            String nama = doc.select("p[class=student-name]").text();
-            logged_mhs.setNama(nama);
-            String curr_sem = doc.select(".main-info-semester a").text();
-            String[] sem_set = this.parseSemester(curr_sem);
-            Element photo = doc.select(".student-photo img").first();
-            String photoPath = photo.absUrl("src"); 
-            logged_mhs.setPhotoURL(new URL(photoPath));
-            currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
-            this.requestKuliah(login_cookies);
-            List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
-            logged_mhs.setJadwalKuliahList(jadwalList);
-            this.setNilai(login_cookies, logged_mhs);
-            logout();
-            return logged_mhs;
+//            String nama = doc.select("p[class=student-name]").text();
+//            logged_mhs.setNama(nama);
+//            String curr_sem = doc.select(".main-info-semester a").text();
+//            String[] sem_set = this.parseSemester(curr_sem);
+//            Element photo = doc.select(".student-photo img").first();
+//            String photoPath = photo.absUrl("src"); 
+//            logged_mhs.setPhotoURL(new URL(photoPath));
+//            currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
+//            this.requestKuliah(login_cookies);
+//            List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
+//            logged_mhs.setJadwalKuliahList(jadwalList);
+//            this.setNilai(login_cookies, logged_mhs);
+//            logout();
+//            return logged_mhs;
+            // retun jadi cookies/map dari yang sebelumnya mahasiswa
+            return login_cookies;
         }       
         else{
             return null;
         }
     }
+    //bikin method buat ngambil halaman home "Rifky"
+    public Mahasiswa getHome() {
+    	Mahasiswa home_mhs = logged_mhs;
+    	String nama = doc.select("p[class=student-name]").text();
+    	home_mhs.setNama(nama);
+    	Element photo = doc.select(".student-photo img").first();
+    	String photoPath = photo.absUrl("src"); 
+    	try {
+			home_mhs.setPhotoURL(new URL(photoPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return home_mhs;
+    }
+    
     
     public void requestKuliah(Map<String,String> login_cookies) throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);

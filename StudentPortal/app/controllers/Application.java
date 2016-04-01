@@ -31,6 +31,7 @@ import play.Logger;
 public class Application extends Controller {
 	Scraper scrap = new Scraper();
 	Map<String,Mahasiswa> mahasiswaList = new HashMap<String,Mahasiswa>();
+//	Map<String,String> cookies;
 	
     public Result index() {
     	if(session("npm")==null){
@@ -67,12 +68,14 @@ public class Application extends Controller {
     		return ok(views.html.login.render(errorHtml+" bukan mahasiswa teknik informatika"+ "</div>"));
     	}
     	String npm = "20" + email.substring(2,4) + email.substring(0,2)+ "0" + email.substring(4,7);
-    	Mahasiswa login_mhs = this.scrap.login(npm, pass);
+    	Map<String,String> login_mhs = this.scrap.login(npm, pass);
     	if(login_mhs!=null){
     		Logger.info("User "+ email+ " berhasil login dari "+ request().remoteAddress() );
     		session("npm", npm);
     		session("email",email);
-    		mahasiswaList.put(session("npm"), login_mhs);
+    		session("timestamp", (System.currentTimeMillis()/1000) + "");
+//    		mahasiswaList.put(session("npm"), login_mhs);
+//    		cookies = login_mhs;
     		return home();
     	}
 	    else{
@@ -80,15 +83,24 @@ public class Application extends Controller {
 	    	return ok(views.html.login.render(errorHtml+"Password yang anda masukkan salah atau bukan mahasiswa aktif"+ "</div>"));
 	    }
     }
+    //true jika timestamp null atau lebih dari sejam
+    public boolean timestamp(){
+    	if(session("timestamp") == null){
+    		return true;
+    	}
+    	return (((System.currentTimeMillis()/1000) - Long.parseLong(session("timestamp"))) > 3600);
+    }
+    
     
     public Result home() {
-    	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
+    	if(session("npm") == null || /*!mahasiswaList.containsKey(session("npm"))*/ timestamp()) {
     		session().clear();
     		return index();
     	}
     	else{
     		Logger.info("User " + session("email") +" mengakses halaman home dari "+ request().remoteAddress());
-    		return ok(views.html.home.render(mahasiswaList.get(session("npm"))));	
+//    		return ok(views.html.home.render(mahasiswaList.get(session("npm"))));
+    		return ok(views.html.home.render(this.scrap.getHome()));
     	}
     }
     
