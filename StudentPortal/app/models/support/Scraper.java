@@ -124,6 +124,14 @@ public class Scraper {
     	return ringkasan_mhs;
     }
     
+    //method untuk mengambil halaman jadwal kuliah "Rizqi"
+    public Mahasiswa getJadwal(){
+    	Mahasiswa jadwal_mhs = logged_mhs;
+    	List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
+        jadwal_mhs.setJadwalKuliahList(jadwalList);
+    	return jadwal_mhs;
+    }
+    
     
     public void requestKuliah(Map<String,String> login_cookies) throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);

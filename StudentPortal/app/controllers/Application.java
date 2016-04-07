@@ -126,12 +126,12 @@ public class Application extends Controller {
     }
     
     public Result jadwalKuliah() throws IOException{
-    	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
+    	if(session("npm") == null || cookies == null || timestamp() ) {
     		session().clear();
     		return index();
     	}
     	else{
-			JadwalDisplay table = new JadwalDisplay(mahasiswaList.get(session("npm")).getJadwalKuliahList());
+    		JadwalDisplay table = new JadwalDisplay(this.scrap.getJadwal().get(session("npm")).getJadwalKuliahList());
 			String semester = scrap.getSemester();
 			Logger.info("User " + session("email")+" mengakses halaman jadwal kuliah dari "+ request().remoteAddress());
    	    	return ok(views.html.jadwalKuliah.render(table,semester));
