@@ -1,3 +1,2 @@
 /StudentPortal/.sbtserver
-/StudentPortal/scripts/password
-/StudentPortal/certs/*
+/StudentPortal/certs/password

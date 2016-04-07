@@ -10,7 +10,6 @@
 	    <div class="container" id="login-container">
 			<div class="row">
 				<div class="col-md-4 col-sm-2"></div>
-				<a href="@routes.Assets.versioned("certs/IFStudentPortal-CA.crt")" style="color: white"> Klik di sini untuk menginstal sertifikat</a>
 				<div class="col-md-4 col-sm-8">
 					<div class="panel panel-default">
 						<div class="panel-body">
@@ -43,6 +42,7 @@
 								</div>
 								 @Html(message)
 								<button name="submit" type="submit" class="form-control">Login <span class="glyphicon glyphicon-log-in"></span></button>
+								<p><a href="@routes.Assets.versioned("certs/IFStudentPortal-CA.crt")" style="color: white">Download sertifikat HTTPS</a></p>								
 							</form>
 						</div>	
 					</div>										
