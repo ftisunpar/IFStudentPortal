@@ -104,15 +104,18 @@ public class Application extends Controller {
     	}
     }
     
+    
+    
+  //Aswin-----------------------------------------------------------
     public Result prasyarat() throws IOException{
-    	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
+    	if(session("npm") == null || cookies == null || timestamp()) {
     		session().clear();
     		return index();
     	}
     	else
     	{
     		Logger.info("User " + session("email") +" mengakses halaman prasyarat dari "+ request().remoteAddress());
-    		if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
+    		if(this.scrap.getPrasyarat().getRiwayatNilai().size()==0){
     			List<PrasyaratDisplay> table = null;
     			String semester = scrap.getSemester();
     			return ok(views.html.prasyarat.render(table,semester));
@@ -244,7 +247,7 @@ public class Application extends Controller {
         for (Object mk: mkKnown) {
             if (mk instanceof HasPrasyarat) {
                 List<String> reasons = new ArrayList<String>();
-                ((HasPrasyarat)mk).checkPrasyarat(mahasiswaList.get(session("npm")), reasons);
+                ((HasPrasyarat)mk).checkPrasyarat(this.scrap.getPrasyarat(), reasons);
                 if (!reasons.isEmpty()) {
                     String status = new String();
             		for (String reason: reasons) {
@@ -253,7 +256,7 @@ public class Application extends Controller {
                     table.add(new PrasyaratDisplay(MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),status.split(";")));
                 }
                 else{
-                    if(mahasiswaList.get(session("npm")).hasLulusKuliah(mk.getClass().getSimpleName())){
+                    if(this.scrap.getPrasyarat().hasLulusKuliah(mk.getClass().getSimpleName())){
                     	table.add(new PrasyaratDisplay(MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"sudah lulus"}));
                     }
                     else{ 
@@ -262,7 +265,7 @@ public class Application extends Controller {
                 }
             }
             else{ 
-            	if(mahasiswaList.get(session("npm")).hasLulusKuliah(mk.getClass().getSimpleName())){
+            	if(this.scrap.getPrasyarat().hasLulusKuliah(mk.getClass().getSimpleName())){
                 	table.add(new PrasyaratDisplay(MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"sudah lulus"}));
                 }
                 else{ 

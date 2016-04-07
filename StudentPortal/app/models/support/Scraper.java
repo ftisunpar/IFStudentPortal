@@ -132,6 +132,25 @@ public class Scraper {
     	return jadwal_mhs;
     }
     
+    //mehthod untuk mendapatkan prasyarat "aswin"
+    public Mahasiswa getPrasyarat() throws IOException{
+    	Mahasiswa prasyarat_mhs = logged_mhs;
+    	//String nama = doc.select("p[class=student-name]").text();
+    	//prasyarat_mhs.setNama(nama);
+    	String curr_sem = doc.select(".main-info-semester a").text();
+    	String[] sem_set = this.parseSemester(curr_sem);
+    	//Element photo = doc.select(".student-photo img").first();
+    	//String photoPath = photo.absUrl("src"); 
+    	//prasyarat_mhs.setPhotoURL(new URL(photoPath));
+    	currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
+    	this.requestKuliah(login_cookies);
+    	List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
+    	prasyarat_mhs.setJadwalKuliahList(jadwalList);
+    	this.setNilai(login_cookies, prasyarat_mhs);
+    	return prasyarat_mhs;
+    	
+    }
+    
     
     public void requestKuliah(Map<String,String> login_cookies) throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
