@@ -93,7 +93,7 @@ public class Application extends Controller {
     
     
     public Result home() {
-    	if(session("npm") == null || cookies == null || /*!mahasiswaList.containsKey(session("npm"))*/ timestamp()) {
+    	if(session("npm") == null || cookies == null || timestamp()) {
     		session().clear();
     		return index();
     	}
@@ -104,9 +104,6 @@ public class Application extends Controller {
     	}
     }
     
-    
-    
-  //Aswin-----------------------------------------------------------
     public Result prasyarat() throws IOException{
     	if(session("npm") == null || cookies == null || timestamp()) {
     		session().clear();
@@ -134,7 +131,7 @@ public class Application extends Controller {
     		return index();
     	}
     	else{
-    		JadwalDisplay table = new JadwalDisplay(this.scrap.getJadwal().get(session("npm")).getJadwalKuliahList());
+    		JadwalDisplay table = new JadwalDisplay(this.scrap.getJadwal().getJadwalKuliahList());
 			String semester = scrap.getSemester();
 			Logger.info("User " + session("email")+" mengakses halaman jadwal kuliah dari "+ request().remoteAddress());
    	    	return ok(views.html.jadwalKuliah.render(table,semester));
@@ -226,6 +223,8 @@ public class Application extends Controller {
     }
     
     private List<PrasyaratDisplay> checkPrasyarat() throws IOException{
+        Mahasiswa mahasiswa = new Mahasiswa(session("npm"));
+        scrap.setNilai(cookies, mahasiswa);
     	List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
     	List<MataKuliah> mkList = scrap.getMkList();
         String MATAKULIAH_REPOSITORY_PACKAGE = "id.ac.unpar.siamodels.matakuliah"; 
