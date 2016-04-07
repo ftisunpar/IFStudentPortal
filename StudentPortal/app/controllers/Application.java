@@ -31,7 +31,7 @@ import play.Logger;
 public class Application extends Controller {
 	Scraper scrap = new Scraper();
 	Map<String,Mahasiswa> mahasiswaList = new HashMap<String,Mahasiswa>();
-//	Map<String,String> cookies;
+	Map<String,String> cookies;
 	
     public Result index() {
     	if(session("npm")==null){
@@ -75,7 +75,7 @@ public class Application extends Controller {
     		session("email",email);
     		session("timestamp", (System.currentTimeMillis()/1000) + "");
 //    		mahasiswaList.put(session("npm"), login_mhs);
-//    		cookies = login_mhs;
+    		cookies = login_mhs;
     		return home();
     	}
 	    else{
@@ -93,7 +93,7 @@ public class Application extends Controller {
     
     
     public Result home() {
-    	if(session("npm") == null || /*!mahasiswaList.containsKey(session("npm"))*/ timestamp()) {
+    	if(session("npm") == null || cookies == null || /*!mahasiswaList.containsKey(session("npm"))*/ timestamp()) {
     		session().clear();
     		return index();
     	}
@@ -139,18 +139,18 @@ public class Application extends Controller {
     }
 
     public Result ringkasan() throws IOException{
-    	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
+    	if(session("npm") == null || cookies == null || timestamp()) {
     		session().clear();
     		return index();
     	}
     	else{
     		Logger.info("User " + session("email") +" mengakses halaman Data akademik dari "+ request().remoteAddress());
-    		if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
-    		RingkasanDisplay display  = null;;
+    		if(this.scrap.getRingkasan().getRiwayatNilai().size()==0){
+    		RingkasanDisplay display  = null;
     		return ok(views.html.ringkasan.render(display));
     		}
 	    	else{
-	    		Mahasiswa currMahasiswa = mahasiswaList.get(session("npm"));
+	    		Mahasiswa currMahasiswa = this.scrap.getRingkasan();
 	    		RingkasanDisplay display = new RingkasanDisplay(
 					String.format("%.2f", currMahasiswa.calculateIPS()), 
 					String.format("%.2f", currMahasiswa.calculateIPKLulus()), 
@@ -180,7 +180,7 @@ public class Application extends Controller {
 	    		String pilWajibLulus = new String();
 		    	String pilWajibBelumLulus = new String();
 	    		for(int i=0; i<display.getPilWajib().length; i++){
-		    		if( mahasiswaList.get(session("npm")).hasLulusKuliah(display.getPilWajib()[i])){
+		    		if( this.scrap.getRingkasan().hasLulusKuliah(display.getPilWajib()[i])){
 		    			pilWajibLulus += display.getPilWajib()[i]+";";
 		    		}
 		    		else{

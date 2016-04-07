@@ -117,6 +117,13 @@ public class Scraper {
     	return home_mhs;
     }
     
+    //method untuk ngambil halaman ringkasan "Abat"
+    public Mahasiswa getRingkasan() throws IOException{
+    	Mahasiswa ringkasan_mhs = logged_mhs;
+    	this.setNilai(login_cookies, ringkasan_mhs);
+    	return ringkasan_mhs;
+    }
+    
     
     public void requestKuliah(Map<String,String> login_cookies) throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
@@ -238,7 +245,7 @@ public class Scraper {
                   if(NA != null) {
                 	  TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn),Semester.fromString(sem));
                       logged_mhs.getRiwayatNilai().add(new Nilai(tahunSemesterNilai, curr_mk, kelas, ART, UTS, UAS, NA));
-                  }	    
+                  }	
                 }
             }
         }
