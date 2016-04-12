@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PW=`cat password`
+export PW=`cat ../conf/password.conf`
 
 # Create a server certificate, tied to studentportal-if.ftis.unpar
 keytool -genkeypair -v \

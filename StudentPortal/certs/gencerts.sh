@@ -7,4 +7,5 @@ ${DIR}/genclient.sh
 ${DIR}/genserver.sh
 ${DIR}/gentrustanchor.sh
 
-
+cp IFStudentPortal-CA.crt ../public/certs
+cp IFStudentPortal.jks ../conf

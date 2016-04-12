@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PW=`cat password`
+export PW=`cat ../conf/password.conf`
 
 # Create a self signed key pair root CA certificate.
 keytool -genkeypair -v \

@@ -7,6 +7,7 @@
 Kebutuhan:
 
 * JDK 1.8
+* Git
 
 Langkah-langkah:
 
@@ -34,22 +35,30 @@ Langkah-langkah (pada direktori proyek _Play_ `IFStudentPortal/StudentPortal`):
 2. Copy `functionaltest-template.conf` pada direktori `conf/` ke `functionaltest.conf` dan sesuaikan isinya dengan username/password yang benar
 3. Activator Test `./activator test`
 
+## Production
+
 ### Building
 
-Langkah-langkah (pada direktori proyek _Play_ `IFStudentPortal/StudentPortal`):
+Kebutuhan:
 
-1. Activator Dist `./activator dist`
-2. Hasil deployment ada di `target/universal/ifstudentportal-1.0.zip`.
-3. Copy file tersebut ke server tujuan
+* Linux
+* JDK 1.8
+* Git
 
-## Deployment
+Langkah-langkah:
 
-### HTTPS, Dengan Command Line
+1. Clone repository `git clone https://github.com/ftisunpar/IFStudentPortal`
+2. Masuk ke direktori proyek `cd IFStudentPortal`
+3. Submodule update `git submodule update --init -- StudentPortal/SIAModels`
+4. Masuk ke direktori konfigurasi proyek _Play_ `cd StudentPortal/conf`
+5. Buat password acak: ketik `cat > password.conf`, ketikkan huruf/angka acak, dan tekan Ctrl+D
+6. Pindah ke direktori sertifikat `cd ../certs`
+7. Jalankan script untuk membuat sertifikat `./gencerts.sh`
+8. Eksekusi build `./activator stage`
 
-Aplikasi bisa dijalankan dengan command line, berbekal project lengkap dari Git.
+Hasil build ada di `StudentPortal/target/universal/stage`
 
-1. Masuk ke direktori `StudentPortal/certs`
-2. Buat file `password` dan isi dengan string acak
-3. Generate certificate `./gencerts.sh`
-4. Copy file `IFStudentPortal-CA.crt` ke direktori `StudentPortal/public/certs` supaya bisa diunduh pengguna.
-5. Jalankan aplikasi dengan `sudo ./activator-https run`. Akses HTTP tetap pada port 9000, sedangkan HTTPS pada 443 (default)
+### Running
+
+1. Masuk ke direktori `StudentPortal/target/universal/stage/bin`
+2. Jalankan `./ifstudentportal -Dhttps.port=9443 -Dhttps.keystore.path=conf/IFStudentPortal.jsk -Dhttps.keystore.password="$(cat ../conf/password.conf)` (TODO: sertifikat masih pakai default)

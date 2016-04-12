@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PW=`cat password`
+export PW=`cat ../conf/password.conf`
 
 # Create a JKS keystore that trusts the example CA, with the default password.  
 # This is used by the client in the trustmanager section.
