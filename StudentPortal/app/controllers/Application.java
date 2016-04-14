@@ -223,8 +223,8 @@ public class Application extends Controller {
     }
     
     private List<PrasyaratDisplay> checkPrasyarat() throws IOException{
-        Mahasiswa mahasiswa = new Mahasiswa(session("npm"));
-        scrap.setNilai(cookies, mahasiswa);
+//    	Mahasiswa mahasiswa = new Mahasiswa(session("npm"));
+//    	scrap.setNilai(cookies, mahasiswa);
     	List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
     	List<MataKuliah> mkList = scrap.getMkList();
         String MATAKULIAH_REPOSITORY_PACKAGE = "id.ac.unpar.siamodels.matakuliah"; 

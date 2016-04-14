@@ -103,6 +103,49 @@ public class Scraper {
         }
     }
     
+    public Mahasiswa getHome() {
+    	Mahasiswa home_mhs = logged_mhs;
+    	String nama = doc.select("p[class=student-name]").text();
+	    home_mhs.setNama(nama);
+	    Element photo = doc.select(".student-photo img").first();
+	    String photoPath = photo.absUrl("src"); 
+	   try {
+	       home_mhs.setPhotoURL(new URL(photoPath));
+	   } catch (IOException e) {
+	       e.printStackTrace();
+	   }
+	   return home_mhs;
+    }
+    	    
+    //method untuk ngambil halaman ringkasan "Abat"
+    public Mahasiswa getRingkasan() throws IOException{
+       Mahasiswa ringkasan_mhs = logged_mhs;
+       this.setNilai(login_cookies, ringkasan_mhs);
+       return ringkasan_mhs;
+    }
+    
+    //method untuk mengambil halaman jadwal kuliah "Rizqi"
+    public Mahasiswa getJadwal() throws IOException{
+       Mahasiswa jadwal_mhs = logged_mhs;
+       List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
+       jadwal_mhs.setJadwalKuliahList(jadwalList);
+       return jadwal_mhs;
+    }
+    
+    //mehthod untuk mendapatkan prasyarat "aswin"
+    public Mahasiswa getPrasyarat() throws IOException{
+       Mahasiswa prasyarat_mhs = logged_mhs;
+       String curr_sem = doc.select(".main-info-semester a").text();
+       String[] sem_set = this.parseSemester(curr_sem);
+       currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
+       this.requestKuliah(login_cookies);
+       List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
+       prasyarat_mhs.setJadwalKuliahList(jadwalList);
+       this.setNilai(login_cookies, prasyarat_mhs);
+       return prasyarat_mhs;
+    }
+
+    
     public void requestKuliah(Map<String,String> login_cookies) throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
         kuliahConn.cookies(login_cookies);
