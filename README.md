@@ -61,4 +61,6 @@ Hasil build ada di `StudentPortal/target/universal/stage`
 ### Running
 
 1. Masuk ke direktori `StudentPortal/target/universal/stage/bin`
-2. Jalankan `./ifstudentportal -Dhttps.port=9443 -Dhttps.keystore.path=conf/IFStudentPortal.jks -Dhttps.keystore.password="$(cat ../conf/password.conf)"` (TODO: sertifikat masih pakai default, application secret not set)
+2. Jalankan salah satu dari:
+    * `./ifstudentportal -Dhttps.port=9443 -Dplay.server.https.keyStore.path=../conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat ../conf/password.conf)" -Dapplication.secret="$(cat ../conf/password.conf)"`
+    * `sudo ./ifstudentportal -Dhttps.port=443 -Dplay.server.https.keyStore.path=../conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat ../conf/password.conf)" -Dapplication.secret="$(cat ../conf/password.conf)"`
