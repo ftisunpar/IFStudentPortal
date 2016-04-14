@@ -54,11 +54,11 @@ Langkah-langkah:
 5. Buat password acak: ketik `cat > password.conf`, ketikkan huruf/angka acak, dan tekan Ctrl+D
 6. Pindah ke direktori sertifikat `cd ../certs`
 7. Jalankan script untuk membuat sertifikat `./gencerts.sh`
-8. Eksekusi build `./activator stage`
+8. Naik satu level direktori `cd ..` dan eksekusi build `./activator stage`
 
 Hasil build ada di `StudentPortal/target/universal/stage`
 
 ### Running
 
 1. Masuk ke direktori `StudentPortal/target/universal/stage/bin`
-2. Jalankan `./ifstudentportal -Dhttps.port=9443 -Dhttps.keystore.path=conf/IFStudentPortal.jsk -Dhttps.keystore.password="$(cat ../conf/password.conf)` (TODO: sertifikat masih pakai default)
+2. Jalankan `./ifstudentportal -Dhttps.port=9443 -Dhttps.keystore.path=conf/IFStudentPortal.jks -Dhttps.keystore.password="$(cat ../conf/password.conf)"` (TODO: sertifikat masih pakai default, application secret not set)
