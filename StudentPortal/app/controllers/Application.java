@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.lang.instrument.Instrumentation;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,14 +11,18 @@ import java.util.Map.Entry;
 import java.time.LocalDate;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import models.display.JadwalDisplay;
 import models.display.PrasyaratDisplay;
 import models.display.RingkasanDisplay;
+import id.ac.unpar.siamodels.JadwalKuliah;
 import id.ac.unpar.siamodels.Mahasiswa;
 import id.ac.unpar.siamodels.MataKuliah;
 import id.ac.unpar.siamodels.Mahasiswa.Nilai;
 import id.ac.unpar.siamodels.MataKuliahFactory;
 import id.ac.unpar.siamodels.Semester;
+import id.ac.unpar.siamodels.TahunSemester;
 import id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
 import id.ac.siamodels.prodi.teknikinformatika.*;
 import models.support.Scraper;
@@ -30,7 +35,6 @@ import play.Logger;
 
 public class Application extends Controller {
 	Scraper scrap = new Scraper();
-	Map<String,Mahasiswa> mahasiswaList = new HashMap<String,Mahasiswa>();
 	Map<String,String> cookies;
 	
     public Result index() {
@@ -74,7 +78,6 @@ public class Application extends Controller {
     		session("npm", npm);
     		session("email",email);
     		session("timestamp", (System.currentTimeMillis()/1000) + "");
-//    		mahasiswaList.put(session("npm"), login_mhs);
     		cookies = login_mhs;
     		return home();
     	}
@@ -83,7 +86,8 @@ public class Application extends Controller {
 	    	return ok(views.html.login.render(errorHtml+"Password yang anda masukkan salah atau bukan mahasiswa aktif"+ "</div>"));
 	    }
     }
-    //true jika timestamp null atau lebih dari sejam
+    
+    // true jika timestamp null atau lebih dari sejam
     public boolean timestamp(){
     	if(session("timestamp") == null){
     		return true;
@@ -91,66 +95,90 @@ public class Application extends Controller {
     	return (((System.currentTimeMillis()/1000) - Long.parseLong(session("timestamp"))) > 3600);
     }
     
-    
     public Result home() {
+    	Mahasiswa mhs = new Mahasiswa(session("npm"));
     	if(session("npm") == null || cookies == null || timestamp()) {
     		session().clear();
     		return index();
     	}
     	else{
+    		String nama = this.scrap.getDoc().select("p[class=student-name]").text();
+    	    mhs.setNama(nama);
+    	    Element photo = this.scrap.getDoc().select(".student-photo img").first();
+    	    String photoPath = photo.absUrl("src"); 
+		    try {
+		        mhs.setPhotoURL(new URL(photoPath));
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
     		Logger.info("User " + session("email") +" mengakses halaman home dari "+ request().remoteAddress());
-//    		return ok(views.html.home.render(mahasiswaList.get(session("npm"))));
-    		return ok(views.html.home.render(this.scrap.getHome()));
+    		return ok(views.html.home.render(mhs));
     	}
     }
     
     public Result prasyarat() throws IOException{
+    	Mahasiswa mhs = new Mahasiswa(session("npm"));
     	if(session("npm") == null || cookies == null || timestamp()) {
     		session().clear();
     		return index();
     	}
     	else
     	{
+    		String curr_sem = this.scrap.getDoc().select(".main-info-semester a").text();
+	        String[] sem_set = this.scrap.parseSemester(curr_sem);
+	        TahunSemester currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
+	        this.scrap.requestKuliah(cookies);
+	        List<JadwalKuliah> jadwalList = this.scrap.requestJadwal(cookies);
+	        mhs.setJadwalKuliahList(jadwalList);
+	        this.scrap.setNilai(cookies, mhs);
     		Logger.info("User " + session("email") +" mengakses halaman prasyarat dari "+ request().remoteAddress());
-    		if(this.scrap.getPrasyarat().getRiwayatNilai().size()==0){
+    		if(mhs.getRiwayatNilai().size()==0){
     			List<PrasyaratDisplay> table = null;
-    			String semester = scrap.getSemester();
+    			String semester = currTahunSemester.getSemester() +" "+currTahunSemester.getTahun()+"/"+(currTahunSemester.getTahun()+1);
     			return ok(views.html.prasyarat.render(table,semester));
     		}
     		else{
 	    		List<PrasyaratDisplay> table = checkPrasyarat();
-	    		String semester = scrap.getSemester();
+	    		String semester = currTahunSemester.getSemester() +" "+currTahunSemester.getTahun()+"/"+(currTahunSemester.getTahun()+1);
 	    		return ok(views.html.prasyarat.render(table,semester));
     		}
     	}
     }
     
     public Result jadwalKuliah() throws IOException{
+    	Mahasiswa mhs = new Mahasiswa(session("npm"));
     	if(session("npm") == null || cookies == null || timestamp() ) {
     		session().clear();
     		return index();
     	}
     	else{
-    		JadwalDisplay table = new JadwalDisplay(this.scrap.getJadwal().getJadwalKuliahList());
-			String semester = scrap.getSemester();
+    		List<JadwalKuliah> jadwalList = this.scrap.requestJadwal(cookies);
+	        mhs.setJadwalKuliahList(jadwalList);
+	        String curr_sem = this.scrap.getDoc().select(".main-info-semester a").text();
+	        String[] sem_set = this.scrap.parseSemester(curr_sem);
+	        TahunSemester currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
+    		JadwalDisplay table = new JadwalDisplay(mhs.getJadwalKuliahList());
+			String semester = currTahunSemester.getSemester() +" "+currTahunSemester.getTahun()+"/"+(currTahunSemester.getTahun()+1);
 			Logger.info("User " + session("email")+" mengakses halaman jadwal kuliah dari "+ request().remoteAddress());
    	    	return ok(views.html.jadwalKuliah.render(table,semester));
     	}
     }
 
     public Result ringkasan() throws IOException{
+    	Mahasiswa mhs = new Mahasiswa(session("npm"));
     	if(session("npm") == null || cookies == null || timestamp()) {
     		session().clear();
     		return index();
     	}
     	else{
+    		this.scrap.setNilai(cookies, mhs);
     		Logger.info("User " + session("email") +" mengakses halaman Data akademik dari "+ request().remoteAddress());
-    		if(this.scrap.getRingkasan().getRiwayatNilai().size()==0){
+    		if(mhs.getRiwayatNilai().size()==0){
     		RingkasanDisplay display  = null;
     		return ok(views.html.ringkasan.render(display));
     		}
 	    	else{
-	    		Mahasiswa currMahasiswa = this.scrap.getRingkasan();
+	    		Mahasiswa currMahasiswa = mhs;
 	    		RingkasanDisplay display = new RingkasanDisplay(
 					String.format("%.2f", currMahasiswa.calculateIPS()), 
 					String.format("%.2f", currMahasiswa.calculateIPKLulus()), 
@@ -180,7 +208,7 @@ public class Application extends Controller {
 	    		String pilWajibLulus = new String();
 		    	String pilWajibBelumLulus = new String();
 	    		for(int i=0; i<display.getPilWajib().length; i++){
-		    		if( this.scrap.getRingkasan().hasLulusKuliah(display.getPilWajib()[i])){
+		    		if( mhs.hasLulusKuliah(display.getPilWajib()[i])){
 		    			pilWajibLulus += display.getPilWajib()[i]+";";
 		    		}
 		    		else{
@@ -205,7 +233,7 @@ public class Application extends Controller {
     }
     
     public Result tentang() {
-    	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
+    	if(session("npm") == null || cookies == null || timestamp()) {
     		session().clear();
     		return index();
     	}
@@ -218,13 +246,13 @@ public class Application extends Controller {
     public Result logout() throws IOException {
     	Logger.info("User " + session("email") +" telah logout dari "+ request().remoteAddress());
     	session().clear();
-    	mahasiswaList.remove(session("npm"));
+    	cookies = null;
     	return index();
     }
     
     private List<PrasyaratDisplay> checkPrasyarat() throws IOException{
-//    	Mahasiswa mahasiswa = new Mahasiswa(session("npm"));
-//    	scrap.setNilai(cookies, mahasiswa);
+    	Mahasiswa mhs = new Mahasiswa(session("npm"));
+    	this.scrap.setNilai(cookies, mhs);
     	List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
     	List<MataKuliah> mkList = scrap.getMkList();
         String MATAKULIAH_REPOSITORY_PACKAGE = "id.ac.unpar.siamodels.matakuliah"; 
@@ -246,7 +274,7 @@ public class Application extends Controller {
         for (Object mk: mkKnown) {
             if (mk instanceof HasPrasyarat) {
                 List<String> reasons = new ArrayList<String>();
-                ((HasPrasyarat)mk).checkPrasyarat(this.scrap.getPrasyarat(), reasons);
+                ((HasPrasyarat)mk).checkPrasyarat(mhs, reasons);
                 if (!reasons.isEmpty()) {
                     String status = new String();
             		for (String reason: reasons) {
@@ -255,7 +283,7 @@ public class Application extends Controller {
                     table.add(new PrasyaratDisplay(MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),status.split(";")));
                 }
                 else{
-                    if(this.scrap.getPrasyarat().hasLulusKuliah(mk.getClass().getSimpleName())){
+                    if(mhs.hasLulusKuliah(mk.getClass().getSimpleName())){
                     	table.add(new PrasyaratDisplay(MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"sudah lulus"}));
                     }
                     else{ 
@@ -264,7 +292,7 @@ public class Application extends Controller {
                 }
             }
             else{ 
-            	if(this.scrap.getPrasyarat().hasLulusKuliah(mk.getClass().getSimpleName())){
+            	if(mhs.hasLulusKuliah(mk.getClass().getSimpleName())){
                 	table.add(new PrasyaratDisplay(MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),MataKuliahFactory.UNKNOWN_SKS,MataKuliahFactory.UNKNOWN_NAMA),new String[]{"sudah lulus"}));
                 }
                 else{ 

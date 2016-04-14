@@ -41,10 +41,6 @@ public class Scraper {
     	return this.mkList;
     }
     
-    public String getSemester() {
-        return currTahunSemester.getSemester() +" "+currTahunSemester.getTahun()+"/"+(currTahunSemester.getTahun()+1);
-    }
-    
     public void init() throws IOException{
         Connection baseConn = Jsoup.connect(BASE_URL);
         baseConn.timeout(0);
@@ -81,21 +77,6 @@ public class Scraper {
         if(resp.body().contains("Data Akademik")){
         	login_cookies = resp.cookies();
             doc = resp.parse();
-//            String nama = doc.select("p[class=student-name]").text();
-//            logged_mhs.setNama(nama);
-//            String curr_sem = doc.select(".main-info-semester a").text();
-//            String[] sem_set = this.parseSemester(curr_sem);
-//            Element photo = doc.select(".student-photo img").first();
-//            String photoPath = photo.absUrl("src"); 
-//            logged_mhs.setPhotoURL(new URL(photoPath));
-//            currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
-//            this.requestKuliah(login_cookies);
-//            List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
-//            logged_mhs.setJadwalKuliahList(jadwalList);
-//            this.setNilai(login_cookies, logged_mhs);
-//            logout();
-//            return logged_mhs;
-            // retun jadi cookies/map dari yang sebelumnya mahasiswa
             return login_cookies;
         }       
         else{
@@ -103,48 +84,9 @@ public class Scraper {
         }
     }
     
-    public Mahasiswa getHome() {
-    	Mahasiswa home_mhs = logged_mhs;
-    	String nama = doc.select("p[class=student-name]").text();
-	    home_mhs.setNama(nama);
-	    Element photo = doc.select(".student-photo img").first();
-	    String photoPath = photo.absUrl("src"); 
-	   try {
-	       home_mhs.setPhotoURL(new URL(photoPath));
-	   } catch (IOException e) {
-	       e.printStackTrace();
-	   }
-	   return home_mhs;
+    public Document getDoc(){
+    	return doc;
     }
-    	    
-    //method untuk ngambil halaman ringkasan "Abat"
-    public Mahasiswa getRingkasan() throws IOException{
-       Mahasiswa ringkasan_mhs = logged_mhs;
-       this.setNilai(login_cookies, ringkasan_mhs);
-       return ringkasan_mhs;
-    }
-    
-    //method untuk mengambil halaman jadwal kuliah "Rizqi"
-    public Mahasiswa getJadwal() throws IOException{
-       Mahasiswa jadwal_mhs = logged_mhs;
-       List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
-       jadwal_mhs.setJadwalKuliahList(jadwalList);
-       return jadwal_mhs;
-    }
-    
-    //mehthod untuk mendapatkan prasyarat "aswin"
-    public Mahasiswa getPrasyarat() throws IOException{
-       Mahasiswa prasyarat_mhs = logged_mhs;
-       String curr_sem = doc.select(".main-info-semester a").text();
-       String[] sem_set = this.parseSemester(curr_sem);
-       currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
-       this.requestKuliah(login_cookies);
-       List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
-       prasyarat_mhs.setJadwalKuliahList(jadwalList);
-       this.setNilai(login_cookies, prasyarat_mhs);
-       return prasyarat_mhs;
-    }
-
     
     public void requestKuliah(Map<String,String> login_cookies) throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
@@ -280,7 +222,7 @@ public class Scraper {
         logoutConn.execute();
     }
     
-    private String[] parseSemester(String sem_raw){
+    public String[] parseSemester(String sem_raw){
          String[] sem_set = sem_raw.split("/")[0].split("-");
          return new String[]{sem_set[1].trim(),sem_set[0].trim()};
     }    
