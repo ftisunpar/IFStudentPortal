@@ -31,11 +31,8 @@ public class Scraper {
     private final String JADWAL_URL = BASE_URL + "includes/jadwal.aktif.php";
     private final String NILAI_URL = BASE_URL + "includes/nilai.sem.php";
     private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
-    private TahunSemester currTahunSemester;
+    private final String HOME_URL = BASE_URL + "main.php";
     private List<MataKuliah> mkList;
-    private Map<String,String> login_cookies;
-    private Document doc;
-    private Mahasiswa logged_mhs;
     
     public List<MataKuliah> getMkList(){
     	return this.mkList;
@@ -49,9 +46,9 @@ public class Scraper {
         baseConn.execute(); 
     }
     
-    public Map<String,String> login(String npm, String pass) throws IOException{
+    public String login(String npm, String pass) throws IOException{
         init();
-    	logged_mhs = new Mahasiswa(npm);	
+        Mahasiswa logged_mhs = new Mahasiswa(npm);	
         String user = logged_mhs.getEmailAddress();
         Connection conn = Jsoup.connect(LOGIN_URL);
         conn.data("Submit", "Login");
@@ -59,7 +56,7 @@ public class Scraper {
         conn.validateTLSCertificates(false);
         conn.method(Connection.Method.POST);
         Response resp = conn.execute();
-        doc = resp.parse();
+        Document doc = resp.parse();
         String lt = doc.select("input[name=lt]").val();
         String execution = doc.select("input[name=execution]").val();
         /*CAS LOGIN*/
@@ -75,22 +72,37 @@ public class Scraper {
         loginConn.method(Connection.Method.GET);
         resp = loginConn.execute();
         if(resp.body().contains("Data Akademik")){
-        	login_cookies = resp.cookies();
+        	Map<String,String> phpsessid = resp.cookies();
             doc = resp.parse();
-            return login_cookies;
+            return phpsessid.get("PHPSESSID");
         }       
         else{
             return null;
         }
     }
     
-    public Document getDoc(){
-    	return doc;
+    public TahunSemester requestName_Photo_TahunSemester(String phpsessid, Mahasiswa mhs) throws IOException{
+    	Connection conn = Jsoup.connect(HOME_URL);
+        conn.cookie("PHPSESSID", phpsessid);
+        conn.timeout(0);
+        conn.validateTLSCertificates(false); 
+        conn.method(Connection.Method.GET);
+        Response resp = conn.execute();
+        Document doc = resp.parse();
+        String nama = doc.select("p[class=student-name]").text();
+	    mhs.setNama(nama);
+	    Element photo = doc.select(".student-photo img").first();
+	    String photoPath = photo.absUrl("src"); 
+	    mhs.setPhotoURL(new URL(photoPath));
+	    String curr_sem = doc.select(".main-info-semester a").text();
+        String[] sem_set = parseSemester(curr_sem);
+        TahunSemester currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
+        return currTahunSemester;
     }
     
-    public void requestKuliah(Map<String,String> login_cookies) throws IOException{
+    public void requestKuliah(String phpsessid) throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
-        kuliahConn.cookies(login_cookies);
+        kuliahConn.cookie("PHPSESSID", phpsessid);
         kuliahConn.timeout(0);
         kuliahConn.validateTLSCertificates(false); 
         kuliahConn.method(Connection.Method.GET);
@@ -114,9 +126,10 @@ public class Scraper {
         }    
     }
     
-    public List<JadwalKuliah> requestJadwal(Map<String,String> login_cookies) throws IOException{
+    
+    public List<JadwalKuliah> requestJadwal(String phpsessid) throws IOException{
         Connection jadwalConn = Jsoup.connect(JADWAL_URL);
-        jadwalConn.cookies(login_cookies);
+        jadwalConn.cookie("PHPSESSID", phpsessid);
         jadwalConn.timeout(0);
         jadwalConn.validateTLSCertificates(false); 
         jadwalConn.method(Connection.Method.GET);
@@ -153,9 +166,9 @@ public class Scraper {
         return jadwalList;
     }
     
-    public void setNilai(Map<String,String> login_cookies, Mahasiswa logged_mhs) throws IOException{  
+    public void setNilai(String phpsessid, Mahasiswa logged_mhs) throws IOException{  
         Connection nilaiConn = Jsoup.connect(NILAI_URL);
-        nilaiConn.cookies(login_cookies);
+        nilaiConn.cookie("PHPSESSID", phpsessid);
         nilaiConn.data("npm",logged_mhs.getNpm());
         nilaiConn.data("thn_akd","ALL");
         nilaiConn.timeout(0);

@@ -34,10 +34,8 @@ import views.html.*;
 import play.Logger;
 
 public class Application extends Controller {
-	Scraper scrap = new Scraper();
-	Map<String,String> cookies;
 	
-    public Result index() {
+    public Result index() throws IOException {
     	if(session("npm")==null){
     		return ok(views.html.login.render(""));
     	}
@@ -46,7 +44,7 @@ public class Application extends Controller {
     	}
     }
     
-    public Result login() {
+    public Result login() throws IOException{
     	if(session("npm")==null){
     		return index();
     	}
@@ -56,6 +54,7 @@ public class Application extends Controller {
     }
     
     public Result submitLogin() throws IOException{
+    	Scraper scrap = new Scraper();
     	String errorHtml = 
     	"<div class='alert alert-danger' role='alert'>" +
     	  "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+
@@ -72,13 +71,13 @@ public class Application extends Controller {
     		return ok(views.html.login.render(errorHtml+" bukan mahasiswa teknik informatika"+ "</div>"));
     	}
     	String npm = "20" + email.substring(2,4) + email.substring(0,2)+ "0" + email.substring(4,7);
-    	Map<String,String> login_mhs = this.scrap.login(npm, pass);
-    	if(login_mhs!=null){
+    	String phpsessid = scrap.login(npm, pass);
+    	if(phpsessid!=null){
     		Logger.info("User "+ email+ " berhasil login dari "+ request().remoteAddress() );
     		session("npm", npm);
     		session("email",email);
     		session("timestamp", (System.currentTimeMillis()/1000) + "");
-    		cookies = login_mhs;
+    		session("phpsessid", phpsessid);
     		return home();
     	}
 	    else{
@@ -95,42 +94,35 @@ public class Application extends Controller {
     	return (((System.currentTimeMillis()/1000) - Long.parseLong(session("timestamp"))) > 3600);
     }
     
-    public Result home() {
-    	Mahasiswa mhs = new Mahasiswa(session("npm"));
-    	if(session("npm") == null || cookies == null || timestamp()) {
+    public Result home() throws IOException{
+    	if(session("npm") == null || session("phpsessid") == null || timestamp()) {
     		session().clear();
     		return index();
     	}
     	else{
-    		String nama = this.scrap.getDoc().select("p[class=student-name]").text();
-    	    mhs.setNama(nama);
-    	    Element photo = this.scrap.getDoc().select(".student-photo img").first();
-    	    String photoPath = photo.absUrl("src"); 
-		    try {
-		        mhs.setPhotoURL(new URL(photoPath));
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		    }
+    		Scraper scrap = new Scraper();
+    		Mahasiswa mhs = new Mahasiswa(session("npm"));
+    		scrap.requestName_Photo_TahunSemester(session("phpsessid"), mhs);
     		Logger.info("User " + session("email") +" mengakses halaman home dari "+ request().remoteAddress());
     		return ok(views.html.home.render(mhs));
     	}
     }
     
     public Result prasyarat() throws IOException{
-    	Mahasiswa mhs = new Mahasiswa(session("npm"));
-    	if(session("npm") == null || cookies == null || timestamp()) {
+    	
+    	if(session("npm") == null || session("phpsessid") == null || timestamp()) {
     		session().clear();
     		return index();
     	}
     	else
     	{
-    		String curr_sem = this.scrap.getDoc().select(".main-info-semester a").text();
-	        String[] sem_set = this.scrap.parseSemester(curr_sem);
-	        TahunSemester currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
-	        this.scrap.requestKuliah(cookies);
-	        List<JadwalKuliah> jadwalList = this.scrap.requestJadwal(cookies);
+    		Mahasiswa mhs = new Mahasiswa(session("npm"));
+    		Scraper scrap = new Scraper();
+	        TahunSemester currTahunSemester = scrap.requestName_Photo_TahunSemester(session("phpsessid"), mhs);       
+	        scrap.requestKuliah(session("phpsessid"));
+	        List<JadwalKuliah> jadwalList = scrap.requestJadwal(session("phpsessid"));
 	        mhs.setJadwalKuliahList(jadwalList);
-	        this.scrap.setNilai(cookies, mhs);
+	        scrap.setNilai(session("phpsessid"), mhs);
     		Logger.info("User " + session("email") +" mengakses halaman prasyarat dari "+ request().remoteAddress());
     		if(mhs.getRiwayatNilai().size()==0){
     			List<PrasyaratDisplay> table = null;
@@ -146,17 +138,17 @@ public class Application extends Controller {
     }
     
     public Result jadwalKuliah() throws IOException{
-    	Mahasiswa mhs = new Mahasiswa(session("npm"));
-    	if(session("npm") == null || cookies == null || timestamp() ) {
+    	
+    	if(session("npm") == null || session("phpsessid") == null || timestamp() ) {
     		session().clear();
     		return index();
     	}
     	else{
-    		List<JadwalKuliah> jadwalList = this.scrap.requestJadwal(cookies);
+    		Scraper scrap = new Scraper();
+        	Mahasiswa mhs = new Mahasiswa(session("npm"));
+    		List<JadwalKuliah> jadwalList = scrap.requestJadwal(session("phpsessid"));
 	        mhs.setJadwalKuliahList(jadwalList);
-	        String curr_sem = this.scrap.getDoc().select(".main-info-semester a").text();
-	        String[] sem_set = this.scrap.parseSemester(curr_sem);
-	        TahunSemester currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
+	        TahunSemester currTahunSemester = scrap.requestName_Photo_TahunSemester(session("phpsessid"), mhs);
     		JadwalDisplay table = new JadwalDisplay(mhs.getJadwalKuliahList());
 			String semester = currTahunSemester.getSemester() +" "+currTahunSemester.getTahun()+"/"+(currTahunSemester.getTahun()+1);
 			Logger.info("User " + session("email")+" mengakses halaman jadwal kuliah dari "+ request().remoteAddress());
@@ -165,13 +157,14 @@ public class Application extends Controller {
     }
 
     public Result ringkasan() throws IOException{
-    	Mahasiswa mhs = new Mahasiswa(session("npm"));
-    	if(session("npm") == null || cookies == null || timestamp()) {
+    	if(session("npm") == null || session("phpsessid") == null || timestamp()) {
     		session().clear();
     		return index();
     	}
     	else{
-    		this.scrap.setNilai(cookies, mhs);
+    		Scraper scrap = new Scraper();
+        	Mahasiswa mhs = new Mahasiswa(session("npm"));
+    		scrap.setNilai(session("phpsessid"), mhs);
     		Logger.info("User " + session("email") +" mengakses halaman Data akademik dari "+ request().remoteAddress());
     		if(mhs.getRiwayatNilai().size()==0){
     		RingkasanDisplay display  = null;
@@ -232,8 +225,8 @@ public class Application extends Controller {
     	}
     }
     
-    public Result tentang() {
-    	if(session("npm") == null || cookies == null || timestamp()) {
+    public Result tentang() throws IOException {
+    	if(session("npm") == null || session("phpsessid") == null || timestamp()) {
     		session().clear();
     		return index();
     	}
@@ -246,14 +239,15 @@ public class Application extends Controller {
     public Result logout() throws IOException {
     	Logger.info("User " + session("email") +" telah logout dari "+ request().remoteAddress());
     	session().clear();
-    	cookies = null;
     	return index();
     }
     
     private List<PrasyaratDisplay> checkPrasyarat() throws IOException{
+    	Scraper scrap = new Scraper();
     	Mahasiswa mhs = new Mahasiswa(session("npm"));
-    	this.scrap.setNilai(cookies, mhs);
+    	scrap.setNilai(session("phpsessid"), mhs);
     	List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
+    	scrap.requestKuliah(session("phpsessid"));
     	List<MataKuliah> mkList = scrap.getMkList();
         String MATAKULIAH_REPOSITORY_PACKAGE = "id.ac.unpar.siamodels.matakuliah"; 
     	List<Object> mkKnown = new ArrayList<Object>(); 
