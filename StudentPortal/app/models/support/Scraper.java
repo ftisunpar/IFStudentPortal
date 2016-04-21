@@ -1,6 +1,7 @@
 package models.support;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -39,17 +40,7 @@ public class Scraper {
     private final String NILAI_URL = BASE_URL + "includes/nilai.sem.php";
     private final String TOEFL_URL = BASE_URL + "includes/nilai.toefl.php";
     private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
-    private TahunSemester currTahunSemester;
-    private List<MataKuliah> mkList;
-    private SortedMap<LocalDate, Integer> nilaiTerakhirTOEFL = new TreeMap<LocalDate, Integer>();
-    
-    public List<MataKuliah> getMkList(){
-    	return this.mkList;
-    }
-    
-    public String getSemester() {
-        return currTahunSemester.getSemester() +" "+currTahunSemester.getTahun()+"/"+(currTahunSemester.getTahun()+1);
-    }
+    private final String HOME_URL = BASE_URL + "main.php";
     
     public void init() throws IOException{
         Connection baseConn = Jsoup.connect(BASE_URL);
@@ -59,9 +50,9 @@ public class Scraper {
         baseConn.execute(); 
     }
     
-    public Mahasiswa login(String npm, String pass) throws IOException{
+    public String login(String npm, String pass) throws IOException{
         init();
-    	Mahasiswa logged_mhs = new Mahasiswa(npm);	
+        Mahasiswa logged_mhs = new Mahasiswa(npm);	
         String user = logged_mhs.getEmailAddress();
         Connection conn = Jsoup.connect(LOGIN_URL);
         conn.data("Submit", "Login");
@@ -85,32 +76,37 @@ public class Scraper {
         loginConn.method(Connection.Method.GET);
         resp = loginConn.execute();
         if(resp.body().contains("Data Akademik")){
-        	Map<String,String> login_cookies = resp.cookies();
+        	Map<String,String> phpsessid = resp.cookies();
             doc = resp.parse();
-            String nama = doc.select("p[class=student-name]").text();
-            logged_mhs.setNama(nama);
-            String curr_sem = doc.select(".main-info-semester a").text();
-            String[] sem_set = this.parseSemester(curr_sem);
-            Element photo = doc.select(".student-photo img").first();
-            String photoPath = photo.absUrl("src"); 
-            logged_mhs.setPhotoURL(new URL(photoPath));
-            currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
-            this.requestKuliah(login_cookies);
-            List<JadwalKuliah> jadwalList = this.requestJadwal(login_cookies);
-            logged_mhs.setJadwalKuliahList(jadwalList);
-            this.setNilai(login_cookies, logged_mhs);
-            this.setNilaiTOEFL(login_cookies, logged_mhs);
-            logout();
-            return logged_mhs;
+            return phpsessid.get("PHPSESSID");
         }       
         else{
             return null;
         }
     }
     
-    public void requestKuliah(Map<String,String> login_cookies) throws IOException{
+    public TahunSemester requestName_Photo_TahunSemester(String phpsessid, Mahasiswa mhs) throws IOException{
+    	Connection conn = Jsoup.connect(HOME_URL);
+        conn.cookie("PHPSESSID", phpsessid);
+        conn.timeout(0);
+        conn.validateTLSCertificates(false); 
+        conn.method(Connection.Method.GET);
+        Response resp = conn.execute();
+        Document doc = resp.parse();
+        String nama = doc.select("p[class=student-name]").text();
+	    mhs.setNama(nama);
+	    Element photo = doc.select(".student-photo img").first();
+	    String photoPath = photo.absUrl("src"); 
+	    mhs.setPhotoURL(new URL(photoPath));
+	    String curr_sem = doc.select(".main-info-semester a").text();
+        String[] sem_set = parseSemester(curr_sem);
+        TahunSemester currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),Semester.fromString(sem_set[1]));
+        return currTahunSemester;
+    }
+    
+    public List<MataKuliah> requestKuliah(String phpsessid) throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
-        kuliahConn.cookies(login_cookies);
+        kuliahConn.cookie("PHPSESSID", phpsessid);
         kuliahConn.timeout(0);
         kuliahConn.validateTLSCertificates(false); 
         kuliahConn.method(Connection.Method.GET);
@@ -118,6 +114,7 @@ public class Scraper {
         Document doc = resp.parse();
         Elements jadwal = doc.select("tr");
         String prev = "";
+        List<MataKuliah> mkList;
         mkList = new ArrayList<MataKuliah>();
         for (int i = 1; i < jadwal.size()-1; i++) {
             Elements row = jadwal.get(i).children();
@@ -131,12 +128,14 @@ public class Scraper {
                 }
                 prev = kode;
             }   
-        }    
+        }
+        return mkList;
     }
     
-    public List<JadwalKuliah> requestJadwal(Map<String,String> login_cookies) throws IOException{
+    
+    public List<JadwalKuliah> requestJadwal(String phpsessid) throws IOException{
         Connection jadwalConn = Jsoup.connect(JADWAL_URL);
-        jadwalConn.cookies(login_cookies);
+        jadwalConn.cookie("PHPSESSID", phpsessid);
         jadwalConn.timeout(0);
         jadwalConn.validateTLSCertificates(false); 
         jadwalConn.method(Connection.Method.GET);
@@ -173,9 +172,9 @@ public class Scraper {
         return jadwalList;
     }
     
-    public void setNilai(Map<String,String> login_cookies, Mahasiswa logged_mhs) throws IOException{  
+    public void setNilai(String phpsessid, Mahasiswa logged_mhs) throws IOException{  
         Connection nilaiConn = Jsoup.connect(NILAI_URL);
-        nilaiConn.cookies(login_cookies);
+        nilaiConn.cookie("PHPSESSID", phpsessid);
         nilaiConn.data("npm",logged_mhs.getNpm());
         nilaiConn.data("thn_akd","ALL");
         nilaiConn.timeout(0);
@@ -228,13 +227,14 @@ public class Scraper {
                   if(NA != null) {
                 	  TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn),Semester.fromString(sem));
                       logged_mhs.getRiwayatNilai().add(new Nilai(tahunSemesterNilai, curr_mk, kelas, ART, UTS, UAS, NA));
-                  }	    
+                  }	
                 }
             }
         }
     }
     
     public void setNilaiTOEFL(Map<String,String> login_cookies, Mahasiswa logged_mhs) throws IOException{
+    	SortedMap<LocalDate, Integer> nilaiTerakhirTOEFL = new TreeMap<>();
     	Connection toeflConn = Jsoup.connect(TOEFL_URL);
     	toeflConn.cookies(login_cookies);
     	toeflConn.data("npm",logged_mhs.getNpm());
@@ -283,7 +283,7 @@ public class Scraper {
         logoutConn.execute();
     }
     
-    private String[] parseSemester(String sem_raw){
+    public String[] parseSemester(String sem_raw){
          String[] sem_set = sem_raw.split("/")[0].split("-");
          return new String[]{sem_set[1].trim(),sem_set[0].trim()};
     }    
