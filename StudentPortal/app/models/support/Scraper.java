@@ -1,19 +1,20 @@
 package models.support;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.Map.Entry;
+
+import org.jsoup.Connection;
+import org.jsoup.Connection.Response;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import id.ac.unpar.siamodels.Dosen;
 import id.ac.unpar.siamodels.JadwalKuliah;
@@ -23,13 +24,6 @@ import id.ac.unpar.siamodels.MataKuliah;
 import id.ac.unpar.siamodels.MataKuliahFactory;
 import id.ac.unpar.siamodels.Semester;
 import id.ac.unpar.siamodels.TahunSemester;
-
-import org.jsoup.Connection;
-import org.jsoup.Connection.Response;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 public class Scraper {
     private final String BASE_URL = "https://studentportal.unpar.ac.id/";
@@ -85,13 +79,13 @@ public class Scraper {
         }
     }
     
-    public TahunSemester requestName_Photo_TahunSemester(String phpsessid, Mahasiswa mhs) throws IOException{
-    	Connection conn = Jsoup.connect(HOME_URL);
-        conn.cookie("PHPSESSID", phpsessid);
-        conn.timeout(0);
-        conn.validateTLSCertificates(false); 
-        conn.method(Connection.Method.GET);
-        Response resp = conn.execute();
+    public TahunSemester requestNamePhotoTahunSemester(String phpsessid, Mahasiswa mhs) throws IOException{
+    	Connection connection = Jsoup.connect(HOME_URL);
+        connection.cookie("PHPSESSID", phpsessid);
+        connection.timeout(0);
+        connection.validateTLSCertificates(false); 
+        connection.method(Connection.Method.GET);
+        Response resp = connection.execute();
         Document doc = resp.parse();
         String nama = doc.select("p[class=student-name]").text();
 	    mhs.setNama(nama);
@@ -105,12 +99,12 @@ public class Scraper {
     }
     
     public List<MataKuliah> requestKuliah(String phpsessid) throws IOException{
-        Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
-        kuliahConn.cookie("PHPSESSID", phpsessid);
-        kuliahConn.timeout(0);
-        kuliahConn.validateTLSCertificates(false); 
-        kuliahConn.method(Connection.Method.GET);
-        Response resp = kuliahConn.execute();
+        Connection connection = Jsoup.connect(ALLJADWAL_URL);
+        connection.cookie("PHPSESSID", phpsessid);
+        connection.timeout(0);
+        connection.validateTLSCertificates(false); 
+        connection.method(Connection.Method.GET);
+        Response resp = connection.execute();
         Document doc = resp.parse();
         Elements jadwal = doc.select("tr");
         String prev = "";
@@ -134,12 +128,12 @@ public class Scraper {
     
     
     public List<JadwalKuliah> requestJadwal(String phpsessid) throws IOException{
-        Connection jadwalConn = Jsoup.connect(JADWAL_URL);
-        jadwalConn.cookie("PHPSESSID", phpsessid);
-        jadwalConn.timeout(0);
-        jadwalConn.validateTLSCertificates(false); 
-        jadwalConn.method(Connection.Method.GET);
-        Response resp = jadwalConn.execute();
+        Connection connection = Jsoup.connect(JADWAL_URL);
+        connection.cookie("PHPSESSID", phpsessid);
+        connection.timeout(0);
+        connection.validateTLSCertificates(false); 
+        connection.method(Connection.Method.GET);
+        Response resp = connection.execute();
         Document doc = resp.parse();
         Elements jadwalTable = doc.select(".portal-full-table"); 
         List<JadwalKuliah> jadwalList = new ArrayList<JadwalKuliah>();
@@ -172,15 +166,15 @@ public class Scraper {
         return jadwalList;
     }
     
-    public void setNilai(String phpsessid, Mahasiswa logged_mhs) throws IOException{  
-        Connection nilaiConn = Jsoup.connect(NILAI_URL);
-        nilaiConn.cookie("PHPSESSID", phpsessid);
-        nilaiConn.data("npm",logged_mhs.getNpm());
-        nilaiConn.data("thn_akd","ALL");
-        nilaiConn.timeout(0);
-        nilaiConn.validateTLSCertificates(false); 
-        nilaiConn.method(Connection.Method.POST);
-        Response resp = nilaiConn.execute();
+    public void requestNilai(String phpsessid, Mahasiswa logged_mhs) throws IOException{  
+        Connection connection = Jsoup.connect(NILAI_URL);
+        connection.cookie("PHPSESSID", phpsessid);
+        connection.data("npm",logged_mhs.getNpm());
+        connection.data("thn_akd","ALL");
+        connection.timeout(0);
+        connection.validateTLSCertificates(false); 
+        connection.method(Connection.Method.POST);
+        Response resp = connection.execute();
         Document doc = resp.parse();
         Elements mk = doc.select("table");
 
@@ -233,16 +227,16 @@ public class Scraper {
         }
     }
     
-    public void setNilaiTOEFL(Map<String,String> login_cookies, Mahasiswa logged_mhs) throws IOException{
+    public void requestNilaiTOEFL(String phpsessid, Mahasiswa mahasiswa) throws IOException{
     	SortedMap<LocalDate, Integer> nilaiTerakhirTOEFL = new TreeMap<>();
-    	Connection toeflConn = Jsoup.connect(TOEFL_URL);
-    	toeflConn.cookies(login_cookies);
-    	toeflConn.data("npm",logged_mhs.getNpm());
-    	toeflConn.data("thn_akd","ALL");
-    	toeflConn.timeout(0);
-    	toeflConn.validateTLSCertificates(false); 
-    	toeflConn.method(Connection.Method.POST);
-        Response resp = toeflConn.execute();
+    	Connection connection = Jsoup.connect(TOEFL_URL);
+        connection.cookie("PHPSESSID", phpsessid);
+    	connection.data("npm",mahasiswa.getNpm());
+    	connection.data("thn_akd","ALL");
+    	connection.timeout(0);
+    	connection.validateTLSCertificates(false); 
+    	connection.method(Connection.Method.POST);
+        Response resp = connection.execute();
         Document doc = resp.parse();
         Elements nilaiTOEFL = doc.select("table").select("tbody").select("tr");
         if(!nilaiTOEFL.isEmpty()){
@@ -270,9 +264,7 @@ public class Scraper {
 		        nilaiTerakhirTOEFL.put(localDate, Integer.parseInt(nilai.text()));
 	        }
         }
-        
-        logged_mhs.setNilaiTOEFL(nilaiTerakhirTOEFL);
-    	
+        mahasiswa.setNilaiTOEFL(nilaiTerakhirTOEFL);
     }
 
     public void logout() throws IOException{

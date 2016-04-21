@@ -92,14 +92,13 @@ public class Application extends Controller {
 		} else {
 			Scraper scrap = new Scraper();
 			Mahasiswa mhs = new Mahasiswa(session("npm"));
-			scrap.requestName_Photo_TahunSemester(session("phpsessid"), mhs);
+			scrap.requestNamePhotoTahunSemester(session("phpsessid"), mhs);
 			Logger.info("User " + session("email") + " mengakses halaman home dari " + request().remoteAddress());
 			return ok(views.html.home.render(mhs));
 		}
 	}
 	
-    // TODO rename nama method & view ke perwalian
-	public Result prasyarat() throws IOException {
+	public Result perwalian() throws IOException {
 
 		if (session("npm") == null || session("phpsessid") == null) {
 			session().clear();
@@ -107,11 +106,11 @@ public class Application extends Controller {
 		} else {
 			Mahasiswa mhs = new Mahasiswa(session("npm"));
 			Scraper scrap = new Scraper();
-			TahunSemester currTahunSemester = scrap.requestName_Photo_TahunSemester(session("phpsessid"), mhs);
+			TahunSemester currTahunSemester = scrap.requestNamePhotoTahunSemester(session("phpsessid"), mhs);
 			scrap.requestKuliah(session("phpsessid"));
 			List<JadwalKuliah> jadwalList = scrap.requestJadwal(session("phpsessid"));
 			mhs.setJadwalKuliahList(jadwalList);
-			scrap.setNilai(session("phpsessid"), mhs);
+			scrap.requestNilai(session("phpsessid"), mhs);
 			Logger.info("User " + session("email") + " mengakses halaman prasyarat dari " + request().remoteAddress());
 			if (mhs.getRiwayatNilai().size() == 0) {
 				List<PrasyaratDisplay> table = null;
@@ -137,7 +136,7 @@ public class Application extends Controller {
 			Mahasiswa mhs = new Mahasiswa(session("npm"));
 			List<JadwalKuliah> jadwalList = scrap.requestJadwal(session("phpsessid"));
 			mhs.setJadwalKuliahList(jadwalList);
-			TahunSemester currTahunSemester = scrap.requestName_Photo_TahunSemester(session("phpsessid"), mhs);
+			TahunSemester currTahunSemester = scrap.requestNamePhotoTahunSemester(session("phpsessid"), mhs);
 			JadwalDisplay table = new JadwalDisplay(mhs.getJadwalKuliahList());
 			String semester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
 					+ (currTahunSemester.getTahun() + 1);
@@ -147,15 +146,15 @@ public class Application extends Controller {
 		}
 	}
 
-    // TODO rename nama method & view ke "kelulusan"
-	public Result ringkasan() throws IOException {
+	public Result kelulusan() throws IOException {
 		if (session("npm") == null || session("phpsessid") == null) {
 			session().clear();
 			return index();
 		} else {
 			Scraper scrap = new Scraper();
 			Mahasiswa mhs = new Mahasiswa(session("npm"));
-			scrap.setNilai(session("phpsessid"), mhs);
+			scrap.requestNilai(session("phpsessid"), mhs);
+			scrap.requestNilaiTOEFL(session("phpsessid"), mhs);
 			Logger.info(
 					"User " + session("email") + " mengakses halaman Data akademik dari " + request().remoteAddress());
 			if (mhs.getRiwayatNilai().size() == 0) {
@@ -166,7 +165,7 @@ public class Application extends Controller {
 				RingkasanDisplay display = new RingkasanDisplay(String.format("%.2f", currMahasiswa.calculateIPS()),
 						String.format("%.2f", currMahasiswa.calculateIPKLulus()), currMahasiswa.calculateSKSLulus());
 				Kelulusan str = new Kelulusan();
-				ArrayList<String> arrString = new ArrayList();
+				ArrayList<String> arrString = new ArrayList<>();
 				str.checkPrasyarat(currMahasiswa, arrString);
 				display.setData(arrString);
 				List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();
@@ -229,7 +228,7 @@ public class Application extends Controller {
 	private List<PrasyaratDisplay> checkPrasyarat() throws IOException {
 		Scraper scrap = new Scraper();
 		Mahasiswa mhs = new Mahasiswa(session("npm"));
-		scrap.setNilai(session("phpsessid"), mhs);
+		scrap.requestNilai(session("phpsessid"), mhs);
 		List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
 		List<MataKuliah> mkList = scrap.requestKuliah(session("phpsessid"));
 		String MATAKULIAH_REPOSITORY_PACKAGE = "id.ac.unpar.siamodels.matakuliah";
