@@ -92,6 +92,7 @@ public class Application extends Controller {
     	}
     }
     
+    // TODO rename nama method & view ke perwalian
     public Result prasyarat() throws IOException{
     	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
     		session().clear();
@@ -99,7 +100,7 @@ public class Application extends Controller {
     	}
     	else
     	{
-    		Logger.info("User " + session("email") +" mengakses halaman prasyarat dari "+ request().remoteAddress());
+    		Logger.info("User " + session("email") +" mengakses halaman perwalian dari "+ request().remoteAddress());
     		if(mahasiswaList.get(session("npm")).getRiwayatNilai().size()==0){
     			List<PrasyaratDisplay> table = null;
     			String semester = scrap.getSemester();
@@ -126,6 +127,7 @@ public class Application extends Controller {
     	}
     }
 
+    // TODO rename nama method & view ke "kelulusan"
     public Result ringkasan() throws IOException{
     	if(session("npm") == null || !mahasiswaList.containsKey(session("npm"))) {
     		session().clear();
