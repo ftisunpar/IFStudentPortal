@@ -32,11 +32,6 @@ public class Scraper {
     private final String NILAI_URL = BASE_URL + "includes/nilai.sem.php";
     private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
     private final String HOME_URL = BASE_URL + "main.php";
-    private List<MataKuliah> mkList;
-    
-    public List<MataKuliah> getMkList(){
-    	return this.mkList;
-    }
     
     public void init() throws IOException{
         Connection baseConn = Jsoup.connect(BASE_URL);
@@ -100,7 +95,7 @@ public class Scraper {
         return currTahunSemester;
     }
     
-    public void requestKuliah(String phpsessid) throws IOException{
+    public List<MataKuliah> requestKuliah(String phpsessid) throws IOException{
         Connection kuliahConn = Jsoup.connect(ALLJADWAL_URL);
         kuliahConn.cookie("PHPSESSID", phpsessid);
         kuliahConn.timeout(0);
@@ -110,6 +105,7 @@ public class Scraper {
         Document doc = resp.parse();
         Elements jadwal = doc.select("tr");
         String prev = "";
+        List<MataKuliah> mkList;
         mkList = new ArrayList<MataKuliah>();
         for (int i = 1; i < jadwal.size()-1; i++) {
             Elements row = jadwal.get(i).children();
@@ -123,7 +119,8 @@ public class Scraper {
                 }
                 prev = kode;
             }   
-        }    
+        }
+        return mkList;
     }
     
     
