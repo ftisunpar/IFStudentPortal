@@ -15,15 +15,12 @@
 						<div class="panel-body">
 							<div class="page-header">
 								<center>
-								<div class="logo-set">	
-									<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="120px" height="120px"/>
-									<img src="@routes.Assets.versioned("images/logo-IT.png")" width="120px" height="120px"/>
+								<div class="logo-set">
+									<img src="@routes.Assets.versioned("images/logo.png")" width="100%" alt="INFORMATIKA STUDENT PORTAL"/>
 								</div>
 								</center>
 								<br>
-								<h4 class="text-center">INFORMATIKA STUDENT PORTAL</h4> 
-								<h5 class="text-center">Portal Akademik Mahasiswa</h5>
-								<h5 class="text-center">Teknik Informatika UNPAR</h5>
+								
 							</div>
 							<form action="@routes.Application.submitLogin()" method="POST" name ="loginForm">
 								<div class="form-group">
@@ -42,6 +39,7 @@
 								</div>
 								 @Html(message)
 								<button name="submit" type="submit" class="form-control">Login <span class="glyphicon glyphicon-log-in"></span></button>
+								<p><a href="@routes.Assets.versioned("certs/IFStudentPortal-CA.crt")" style="color: white">Download sertifikat HTTPS</a></p>								
 							</form>
 						</div>	
 					</div>										

@@ -1,7 +1,9 @@
 package models.display;
 
-import id.ac.unpar.siamodels.MataKuliahFactory;
+import java.util.ArrayList;
+import java.util.List;
 
+import id.ac.unpar.siamodels.MataKuliahFactory;
 
 public class RingkasanDisplay {
 	private String[] pilWajib;
@@ -13,23 +15,26 @@ public class RingkasanDisplay {
 	private int sksLulusSemTerakhir;
 	private String semesterTerakhir;
 	private final int MIN_LULUS_PIL_WAJIB = 4;
-	
-	public RingkasanDisplay(String IPS, String IPK, int sksLulusTotal){
+	private int nilaiTOEFL;
+	private List<String> data = new ArrayList<>();
+
+	public RingkasanDisplay(String IPS, String IPK, int sksLulusTotal) {
 		this.IPS = IPS;
 		this.IPK = IPK;
 		this.sksLulusTotal = sksLulusTotal;
-		/*create mata kuliah pilihan wajib*/
-		pilWajib = new String[]{"AIF311","AIF312","AIF313","AIF314","AIF315","AIF316","AIF317","AIF318"}; 
+		/* create mata kuliah pilihan wajib */
+		pilWajib = new String[] { "AIF311", "AIF312", "AIF313", "AIF314", "AIF315", "AIF316", "AIF317", "AIF318" };
 	}
-	
-	public int getMinLulusPilWajib(){
+
+	public int getMinLulusPilWajib() {
 		return this.MIN_LULUS_PIL_WAJIB;
 	}
-	
-	public String getNamaPilWajib(String kode){
-		return MataKuliahFactory.getInstance().createMataKuliah(kode, MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA).nama()+"";
+
+	public String getNamaPilWajib(String kode) {
+		return MataKuliahFactory.getInstance()
+				.createMataKuliah(kode, MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA).nama() + "";
 	}
-	
+
 	public String[] getPilWajibLulus() {
 		return pilWajibLulus;
 	}
@@ -42,45 +47,60 @@ public class RingkasanDisplay {
 		return pilWajibBelumLulus;
 	}
 
-
 	public void setPilWajibBelumLulus(String[] pilWajibBelumLulus) {
 		this.pilWajibBelumLulus = pilWajibBelumLulus;
 	}
 
-	public String[] getPilWajib(){
+	public String[] getPilWajib() {
 		return this.pilWajib;
 	}
-	
-	public String getIPS(){
+
+	public String getIPS() {
 		return this.IPS;
 	}
-	
-	public String getIPK(){
+
+	public String getIPK() {
 		return this.IPK;
 	}
-	
+
 	public void setDataSemTerakhir(String semTerakhir, int sksLulusSemTerakhir) {
 		this.semesterTerakhir = semTerakhir;
 		this.sksLulusSemTerakhir = sksLulusSemTerakhir;
 	}
-	
-	public String getSemesterTerakhir(){
+
+	public String getSemesterTerakhir() {
 		return semesterTerakhir;
 	}
-	public int getSKSLulusTotal(){
+
+	public int getSKSLulusTotal() {
 		return this.sksLulusTotal;
 	}
-	
-	public int getSKSLulusSemTerakhir(){
+
+	public int getSKSLulusSemTerakhir() {
 		return this.sksLulusSemTerakhir;
 	}
-	
-	public int getMinSisaSKS(){
-		if(sksLulusTotal>=144){
+
+	public int getNilaiTOEFL() {
+		return this.nilaiTOEFL;
+	}
+
+	public void setNilaiTOEFL(int nilai) {
+		this.nilaiTOEFL = nilai;
+	}
+
+	public int getMinSisaSKS() {
+		if (sksLulusTotal >= 144) {
 			return 0;
+		} else {
+			return 144 - sksLulusTotal;
 		}
-		else{
-			return 144-sksLulusTotal;
-		}
+	}
+
+	public void setData(ArrayList<String> data) {
+		this.data = data;
+	}
+
+	public List<String> getData() {
+		return this.data;
 	}
 }

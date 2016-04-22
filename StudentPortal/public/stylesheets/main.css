@@ -79,14 +79,15 @@ nav.sidebar, .main{
 .main{
 	padding: 10px 10px 0 10px;
 }
-/*small & medium display*/
+
+/*medium display*/
 @media (min-width: 768px) {
 
 	/*Allow main to be next to Nav*/
 	.main{
 		position: absolute;
-		width: calc(100% - 40px); /*keeps 100% minus nav size*/
-		margin-left: 40px;
+		width: calc(100% - 200px); /*keeps 100% minus nav size*/
+		margin-left: 200px;
 		float: right;
 	}
 
@@ -147,7 +148,7 @@ nav.sidebar, .main{
 	nav.sidebar{
 		width: 200px;
 		height: 100%;
-		margin-left: -160px;
+		margin-left: 0px;
 		float: left;
 		z-index: 8000;
 		margin-bottom: 0px;
@@ -165,6 +166,10 @@ nav.sidebar, .main{
 	/*for hiden things when navbar hidden*/
 	.forAnimate{
 		opacity: 0;
+	}
+	
+	nav.sidebar.forAnimate{
+		opacity:1;
 	}
 }
 

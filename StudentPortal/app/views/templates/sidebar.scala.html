@@ -1,5 +1,5 @@
 @(selected: String)
-<nav class="navbar navbar-inverse sidebar" role="navigation">
+<nav class="navbar-inverse sidebar" role="navigation">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sidebar-navbar-collapse">
@@ -8,24 +8,25 @@
 				<span class="icon-bar"></span>
 			</button>
 			<div class="logo-set">
-				<img src="@routes.Assets.versioned("images/logo-unpar.png")" width="25%" height="25%"/>
-				<img src="@routes.Assets.versioned("images/logo-IT.png")" width="25%" height="25%"/>
+				<br/>
+				<center> <img src="@routes.Assets.versioned("images/logo.png")" width="85%" alt="INFORMATIKA STUDENT PORTAL"/></center>
+				<br/>
 			</div>
-			<p class="navbar-brand">INFORMATIKA STUDENT PORTAL</p>
+			
 		</div>
 		<div class="collapse navbar-collapse" id="sidebar-navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li @if(selected.equals("home")){class="active"}><a href="@routes.Application.home()">
 					Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span>
 				</a></li>
-				<li @if(selected.equals("prasyarat")){class="active"}><a href="@routes.Application.prasyarat()">
-					Prasyarat Mata Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tasks"></span>
+				<li @if(selected.equals("prasyarat")){class="active"}><a href="@routes.Application.perwalian()">
+					Persiapan Perwalian<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tasks"></span>
 				</a></li>
 				<li @if(selected.equals("jadwalKuliah")){class="active"}><a href="@routes.Application.jadwalKuliah()">
 					 Jadwal Kuliah<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span>
 				</a></li>
-				<li @if(selected.equals("ringkasan")){class="active"}><a href="@routes.Application.ringkasan()">
-					Data Akademik<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-book"></span>
+				<li @if(selected.equals("ringkasan")){class="active"}><a href="@routes.Application.kelulusan()">
+					Syarat Kelulusan<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-book"></span>
 				</a></li>
 				<li @if(selected.equals("tentang")){class="active"}><a href="@routes.Application.tentang()">
 					Info &amp; Lapor Bug<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-info-sign"></span>
