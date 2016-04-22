@@ -97,7 +97,7 @@ public class Application extends Controller {
 			return ok(views.html.home.render(mhs));
 		}
 	}
-	
+
 	public Result perwalian() throws IOException {
 
 		if (session("npm") == null || session("phpsessid") == null) {
@@ -163,7 +163,7 @@ public class Application extends Controller {
 			} else {
 				Mahasiswa currMahasiswa = mhs;
 				RingkasanDisplay display = new RingkasanDisplay(String.format("%.2f", currMahasiswa.calculateIPS()),
-						String.format("%.2f", currMahasiswa.calculateIPKLulus()), currMahasiswa.calculateSKSLulus());
+						String.format("%.2f", currMahasiswa.calculateIPLulus()), currMahasiswa.calculateSKSLulus());
 				Kelulusan str = new Kelulusan();
 				ArrayList<String> arrString = new ArrayList<>();
 				str.checkPrasyarat(currMahasiswa, arrString);
@@ -260,7 +260,7 @@ public class Application extends Controller {
 							new PrasyaratDisplay(
 									MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),
 											MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA),
-							status.split(";")));
+									status.split(";")));
 				} else {
 					if (mhs.hasLulusKuliah(mk.getClass().getSimpleName())) {
 						table.add(new PrasyaratDisplay(
