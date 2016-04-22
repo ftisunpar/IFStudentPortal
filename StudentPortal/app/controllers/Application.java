@@ -18,8 +18,8 @@ import models.display.PrasyaratDisplay;
 import models.display.RingkasanDisplay;
 import id.ac.unpar.siamodels.JadwalKuliah;
 import id.ac.unpar.siamodels.Mahasiswa;
-import id.ac.unpar.siamodels.MataKuliah;
 import id.ac.unpar.siamodels.Mahasiswa.Nilai;
+import id.ac.unpar.siamodels.MataKuliah;
 import id.ac.unpar.siamodels.MataKuliahFactory;
 import id.ac.unpar.siamodels.Semester;
 import id.ac.unpar.siamodels.TahunSemester;
@@ -61,12 +61,12 @@ public class Application extends Controller {
 		String pass = dynamicForm.get("pass");
 		if (!email.matches("[0-9]{7}+@student.unpar.ac.id")) {
 			Logger.info(
-					"User: " + email + " gagal login dari " + request().remoteAddress() + " karena salah input E-Mail");
+					"User: " + email + " gagal login dari " + request().remoteAddress() + " karena e-mail tidak valid");
 			return ok(views.html.login.render(errorHtml + "Email tidak valid" + "</div>"));
 		}
 		if (!(email.charAt(0) == '7' && email.charAt(1) == '3')) {
 			Logger.info("User: " + email + " gagal login dari " + request().remoteAddress()
-					+ " karena bukan mahasiswa teknik informatika");
+					+ " karena bukan mahasiswa teknik informatika (73*)");
 			return ok(views.html.login.render(errorHtml + " bukan mahasiswa teknik informatika" + "</div>"));
 		}
 		String npm = "20" + email.substring(2, 4) + email.substring(0, 2) + "0" + email.substring(4, 7);
@@ -107,7 +107,7 @@ public class Application extends Controller {
 			Mahasiswa mhs = new Mahasiswa(session("npm"));
 			Scraper scrap = new Scraper();
 			TahunSemester currTahunSemester = scrap.requestNamePhotoTahunSemester(session("phpsessid"), mhs);
-			scrap.requestKuliah(session("phpsessid"));
+			scrap.requestAvailableKuliah(session("phpsessid"));
 			List<JadwalKuliah> jadwalList = scrap.requestJadwal(session("phpsessid"));
 			mhs.setJadwalKuliahList(jadwalList);
 			scrap.requestNilai(session("phpsessid"), mhs);
@@ -177,7 +177,7 @@ public class Application extends Controller {
 					Nilai nilai = riwayatNilai.get(i);
 					if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
 						if (nilai.getAngkaAkhir() != null) {
-							totalSKS += nilai.getMataKuliah().sks();
+							totalSKS += nilai.getMataKuliah().getSks();
 						}
 					} else {
 						break;
@@ -230,66 +230,28 @@ public class Application extends Controller {
 		Mahasiswa mhs = new Mahasiswa(session("npm"));
 		scrap.requestNilai(session("phpsessid"), mhs);
 		List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
-		List<MataKuliah> mkList = scrap.requestKuliah(session("phpsessid"));
-		String MATAKULIAH_REPOSITORY_PACKAGE = "id.ac.unpar.siamodels.matakuliah";
-		List<Object> mkKnown = new ArrayList<Object>();
-		List<MataKuliah> mkUnknown = new ArrayList<MataKuliah>();
+		List<MataKuliah> mkList = scrap.requestAvailableKuliah(session("phpsessid"));
 		for (MataKuliah mk : mkList) {
-			try {
-				Class<?> mkClass = Class.forName(MATAKULIAH_REPOSITORY_PACKAGE + "." + mk.kode());
-				Object matakuliah = mkClass.newInstance();
-				mkKnown.add(matakuliah);
-			} catch (ClassNotFoundException e) {
-				mkUnknown.add(mk);
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			}
-		}
-		for (Object mk : mkKnown) {
-			if (mk instanceof HasPrasyarat) {
-				List<String> reasons = new ArrayList<String>();
-				((HasPrasyarat) mk).checkPrasyarat(mhs, reasons);
-				if (!reasons.isEmpty()) {
-					String status = new String();
-					for (String reason : reasons) {
-						status += reason + ";";
-					}
-					table.add(
-							new PrasyaratDisplay(
-									MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),
-											MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA),
-									status.split(";")));
-				} else {
-					if (mhs.hasLulusKuliah(mk.getClass().getSimpleName())) {
-						table.add(new PrasyaratDisplay(
-								MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),
-										MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA),
-								new String[] { "sudah lulus" }));
-					} else {
-						table.add(new PrasyaratDisplay(
-								MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),
-										MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA),
-								new String[] { "memenuhi syarat" }));
-					}
-				}
+			if (mhs.hasLulusKuliah(mk.getKode())) {
+				table.add(new PrasyaratDisplay(mk, new String[] { "sudah lulus" }));
 			} else {
-				if (mhs.hasLulusKuliah(mk.getClass().getSimpleName())) {
-					table.add(new PrasyaratDisplay(
-							MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),
-									MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA),
-							new String[] { "sudah lulus" }));
+				if ((Object)mk instanceof HasPrasyarat) {
+					List<String> reasons = new ArrayList<String>();
+					((HasPrasyarat) mk).checkPrasyarat(mhs, reasons);
+					if (!reasons.isEmpty()) {
+						table.add(new PrasyaratDisplay(mk, reasons.toArray(new String[reasons.size()])));
+					} else {
+						if (mhs.hasLulusKuliah(mk.getKode())) {
+							table.add(new PrasyaratDisplay(mk, new String[] { "sudah lulus" }));
+						} else {
+							table.add(new PrasyaratDisplay(mk, new String[] { "memenuhi syarat" }));
+						}
+					}
 				} else {
-					table.add(new PrasyaratDisplay(
-							MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),
-									MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA),
-							new String[] { "tidak memiliki prasyarat" }));
+					table.add(new PrasyaratDisplay(mk, new String[] { "tidak memiliki prasyarat" }));
 				}
+
 			}
-		}
-		for (MataKuliah mk : mkUnknown) {
-			table.add(new PrasyaratDisplay(mk, new String[] { "data prasyarat tidak tersedia" }));
 		}
 		return table;
 	}

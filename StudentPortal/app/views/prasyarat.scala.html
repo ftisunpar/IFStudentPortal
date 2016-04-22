@@ -34,13 +34,13 @@
 						<tbody>
 						@for(ls<-list){
 							<tr>
-								<td class="text-center" rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().kode()
+								<td class="text-center" rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().getKode()
 								@if(!ls.getStatus()(0).contains("data prasyarat tidak tersedia")){
-									<a target="_blank" href= @{val ref = "https://github.com/pascalalfadian/SIAModels/blob/master/src/main/java/id/ac/unpar/siamodels/matakuliah/"+ls.getMataKuliah().kode()+".java"; ref}><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
+									<a target="_blank" href= @{val ref = "https://github.com/pascalalfadian/SIAModels/blob/master/src/main/java/id/ac/unpar/siamodels/matakuliah/"+ls.getMataKuliah().getKode()+".java"; ref}><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
 								}
 								</td>
 
-								<td rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().nama()</td>
+								<td rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().getNama()</td>
 								
 								@for(stat<-ls.getStatus()){
 									@if(!stat.isEmpty){

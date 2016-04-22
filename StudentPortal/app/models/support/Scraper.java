@@ -98,7 +98,8 @@ public class Scraper {
 		return currTahunSemester;
 	}
 
-	public List<MataKuliah> requestKuliah(String phpsessid) throws IOException {
+	public List<MataKuliah> requestAvailableKuliah(String phpsessid) throws IOException {
+		MataKuliahFactory mkFactory = MataKuliahFactory.getInstance();
 		Connection connection = Jsoup.connect(ALLJADWAL_URL);
 		connection.cookie("PHPSESSID", phpsessid);
 		connection.timeout(0);
@@ -109,7 +110,7 @@ public class Scraper {
 		Elements jadwal = doc.select("tr");
 		String prev = "";
 		List<MataKuliah> mkList;
-		mkList = new ArrayList<MataKuliah>();
+		mkList = new ArrayList<>(jadwal.size());
 		for (int i = 1; i < jadwal.size() - 1; i++) {
 			Elements row = jadwal.get(i).children();
 			if (!row.get(1).text().equals("")) {
@@ -117,7 +118,7 @@ public class Scraper {
 				String nama = row.get(2).text();
 				String sks = row.get(3).text();
 				if (!kode.equals(prev)) {
-					MataKuliah curr = MataKuliahFactory.getInstance().createMataKuliah(kode, Integer.parseInt(sks),
+					MataKuliah curr = mkFactory.createMataKuliah(kode, Integer.parseInt(sks),
 							nama);
 					mkList.add(curr);
 				}

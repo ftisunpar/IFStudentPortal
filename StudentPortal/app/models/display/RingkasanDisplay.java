@@ -32,7 +32,7 @@ public class RingkasanDisplay {
 
 	public String getNamaPilWajib(String kode) {
 		return MataKuliahFactory.getInstance()
-				.createMataKuliah(kode, MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA).nama() + "";
+				.createMataKuliah(kode).getNama() + "";
 	}
 
 	public String[] getPilWajibLulus() {
