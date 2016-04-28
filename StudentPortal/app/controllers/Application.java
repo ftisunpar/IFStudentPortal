@@ -15,7 +15,7 @@ import org.jsoup.nodes.Element;
 
 import models.display.JadwalDisplay;
 import models.display.PrasyaratDisplay;
-import models.display.RingkasanDisplay;
+import models.display.KelulusanDisplay;
 import id.ac.unpar.siamodels.JadwalKuliah;
 import id.ac.unpar.siamodels.Mahasiswa;
 import id.ac.unpar.siamodels.Mahasiswa.Nilai;
@@ -158,16 +158,20 @@ public class Application extends Controller {
 			Logger.info(
 					"User " + session("email") + " mengakses halaman Data akademik dari " + request().remoteAddress());
 			if (mhs.getRiwayatNilai().size() == 0) {
-				RingkasanDisplay display = null;
-				return ok(views.html.ringkasan.render(display));
+				KelulusanDisplay display = null;
+				return ok(views.html.kelulusan.render(display));
 			} else {
 				Mahasiswa currMahasiswa = mhs;
-				RingkasanDisplay display = new RingkasanDisplay(String.format("%.2f", currMahasiswa.calculateIPS()),
-						String.format("%.2f", currMahasiswa.calculateIPLulus()), currMahasiswa.calculateSKSLulus());
+				KelulusanDisplay display = new KelulusanDisplay();
+				display.ips = String.format("%.2f", mhs.calculateIPS());
+				display.ipKumulatif = String.format("%.2f", mhs.calculateIPKumulatif());
+				display.ipLulus = String.format("%.2f", mhs.calculateIPLulus());
+				display.ipNTerbaik = String.format("%.2f", mhs.calculateIPTempuh(false));
+				display.sksLulusTotal = mhs.calculateSKSLulus();
 				Kelulusan str = new Kelulusan();
 				ArrayList<String> arrString = new ArrayList<>();
 				str.checkPrasyarat(currMahasiswa, arrString);
-				display.setData(arrString);
+				display.alasanBelumLulus = arrString;
 				List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();
 				int lastIndex = riwayatNilai.size() - 1;
 				Semester semester = riwayatNilai.get(lastIndex).getSemester();
@@ -184,27 +188,11 @@ public class Application extends Controller {
 					}
 				}
 				String semTerakhir = semester + " " + tahunAjaran + "/" + (tahunAjaran + 1);
-				display.setDataSemTerakhir(semTerakhir, totalSKS);
+				display.semesterTerakhir = semTerakhir;
+				display.sksLulusSemTerakhir = totalSKS;
 				String pilWajibLulus = new String();
 				String pilWajibBelumLulus = new String();
-				for (int i = 0; i < display.getPilWajib().length; i++) {
-					if (mhs.hasLulusKuliah(display.getPilWajib()[i])) {
-						pilWajibLulus += display.getPilWajib()[i] + ";";
-					} else {
-						pilWajibBelumLulus += display.getPilWajib()[i] + ";";
-					}
-				}
-				if (!pilWajibLulus.isEmpty()) {
-					display.setPilWajibLulus(pilWajibLulus.split(";"));
-				} else {
-					display.setPilWajibLulus(new String[] {});
-				}
-				if (!pilWajibBelumLulus.isEmpty()) {
-					display.setPilWajibBelumLulus(pilWajibBelumLulus.split(";"));
-				} else {
-					display.setPilWajibBelumLulus(new String[] {});
-				}
-				return ok(views.html.ringkasan.render(display));
+				return ok(views.html.kelulusan.render(display));
 			}
 		}
 	}
