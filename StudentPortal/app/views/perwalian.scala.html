@@ -1,4 +1,4 @@
-@(list: List[models.display.PrasyaratDisplay], semester: String)
+@(list: List[models.display.PrasyaratDisplay], semester: String, dataAkademik: models.display.DataAkademikDisplay)
 
 <!DOCTYPE html>
 
@@ -15,6 +15,35 @@
 					<h2 class="text-center">PERSIAPAN PERWALIAN</h2> 
 					<h4 class="text-center">SEMESTER @semester</h4> 
 				</div>
+				@if(list==null){
+					<div class="row">
+						<h5 style="color: gray;">DATA AKADEMIK BELUM TERSEDIA <span class="glyphicon glyphicon-exclamation-sign"></span></h5>
+					</div>	
+				}else{
+					<div class="row">
+						<div class="col-lg-2 kelulusan-panel"></div>
+	                    <div class="col-lg-8 kelulusan-panel">
+							<div class="page-header">
+								<h5 class="text-center">DATA AKADEMIK</h5>
+							</div>
+							<div class="kelulusan-body">
+								IPS <a target="_blank" href="https://github.com/pascalalfadian/SIAModels/blob/master/src/main/java/id/ac/unpar/siamodels/Mahasiswa.java#L199"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> @dataAkademik.semesterTerakhir: @dataAkademik.ips dari @dataAkademik.sksLulusSemTerakhir SKS<br>
+								IP Kumulatif <a target="_blank" href="https://github.com/pascalalfadian/SIAModels/blob/master/src/main/java/id/ac/unpar/siamodels/Mahasiswa.java#L154"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>: @dataAkademik.ipKumulatif<br>
+								IP Lulus <a target="_blank" href="https://github.com/pascalalfadian/SIAModels/blob/master/src/main/java/id/ac/unpar/siamodels/Mahasiswa.java#L99"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>: @dataAkademik.ipLulus<br>
+								IP N. Terbaik <a target="_blank" href="https://github.com/pascalalfadian/SIAModels/blob/master/src/main/java/id/ac/unpar/siamodels/Mahasiswa.java#L113"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>: @dataAkademik.ipNTerbaik<br>
+								SKS lulus: @dataAkademik.sksLulusTotal<br>
+								@if(dataAkademik.nilaiTOEFLTerakhir !=0){
+									Nilai TOEFL Terakhir: @dataAkademik.nilaiTOEFLTerakhir<br>
+								}else{
+									Nilai TOEFL Terakhir: (belum mengambil)<br>
+								}
+							</div>
+						</div>
+	                </div>
+				}
+				
+				<p>&nbsp;</p>
+				
 				@if(list==null){
 					<div class="row">
 						<h5 style="color: gray;">PRASYARAT BELUM TERSEDIA <span class="glyphicon glyphicon-exclamation-sign"></span></h5>
@@ -34,18 +63,18 @@
 						<tbody>
 						@for(ls<-list){
 							<tr>
-								<td class="text-center" rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().getKode()
-								@if(!ls.getStatus()(0).contains("data prasyarat tidak tersedia")){
-									<a target="_blank" href= @{val ref = "https://github.com/pascalalfadian/SIAModels/blob/master/src/main/java/id/ac/unpar/siamodels/matakuliah/"+ls.getMataKuliah().getKode()+".java"; ref}><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
+								<td class="text-center" rowspan="@(ls.status.length)">@ls.mataKuliah.getKode()
+								@if(!ls.status(0).contains("data prasyarat tidak tersedia")){
+									<a target="_blank" href= @{val ref = "https://github.com/pascalalfadian/SIAModels/blob/master/src/main/java/id/ac/unpar/siamodels/matakuliah/"+ls.mataKuliah.getKode()+".java"; ref}><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
 								}
 								</td>
 
-								<td rowspan="@(ls.getStatus().length)">@ls.getMataKuliah().getNama()</td>
+								<td rowspan="@(ls.status.length)">@ls.mataKuliah.getNama()</td>
 								
-								@for(stat<-ls.getStatus()){
+								@for(stat<-ls.status){
 									@if(!stat.isEmpty){
 										@{
-											if(stat.equals(ls.getStatus()(0))){
+											if(stat.equals(ls.status(0))){
 												if(stat.contains("sudah lulus")){
 													<td style="color: #0066FF;">{stat} <span class="glyphicon glyphicon-flag"></span></td>
 												}else if(stat.contains("memenuhi syarat")){

@@ -13,6 +13,7 @@ import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import models.display.DataAkademikDisplay;
 import models.display.JadwalDisplay;
 import models.display.PrasyaratDisplay;
 import models.display.KelulusanDisplay;
@@ -111,17 +112,41 @@ public class Application extends Controller {
 			List<JadwalKuliah> jadwalList = scrap.requestJadwal(session("phpsessid"));
 			mhs.setJadwalKuliahList(jadwalList);
 			scrap.requestNilai(session("phpsessid"), mhs);
+			DataAkademikDisplay dataAkademik = new DataAkademikDisplay(); 
+			dataAkademik.ips = String.format("%.2f", mhs.calculateIPS());
+			dataAkademik.ipKumulatif = String.format("%.2f", mhs.calculateIPKumulatif());
+			dataAkademik.ipLulus = String.format("%.2f", mhs.calculateIPLulus());
+			dataAkademik.ipNTerbaik = String.format("%.2f", mhs.calculateIPTempuh(false));
+			dataAkademik.sksLulusTotal = mhs.calculateSKSLulus();
+			List<Nilai> riwayatNilai = mhs.getRiwayatNilai();
+			int lastIndex = riwayatNilai.size() - 1;
+			Semester semester = riwayatNilai.get(lastIndex).getSemester();
+			int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
+			int totalSKS = 0;
+			for (int i = lastIndex; i >= 0; i--) {
+				Nilai nilai = riwayatNilai.get(i);
+				if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
+					if (nilai.getAngkaAkhir() != null) {
+						totalSKS += nilai.getMataKuliah().getSks();
+					}
+				} else {
+					break;
+				}
+			}
+			String semTerakhir = semester + " " + tahunAjaran + "/" + (tahunAjaran + 1);
+			dataAkademik.semesterTerakhir = semTerakhir;
+			dataAkademik.sksLulusSemTerakhir = totalSKS;
 			Logger.info("User " + session("email") + " mengakses halaman prasyarat dari " + request().remoteAddress());
-			if (mhs.getRiwayatNilai().size() == 0) {
+			if (riwayatNilai.size() == 0) {
 				List<PrasyaratDisplay> table = null;
-				String semester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
+				String currentSemester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
 						+ (currTahunSemester.getTahun() + 1);
-				return ok(views.html.prasyarat.render(table, semester));
+				return ok(views.html.perwalian.render(table, currentSemester, dataAkademik));
 			} else {
 				List<PrasyaratDisplay> table = checkPrasyarat();
-				String semester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
+				String currentSemester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
 						+ (currTahunSemester.getTahun() + 1);
-				return ok(views.html.prasyarat.render(table, semester));
+				return ok(views.html.perwalian.render(table, currentSemester, dataAkademik));
 			}
 		}
 	}
@@ -163,35 +188,10 @@ public class Application extends Controller {
 			} else {
 				Mahasiswa currMahasiswa = mhs;
 				KelulusanDisplay display = new KelulusanDisplay();
-				display.ips = String.format("%.2f", mhs.calculateIPS());
-				display.ipKumulatif = String.format("%.2f", mhs.calculateIPKumulatif());
-				display.ipLulus = String.format("%.2f", mhs.calculateIPLulus());
-				display.ipNTerbaik = String.format("%.2f", mhs.calculateIPTempuh(false));
-				display.sksLulusTotal = mhs.calculateSKSLulus();
 				Kelulusan str = new Kelulusan();
 				ArrayList<String> arrString = new ArrayList<>();
 				str.checkPrasyarat(currMahasiswa, arrString);
 				display.alasanBelumLulus = arrString;
-				List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();
-				int lastIndex = riwayatNilai.size() - 1;
-				Semester semester = riwayatNilai.get(lastIndex).getSemester();
-				int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
-				int totalSKS = 0;
-				for (int i = lastIndex; i >= 0; i--) {
-					Nilai nilai = riwayatNilai.get(i);
-					if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
-						if (nilai.getAngkaAkhir() != null) {
-							totalSKS += nilai.getMataKuliah().getSks();
-						}
-					} else {
-						break;
-					}
-				}
-				String semTerakhir = semester + " " + tahunAjaran + "/" + (tahunAjaran + 1);
-				display.semesterTerakhir = semTerakhir;
-				display.sksLulusSemTerakhir = totalSKS;
-				String pilWajibLulus = new String();
-				String pilWajibBelumLulus = new String();
 				return ok(views.html.kelulusan.render(display));
 			}
 		}
