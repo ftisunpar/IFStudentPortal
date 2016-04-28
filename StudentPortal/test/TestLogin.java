@@ -1,9 +1,12 @@
 import org.junit.*;
+
 import static org.junit.Assert.*;
 
 import static play.test.Helpers.running;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.fluentlenium.core.filter.FilterConstructor.*;
 
@@ -28,9 +31,13 @@ public class TestLogin extends FunctionalTest {
 		running(server, new Runnable() {
 			@Override
 			public void run() {
-				browser.goTo("/");
+				browser.goTo(FunctionalTest.URL_HOME);
 				browser.find(".form-control", withName("submit")).click();
-				assertEquals("Error:\nEmail tidak valid", browser.find(".alert-danger").getText());
+				String cek=browser.find(".alert-danger").getText();
+				Matcher matcher = Pattern.compile(".*Email tidak valid.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				boolean condition = matcher.matches();
+				assertTrue(condition);
+				//assertEquals("Error:\nEmail tidak valid", browser.find(".alert-danger").getText());
 			}
 		});
 	}
@@ -44,69 +51,85 @@ public class TestLogin extends FunctionalTest {
 		running(server, new Runnable() {
 			@Override
 			public void run() {
-				browser.goTo("/");
+				browser.goTo(FunctionalTest.URL_HOME);
 				browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailInvalid());
 				browser.find(".form-control", withName("submit")).get(0).click();
-				assertEquals("Error:\nEmail tidak valid", browser.find(".alert-danger").getText());
+				//assertEquals("Error:\nEmail tidak valid", browser.find(".alert-danger").getText());
+				String cek=browser.find(".alert-danger").getText();
+				Matcher matcher = Pattern.compile(".*Email tidak valid.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				boolean condition = matcher.matches();
+				assertTrue(condition);
 			}
 		});
 	}
 
 	/**
 	 * Jika email yang dimasukkan bukan email mahasiswa teknik informatika, akan
-	 * ditampilkan pesan “Maaf, Anda bukan mahasiswa teknik informatika”
+	 * ditampilkan pesan “bukan mahasiswa teknik informatika”
 	 */
 	@Test
 	public void testUserInvalidITUnpar() {
 		running(server, new Runnable() {
 			@Override
 			public void run() {
-				browser.goTo("/");
+				browser.goTo(FunctionalTest.URL_HOME);
 				browser.find(".form-control", withId("email-input")).get(0)
 						.text(objFileConfReader.getEmailNotStudentUnpar());
 				browser.find(".form-control", withName("submit")).get(0).click();
-				assertEquals("Error:\nMaaf, Anda bukan mahasiswa teknik informatika",
-						browser.find(".alert-danger").getText());
+				//assertEquals("Error:\nMaaf, Anda bukan mahasiswa teknik informatika",
+						//browser.find(".alert-danger").getText());
+				String cek=browser.find(".alert-danger").getText();
+				Matcher matcher = Pattern.compile(".*bukan.+informatika.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				boolean condition = matcher.matches();
+				assertTrue(condition);
 			}
 		});
 	}
 
 	/**
-	 * Jika email dan password tidak sesuai akan ditampilkan pesan “Password
-	 * yang Anda masukkan salah atau Anda bukan mahasiswa aktif”
+	 * Jika email dan password tidak sesuai akan ditampilkan pesan “Password yang anda masukkan salah 
+	 * atau bukan mahasiswa aktif”
 	 */
 	@Test
 	public void testUserValidPassInvalid() {
 		running(server, new Runnable() {
 			@Override
 			public void run() {
-				browser.goTo("/");
+				browser.goTo(FunctionalTest.URL_HOME);
 				browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
 				browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassInvalid());
 				browser.find(".form-control", withName("submit")).get(0).click();
-				assertEquals("Error:\nPassword yang Anda masukkan salah atau Anda bukan mahasiswa aktif",
-						browser.find(".alert-danger").getText());
+				//assertEquals("Error:\nPassword yang Anda masukkan salah atau Anda bukan mahasiswa aktif",
+						//browser.find(".alert-danger").getText());
+				String cek=browser.find(".alert-danger").getText();
+				Matcher matcher = Pattern.compile(".*password.+salah.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				boolean condition = matcher.matches();
+				assertTrue(condition);
 			}
 		});
 	}
 
 	/**
 	 * Jika email dan password sesuai tetapi bukan mahasiswa aktif, akan
-	 * ditampilkan pesan “Password yang Anda masukkan salah atau Anda bukan
-	 * mahasiswa aktif”
+	 * ditampilkan pesan “Password yang anda masukkan salah 
+	 * atau bukan mahasiswa aktif”
 	 */
 	@Test
 	public void testUserValidPassValidInactive() {
 		running(server, new Runnable() {
 			@Override
 			public void run() {
-				browser.goTo("/");
+				browser.goTo(FunctionalTest.URL_HOME);
 				browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailNotActive());
 				browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPasswordNotActive());
 				// WARN : BELUM DICEK KARENA TIDAK ADA ID YANG TIDAK AKTIF
 				browser.find(".form-control", withName("submit")).get(0).click();
-				assertEquals("Error:\nPassword yang Anda masukkan salah atau Anda bukan mahasiswa aktif",
-						browser.find(".alert-danger").getText());
+				//assertEquals("Error:\nPassword yang Anda masukkan salah atau Anda bukan mahasiswa aktif",
+						//browser.find(".alert-danger").getText());
+				String cek=browser.find(".alert-danger").getText();
+				Matcher matcher = Pattern.compile(".*bukan mahasiswa aktif.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				boolean condition = matcher.matches();
+				assertTrue(condition);
 			}
 		});
 	}
@@ -119,12 +142,16 @@ public class TestLogin extends FunctionalTest {
 		running(server, new Runnable() {
 			@Override
 			public void run() {
-				browser.goTo("/");
+				browser.goTo(FunctionalTest.URL_HOME);
 				browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
 				browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
 				browser.find(".form-control", withName("submit")).get(0).click();
-				assertEquals("Selamat datang di Informatika Student Portal!",
-						browser.find(".row").get(0).find("h2").get(0).getText());
+				String cek=browser.find(".row").get(0).find("h2").get(0).getText();
+				Matcher matcher = Pattern.compile(".*selamat.+datang.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				boolean condition = matcher.matches();
+				assertTrue(condition);
+				//assertEquals("Selamat datang di Informatika Student Portal!",
+						//browser.find(".row").get(0).find("h2").get(0).getText());
 			}
 		});
 	}
