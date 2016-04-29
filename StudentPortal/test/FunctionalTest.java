@@ -28,6 +28,12 @@ public class FunctionalTest extends WithBrowser {
 
 	protected FileConfReader objFileConfReader ;
 	
+	public static String URL_HOME = "/";
+	public static String URL_PERSIAPAN_PERWALIAN = "/perwalian";
+	public static String URL_JADWAL_KULIAH = "/jadwalkuliah";
+	public static String URL_SYARAT_KELULUSAN = "/kelulusan";
+	public static String URL_LOG_OUT = "/logout";
+	
 	public FunctionalTest() throws IOException{
 		this.objFileConfReader = FileConfReader.getObjFileConfReader();
 	}

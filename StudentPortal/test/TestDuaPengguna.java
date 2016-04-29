@@ -1,3 +1,5 @@
+import org.fluentlenium.core.domain.FluentList;
+import org.fluentlenium.core.domain.FluentWebElement;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.openqa.selenium.*;
@@ -6,6 +8,8 @@ import play.test.TestBrowser;
 import static play.test.Helpers.running;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.fluentlenium.core.filter.FilterConstructor.*;
 
@@ -36,19 +40,25 @@ public class TestDuaPengguna extends FunctionalTest {
 		running(server, new Runnable() {
 			@Override
 			public void run() {
-				browser.goTo("/");
+				browser.goTo(FunctionalTest.URL_HOME);
 				browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
 				browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
 				browser.find(".form-control", withName("submit")).get(0).click();
-				browser.goTo("/prasyarat");
-				assertEquals("PEMERIKSAAN PRASYARAT MATA KULIAH",
-						browser.find(".row").get(0).find("h2").get(0).getText());
-				browser2.goTo("/");
+				browser.goTo(FunctionalTest.URL_PERSIAPAN_PERWALIAN);
+				String cek=browser.find(".row").get(0).find("h2").get(0).getText();
+				Matcher matcher = Pattern.compile(".*persiapan perwalian.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				boolean condition = matcher.matches();
+				assertTrue(condition);
+				browser2.goTo(FunctionalTest.URL_HOME);
 				browser2.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
 				browser2.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
 				browser2.find(".form-control", withName("submit")).get(0).click();
-				browser2.goTo("/jadwalkuliah");
-				assertEquals("JADWAL KULIAH", browser2.find(".row").get(0).find("h2").get(0).getText());
+				browser2.goTo(FunctionalTest.URL_JADWAL_KULIAH);
+				FluentList<FluentWebElement> e1 = browser2.find(".jadwal-cell");
+				cek=browser2.find(".row").get(0).find("h2").get(0).getText();
+				matcher = Pattern.compile(".*jadwal.+kuliah.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				condition = matcher.matches();
+				assertTrue(condition);
 			}
 		});
 	}

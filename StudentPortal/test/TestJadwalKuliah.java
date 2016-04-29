@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import static play.test.Helpers.running;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.fluentlenium.core.filter.FilterConstructor.*;
 
@@ -33,18 +35,22 @@ public class TestJadwalKuliah extends FunctionalTest {
 		running(server, new Runnable() {
 			@Override
 			public void run() {
-				browser.goTo("/");
+				browser.goTo(FunctionalTest.URL_HOME);
 				browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
 				browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
 				browser.find(".form-control", withName("submit")).get(0).click();
-				browser.goTo("/jadwalkuliah");
-				assertEquals("JADWAL KULIAH", browser.find(".row").get(0).find("h2").get(0).getText());
-
+				browser.goTo(FunctionalTest.URL_JADWAL_KULIAH);
+				//assertEquals("JADWAL KULIAH", browser.find(".row").get(0).find("h2").get(0).getText());
 				FluentList<FluentWebElement> e1 = browser.find(".jadwal-cell");
+				String cek=browser.find(".row").get(0).find("h2").get(0).getText();
+				Matcher matcher = Pattern.compile(".*jadwal.+kuliah.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				boolean condition = matcher.matches();
+				assertTrue(condition);
 				// System.out.println("SIZE: " + e1.size()); //debug
 				// System.out.println(e1.get(0).getText()); //debug
 				if (!(e1.size() > 0)) {
-					assertEquals("Seharusnya size lebih dari 0", "tetapi ternyata 0");
+					System.err.print("Mahasiwa terdaftar prs tetapi tidak memiliki jadwal kuliah");
+					assertTrue(false);
 				}
 			}
 		});
@@ -60,16 +66,21 @@ public class TestJadwalKuliah extends FunctionalTest {
 		running(server, new Runnable() {
 			@Override
 			public void run() {
-				browser.goTo("/");
+				browser.goTo(FunctionalTest.URL_HOME);
 				browser.find(".form-control", withId("email-input")).get(0).text(objFileConfReader.getEmailValid());
 				browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
 				browser.find(".form-control", withName("submit")).get(0).click();
-				browser.goTo("/jadwalkuliah");
-				FluentList<FluentWebElement> e1 = browser.find(".row").get(1).find("h5");
+				browser.goTo(FunctionalTest.URL_JADWAL_KULIAH);
+				FluentList<FluentWebElement> e1 = browser.find(".row").get(1).find("h5");	
 				if (e1.size() > 0) {
+					String cek=e1.get(0).getText();
 					assertEquals("JADWAL KULIAH BELUM TERSEDIA", e1.get(0).getText());
+					Matcher matcher = Pattern.compile(".*jadwal.+belum.+tersedia.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+					boolean condition = matcher.matches();
+					assertTrue(condition);
 				} else {
-					assertEquals("JADWAL KULIAH BELUM TERSEDIA", "testGagal");
+					System.err.print("Mahasiswa memiliki jadwal kuliah");
+					assertTrue(false);
 				}
 			}
 		});
