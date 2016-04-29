@@ -13,13 +13,14 @@ import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import models.display.DataAkademikDisplay;
 import models.display.JadwalDisplay;
 import models.display.PrasyaratDisplay;
-import models.display.RingkasanDisplay;
+import models.display.KelulusanDisplay;
 import id.ac.unpar.siamodels.JadwalKuliah;
 import id.ac.unpar.siamodels.Mahasiswa;
-import id.ac.unpar.siamodels.MataKuliah;
 import id.ac.unpar.siamodels.Mahasiswa.Nilai;
+import id.ac.unpar.siamodels.MataKuliah;
 import id.ac.unpar.siamodels.MataKuliahFactory;
 import id.ac.unpar.siamodels.Semester;
 import id.ac.unpar.siamodels.TahunSemester;
@@ -61,12 +62,12 @@ public class Application extends Controller {
 		String pass = dynamicForm.get("pass");
 		if (!email.matches("[0-9]{7}+@student.unpar.ac.id")) {
 			Logger.info(
-					"User: " + email + " gagal login dari " + request().remoteAddress() + " karena salah input E-Mail");
+					"User: " + email + " gagal login dari " + request().remoteAddress() + " karena e-mail tidak valid");
 			return ok(views.html.login.render(errorHtml + "Email tidak valid" + "</div>"));
 		}
 		if (!(email.charAt(0) == '7' && email.charAt(1) == '3')) {
 			Logger.info("User: " + email + " gagal login dari " + request().remoteAddress()
-					+ " karena bukan mahasiswa teknik informatika");
+					+ " karena bukan mahasiswa teknik informatika (73*)");
 			return ok(views.html.login.render(errorHtml + " bukan mahasiswa teknik informatika" + "</div>"));
 		}
 		String npm = "20" + email.substring(2, 4) + email.substring(0, 2) + "0" + email.substring(4, 7);
@@ -104,24 +105,51 @@ public class Application extends Controller {
 			session().clear();
 			return index();
 		} else {
+			String phpsessid = session("phpsessid");
+			Logger.info("User " + session("email") + " mengakses halaman prasyarat dari " + request().remoteAddress());
 			Mahasiswa mhs = new Mahasiswa(session("npm"));
 			Scraper scrap = new Scraper();
 			TahunSemester currTahunSemester = scrap.requestNamePhotoTahunSemester(session("phpsessid"), mhs);
-			scrap.requestKuliah(session("phpsessid"));
-			List<JadwalKuliah> jadwalList = scrap.requestJadwal(session("phpsessid"));
+			scrap.requestAvailableKuliah(phpsessid);
+			scrap.requestNilaiTOEFL(phpsessid, mhs);
+			List<JadwalKuliah> jadwalList = scrap.requestJadwal(phpsessid);
 			mhs.setJadwalKuliahList(jadwalList);
-			scrap.requestNilai(session("phpsessid"), mhs);
-			Logger.info("User " + session("email") + " mengakses halaman prasyarat dari " + request().remoteAddress());
-			if (mhs.getRiwayatNilai().size() == 0) {
+			scrap.requestNilai(phpsessid, mhs);
+			DataAkademikDisplay dataAkademik = new DataAkademikDisplay(); 
+			dataAkademik.ips = String.format("%.2f", mhs.calculateIPS());
+			dataAkademik.ipKumulatif = String.format("%.2f", mhs.calculateIPKumulatif());
+			dataAkademik.ipLulus = String.format("%.2f", mhs.calculateIPLulus());
+			dataAkademik.ipNTerbaik = String.format("%.2f", mhs.calculateIPTempuh(false));
+			dataAkademik.sksLulusTotal = mhs.calculateSKSLulus();
+			dataAkademik.nilaiTOEFL = "" + mhs.getNilaiTOEFL().values();
+			List<Nilai> riwayatNilai = mhs.getRiwayatNilai();
+			int lastIndex = riwayatNilai.size() - 1;
+			Semester semester = riwayatNilai.get(lastIndex).getSemester();
+			int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
+			int totalSKS = 0;
+			for (int i = lastIndex; i >= 0; i--) {
+				Nilai nilai = riwayatNilai.get(i);
+				if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
+					if (nilai.getAngkaAkhir() != null) {
+						totalSKS += nilai.getMataKuliah().getSks();
+					}
+				} else {
+					break;
+				}
+			}
+			String semTerakhir = semester + " " + tahunAjaran + "/" + (tahunAjaran + 1);
+			dataAkademik.semesterTerakhir = semTerakhir;
+			dataAkademik.sksLulusSemTerakhir = totalSKS;
+			if (riwayatNilai.size() == 0) {
 				List<PrasyaratDisplay> table = null;
-				String semester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
+				String currentSemester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
 						+ (currTahunSemester.getTahun() + 1);
-				return ok(views.html.prasyarat.render(table, semester));
+				return ok(views.html.perwalian.render(table, currentSemester, dataAkademik));
 			} else {
 				List<PrasyaratDisplay> table = checkPrasyarat();
-				String semester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
+				String currentSemester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
 						+ (currTahunSemester.getTahun() + 1);
-				return ok(views.html.prasyarat.render(table, semester));
+				return ok(views.html.perwalian.render(table, currentSemester, dataAkademik));
 			}
 		}
 	}
@@ -151,60 +179,24 @@ public class Application extends Controller {
 			session().clear();
 			return index();
 		} else {
-			Scraper scrap = new Scraper();
-			Mahasiswa mhs = new Mahasiswa(session("npm"));
-			scrap.requestNilai(session("phpsessid"), mhs);
-			scrap.requestNilaiTOEFL(session("phpsessid"), mhs);
+			String phpsessid = session("phpsessid"); 
 			Logger.info(
 					"User " + session("email") + " mengakses halaman Data akademik dari " + request().remoteAddress());
+			Scraper scrap = new Scraper();
+			Mahasiswa mhs = new Mahasiswa(session("npm"));
+			scrap.requestNilai(phpsessid, mhs);
+			scrap.requestNilaiTOEFL(phpsessid, mhs);
 			if (mhs.getRiwayatNilai().size() == 0) {
-				RingkasanDisplay display = null;
-				return ok(views.html.ringkasan.render(display));
+				KelulusanDisplay display = null;
+				return ok(views.html.kelulusan.render(display));
 			} else {
 				Mahasiswa currMahasiswa = mhs;
-				RingkasanDisplay display = new RingkasanDisplay(String.format("%.2f", currMahasiswa.calculateIPS()),
-						String.format("%.2f", currMahasiswa.calculateIPLulus()), currMahasiswa.calculateSKSLulus());
+				KelulusanDisplay display = new KelulusanDisplay();
 				Kelulusan str = new Kelulusan();
 				ArrayList<String> arrString = new ArrayList<>();
 				str.checkPrasyarat(currMahasiswa, arrString);
-				display.setData(arrString);
-				List<Nilai> riwayatNilai = currMahasiswa.getRiwayatNilai();
-				int lastIndex = riwayatNilai.size() - 1;
-				Semester semester = riwayatNilai.get(lastIndex).getSemester();
-				int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
-				int totalSKS = 0;
-				for (int i = lastIndex; i >= 0; i--) {
-					Nilai nilai = riwayatNilai.get(i);
-					if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
-						if (nilai.getAngkaAkhir() != null) {
-							totalSKS += nilai.getMataKuliah().sks();
-						}
-					} else {
-						break;
-					}
-				}
-				String semTerakhir = semester + " " + tahunAjaran + "/" + (tahunAjaran + 1);
-				display.setDataSemTerakhir(semTerakhir, totalSKS);
-				String pilWajibLulus = new String();
-				String pilWajibBelumLulus = new String();
-				for (int i = 0; i < display.getPilWajib().length; i++) {
-					if (mhs.hasLulusKuliah(display.getPilWajib()[i])) {
-						pilWajibLulus += display.getPilWajib()[i] + ";";
-					} else {
-						pilWajibBelumLulus += display.getPilWajib()[i] + ";";
-					}
-				}
-				if (!pilWajibLulus.isEmpty()) {
-					display.setPilWajibLulus(pilWajibLulus.split(";"));
-				} else {
-					display.setPilWajibLulus(new String[] {});
-				}
-				if (!pilWajibBelumLulus.isEmpty()) {
-					display.setPilWajibBelumLulus(pilWajibBelumLulus.split(";"));
-				} else {
-					display.setPilWajibBelumLulus(new String[] {});
-				}
-				return ok(views.html.ringkasan.render(display));
+				display.alasanBelumLulus = arrString;
+				return ok(views.html.kelulusan.render(display));
 			}
 		}
 	}
@@ -230,66 +222,28 @@ public class Application extends Controller {
 		Mahasiswa mhs = new Mahasiswa(session("npm"));
 		scrap.requestNilai(session("phpsessid"), mhs);
 		List<PrasyaratDisplay> table = new ArrayList<PrasyaratDisplay>();
-		List<MataKuliah> mkList = scrap.requestKuliah(session("phpsessid"));
-		String MATAKULIAH_REPOSITORY_PACKAGE = "id.ac.unpar.siamodels.matakuliah";
-		List<Object> mkKnown = new ArrayList<Object>();
-		List<MataKuliah> mkUnknown = new ArrayList<MataKuliah>();
+		List<MataKuliah> mkList = scrap.requestAvailableKuliah(session("phpsessid"));
 		for (MataKuliah mk : mkList) {
-			try {
-				Class<?> mkClass = Class.forName(MATAKULIAH_REPOSITORY_PACKAGE + "." + mk.kode());
-				Object matakuliah = mkClass.newInstance();
-				mkKnown.add(matakuliah);
-			} catch (ClassNotFoundException e) {
-				mkUnknown.add(mk);
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			}
-		}
-		for (Object mk : mkKnown) {
-			if (mk instanceof HasPrasyarat) {
-				List<String> reasons = new ArrayList<String>();
-				((HasPrasyarat) mk).checkPrasyarat(mhs, reasons);
-				if (!reasons.isEmpty()) {
-					String status = new String();
-					for (String reason : reasons) {
-						status += reason + ";";
-					}
-					table.add(
-							new PrasyaratDisplay(
-									MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),
-											MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA),
-									status.split(";")));
-				} else {
-					if (mhs.hasLulusKuliah(mk.getClass().getSimpleName())) {
-						table.add(new PrasyaratDisplay(
-								MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),
-										MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA),
-								new String[] { "sudah lulus" }));
-					} else {
-						table.add(new PrasyaratDisplay(
-								MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),
-										MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA),
-								new String[] { "memenuhi syarat" }));
-					}
-				}
+			if (mhs.hasLulusKuliah(mk.getKode())) {
+				table.add(new PrasyaratDisplay(mk, new String[] { "sudah lulus" }));
 			} else {
-				if (mhs.hasLulusKuliah(mk.getClass().getSimpleName())) {
-					table.add(new PrasyaratDisplay(
-							MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),
-									MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA),
-							new String[] { "sudah lulus" }));
+				if ((Object)mk instanceof HasPrasyarat) {
+					List<String> reasons = new ArrayList<String>();
+					((HasPrasyarat) mk).checkPrasyarat(mhs, reasons);
+					if (!reasons.isEmpty()) {
+						table.add(new PrasyaratDisplay(mk, reasons.toArray(new String[reasons.size()])));
+					} else {
+						if (mhs.hasLulusKuliah(mk.getKode())) {
+							table.add(new PrasyaratDisplay(mk, new String[] { "sudah lulus" }));
+						} else {
+							table.add(new PrasyaratDisplay(mk, new String[] { "memenuhi syarat" }));
+						}
+					}
 				} else {
-					table.add(new PrasyaratDisplay(
-							MataKuliahFactory.getInstance().createMataKuliah(mk.getClass().getSimpleName(),
-									MataKuliahFactory.UNKNOWN_SKS, MataKuliahFactory.UNKNOWN_NAMA),
-							new String[] { "tidak memiliki prasyarat" }));
+					table.add(new PrasyaratDisplay(mk, new String[] { "tidak memiliki prasyarat" }));
 				}
+
 			}
-		}
-		for (MataKuliah mk : mkUnknown) {
-			table.add(new PrasyaratDisplay(mk, new String[] { "data prasyarat tidak tersedia" }));
 		}
 		return table;
 	}

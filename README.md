@@ -63,7 +63,7 @@ Hasil build ada di `StudentPortal/target/universal/stage`
 1. Masuk ke direktori `StudentPortal/target/universal/stage/bin`
 2. Jalankan salah satu dari:
     * `./ifstudentportal -Dhttps.port=9443 -Dplay.server.https.keyStore.path=../conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat ../conf/password.conf)" -Dapplication.secret="$(cat ../conf/password.conf)"`
-    * `sudo ./ifstudentportal -Dhttps.port=443 -Dplay.server.https.keyStore.path=../conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat ../conf/password.conf)" -Dapplication.secret="$(cat ../conf/password.conf)"`
+    * `sudo ./ifstudentportal -Dhttps.port=443 -Dhttp.port=80 -Dplay.server.https.keyStore.path=../conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat ../conf/password.conf)" -Dapplication.secret="$(cat ../conf/password.conf)"`
 
 ### Autostart
 
@@ -96,7 +96,7 @@ BINDIR="$HOMEDIR$BINFILE"
 start() {
     if [ ! -f $PIDDIR ]
     then
-        $BINDIR -Dhttps.port=443 -Dplay.server.https.keyStore.path=$HOMEDIR/conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat $HOMEDIR/conf/password.conf)" -Dapplication.secret="$(cat $HOMEDIR/conf/password.conf)" &
+        $BINDIR -Dhttps.port=443 -Dhttp.port=80 -Dplay.server.https.keyStore.path=$HOMEDIR/conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat $HOMEDIR/conf/password.conf)" -Dapplication.secret="$(cat $HOMEDIR/conf/password.conf)" &
         echo "IFStudentPortal Started"
     else
         echo "IFStudentPortal is already Running"

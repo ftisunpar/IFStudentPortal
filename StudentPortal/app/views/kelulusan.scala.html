@@ -1,0 +1,53 @@
+@(kelulusan: models.display.KelulusanDisplay )
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+    	@templates.head("Syarat Kelulusan")
+    </head>
+    <body>
+		@templates.sidebar("kelulusan")
+		<div class="main">
+		<!-- Konten Halaman -->
+			<div class="container-fluid">
+				<div class="row">
+					<h2 class="text-center">SYARAT KELULUSAN</h2> 
+				</div>
+				<p></br></p>
+				@if(kelulusan==null){ 
+					<div class="row">
+						<h5 style="color: gray;">DATA AKADEMIK BELUM TERSEDIA <span class="glyphicon glyphicon-exclamation-sign"></span></h5>
+					</div>	
+				}else{
+					<div class="row">
+						<div class="col-lg-2 kelulusan-panel"></div>
+	                    <div class="col-lg-8 kelulusan-panel">
+	                    	<div class="page-header">
+								<h5 class="text-center">SYARAT KELULUSAN</h5>
+							</div>
+							<div class="kelulusan-body">
+								@if(kelulusan.alasanBelumLulus.size()==0){
+									<p>Anda sudah memenuhi syarat untuk lulus.<p>
+								}else{
+									<p>Anda belum memenuhi syarat untuk lulus:</p>
+									<ul>
+										@for(alasan<-kelulusan.alasanBelumLulus){
+											<li>@alasan</li>
+										}
+									</ul>
+								}
+							</div>
+						</div>
+					</div>
+                }
+			</div>
+		</div>
+		<div>
+		</div>
+		<!-- Javascript -->
+		<script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")"></script>
+		<script src="@routes.Assets.versioned("javascripts/script.js")"></script>
+		<script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+		
+    </body>
+</html>

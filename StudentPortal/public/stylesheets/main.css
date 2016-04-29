@@ -46,13 +46,13 @@ th{
 	background-color: #222;
 	color: white;
 }
-.ringkasan-panel .page-header{
+.kelulusan-panel .page-header{
 	background-color: #222;
 	color: white;
 	margin: 0px;
 	padding-top: 5px;
 }
-.ringkasan-body{
+.kelulusan-body{
 	background-color: white;
 	color: black;
 	border: 2px solid #222;
