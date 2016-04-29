@@ -13,7 +13,7 @@ keytool -genkeypair -v \
   -keysize 256 \
   -ext KeyUsage:critical="keyCertSign" \
   -ext BasicConstraints:critical="ca:true" \
-  -validity 9999
+  -validity 3650
 
 # Export the exampleCA public certificate so that it can be used in trust stores..
 keytool -export -v \

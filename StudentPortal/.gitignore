@@ -16,4 +16,5 @@ target
 /certs/*.p12
 /certs/*.csr
 /public/certs/*.crt
+application-log*.gz
 *~

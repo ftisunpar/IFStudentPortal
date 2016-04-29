@@ -11,7 +11,7 @@ keytool -genkeypair -v \
   -storepass:env PW \
   -keyalg EC \
   -keysize 256 \
-  -validity 385
+  -validity 3650
 
 # Create a certificate signing request for studentportal-if.ftis.unpar
 keytool -certreq -v \
@@ -33,7 +33,8 @@ keytool -gencert -v \
   -ext KeyUsage:critical="digitalSignature,keyEncipherment" \
   -ext EKU="serverAuth" \
   -ext SAN="DNS:studentportal-if.ftis.unpar" \
-  -rfc
+  -rfc \
+  -validity 3650
 
 # Tell IFStudentPortal.jks it can trust exampleca as a signer.
 keytool -import -v \

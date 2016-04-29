@@ -62,8 +62,8 @@ Hasil build ada di `StudentPortal/target/universal/stage`
 
 1. Masuk ke direktori `StudentPortal/target/universal/stage/bin`
 2. Jalankan salah satu dari:
-    * `./ifstudentportal -Dhttps.port=9443 -Dplay.server.https.keyStore.path=../conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat ../conf/password.conf)" -Dapplication.secret="$(cat ../conf/password.conf)"`
-    * `sudo ./ifstudentportal -Dhttps.port=443 -Dhttp.port=80 -Dplay.server.https.keyStore.path=../conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat ../conf/password.conf)" -Dapplication.secret="$(cat ../conf/password.conf)"`
+    * `./ifstudentportal -Dhttps.port=9443 -Dplay.server.https.keyStore.path=../conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat ../conf/password.conf)" -Dapplication.secret="$(cat ../conf/password.conf)"` (jika tidak punya akses root)
+    * `sudo ./ifstudentportal -Dhttps.port=443 -Dhttp.port=80 -Dplay.server.https.keyStore.path=../conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat ../conf/password.conf)" -Dapplication.secret="$(cat ../conf/password.conf)"` (jika punya akses root)
 
 ### Autostart
 

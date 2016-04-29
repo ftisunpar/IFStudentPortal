@@ -8,7 +8,7 @@ keytool -import -v \
   -alias IFStudentPortal-CA \
   -file IFStudentPortal-CA.crt \
   -keypass:env PW \
-  -storepass changeit \
+  -storepass:env PW \
   -keystore IFStudentPortal-Trust.jks << EOF
 yes
 EOF
@@ -16,4 +16,4 @@ EOF
 # List out the details of the store password.
 keytool -list -v \
   -keystore IFStudentPortal-Trust.jks \
-  -storepass changeit
+  -storepass:env PW
