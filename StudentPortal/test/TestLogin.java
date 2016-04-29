@@ -36,8 +36,7 @@ public class TestLogin extends FunctionalTest {
 				String cek=browser.find(".alert-danger").getText();
 				Matcher matcher = Pattern.compile(".*Email tidak valid.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				boolean condition = matcher.matches();
-				assertTrue(condition);
-				//assertEquals("Error:\nEmail tidak valid", browser.find(".alert-danger").getText());
+				assertTrue("UserName dan password kosong tetapi tidak ada \"error email tidak valid\"",condition);
 			}
 		});
 	}
@@ -58,7 +57,7 @@ public class TestLogin extends FunctionalTest {
 				String cek=browser.find(".alert-danger").getText();
 				Matcher matcher = Pattern.compile(".*Email tidak valid.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				boolean condition = matcher.matches();
-				assertTrue(condition);
+				assertTrue("email yang dimasukkan bukan email student Unpar tetapi tidak ada error \"email tidak valid\"",condition);
 			}
 		});
 	}
@@ -81,7 +80,7 @@ public class TestLogin extends FunctionalTest {
 				String cek=browser.find(".alert-danger").getText();
 				Matcher matcher = Pattern.compile(".*bukan.+informatika.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				boolean condition = matcher.matches();
-				assertTrue(condition);
+				assertTrue("email yang dimasukkan bukan email mahasiswa teknik informatika tetapi tidak ada error \"bukan mahasiswa teknik informatika\"",condition);
 			}
 		});
 	}
@@ -104,7 +103,7 @@ public class TestLogin extends FunctionalTest {
 				String cek=browser.find(".alert-danger").getText();
 				Matcher matcher = Pattern.compile(".*password.+salah.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				boolean condition = matcher.matches();
-				assertTrue(condition);
+				assertTrue("email dan password yang dimasukkan salah tetapi tidak ada error \"Password yang anda masukkan salah atau bukan mahasiswa aktif\"",condition);
 			}
 		});
 	}
@@ -129,7 +128,7 @@ public class TestLogin extends FunctionalTest {
 				String cek=browser.find(".alert-danger").getText();
 				Matcher matcher = Pattern.compile(".*bukan mahasiswa aktif.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				boolean condition = matcher.matches();
-				assertTrue(condition);
+				assertTrue("email dan passord sesuai tetapi bukan mahasiswa aktif, tidak ada pesan error \"Password yang anda masukkan salah atau bukan mahasiswa aktif\"",condition);
 			}
 		});
 	}
@@ -149,9 +148,7 @@ public class TestLogin extends FunctionalTest {
 				String cek=browser.find(".row").get(0).find("h2").get(0).getText();
 				Matcher matcher = Pattern.compile(".*selamat.+datang.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				boolean condition = matcher.matches();
-				assertTrue(condition);
-				//assertEquals("Selamat datang di Informatika Student Portal!",
-						//browser.find(".row").get(0).find("h2").get(0).getText());
+				assertTrue("Tidak dapat masuk ke halaman utama",condition);
 			}
 		});
 	}
