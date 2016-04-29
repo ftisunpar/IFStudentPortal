@@ -8,5 +8,5 @@ public class DataAkademikDisplay {
 	public int sksLulusTotal;
 	public int sksLulusSemTerakhir;
 	public String semesterTerakhir;
-	public int nilaiTOEFLTerakhir;
+	public String nilaiTOEFL;
 }

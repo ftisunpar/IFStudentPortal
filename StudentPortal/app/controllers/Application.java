@@ -105,19 +105,23 @@ public class Application extends Controller {
 			session().clear();
 			return index();
 		} else {
+			String phpsessid = session("phpsessid");
+			Logger.info("User " + session("email") + " mengakses halaman prasyarat dari " + request().remoteAddress());
 			Mahasiswa mhs = new Mahasiswa(session("npm"));
 			Scraper scrap = new Scraper();
 			TahunSemester currTahunSemester = scrap.requestNamePhotoTahunSemester(session("phpsessid"), mhs);
-			scrap.requestAvailableKuliah(session("phpsessid"));
-			List<JadwalKuliah> jadwalList = scrap.requestJadwal(session("phpsessid"));
+			scrap.requestAvailableKuliah(phpsessid);
+			scrap.requestNilaiTOEFL(phpsessid, mhs);
+			List<JadwalKuliah> jadwalList = scrap.requestJadwal(phpsessid);
 			mhs.setJadwalKuliahList(jadwalList);
-			scrap.requestNilai(session("phpsessid"), mhs);
+			scrap.requestNilai(phpsessid, mhs);
 			DataAkademikDisplay dataAkademik = new DataAkademikDisplay(); 
 			dataAkademik.ips = String.format("%.2f", mhs.calculateIPS());
 			dataAkademik.ipKumulatif = String.format("%.2f", mhs.calculateIPKumulatif());
 			dataAkademik.ipLulus = String.format("%.2f", mhs.calculateIPLulus());
 			dataAkademik.ipNTerbaik = String.format("%.2f", mhs.calculateIPTempuh(false));
 			dataAkademik.sksLulusTotal = mhs.calculateSKSLulus();
+			dataAkademik.nilaiTOEFL = "" + mhs.getNilaiTOEFL().values();
 			List<Nilai> riwayatNilai = mhs.getRiwayatNilai();
 			int lastIndex = riwayatNilai.size() - 1;
 			Semester semester = riwayatNilai.get(lastIndex).getSemester();
@@ -136,7 +140,6 @@ public class Application extends Controller {
 			String semTerakhir = semester + " " + tahunAjaran + "/" + (tahunAjaran + 1);
 			dataAkademik.semesterTerakhir = semTerakhir;
 			dataAkademik.sksLulusSemTerakhir = totalSKS;
-			Logger.info("User " + session("email") + " mengakses halaman prasyarat dari " + request().remoteAddress());
 			if (riwayatNilai.size() == 0) {
 				List<PrasyaratDisplay> table = null;
 				String currentSemester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
@@ -176,12 +179,13 @@ public class Application extends Controller {
 			session().clear();
 			return index();
 		} else {
-			Scraper scrap = new Scraper();
-			Mahasiswa mhs = new Mahasiswa(session("npm"));
-			scrap.requestNilai(session("phpsessid"), mhs);
-			scrap.requestNilaiTOEFL(session("phpsessid"), mhs);
+			String phpsessid = session("phpsessid"); 
 			Logger.info(
 					"User " + session("email") + " mengakses halaman Data akademik dari " + request().remoteAddress());
+			Scraper scrap = new Scraper();
+			Mahasiswa mhs = new Mahasiswa(session("npm"));
+			scrap.requestNilai(phpsessid, mhs);
+			scrap.requestNilaiTOEFL(phpsessid, mhs);
 			if (mhs.getRiwayatNilai().size() == 0) {
 				KelulusanDisplay display = null;
 				return ok(views.html.kelulusan.render(display));
