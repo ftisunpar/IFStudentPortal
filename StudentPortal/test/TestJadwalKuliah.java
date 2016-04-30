@@ -40,17 +40,13 @@ public class TestJadwalKuliah extends FunctionalTest {
 				browser.find(".form-control", withId("pw-input")).get(0).text(objFileConfReader.getPassValid());
 				browser.find(".form-control", withName("submit")).get(0).click();
 				browser.goTo(FunctionalTest.URL_JADWAL_KULIAH);
-				//assertEquals("JADWAL KULIAH", browser.find(".row").get(0).find("h2").get(0).getText());
 				FluentList<FluentWebElement> e1 = browser.find(".jadwal-cell");
 				String cek=browser.find(".row").get(0).find("h2").get(0).getText();
 				Matcher matcher = Pattern.compile(".*jadwal.+kuliah.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				boolean condition = matcher.matches();
 				assertTrue(condition);
-				// System.out.println("SIZE: " + e1.size()); //debug
-				// System.out.println(e1.get(0).getText()); //debug
 				if (!(e1.size() > 0)) {
-					System.err.print("Mahasiwa terdaftar prs tetapi tidak memiliki jadwal kuliah");
-					assertTrue(false);
+					assertTrue("Mahasiswa terdaftar prs tetapi tidak memiliki jadwal kuliah",false);
 				}
 			}
 		});
@@ -79,8 +75,7 @@ public class TestJadwalKuliah extends FunctionalTest {
 					boolean condition = matcher.matches();
 					assertTrue(condition);
 				} else {
-					System.err.print("Mahasiswa memiliki jadwal kuliah");
-					assertTrue(false);
+					assertTrue("Mahasiswa memiliki jadwal kuliah",false);
 				}
 			}
 		});

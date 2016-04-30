@@ -33,8 +33,7 @@ public class TestInitialRun extends FunctionalTest {
 				String cek=browser.find(".form-control", withName("submit")).get(0).getText();
 				Matcher matcher = Pattern.compile(".*login.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				boolean condition = matcher.matches();
-				assertTrue(condition);
-				//assertEquals("Login", browser.find(".form-control", withName("submit")).get(0).getText());
+				assertTrue("Tidak dapat masuk ke halaman login",condition);
 			}
 		});
 	}

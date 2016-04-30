@@ -42,38 +42,27 @@ public class TestSyaratKelulusan extends FunctionalTest {
 				browser.find(".form-control", withName("submit")).get(0).click();
 				browser.goTo(FunctionalTest.URL_SYARAT_KELULUSAN);
 
-				// cek berhasil masuk ke halaman Ringkasan Data Akademik
 				FluentList<FluentWebElement> e1 = browser.find("h2", withClass("text-center"));
 				String cek=e1.get(0).getText();
 				Matcher matcher = Pattern.compile(".*syarat.+kelulusan.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				boolean condition = matcher.matches();
-				assertTrue(condition);
-				//assertEquals("SYARAT KELULUSAN", e1.get(0).getText());
+				assertTrue("Tidak terdapat judul Syarat Kelulusan",condition);
 
-				// testing
-				String[] temp = new String[4];
-				temp = browser.find(".ringkasan-body").get(0).getText().split("\n");
-				//assertEquals("IPS", temp[0].substring(0, 3));
-//				assertEquals("IPK (Lulus)", temp[1].substring(0, 11));
-//				assertEquals("SKS lulus", temp[2].substring(0, 9));
-				
-				cek=temp[0].substring(0, 3);
-				matcher = Pattern.compile(".*ips.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				e1 = browser.find("div", withClass("kelulusan-body"));
+				cek=e1.get(0).find("p").getText();
+				matcher = Pattern.compile(".*memenuhi.+lulus.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				condition = matcher.matches();
-				assertTrue(condition);
-				
-				cek=temp[1].substring(0, 11);
-				matcher = Pattern.compile(".*ipk.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
-				condition = matcher.matches();
-				assertTrue(condition);
-				
-				cek=temp[2].substring(0, 9);
-				matcher = Pattern.compile(".*sks.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
-				condition = matcher.matches();
-				assertTrue(condition);
-				
-				//assertEquals("Sisa SKS untuk kelulusan", temp[3].substring(0, 24));
-				//assertEquals("PILIHAN WAJIB", browser.find("h5", withClass("text-center")).get(1).getText());
+				assertTrue("Tidak terdapat kata-kata anda sudah atau belum memenuhi syarat lulus",condition);	
+				FluentList<FluentWebElement> e2 = browser.find("li");
+				if(cek.toLowerCase().contains("belum")){
+					if(e2.size()<=0){
+						assertTrue("Belum memenuhi syarat lulus, tetapi tidak ada mata kuliah belum lulus yang ditampilkan",false);
+					}
+				}else{
+					if(e2.size()>0){
+						assertTrue("Sudah memenuhi syarat lulus, tetapi ada mata kuliah belum lulus yang ditampilkan",false);
+					}
+				}
 			}
 		});
 	}
@@ -93,28 +82,19 @@ public class TestSyaratKelulusan extends FunctionalTest {
 				browser.find(".form-control", withName("submit")).get(0).click();
 				browser.goTo(FunctionalTest.URL_SYARAT_KELULUSAN);
 
-				// cek berhasil masuk ke halaman Ringkasan Data Akademik
 				FluentList<FluentWebElement> e1 = browser.find("h2", withClass("text-center"));
-				// System.out.println("hasil : " + e1.get(0).getText());
-				//assertEquals("RINGKASAN DATA AKADEMIK", e1.get(0).getText());
+
 				String cek=e1.get(0).getText();
 				Matcher matcher = Pattern.compile(".*syarat.+kelulusan.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				boolean condition = matcher.matches();
-				assertTrue(condition);
+				assertTrue("Tidak terdapat judul Syarat Kelulusan",condition);
 
-				// testing
 				FluentList<FluentWebElement> e2 = browser.find("div", withClass("row"));
-				// System.out.println("hasil : " +
-				// e2.get(1).find("h5").get(0).getText());
-				
+			
 				cek=e2.get(1).find("h5").get(0).getText();
 				matcher = Pattern.compile(".*akedemik.+belum.+tersedia.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				condition = matcher.matches();
-				assertTrue(condition);
-				System.err.print("Data Akademik Tersedia");
-				//assertEquals("DATA AKADEMIK BELUM TERSEDIA", e2.get(1).find("h5").get(0).getText());
-				
-				
+				assertTrue("Data Akademik Tersedia",condition);
 			}
 		});
 	}

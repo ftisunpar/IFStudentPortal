@@ -50,17 +50,12 @@ public class TestPersiapanPerwalian extends FunctionalTest {
 						String cek=e2.get(0).getText();
 						Matcher matcher = Pattern.compile(".*prasyarat.+belum.+tersedia.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 						boolean condition = matcher.matches();
-						assertTrue(condition);
-						//assertEquals("PRASYARAT BELUM TERSEDIA", e2.get(0).getText());
+						assertTrue("prasyarat belum tersedia",condition);
 					} else {
-						System.err.print("prasyarat belum tersedia");
-						assertTrue(false);
-						//assertEquals("PRASYARAT BELUM TERSEDIA", "Test Gagal");
+						assertTrue("prasyarat belum tersedia",false);
 					}
 				} else {
-					System.err.print("prasyarat belum tersedia");
-					assertTrue(false);
-					//assertEquals("PRASYARAT BELUM TERSEDIA", "Test Gagal");
+					assertTrue("prasyarat belum tersedia",false);
 				}
 			}
 		});
@@ -84,15 +79,36 @@ public class TestPersiapanPerwalian extends FunctionalTest {
 				String cek=browser.find(".row").get(0).find("h2").get(0).getText();
 				Matcher matcher = Pattern.compile(".*persiapan.+perwalian.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				boolean condition = matcher.matches();
-				assertTrue(condition);
+				assertTrue("tidak dapat masuk ke halaman persiapan perwalian",condition);
 				
 				cek=browser.find(".table-bordered").get(0).find("th").get(2).getText();
 				matcher = Pattern.compile(".*keterangan.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
 				condition = matcher.matches();
-				assertTrue(condition);
-//				assertEquals("PERSIAPAN PERWALIAN",
-//						browser.find(".row").get(0).find("h2").get(0).getText());
-//				assertEquals("Keterangan", browser.find(".table-bordered").get(0).find("th").get(2).getText());
+				assertTrue("tidak ada tabel prasyarat mata kuliah",condition);
+				
+				String[] temp;
+				temp = browser.find(".kelulusan-body").get(0).getText().split("\n");
+				
+				cek=temp[0];
+				matcher = Pattern.compile(".*ips.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				condition = matcher.matches();
+				assertTrue("IPS tidak ditemukan", condition);
+				
+				cek=temp[1];
+				matcher = Pattern.compile(".*ip.+kumulatif.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				condition = matcher.matches();
+				assertTrue("IP Kumulatif tidak ditemukan",condition);
+				
+				cek=temp[2];
+				matcher = Pattern.compile(".*ip.+lulus.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				condition = matcher.matches();
+				assertTrue("IP Lulus tidak ditemukan",condition);
+				
+				cek=temp[4];
+				matcher = Pattern.compile(".*sks.+lulus.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(cek);
+				condition = matcher.matches();
+				assertTrue("SKS Lulus tidak ditemukan",condition);
+
 			}
 		});
 	}
