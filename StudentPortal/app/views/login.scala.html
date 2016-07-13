@@ -14,31 +14,29 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="page-header">
-								<center>
 								<div class="logo-set">
 									<img src="@routes.Assets.versioned("images/logo.png")" width="100%" alt="INFORMATIKA STUDENT PORTAL"/>
 								</div>
-								</center>
 								<br>
-								
 							</div>
 							<form action="@routes.Application.submitLogin()" method="POST" name ="loginForm">
 								<div class="form-group">
 									<label for="email-input">Email</label> 
 									<div class="input-group">
 										<input name="email" type="email" class="form-control" id="email-input" placeholder="co: 7312012&#64;student.unpar.ac.id"/>
-										<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="pw-input">Password</label> 
 									<div class="input-group">
 										<input name="pass" type="password" class="form-control" id="pw-input" placeholder="********"/>
-										<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
 									</div>
 								</div>
 								 @Html(message)
 								<button name="submit" type="submit" class="form-control">Login <span class="glyphicon glyphicon-log-in"></span></button>
+								<div class="alert alert-info" role="alert"><a target="_blank" href="https://docs.google.com/a/unpar.ac.id/forms/d/e/1FAIpQLSfDlJh5EP2p8b2YkORPdxqF3czImI1prBcj46U7Aq9-uwDfqA/viewform">Mohon mengisi survei selama FRS 2016</a></div>
 								<p><a href="https://docs.google.com/document/u/1/d/1svBDGqZLnBKoKMcE9v9umcmF8TWCFZZGh5mLjw7X2UA/pub" style="color: white"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Petunjuk Penggunaan</a> <a href="@routes.Assets.versioned("certs/IFStudentPortal-CA.crt")" style="color: white"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Sertifikat HTTPS</a></p>								
 							</form>
 						</div>	
