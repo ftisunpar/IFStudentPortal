@@ -160,3 +160,7 @@ Keterangan:
 2. `chmod` file tersebut dengan 744 (sebaiknya hanya boleh dieksekusi oleh `root`)
 3. Ketikkan perintah `sudo update-rc.d ifstudentportal` untuk mendaftarkan ke startup
 
+### Updating
+
+1. Masuk ke direktori `StudentPortal` dan jalankan `./activator stage`
+2. Restart IFStudentPortal
