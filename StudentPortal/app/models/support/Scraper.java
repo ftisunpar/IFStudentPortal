@@ -28,7 +28,7 @@ import id.ac.unpar.siamodels.TahunSemester;
 public class Scraper {
 	private final String BASE_URL = "https://studentportal.unpar.ac.id/";
 	private final String LOGIN_URL = BASE_URL + "home/index.login.submit.php";
-	private final String CAS_URL = "https://cas.unpar.ac.id/login";
+	private final String SSO_URL = "https://sso.unpar.ac.id/login";
 	private final String ALLJADWAL_URL = BASE_URL + "includes/jadwal.all.php";
 	private final String JADWAL_URL = BASE_URL + "includes/jadwal.aktif.php";
 	private final String NILAI_URL = BASE_URL + "includes/nilai.sem.php";
@@ -57,17 +57,19 @@ public class Scraper {
 		Document doc = resp.parse();
 		String lt = doc.select("input[name=lt]").val();
 		String execution = doc.select("input[name=execution]").val();
+		String jsessionid = resp.cookie("JSESSIONID");
 		/* CAS LOGIN */
-		Connection loginConn = Jsoup.connect(CAS_URL);
+		Connection loginConn = Jsoup.connect(SSO_URL + ";jsessionid=" + jsessionid + "?service=" + LOGIN_URL);
 		loginConn.cookies(resp.cookies());
 		loginConn.data("username", user);
 		loginConn.data("password", pass);
 		loginConn.data("lt", lt);
 		loginConn.data("execution", execution);
 		loginConn.data("_eventId", "submit");
+		loginConn.data("submit", "");
 		loginConn.timeout(0);
 		loginConn.validateTLSCertificates(false);
-		loginConn.method(Connection.Method.GET);
+		loginConn.method(Connection.Method.POST);
 		resp = loginConn.execute();
 		if (resp.body().contains("Data Akademik")) {
 			Map<String, String> phpsessid = resp.cookies();
