@@ -13,10 +13,9 @@ Langkah-langkah:
 
 1. Clone repository `git clone https://github.com/ftisunpar/IFStudentPortal`
 2. Masuk ke direktori proyek `cd IFStudentPortal`
-3. Submodule update `git submodule update --init -- StudentPortal/SIAModels`
-4. Masuk ke direktori proyek _Play_ `cd StudentPortal`
-5. Create Eclipse project `./activator eclipse`
-6. _Import project_ di Eclipse (File > Import > Existing Projects into Workspace)
+3. Submodule update `git submodule update --init -- SIAModels`
+4. Create Eclipse project `./activator eclipse`
+5. _Import project_ di Eclipse (File > Import > Existing Projects into Workspace)
 
 ### Running
 
@@ -49,18 +48,18 @@ Langkah-langkah:
 
 1. Clone repository `git clone https://github.com/ftisunpar/IFStudentPortal`
 2. Masuk ke direktori proyek `cd IFStudentPortal`
-3. Submodule update `git submodule update --init -- StudentPortal/SIAModels`
-4. Masuk ke direktori konfigurasi proyek _Play_ `cd StudentPortal/conf`
+3. Submodule update `git submodule update --init -- SIAModels`
+4. Masuk ke direktori konfigurasi proyek _Play_ `cd conf`
 5. Buat password acak: ketik `cat > password.conf`, ketikkan huruf/angka acak, dan tekan Ctrl+D
 6. Pindah ke direktori sertifikat `cd ../certs`
 7. Jalankan script untuk membuat sertifikat `./gencerts.sh`
 8. Naik satu level direktori `cd ..` dan eksekusi build `./activator stage`
 
-Hasil build ada di `StudentPortal/target/universal/stage`
+Hasil build ada di `target/universal/stage`
 
 ### Running
 
-1. Masuk ke direktori `StudentPortal/target/universal/stage/bin`
+1. Masuk ke direktori `target/universal/stage/bin`
 2. Jalankan salah satu dari:
     * `./ifstudentportal -Dhttps.port=9443 -Dplay.server.https.keyStore.path=../conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat ../conf/password.conf)" -Dapplication.secret="$(cat ../conf/password.conf)"` (jika tidak punya akses root)
     * `sudo ./ifstudentportal -Dhttps.port=443 -Dhttp.port=80 -Dplay.server.https.keyStore.path=../conf/IFStudentPortal.jks -Dplay.server.https.keyStore.password="$(cat ../conf/password.conf)" -Dapplication.secret="$(cat ../conf/password.conf)"` (jika punya akses root)
@@ -87,7 +86,7 @@ Di Ubuntu, buat file `/etc/init.d/ifstudentportal` yang isinya seperti di bawah 
 . /lib/lsb/init-functions
 # Start the service IFStudentPortal
 PIDNUM=""
-HOMEDIR="/home/pascal/IFStudentPortal/StudentPortal/target/universal/stage/"
+HOMEDIR="/home/pascal/IFStudentPortal/target/universal/stage/"
 PIDFILE="RUNNING_PID"
 PIDDIR="$HOMEDIR$PIDFILE"
 BINFILE="bin/ifstudentportal"
