@@ -123,14 +123,14 @@ public class Application extends Controller {
 			dataAkademik.sksLulusTotal = mhs.calculateSKSLulus();
 			dataAkademik.nilaiTOEFL = "" + mhs.getNilaiTOEFL().values();
 			List<Nilai> riwayatNilai = mhs.getRiwayatNilai();
-			int lastIndex = riwayatNilai.size() - 1;
+			int lastIndex = riwayatNilai.size() - 2;
 			Semester semester = riwayatNilai.get(lastIndex).getSemester();
 			int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
 			int totalSKS = 0;
 			for (int i = lastIndex; i >= 0; i--) {
 				Nilai nilai = riwayatNilai.get(i);
 				if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
-					if (nilai.getAngkaAkhir() != null) {
+					if (!nilai.getAngkaAkhir().equals("")) {
 						totalSKS += nilai.getMataKuliah().getSks();
 					}
 				} else {

@@ -198,8 +198,9 @@ public class Scraper {
 					int sks = Integer.parseInt(td.child(3).text());
 					String nama_mk = td.child(2).text();
 					MataKuliah curr_mk = MataKuliahFactory.getInstance().createMataKuliah(kode, sks, nama_mk);
-					Character kelas, NA;
+					Character kelas;
 					Double ART, UTS, UAS;
+					String NA;
 					try {
 						kelas = td.child(4).text().charAt(0);
 					} catch (IndexOutOfBoundsException e) {
@@ -221,7 +222,7 @@ public class Scraper {
 						UAS = null;
 					}
 					try {
-						NA = td.child(9).text().charAt(0);
+						NA = td.child(9).text();
 					} catch (IndexOutOfBoundsException e) {
 						NA = null;
 					}
