@@ -227,7 +227,7 @@ public class Scraper {
 						NA = null;
 					}
 
-					if (NA != null) {
+					if (!NA.equals("")) {
 						TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn),
 								Semester.fromString(sem));
 						logged_mhs.getRiwayatNilai()

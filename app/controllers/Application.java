@@ -123,7 +123,7 @@ public class Application extends Controller {
 			dataAkademik.sksLulusTotal = mhs.calculateSKSLulus();
 			dataAkademik.nilaiTOEFL = "" + mhs.getNilaiTOEFL().values();
 			List<Nilai> riwayatNilai = mhs.getRiwayatNilai();
-			int lastIndex = riwayatNilai.size() - 2;
+			int lastIndex = riwayatNilai.size() - 1;
 			Semester semester = riwayatNilai.get(lastIndex).getSemester();
 			int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
 			int totalSKS = 0;
