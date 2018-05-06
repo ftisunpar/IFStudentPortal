@@ -130,7 +130,7 @@ public class Application extends Controller {
 			for (int i = lastIndex; i >= 0; i--) {
 				Nilai nilai = riwayatNilai.get(i);
 				if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
-					if (!nilai.getAngkaAkhir().equals("")) {
+					if (nilai.getAngkaAkhir() != null) {
 						totalSKS += nilai.getMataKuliah().getSks();
 					}
 				} else {
