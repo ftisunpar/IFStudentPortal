@@ -200,7 +200,7 @@ public class Scraper {
 					MataKuliah curr_mk = MataKuliahFactory.getInstance().createMataKuliah(kode, sks, nama_mk);
 					Character kelas;
 					Double ART, UTS, UAS;
-					String NA;
+					Character NA;
 					try {
 						kelas = td.child(4).text().charAt(0);
 					} catch (IndexOutOfBoundsException e) {
