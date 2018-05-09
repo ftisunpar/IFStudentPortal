@@ -222,12 +222,12 @@ public class Scraper {
 						UAS = null;
 					}
 					try {
-						NA = td.child(9).text();
+						NA = td.child(9).text().charAt(0);
 					} catch (IndexOutOfBoundsException e) {
 						NA = null;
 					}
 
-					if (!NA.equals("")) {
+					if (!NA.equals("") && NA !== null) {
 						TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn),
 								Semester.fromString(sem));
 						logged_mhs.getRiwayatNilai()
