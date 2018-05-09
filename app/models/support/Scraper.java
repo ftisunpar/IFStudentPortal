@@ -200,7 +200,7 @@ public class Scraper {
 					MataKuliah curr_mk = MataKuliahFactory.getInstance().createMataKuliah(kode, sks, nama_mk);
 					Character kelas;
 					Double ART, UTS, UAS;
-					Character NA;
+					String NA;
 					try {
 						kelas = td.child(4).text().charAt(0);
 					} catch (IndexOutOfBoundsException e) {
@@ -222,12 +222,12 @@ public class Scraper {
 						UAS = null;
 					}
 					try {
-						NA = td.child(9).text().charAt(0);
+						NA = td.child(9).text();
 					} catch (IndexOutOfBoundsException e) {
 						NA = null;
 					}
 
-					if (NA != null) {
+					if (!NA.equals("")) {
 						TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn),
 								Semester.fromString(sem));
 						logged_mhs.getRiwayatNilai()
