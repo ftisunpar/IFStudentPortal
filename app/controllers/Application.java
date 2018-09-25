@@ -34,6 +34,8 @@ import play.mvc.*;
 import views.html.*;
 import play.Logger;
 
+import javax.script.ScriptException;
+
 public class Application extends Controller {
 
 	public Result index() throws IOException {
@@ -99,7 +101,7 @@ public class Application extends Controller {
 		}
 	}
 
-	public Result perwalian() throws IOException {
+	public Result perwalian() throws IOException, ScriptException {
 
 		if (session("npm") == null || session("phpsessid") == null) {
 			session().clear();
@@ -174,7 +176,7 @@ public class Application extends Controller {
 		}
 	}
 
-	public Result kelulusan() throws IOException {
+	public Result kelulusan() throws IOException, ScriptException {
 		if (session("npm") == null || session("phpsessid") == null) {
 			session().clear();
 			return index();
@@ -217,7 +219,7 @@ public class Application extends Controller {
 		return index();
 	}
 
-	private List<PrasyaratDisplay> checkPrasyarat() throws IOException {
+	private List<PrasyaratDisplay> checkPrasyarat() throws IOException, ScriptException {
 		Scraper scrap = new Scraper();
 		Mahasiswa mhs = new Mahasiswa(session("npm"));
 		scrap.requestNilai(session("phpsessid"), mhs);
