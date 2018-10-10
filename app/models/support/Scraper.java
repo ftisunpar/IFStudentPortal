@@ -14,6 +14,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
@@ -197,8 +198,6 @@ public class Scraper {
 	public void requestNilai(String phpsessid, Mahasiswa logged_mhs) throws IOException, ScriptException {
 		Connection connection = Jsoup.connect(NILAI_URL);
 		connection.cookie("ci_session", phpsessid);
-		connection.data("npm", logged_mhs.getNpm());
-		connection.data("thn_akd", "ALL");
 		connection.timeout(0);
 		connection.validateTLSCertificates(false);
 		connection.method(Connection.Method.GET);
@@ -218,8 +217,6 @@ public class Scraper {
 			String sem = thn_sem[1];
 			connection = Jsoup.connect(NILAI_URL + "/" + thn + "/" + sem);
 			connection.cookie("ci_session", phpsessid);
-			connection.data("npm", logged_mhs.getNpm());
-			connection.data("thn_akd", "ALL");
 			connection.timeout(0);
 			connection.validateTLSCertificates(false);
 			connection.method(Connection.Method.GET);
@@ -227,32 +224,15 @@ public class Scraper {
 			doc = resp.parse();
 
 			Element script = doc.select("script").get(10);
-			String data_mata_kuliah = script.html().substring(script.html().indexOf("var data_mata_kuliah = [];"), script.html().indexOf("var data_angket = [];"));
-			String[] array_data_mata_kuliah = data_mata_kuliah.split(";");
-
-			engine.eval(array_data_mata_kuliah[0]);
-			ArrayList<ArrayList<String>> array_mata_kuliah = new ArrayList<ArrayList<String>>();
-			ArrayList<String> mata_kuliah = new ArrayList<String>();
-			for (int i=1; i < array_data_mata_kuliah.length; i++){
-				if(array_data_mata_kuliah[i].contains("nama_mata_kuliah")){
-					mata_kuliah.add(0,(String) engine.eval(array_data_mata_kuliah[i]));
-				} else if (array_data_mata_kuliah[i].contains("kode_mata_kuliah")){
-					mata_kuliah.add(1,(String) engine.eval(array_data_mata_kuliah[i]));
-				} else if (array_data_mata_kuliah[i].contains("jumlah_sks")){
-					mata_kuliah.add(2,(String) engine.eval(array_data_mata_kuliah[i]));
-				} else if (array_data_mata_kuliah[i].contains("na")){
-					mata_kuliah.add(3,(String) engine.eval(array_data_mata_kuliah[i]));
-					array_mata_kuliah.add(mata_kuliah);
-					mata_kuliah = new ArrayList<String>();
-				} else {
-					engine.eval(array_data_mata_kuliah[i]);
-				}
-			}
+			String scriptDataMataKuliah = script.html().substring(script.html().indexOf("var data_mata_kuliah = [];"), script.html().indexOf("var data_angket = [];"));
+			engine.eval(scriptDataMataKuliah);
+			ScriptObjectMirror dataMataKuliah = (ScriptObjectMirror) engine.get("data_mata_kuliah");
 			TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn), sem.charAt(0));
-			for (int k = 0; k < array_mata_kuliah.size(); k++){
-				MataKuliah curr_mk = MataKuliahFactory.getInstance().createMataKuliah(array_mata_kuliah.get(k).get(1), Integer.parseInt(array_mata_kuliah.get(k).get(2)), array_mata_kuliah.get(k).get(0));
+			for (Map.Entry<String, Object> mataKuliahEntry: dataMataKuliah.entrySet()){
+				ScriptObjectMirror mataKuliah = (ScriptObjectMirror) mataKuliahEntry.getValue();
+				MataKuliah curr_mk = MataKuliahFactory.getInstance().createMataKuliah((String) mataKuliah.get("kode_mata_kuliah"), Integer.parseInt((String) mataKuliah.get("jumlah_sks")), (String) mataKuliah.get("nama_mata_kuliah"));
 				logged_mhs.getRiwayatNilai()
-						.add(new Nilai(tahunSemesterNilai, curr_mk, array_mata_kuliah.get(k).get(3)));
+						.add(new Nilai(tahunSemesterNilai, curr_mk, (String) mataKuliah.get("na")));
 			}
 		}
 	}
@@ -261,8 +241,6 @@ public class Scraper {
 		SortedMap<LocalDate, Integer> nilaiTerakhirTOEFL = new TreeMap<>();
 		Connection connection = Jsoup.connect(TOEFL_URL);
 		connection.cookie("ci_session", phpsessid);
-		connection.data("npm", mahasiswa.getNpm());
-		connection.data("thn_akd", "ALL");
 		connection.timeout(0);
 		connection.validateTLSCertificates(false);
 		connection.method(Connection.Method.POST);
