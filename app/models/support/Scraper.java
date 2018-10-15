@@ -1,9 +1,6 @@
 package models.support;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,17 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.DataNode;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
 import id.ac.unpar.siamodels.Dosen;
@@ -86,7 +79,6 @@ public class Scraper {
 		resp = loginConn.execute();
 		if (resp.body().contains(user)) {
 			Map<String, String> phpsessid = resp.cookies();
-			doc = resp.parse();
 			return phpsessid.get("ci_session");
 		} else {
 			return null;
