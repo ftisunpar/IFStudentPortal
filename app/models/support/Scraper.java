@@ -72,7 +72,7 @@ public class Scraper {
 		String execution = doc.select("input[name=execution]").val();
 		String jsessionid = resp.cookie("JSESSIONID");
 		/* CAS LOGIN */
-		Connection loginConn = Jsoup.connect(SSO_URL + "?service=" + LOGIN_URL);
+		Connection loginConn = Jsoup.connect(SSO_URL + ";jsessionid=" + jsessionid + "?service=" + LOGIN_URL);
 		loginConn.cookies(resp.cookies());
 		loginConn.data("username", user);
 		loginConn.data("password", pass);
@@ -200,7 +200,7 @@ public class Scraper {
 		connection.cookie("ci_session", phpsessid);
 		connection.timeout(0);
 		connection.validateTLSCertificates(false);
-		connection.method(Connection.Method.GET);
+		connection.method(Connection.Method.POST);
 		Response resp = connection.execute();
 		Document doc = resp.parse();
 
