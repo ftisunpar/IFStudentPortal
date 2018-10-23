@@ -112,25 +112,8 @@ public class Application extends Controller {
 			dataAkademik.sksLulusTotal = mhs.calculateSKSLulus();
 			dataAkademik.nilaiTOEFL = "" + mhs.getNilaiTOEFL().values();
 			List<Nilai> riwayatNilai = mhs.getRiwayatNilai();
-			Collections.sort(riwayatNilai, new Comparator<Nilai>() {
-				@Override
-				public int compare(Nilai o1, Nilai o2) {
-					if (o1.getTahunAjaran() < o2.getTahunAjaran()) {
-						return -1;
-					}
-					if (o1.getTahunAjaran() > o2.getTahunAjaran()) {
-						return + 1;
-					}
-					if (o1.getSemester().getOrder() < o2.getSemester().getOrder()) {
-						return -1;
-					}
-					if (o1.getSemester().getOrder() > o2.getSemester().getOrder()) {
-						return +1;
-					}
-					return 0;
-				}
-			});
 			int lastIndex = riwayatNilai.size() - 1;
+			System.out.println(lastIndex);
 			Semester semester = riwayatNilai.get(lastIndex).getSemester();
 			int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
 			int totalSKS = 0;
