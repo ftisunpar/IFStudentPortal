@@ -98,14 +98,8 @@ public class Scraper {
 		String nama = doc.select("div[class=namaUser d-none d-lg-block mr-3]").text();
 		mhs.setNama(nama.substring(0, nama.indexOf(mhs.getEmailAddress())));
 		Element photo = doc.select("img[class=img-fluid  fotoProfil]").first();
-		String photoPathBase64 = photo.attr("src");
-		String[] parsephoto = photoPathBase64.split(",");
-		byte[] photoPathdecode = Base64.getDecoder().decode(parsephoto[1]);
-		BufferedImage photoPath = ImageIO.read(new ByteArrayInputStream(photoPathdecode));
-		String projectPath = Play.application().path().getAbsolutePath();
-		File photoMhs = new File(projectPath + "\\public\\images\\" + mhs.getNpm() + ".jpeg");
-		ImageIO.write(photoPath, "jpeg", photoMhs);
-		mhs.setPhotoPath("/assets/images/"+mhs.getNpm()+".jpeg");
+		String photoPath = photo.attr("src");
+		mhs.setPhotoPath(photoPath);
 		connection = Jsoup.connect(FRSPRS_URL);
 		connection.cookie("ci_session", phpsessid);
 		connection.timeout(0);
