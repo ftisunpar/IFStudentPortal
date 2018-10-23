@@ -1,13 +1,13 @@
 package models.support;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.jsoup.Connection;
@@ -25,7 +25,9 @@ import id.ac.unpar.siamodels.MataKuliah;
 import id.ac.unpar.siamodels.MataKuliahFactory;
 import id.ac.unpar.siamodels.Semester;
 import id.ac.unpar.siamodels.TahunSemester;
+import play.Play;
 
+import javax.imageio.ImageIO;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -95,9 +97,15 @@ public class Scraper {
 		Document doc = resp.parse();
 		String nama = doc.select("div[class=namaUser d-none d-lg-block mr-3]").text();
 		mhs.setNama(nama.substring(0, nama.indexOf(mhs.getEmailAddress())));
-		Element photo = doc.select("img[class=fotoUser mx-1 d-flex]").first();
-		String photoPath = photo.absUrl("src");
-		mhs.setPhotoURL(new URL(photoPath));
+		Element photo = doc.select("img[class=img-fluid  fotoProfil]").first();
+		String photoPathBase64 = photo.attr("src");
+		String[] parsephoto = photoPathBase64.split(",");
+		byte[] photoPathdecode = Base64.getDecoder().decode(parsephoto[1]);
+		BufferedImage photoPath = ImageIO.read(new ByteArrayInputStream(photoPathdecode));
+		String projectPath = Play.application().path().getAbsolutePath();
+		File photoMhs = new File(projectPath + "\\public\\images\\" + mhs.getNpm() + ".jpeg");
+		ImageIO.write(photoPath, "jpeg", photoMhs);
+		mhs.setPhotoPath("/assets/images/"+mhs.getNpm()+".jpeg");
 		connection = Jsoup.connect(FRSPRS_URL);
 		connection.cookie("ci_session", phpsessid);
 		connection.timeout(0);
