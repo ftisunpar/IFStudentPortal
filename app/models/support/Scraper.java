@@ -195,7 +195,7 @@ public class Scraper {
 		return jadwalList;
 	}
 
-	public void requestNilai(String phpsessid, Mahasiswa logged_mhs) throws IOException, ScriptException {
+	public void requestNilai(String phpsessid, Mahasiswa logged_mhs) throws IOException, InterruptedException {
 		Connection connection = Jsoup.connect(NILAI_URL);
 		connection.cookie("ci_session", phpsessid);
 		connection.timeout(0);
@@ -209,32 +209,39 @@ public class Scraper {
 		for (Element semester : dropdownSemester){
 			listSemester.add(semester.attr("value"));
 		}
-		ScriptEngineManager factory = new ScriptEngineManager();
-		ScriptEngine engine = factory.getEngineByName("JavaScript");
-		for (int l = 0; l < listSemester.size()-1; l++) {
-			String[] thn_sem = listSemester.get(l).split("-");
-			String thn = thn_sem[0];
-			String sem = thn_sem[1];
-			connection = Jsoup.connect(NILAI_URL + "/" + thn + "/" + sem);
-			connection.cookie("ci_session", phpsessid);
-			connection.timeout(0);
-			connection.validateTLSCertificates(false);
-			connection.method(Connection.Method.GET);
-			resp = connection.execute();
-			doc = resp.parse();
 
-			Element script = doc.select("script").get(10);
-			String scriptDataMataKuliah = script.html().substring(script.html().indexOf("var data_mata_kuliah = [];"), script.html().indexOf("var data_angket = [];"));
-			engine.eval(scriptDataMataKuliah);
-			ScriptObjectMirror dataMataKuliah = (ScriptObjectMirror) engine.get("data_mata_kuliah");
-			TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn), sem.charAt(0));
-			for (Map.Entry<String, Object> mataKuliahEntry: dataMataKuliah.entrySet()){
-				ScriptObjectMirror mataKuliah = (ScriptObjectMirror) mataKuliahEntry.getValue();
-				MataKuliah curr_mk = MataKuliahFactory.getInstance().createMataKuliah((String) mataKuliah.get("kode_mata_kuliah"), Integer.parseInt((String) mataKuliah.get("jumlah_sks")), (String) mataKuliah.get("nama_mata_kuliah"));
-				logged_mhs.getRiwayatNilai()
-						.add(new Nilai(tahunSemesterNilai, curr_mk, (String) mataKuliah.get("na")));
-			}
+		Thread[] threadUrl = new Thread[listSemester.size()-1];
+		for(int i = 0; i < listSemester.size()-1; i++){
+			threadUrl[i] = new Thread(new MultipleRequest(i, listSemester, NILAI_URL, phpsessid, logged_mhs));
+			threadUrl[i].start();
 		}
+		for(int i = 0; i < listSemester.size()-1; i++){
+			threadUrl[i].join();
+		}
+//		for (int l = 0; l < listSemester.size()-1; l++) {
+//			String[] thn_sem = listSemester.get(l).split("-");
+//			String thn = thn_sem[0];
+//			String sem = thn_sem[1];
+//			connection = Jsoup.connect(NILAI_URL + "/" + thn + "/" + sem);
+//			connection.cookie("ci_session", phpsessid);
+//			connection.timeout(0);
+//			connection.validateTLSCertificates(false);
+//			connection.method(Connection.Method.GET);
+//			resp = connection.execute();
+//			doc = resp.parse();
+//
+//			Element script = doc.select("script").get(10);
+//			String scriptDataMataKuliah = script.html().substring(script.html().indexOf("var data_mata_kuliah = [];"), script.html().indexOf("var data_angket = [];"));
+//			engine.eval(scriptDataMataKuliah);
+//			ScriptObjectMirror dataMataKuliah = (ScriptObjectMirror) engine.get("data_mata_kuliah");
+//			TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn), sem.charAt(0));
+//			for (Map.Entry<String, Object> mataKuliahEntry: dataMataKuliah.entrySet()){
+//				ScriptObjectMirror mataKuliah = (ScriptObjectMirror) mataKuliahEntry.getValue();
+//				MataKuliah curr_mk = MataKuliahFactory.getInstance().createMataKuliah((String) mataKuliah.get("kode_mata_kuliah"), Integer.parseInt((String) mataKuliah.get("jumlah_sks")), (String) mataKuliah.get("nama_mata_kuliah"));
+//				logged_mhs.getRiwayatNilai()
+//						.add(new Nilai(tahunSemesterNilai, curr_mk, (String) mataKuliah.get("na")));
+//			}
+//		}
 	}
 
 	public void requestNilaiTOEFL(String phpsessid, Mahasiswa mahasiswa) throws IOException {

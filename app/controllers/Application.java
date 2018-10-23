@@ -1,17 +1,7 @@
 package controllers;
 
 import java.io.IOException;
-import java.lang.instrument.Instrumentation;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.time.LocalDate;
-import org.jsoup.Connection;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import java.util.*;
 
 import models.display.DataAkademikDisplay;
 import models.display.JadwalDisplay;
@@ -21,17 +11,14 @@ import id.ac.unpar.siamodels.JadwalKuliah;
 import id.ac.unpar.siamodels.Mahasiswa;
 import id.ac.unpar.siamodels.Mahasiswa.Nilai;
 import id.ac.unpar.siamodels.MataKuliah;
-import id.ac.unpar.siamodels.MataKuliahFactory;
 import id.ac.unpar.siamodels.Semester;
 import id.ac.unpar.siamodels.TahunSemester;
 import id.ac.unpar.siamodels.matakuliah.interfaces.HasPrasyarat;
 import id.ac.unpar.siamodels.prodi.teknikinformatika.*;
 import models.support.Scraper;
-import play.*;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.*;
-import views.html.*;
 import play.Logger;
 
 import javax.script.ScriptException;
@@ -101,7 +88,7 @@ public class Application extends Controller {
 		}
 	}
 
-	public Result perwalian() throws IOException, ScriptException {
+	public Result perwalian() throws IOException, InterruptedException {
 
 		if (session("npm") == null || session("phpsessid") == null) {
 			session().clear();
@@ -125,6 +112,24 @@ public class Application extends Controller {
 			dataAkademik.sksLulusTotal = mhs.calculateSKSLulus();
 			dataAkademik.nilaiTOEFL = "" + mhs.getNilaiTOEFL().values();
 			List<Nilai> riwayatNilai = mhs.getRiwayatNilai();
+			Collections.sort(riwayatNilai, new Comparator<Nilai>() {
+				@Override
+				public int compare(Nilai o1, Nilai o2) {
+					if (o1.getTahunAjaran() < o2.getTahunAjaran()) {
+						return -1;
+					}
+					if (o1.getTahunAjaran() > o2.getTahunAjaran()) {
+						return + 1;
+					}
+					if (o1.getSemester().getOrder() < o2.getSemester().getOrder()) {
+						return -1;
+					}
+					if (o1.getSemester().getOrder() > o2.getSemester().getOrder()) {
+						return +1;
+					}
+					return 0;
+				}
+			});
 			int lastIndex = riwayatNilai.size() - 1;
 			Semester semester = riwayatNilai.get(lastIndex).getSemester();
 			int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
@@ -176,7 +181,7 @@ public class Application extends Controller {
 		}
 	}
 
-	public Result kelulusan() throws IOException, ScriptException {
+	public Result kelulusan() throws IOException, InterruptedException {
 		if (session("npm") == null || session("phpsessid") == null) {
 			session().clear();
 			return index();
@@ -219,7 +224,7 @@ public class Application extends Controller {
 		return index();
 	}
 
-	private List<PrasyaratDisplay> checkPrasyarat() throws IOException, ScriptException {
+	private List<PrasyaratDisplay> checkPrasyarat() throws IOException, InterruptedException {
 		Scraper scrap = new Scraper();
 		Mahasiswa mhs = new Mahasiswa(session("npm"));
 		scrap.requestNilai(session("phpsessid"), mhs);
