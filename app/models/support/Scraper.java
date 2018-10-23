@@ -1,15 +1,9 @@
 package models.support;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
@@ -25,12 +19,6 @@ import id.ac.unpar.siamodels.MataKuliah;
 import id.ac.unpar.siamodels.MataKuliahFactory;
 import id.ac.unpar.siamodels.Semester;
 import id.ac.unpar.siamodels.TahunSemester;
-import play.Play;
-
-import javax.imageio.ImageIO;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 
 public class Scraper {
 	private final String BASE_URL = "https://studentportal.unpar.ac.id/";

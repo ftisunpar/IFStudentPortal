@@ -9,7 +9,6 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import scala.collection.immutable.Nil;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
