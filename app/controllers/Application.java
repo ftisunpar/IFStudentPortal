@@ -108,7 +108,7 @@ public class Application extends Controller {
 			List<Nilai> riwayatNilai = mhs.getRiwayatNilai();
 
 			if (riwayatNilai.size() == 0) {
-				List<PrasyaratDisplay> table = checkPrasyarat();
+				List<PrasyaratDisplay> table = null;
 				String currentSemester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
 						+ (currTahunSemester.getTahun() + 1);
 				return ok(views.html.perwalian.render(table, currentSemester, dataAkademik));
