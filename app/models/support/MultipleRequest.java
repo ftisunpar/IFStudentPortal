@@ -46,7 +46,7 @@ public class MultipleRequest implements Runnable {
             connection.cookie("ci_session", phpsessid);
             connection.timeout(0);
             connection.validateTLSCertificates(false);
-            connection.method(Connection.Method.GET);
+            connection.method(Connection.Method.POST);
             Connection.Response resp = connection.execute();
             Document doc = resp.parse();
 

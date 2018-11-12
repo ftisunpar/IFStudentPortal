@@ -54,7 +54,7 @@ public class Scraper {
 		String lt = doc.select("input[name=lt]").val();
 		String execution = doc.select("input[name=execution]").val();
 		String jsessionid = resp.cookie("JSESSIONID");
-		/* CAS LOGIN */
+		/* SSO LOGIN */
 		Connection loginConn = Jsoup.connect(SSO_URL + ";jsessionid=" + jsessionid + "?service=" + LOGIN_URL);
 		loginConn.cookies(resp.cookies());
 		loginConn.data("username", user);

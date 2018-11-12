@@ -101,40 +101,43 @@ public class Application extends Controller {
 			TahunSemester currTahunSemester = scrap.requestNamePhotoTahunSemester(session("phpsessid"), mhs);
 			scrap.requestAvailableKuliah(phpsessid);
 			scrap.requestNilaiTOEFL(phpsessid, mhs);
-			List<JadwalKuliah> jadwalList = scrap.requestJadwal(phpsessid);
-			mhs.setJadwalKuliahList(jadwalList);
+			//List<JadwalKuliah> jadwalList = scrap.requestJadwal(phpsessid);
+			//mhs.setJadwalKuliahList(jadwalList);
 			scrap.requestNilai(phpsessid, mhs);
-			DataAkademikDisplay dataAkademik = new DataAkademikDisplay(); 
-			dataAkademik.ips = String.format("%.2f", mhs.calculateIPS());
-			dataAkademik.ipKumulatif = String.format("%.2f", mhs.calculateIPKumulatif());
-			dataAkademik.ipLulus = String.format("%.2f", mhs.calculateIPLulus());
-			dataAkademik.ipNTerbaik = String.format("%.2f", mhs.calculateIPTempuh(false));
-			dataAkademik.sksLulusTotal = mhs.calculateSKSLulus();
-			dataAkademik.nilaiTOEFL = "" + mhs.getNilaiTOEFL().values();
+			DataAkademikDisplay dataAkademik = new DataAkademikDisplay();
 			List<Nilai> riwayatNilai = mhs.getRiwayatNilai();
-			int lastIndex = riwayatNilai.size() - 1;
-			Semester semester = riwayatNilai.get(lastIndex).getSemester();
-			int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
-			int totalSKS = 0;
-			for (int i = lastIndex; i >= 0; i--) {
-				Nilai nilai = riwayatNilai.get(i);
-				if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
-					if (nilai.getAngkaAkhir() != null) {
-						totalSKS += nilai.getMataKuliah().getSks();
-					}
-				} else {
-					break;
-				}
-			}
-			String semTerakhir = semester + " " + tahunAjaran + "/" + (tahunAjaran + 1);
-			dataAkademik.semesterTerakhir = semTerakhir;
-			dataAkademik.sksLulusSemTerakhir = totalSKS;
+
 			if (riwayatNilai.size() == 0) {
-				List<PrasyaratDisplay> table = null;
+				List<PrasyaratDisplay> table = checkPrasyarat();
 				String currentSemester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
 						+ (currTahunSemester.getTahun() + 1);
 				return ok(views.html.perwalian.render(table, currentSemester, dataAkademik));
 			} else {
+				dataAkademik.ips = String.format("%.2f", mhs.calculateIPS());
+				dataAkademik.ipKumulatif = String.format("%.2f", mhs.calculateIPKumulatif());
+				dataAkademik.ipLulus = String.format("%.2f", mhs.calculateIPLulus());
+				dataAkademik.ipNTerbaik = String.format("%.2f", mhs.calculateIPTempuh(false));
+				dataAkademik.sksLulusTotal = mhs.calculateSKSLulus();
+				dataAkademik.nilaiTOEFL = "" + mhs.getNilaiTOEFL().values();
+
+				int lastIndex = riwayatNilai.size() - 1;
+				Semester semester = riwayatNilai.get(lastIndex).getSemester();
+				int tahunAjaran = riwayatNilai.get(lastIndex).getTahunAjaran();
+				int totalSKS = 0;
+				for (int i = lastIndex; i >= 0; i--) {
+					Nilai nilai = riwayatNilai.get(i);
+					if (nilai.getSemester() == semester && nilai.getTahunAjaran() == tahunAjaran) {
+						if (nilai.getAngkaAkhir() != null) {
+							totalSKS += nilai.getMataKuliah().getSks();
+						}
+					} else {
+						break;
+					}
+				}
+				String semTerakhir = semester + " " + tahunAjaran + "/" + (tahunAjaran + 1);
+				dataAkademik.semesterTerakhir = semTerakhir;
+				dataAkademik.sksLulusSemTerakhir = totalSKS;
+
 				List<PrasyaratDisplay> table = checkPrasyarat();
 				String currentSemester = currTahunSemester.getSemester() + " " + currTahunSemester.getTahun() + "/"
 						+ (currTahunSemester.getTahun() + 1);
