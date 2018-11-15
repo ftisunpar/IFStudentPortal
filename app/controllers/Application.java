@@ -49,17 +49,22 @@ public class Application extends Controller {
 		DynamicForm dynamicForm = Form.form().bindFromRequest();
 		String email = dynamicForm.get("email");
 		String pass = dynamicForm.get("pass");
-		if (!email.matches("[0-9]{7}+@student.unpar.ac.id")) {
+		if (!email.matches("[0-9]{7}+@student.unpar.ac.id") && !email.matches("[0-9]{10}+@student.unpar.ac.id")) {
 			Logger.info(
 					"User: " + email + " gagal login dari " + request().remoteAddress() + " karena e-mail tidak valid");
 			return ok(views.html.login.render(errorHtml + "Email tidak valid" + "</div>"));
 		}
-		if (!(email.charAt(0) == '7' && email.charAt(1) == '3')) {
+		if (!(email.charAt(0) == '7' && email.charAt(1) == '3' || email.contains("201773"))) {
 			Logger.info("User: " + email + " gagal login dari " + request().remoteAddress()
 					+ " karena bukan mahasiswa teknik informatika (73*)");
 			return ok(views.html.login.render(errorHtml + " bukan mahasiswa teknik informatika" + "</div>"));
 		}
-		String npm = "20" + email.substring(2, 4) + email.substring(0, 2) + "0" + email.substring(4, 7);
+		String npm = "";
+		if(email.contains("201773")){
+		    npm = email.substring(0,10);
+        } else {
+            npm = "20" + email.substring(2, 4) + email.substring(0, 2) + "0" + email.substring(4, 7);
+        }
 		String phpsessid = scrap.login(npm, pass);
 		if (phpsessid != null) {
 			Logger.info("User " + email + " berhasil login dari " + request().remoteAddress());
