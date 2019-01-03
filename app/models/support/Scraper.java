@@ -103,7 +103,7 @@ public class Scraper {
 	}
 
 	public List<MataKuliah> requestAvailableKuliah(String phpsessid) throws IOException {
-		//To Do Sementara untuk RequestAvailableKuliah diambil dari array daftar mata kuliah 2018
+		// TODO
 		MataKuliahFactory mkFactory = MataKuliahFactory.getInstance();
 		String[] kodeMataKuliahKurikulum2018 = {
 				"AIF181100","AIF181101","AIF181103","AIF181104","AIF181105","AIF181106","AIF181107",

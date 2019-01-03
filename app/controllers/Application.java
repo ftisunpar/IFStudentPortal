@@ -106,8 +106,6 @@ public class Application extends Controller {
 			TahunSemester currTahunSemester = scrap.requestNamePhotoTahunSemester(session("phpsessid"), mhs);
 			scrap.requestAvailableKuliah(phpsessid);
 			scrap.requestNilaiTOEFL(phpsessid, mhs);
-			//List<JadwalKuliah> jadwalList = scrap.requestJadwal(phpsessid);
-			//mhs.setJadwalKuliahList(jadwalList);
 			scrap.requestNilai(phpsessid, mhs);
 			DataAkademikDisplay dataAkademik = new DataAkademikDisplay();
 			List<Nilai> riwayatNilai = mhs.getRiwayatNilai();
