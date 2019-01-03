@@ -8,6 +8,7 @@ target
 /.sbtserver
 /RUNNING_PID
 /bin/
+/doc
 /conf/functionaltest.conf
 /conf/password.conf
 /conf/IFStudentPortal.jks

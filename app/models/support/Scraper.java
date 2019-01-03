@@ -1,13 +1,8 @@
 package models.support;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 import org.jsoup.Connection;
 import org.jsoup.Connection.Response;
@@ -27,14 +22,15 @@ import id.ac.unpar.siamodels.TahunSemester;
 
 public class Scraper {
 	private final String BASE_URL = "https://studentportal.unpar.ac.id/";
-	private final String LOGIN_URL = BASE_URL + "home/index.login.submit.php";
+	private final String LOGIN_URL = BASE_URL + "C_home/sso_login";
 	private final String SSO_URL = "https://sso.unpar.ac.id/login";
-	private final String ALLJADWAL_URL = BASE_URL + "includes/jadwal.all.php";
-	private final String JADWAL_URL = BASE_URL + "includes/jadwal.aktif.php";
-	private final String NILAI_URL = BASE_URL + "includes/nilai.sem.php";
-	private final String TOEFL_URL = BASE_URL + "includes/nilai.toefl.php";
-	private final String LOGOUT_URL = BASE_URL + "home/index.logout.php";
-	private final String HOME_URL = BASE_URL + "main.php";
+	private final String ALLJADWAL_URL = BASE_URL + "jadwal/seluruh_fakultas";
+	private final String JADWAL_URL = BASE_URL + "jadwal";
+	private final String NILAI_URL = BASE_URL + "nilai";
+	private final String TOEFL_URL = BASE_URL + "nilai/toefl";
+	private final String LOGOUT_URL = BASE_URL + "logout";
+	private final String HOME_URL = BASE_URL + "home";
+	private final String FRSPRS_URL = BASE_URL + "frs_prs";
 
 	public void init() throws IOException {
 		Connection baseConn = Jsoup.connect(BASE_URL);
@@ -58,7 +54,7 @@ public class Scraper {
 		String lt = doc.select("input[name=lt]").val();
 		String execution = doc.select("input[name=execution]").val();
 		String jsessionid = resp.cookie("JSESSIONID");
-		/* CAS LOGIN */
+		/* SSO LOGIN */
 		Connection loginConn = Jsoup.connect(SSO_URL + ";jsessionid=" + jsessionid + "?service=" + LOGIN_URL);
 		loginConn.cookies(resp.cookies());
 		loginConn.data("username", user);
@@ -71,10 +67,9 @@ public class Scraper {
 		loginConn.validateTLSCertificates(false);
 		loginConn.method(Connection.Method.POST);
 		resp = loginConn.execute();
-		if (resp.body().contains("Data Akademik")) {
+		if (resp.body().contains(user)) {
 			Map<String, String> phpsessid = resp.cookies();
-			doc = resp.parse();
-			return phpsessid.get("PHPSESSID");
+			return phpsessid.get("ci_session");
 		} else {
 			return null;
 		}
@@ -82,18 +77,25 @@ public class Scraper {
 
 	public TahunSemester requestNamePhotoTahunSemester(String phpsessid, Mahasiswa mhs) throws IOException {
 		Connection connection = Jsoup.connect(HOME_URL);
-		connection.cookie("PHPSESSID", phpsessid);
+		connection.cookie("ci_session", phpsessid);
 		connection.timeout(0);
 		connection.validateTLSCertificates(false);
 		connection.method(Connection.Method.GET);
 		Response resp = connection.execute();
 		Document doc = resp.parse();
-		String nama = doc.select("p[class=student-name]").text();
-		mhs.setNama(nama);
-		Element photo = doc.select(".student-photo img").first();
-		String photoPath = photo.absUrl("src");
-		mhs.setPhotoURL(new URL(photoPath));
-		String curr_sem = doc.select(".main-info-semester a").text();
+		String nama = doc.select("div[class=namaUser d-none d-lg-block mr-3]").text();
+		mhs.setNama(nama.substring(0, nama.indexOf(mhs.getEmailAddress())));
+		Element photo = doc.select("img[class=img-fluid  fotoProfil]").first();
+		String photoPath = photo.attr("src");
+		mhs.setPhotoPath(photoPath);
+		connection = Jsoup.connect(FRSPRS_URL);
+		connection.cookie("ci_session", phpsessid);
+		connection.timeout(0);
+		connection.validateTLSCertificates(false);
+		connection.method(Connection.Method.GET);
+		resp = connection.execute();
+		doc = resp.parse();
+		String curr_sem = doc.select(".custom-selectContent span").text();
 		String[] sem_set = parseSemester(curr_sem);
 		TahunSemester currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),
 				Semester.fromString(sem_set[1]));
@@ -101,44 +103,45 @@ public class Scraper {
 	}
 
 	public List<MataKuliah> requestAvailableKuliah(String phpsessid) throws IOException {
+		// TODO
 		MataKuliahFactory mkFactory = MataKuliahFactory.getInstance();
-		Connection connection = Jsoup.connect(ALLJADWAL_URL);
-		connection.cookie("PHPSESSID", phpsessid);
-		connection.timeout(0);
-		connection.validateTLSCertificates(false);
-		connection.method(Connection.Method.GET);
-		Response resp = connection.execute();
-		Document doc = resp.parse();
-		Elements jadwal = doc.select("tr");
-		String prev = "";
+		String[] kodeMataKuliahKurikulum2018 = {
+				"AIF181100","AIF181101","AIF181103","AIF181104","AIF181105","AIF181106","AIF181107",
+				"AIF182007","AIF182100","AIF182101","AIF182103","AIF182105","AIF182106","AIF182109",
+				"AIF182111","AIF182112","AIF182204","AIF182210","AIF182302","AIF182308","AIF183002",
+				"AIF183010","AIF183013","AIF183015","AIF183106","AIF183107","AIF183111","AIF183112",
+				"AIF183114","AIF183116","AIF183117","AIF183118","AIF183119","AIF183120","AIF183121",
+				"AIF183122","AIF183123","AIF183124","AIF183128","AIF183141","AIF183143","AIF183145",
+				"AIF183147","AIF183149","AIF183153","AIF183155","AIF183201","AIF183204","AIF183209",
+				"AIF183225","AIF183227","AIF183229","AIF183232","AIF183236","AIF183238","AIF183250",
+				"AIF183300","AIF183303","AIF183305","AIF183308","AIF183331","AIF183333","AIF183337",
+				"AIF183339","AIF183340","AIF183342","AIF183346","AIF183348","AIF184000","AIF184001",
+				"AIF184002","AIF184004","AIF184005","AIF184006","AIF184007","AIF184104","AIF184106",
+				"AIF184108","AIF184109","AIF184110","AIF184114","AIF184115","AIF184116","AIF184119",
+				"AIF184120","AIF184121","AIF184123","AIF184125","AIF184127","AIF184129","AIF184222",
+				"AIF184224","AIF184228","AIF184230","AIF184231","AIF184232","AIF184233","AIF184235",
+				"AIF184237","AIF184247","AIF184303","AIF184334","AIF184336","AIF184338","AIF184339",
+				"AIF184340","AIF184341","AIF184342","AIF184343","AIF184344","AIF184345","MKU180110",
+				"MKU180120","MKU180130","MKU180240","MKU180250","MKU180370","MKU180380"
+		};
 		List<MataKuliah> mkList;
-		mkList = new ArrayList<>(jadwal.size());
-		for (int i = 1; i < jadwal.size() - 1; i++) {
-			Elements row = jadwal.get(i).children();
-			if (!row.get(1).text().equals("")) {
-				String kode = row.get(1).text();
-				String nama = row.get(2).text();
-				String sks = row.get(3).text();
-				if (!kode.equals(prev)) {
-					MataKuliah curr = mkFactory.createMataKuliah(kode, Integer.parseInt(sks),
-							nama);
-					mkList.add(curr);
-				}
-				prev = kode;
-			}
+		mkList = new ArrayList<>(kodeMataKuliahKurikulum2018.length);
+		for (int i=0; i < kodeMataKuliahKurikulum2018.length; i++){
+			MataKuliah curr = mkFactory.createMataKuliah(kodeMataKuliahKurikulum2018[i]);
+			mkList.add(curr);
 		}
 		return mkList;
 	}
 
 	public List<JadwalKuliah> requestJadwal(String phpsessid) throws IOException {
 		Connection connection = Jsoup.connect(JADWAL_URL);
-		connection.cookie("PHPSESSID", phpsessid);
+		connection.cookie("ci_session", phpsessid);
 		connection.timeout(0);
 		connection.validateTLSCertificates(false);
 		connection.method(Connection.Method.GET);
 		Response resp = connection.execute();
 		Document doc = resp.parse();
-		Elements jadwalTable = doc.select(".portal-full-table");
+		Elements jadwalTable = doc.select("table[class=table table-responsive table-hover d-md-table ]");
 		List<JadwalKuliah> jadwalList = new ArrayList<JadwalKuliah>();
 
 		/* Kuliah */
@@ -147,23 +150,23 @@ public class Scraper {
 			String kode = new String();
 			String nama = new String();
 			for (Element elem : tableKuliah) {
-				if (elem.className().contains("row")) {
-					if (!(elem.child(1).text().isEmpty() && elem.child(2).text().isEmpty())) {
-						kode = elem.child(1).text();
-						nama = elem.child(2).text();
+				if (elem.className().contains("")) {
+					if (!(elem.child(2).text().isEmpty() && elem.child(4).text().isEmpty())) {
+						kode = elem.child(2).text();
+						nama = elem.child(4).text();
 					}
 					MataKuliah currMk = MataKuliahFactory.getInstance().createMataKuliah(kode,
-							Integer.parseInt(elem.child(3).text()), nama);
+							Integer.parseInt(elem.child(5).text()), nama);
 					try {
-						String kelasString = elem.child(4).text();
-						String hariString = elem.child(7).text();
-						String waktuString = elem.child(8).text();
+						String kelasString = elem.child(6).text();
+						String hariString = elem.child(0).text();
+						String waktuString = elem.child(1).text();
 						if (hariString != null & hariString.length() != 0
 								&& waktuString != null & waktuString.length() != 0) {
 							jadwalList.add(
 									new JadwalKuliah(currMk, kelasString.length() == 0 ? null : kelasString.charAt(0),
-											new Dosen(null, elem.child(5).text()), hariString, waktuString,
-											elem.child(9).text()));
+											new Dosen(null, elem.child(7).text()), hariString, waktuString,
+											elem.child(3).text()));
 						}
 					} catch (IndexOutOfBoundsException e) {
 						// void. do not add jadwal.
@@ -174,75 +177,53 @@ public class Scraper {
 		return jadwalList;
 	}
 
-	public void requestNilai(String phpsessid, Mahasiswa logged_mhs) throws IOException {
+	public void requestNilai(String phpsessid, Mahasiswa logged_mhs) throws IOException, InterruptedException {
 		Connection connection = Jsoup.connect(NILAI_URL);
-		connection.cookie("PHPSESSID", phpsessid);
-		connection.data("npm", logged_mhs.getNpm());
-		connection.data("thn_akd", "ALL");
+		connection.cookie("ci_session", phpsessid);
 		connection.timeout(0);
 		connection.validateTLSCertificates(false);
 		connection.method(Connection.Method.POST);
 		Response resp = connection.execute();
 		Document doc = resp.parse();
-		Elements mk = doc.select("table");
 
-		for (Element tb : mk) {
-			Elements tr = tb.select("tr");
-			String[] sem_set = this.parseSemester(tr.get(0).text());
-			String thn = sem_set[0];
-			String sem = sem_set[1];
-
-			for (Element td : tr) {
-				if (td.className().contains("row")) {
-					String kode = td.child(1).text();
-					int sks = Integer.parseInt(td.child(3).text());
-					String nama_mk = td.child(2).text();
-					MataKuliah curr_mk = MataKuliahFactory.getInstance().createMataKuliah(kode, sks, nama_mk);
-					Character kelas, NA;
-					Double ART, UTS, UAS;
-					try {
-						kelas = td.child(4).text().charAt(0);
-					} catch (IndexOutOfBoundsException e) {
-						kelas = null;
-					}
-					try {
-						ART = Double.valueOf(td.child(5).text());
-					} catch (NumberFormatException e) {
-						ART = null;
-					}
-					try {
-						UTS = Double.valueOf(td.child(6).text());
-					} catch (NumberFormatException e) {
-						UTS = null;
-					}
-					try {
-						UAS = Double.valueOf(td.child(7).text());
-					} catch (NumberFormatException e) {
-						UAS = null;
-					}
-					try {
-						NA = td.child(9).text().charAt(0);
-					} catch (IndexOutOfBoundsException e) {
-						NA = null;
-					}
-
-					if (NA != null) {
-						TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn),
-								Semester.fromString(sem));
-						logged_mhs.getRiwayatNilai()
-								.add(new Nilai(tahunSemesterNilai, curr_mk, kelas, ART, UTS, UAS, NA));
-					}
-				}
-			}
+		Elements dropdownSemester = doc.select("#dropdownSemester option");
+		ArrayList<String> listSemester = new ArrayList<String>();
+		for (Element semester : dropdownSemester){
+			listSemester.add(semester.attr("value"));
 		}
+
+		Thread[] threadUrl = new Thread[listSemester.size()-1];
+		for(int i = 0; i < listSemester.size()-1; i++){
+			threadUrl[i] = new Thread(new MultipleRequest(i, listSemester, NILAI_URL, phpsessid, logged_mhs));
+			threadUrl[i].start();
+		}
+		for(int i = 0; i < listSemester.size()-1; i++){
+			threadUrl[i].join();
+		}
+		Collections.sort(logged_mhs.getRiwayatNilai(), new Comparator<Nilai>() {
+			@Override
+			public int compare(Nilai o1, Nilai o2) {
+				if (o1.getTahunAjaran() < o2.getTahunAjaran()) {
+					return -1;
+				}
+				if (o1.getTahunAjaran() > o2.getTahunAjaran()) {
+					return + 1;
+				}
+				if (o1.getSemester().getOrder() < o2.getSemester().getOrder()) {
+					return -1;
+				}
+				if (o1.getSemester().getOrder() > o2.getSemester().getOrder()) {
+					return +1;
+				}
+				return 0;
+			}
+		});
 	}
 
 	public void requestNilaiTOEFL(String phpsessid, Mahasiswa mahasiswa) throws IOException {
 		SortedMap<LocalDate, Integer> nilaiTerakhirTOEFL = new TreeMap<>();
 		Connection connection = Jsoup.connect(TOEFL_URL);
-		connection.cookie("PHPSESSID", phpsessid);
-		connection.data("npm", mahasiswa.getNpm());
-		connection.data("thn_akd", "ALL");
+		connection.cookie("ci_session", phpsessid);
 		connection.timeout(0);
 		connection.validateTLSCertificates(false);
 		connection.method(Connection.Method.POST);
@@ -251,8 +232,8 @@ public class Scraper {
 		Elements nilaiTOEFL = doc.select("table").select("tbody").select("tr");
 		if (!nilaiTOEFL.isEmpty()) {
 			for (int i = 0; i < nilaiTOEFL.size(); i++) {
-				Element nilai = nilaiTOEFL.get(i).select("td").get(1);
-				Element tgl_toefl = nilaiTOEFL.get(i).select("td").get(2);
+				Element nilai = nilaiTOEFL.get(i).select("td").get(5);
+				Element tgl_toefl = nilaiTOEFL.get(i).select("td").get(1);
 				String[] tanggal = tgl_toefl.text().split(" ");
 				switch (tanggal[1].toLowerCase()) {
 				case "januari":
