@@ -85,7 +85,7 @@ public class Scraper {
 		Document doc = resp.parse();
 		String nama = doc.select("div[class=namaUser d-none d-lg-block mr-3]").text();
 		mhs.setNama(nama.substring(0, nama.indexOf(mhs.getEmailAddress())));
-		Element photo = doc.select("img[class=img-fluid  fotoProfil]").first();
+		Element photo = doc.select("img[class=img-fluid fotoProfil]").first();
 		String photoPath = photo.attr("src");
 		mhs.setPhotoPath(photoPath);
 		connection = Jsoup.connect(FRSPRS_URL);
