@@ -24,13 +24,11 @@ public class Scraper {
 	private final String BASE_URL = "https://studentportal.unpar.ac.id/";
 	private final String LOGIN_URL = BASE_URL + "C_home/sso_login";
 	private final String SSO_URL = "https://sso.unpar.ac.id/login";
-	private final String ALLJADWAL_URL = BASE_URL + "jadwal/seluruh_fakultas";
 	private final String JADWAL_URL = BASE_URL + "jadwal";
 	private final String NILAI_URL = BASE_URL + "nilai";
 	private final String TOEFL_URL = BASE_URL + "nilai/toefl";
 	private final String LOGOUT_URL = BASE_URL + "logout";
 	private final String HOME_URL = BASE_URL + "home";
-	private final String FRSPRS_URL = BASE_URL + "frs_prs";
 
 	public void init() throws IOException {
 		Connection baseConn = Jsoup.connect(BASE_URL);
@@ -85,20 +83,21 @@ public class Scraper {
 		Document doc = resp.parse();
 		String nama = doc.select("div[class=namaUser d-none d-lg-block mr-3]").text();
 		mhs.setNama(nama.substring(0, nama.indexOf(mhs.getEmailAddress())));
-		Element photo = doc.select("img[class=img-fluid  fotoProfil]").first();
+		Element photo = doc.select("img[class=img-fluid fotoProfil]").first();
 		String photoPath = photo.attr("src");
-		mhs.setPhotoPath(photoPath);
-		connection = Jsoup.connect(FRSPRS_URL);
+		mhs.setPhotoPath(photoPath);		
+		connection = Jsoup.connect(NILAI_URL);
 		connection.cookie("ci_session", phpsessid);
 		connection.timeout(0);
 		connection.validateTLSCertificates(false);
 		connection.method(Connection.Method.GET);
 		resp = connection.execute();
-		doc = resp.parse();
-		String curr_sem = doc.select(".custom-selectContent span").text();
-		String[] sem_set = parseSemester(curr_sem);
-		TahunSemester currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),
-				Semester.fromString(sem_set[1]));
+		doc = resp.parse();	
+		String curr_sem = "";
+		Elements options = doc.getElementsByAttributeValue("name", "dropdownSemester").first().children();   
+		curr_sem = options.last().val(); 				
+		curr_sem = curr_sem.substring(2,4).concat(curr_sem.substring(5));
+		TahunSemester currTahunSemester = new TahunSemester(curr_sem);
 		return currTahunSemester;
 	}
 
