@@ -31,6 +31,7 @@ public class Scraper {
 	private final String LOGOUT_URL = BASE_URL + "logout";
 	private final String HOME_URL = BASE_URL + "home";
 	private final String FRSPRS_URL = BASE_URL + "frs_prs";
+	private final String SSO_LOGIN = "https://sso.unpar.ac.id/login?service=https%3A%2F%2Fstudentportal.unpar.ac.id%2FC_home%2Fsso_login";
 
 	public void init() throws IOException {
 		Connection baseConn = Jsoup.connect(BASE_URL);
@@ -87,18 +88,23 @@ public class Scraper {
 		mhs.setNama(nama.substring(0, nama.indexOf(mhs.getEmailAddress())));
 		Element photo = doc.select("img[class=img-fluid fotoProfil]").first();
 		String photoPath = photo.attr("src");
-		mhs.setPhotoPath(photoPath);
-		connection = Jsoup.connect(FRSPRS_URL);
+		mhs.setPhotoPath(photoPath);		
+		connection = Jsoup.connect(NILAI_URL);
 		connection.cookie("ci_session", phpsessid);
 		connection.timeout(0);
 		connection.validateTLSCertificates(false);
 		connection.method(Connection.Method.GET);
 		resp = connection.execute();
-		doc = resp.parse();
-		String curr_sem = doc.select(".custom-selectContent span").text();
-		String[] sem_set = parseSemester(curr_sem);
-		TahunSemester currTahunSemester = new TahunSemester(Integer.parseInt(sem_set[0]),
-				Semester.fromString(sem_set[1]));
+		doc = resp.parse();	
+		String curr_sem = "";
+		Elements options = doc.getElementsByAttributeValue("name", "dropdownSemester").get(0).children();
+		System.out.println("size : "+doc.getElementsByAttributeValue("name", "dropdownSemester").size());
+		for (Element option : options) {		    
+		   curr_sem = option.val(); 
+		}		
+		curr_sem = curr_sem.substring(2,4).concat(curr_sem.substring(5));
+		System.out.println("cur sem = "+curr_sem);		
+		TahunSemester currTahunSemester = new TahunSemester(curr_sem);
 		return currTahunSemester;
 	}
 
