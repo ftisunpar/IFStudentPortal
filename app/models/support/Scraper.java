@@ -98,7 +98,6 @@ public class Scraper {
 		doc = resp.parse();	
 		String curr_sem = "";
 		Elements options = doc.getElementsByAttributeValue("name", "dropdownSemester").get(0).children();
-		System.out.println("size : "+doc.getElementsByAttributeValue("name", "dropdownSemester").size());
 		for (Element option : options) {		    
 		   curr_sem = option.val(); 
 		}		
