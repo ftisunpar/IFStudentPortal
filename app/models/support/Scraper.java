@@ -24,14 +24,11 @@ public class Scraper {
 	private final String BASE_URL = "https://studentportal.unpar.ac.id/";
 	private final String LOGIN_URL = BASE_URL + "C_home/sso_login";
 	private final String SSO_URL = "https://sso.unpar.ac.id/login";
-	private final String ALLJADWAL_URL = BASE_URL + "jadwal/seluruh_fakultas";
 	private final String JADWAL_URL = BASE_URL + "jadwal";
 	private final String NILAI_URL = BASE_URL + "nilai";
 	private final String TOEFL_URL = BASE_URL + "nilai/toefl";
 	private final String LOGOUT_URL = BASE_URL + "logout";
 	private final String HOME_URL = BASE_URL + "home";
-	private final String FRSPRS_URL = BASE_URL + "frs_prs";
-	private final String SSO_LOGIN = "https://sso.unpar.ac.id/login?service=https%3A%2F%2Fstudentportal.unpar.ac.id%2FC_home%2Fsso_login";
 
 	public void init() throws IOException {
 		Connection baseConn = Jsoup.connect(BASE_URL);
@@ -97,12 +94,9 @@ public class Scraper {
 		resp = connection.execute();
 		doc = resp.parse();	
 		String curr_sem = "";
-		Elements options = doc.getElementsByAttributeValue("name", "dropdownSemester").get(0).children();
-		for (Element option : options) {		    
-		   curr_sem = option.val(); 
-		}		
+		Elements options = doc.getElementsByAttributeValue("name", "dropdownSemester").first().children();   
+		curr_sem = options.last().val(); 				
 		curr_sem = curr_sem.substring(2,4).concat(curr_sem.substring(5));
-		System.out.println("cur sem = "+curr_sem);		
 		TahunSemester currTahunSemester = new TahunSemester(curr_sem);
 		return currTahunSemester;
 	}
