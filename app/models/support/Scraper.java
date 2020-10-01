@@ -92,10 +92,9 @@ public class Scraper {
 		connection.validateTLSCertificates(false);
 		connection.method(Connection.Method.GET);
 		resp = connection.execute();
-		doc = resp.parse();	
-		String curr_sem = "";
+		doc = resp.parse();		
 		Elements options = doc.getElementsByAttributeValue("name", "dropdownSemester").first().children();   
-		curr_sem = options.last().val(); 				
+		String curr_sem = options.last().val(); 				
 		curr_sem = curr_sem.substring(2,4).concat(curr_sem.substring(5));
 		TahunSemester currTahunSemester = new TahunSemester(curr_sem);
 		return currTahunSemester;
