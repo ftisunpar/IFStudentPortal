@@ -24,7 +24,7 @@ public class Scraper {
 	private final String BASE_URL = "https://studentportal.unpar.ac.id/";
 	private final String LOGIN_URL = BASE_URL + "C_home/sso_login";
 	private final String SSO_URL = "https://sso.unpar.ac.id/login";
-	private final String JADWAL_URL = BASE_URL + "jadwal";
+	private final String JADWAL_URL = BASE_URL + "jadwal/kuliah";
 	private final String NILAI_URL = BASE_URL + "nilai";
 	private final String TOEFL_URL = BASE_URL + "nilai/toefl";
 	private final String LOGOUT_URL = BASE_URL + "logout";
