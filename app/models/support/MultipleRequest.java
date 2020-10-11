@@ -9,6 +9,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -50,16 +51,22 @@ public class MultipleRequest implements Runnable {
             Connection.Response resp = connection.execute();
             Document doc = resp.parse();
 
-            Element script = doc.select("script").get(10);
-            String scriptDataMataKuliah = script.html().substring(script.html().indexOf("var data_mata_kuliah = [];"), script.html().indexOf("var data_angket = [];"));
-            engine.eval(scriptDataMataKuliah);
-            ScriptObjectMirror dataMataKuliah = (ScriptObjectMirror) engine.get("data_mata_kuliah");
-            TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn), sem.charAt(0));
-            for (Map.Entry<String, Object> mataKuliahEntry : dataMataKuliah.entrySet()) {
-                ScriptObjectMirror mataKuliah = (ScriptObjectMirror) mataKuliahEntry.getValue();
-                MataKuliah curr_mk = MataKuliahFactory.getInstance().createMataKuliah((String) mataKuliah.get("kode_mata_kuliah"), Integer.parseInt((String) mataKuliah.get("jumlah_sks")), (String) mataKuliah.get("nama_mata_kuliah"));
-                logged_mhs.getRiwayatNilai()
-                        .add(new Mahasiswa.Nilai(tahunSemesterNilai, curr_mk, (String) mataKuliah.get("na")));
+            Elements scripts = doc.select("script");
+            for (Element script: scripts) {
+                String scriptHTML = script.html();
+                if (scriptHTML.contains("var data_mata_kuliah = [];") && scriptHTML.contains("var data_angket = [];")) {
+                    String scriptDataMataKuliah = scriptHTML.substring(scriptHTML.indexOf("var data_mata_kuliah = [];"), scriptHTML.indexOf("var data_angket = [];"));
+                    engine.eval(scriptDataMataKuliah);
+                    ScriptObjectMirror dataMataKuliah = (ScriptObjectMirror) engine.get("data_mata_kuliah");
+                    TahunSemester tahunSemesterNilai = new TahunSemester(Integer.parseInt(thn), sem.charAt(0));
+                    for (Map.Entry<String, Object> mataKuliahEntry : dataMataKuliah.entrySet()) {
+                        ScriptObjectMirror mataKuliah = (ScriptObjectMirror) mataKuliahEntry.getValue();
+                        MataKuliah curr_mk = MataKuliahFactory.getInstance().createMataKuliah((String) mataKuliah.get("kode_mata_kuliah"), Integer.parseInt((String) mataKuliah.get("jumlah_sks")), (String) mataKuliah.get("nama_mata_kuliah"));
+                        logged_mhs.getRiwayatNilai()
+                                .add(new Mahasiswa.Nilai(tahunSemesterNilai, curr_mk, (String) mataKuliah.get("na")));
+                    }
+                    break;
+                }
             }
         } catch (IOException e){
             e.printStackTrace();
