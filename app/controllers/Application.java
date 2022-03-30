@@ -54,17 +54,17 @@ public class Application extends Controller {
 					"User: " + email + " gagal login dari " + request().remoteAddress() + " karena e-mail tidak valid");
 			return ok(views.html.login.render(errorHtml + "Email tidak valid" + "</div>"));
 		}
-		if (!(email.charAt(0) == '7' && email.charAt(1) == '3' || email.contains("201773"))) {
+		if (!(email.startsWith("73") || email.contains("201773") || email.startsWith("618"))) {
 			Logger.info("User: " + email + " gagal login dari " + request().remoteAddress()
-					+ " karena bukan mahasiswa teknik informatika (73*)");
+					+ " karena bukan mahasiswa teknik informatika (618*)");
 			return ok(views.html.login.render(errorHtml + " bukan mahasiswa teknik informatika" + "</div>"));
 		}
-		String npm = "";
-		if(email.contains("201773")){
+		String npm = null;
+		if(email.contains("201773") || email.startsWith("618")) {
 		    npm = email.substring(0,10);
-        } else {
-            npm = "20" + email.substring(2, 4) + email.substring(0, 2) + "0" + email.substring(4, 7);
-        }
+		} else {
+		    npm = "20" + email.substring(2, 4) + email.substring(0, 2) + "0" + email.substring(4, 7);
+		}
 		String phpsessid = scrap.login(npm, pass);
 		if (phpsessid != null) {
 			Logger.info("User " + email + " berhasil login dari " + request().remoteAddress());
